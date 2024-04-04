@@ -22,4 +22,6 @@
     <style name="Theme.SmishingDetectionApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.SmishingDetectionApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.Smishing" parent="Theme.MaterialComponents.Light" />
 </resources>
