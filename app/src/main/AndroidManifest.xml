@@ -27,16 +27,13 @@
         <activity
             android:name=".SignupActivity"
             android:exported="false"
-            android:label="@string/title_activity_signup"
             android:theme="@style/Theme.SmishingDetectionApp" />
         <activity
             android:name=".SettingsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_settings" /> <!-- Making the LoginActivity the launcher and exported -->
+            android:exported="false" /> <!-- Making the LoginActivity the launcher and exported -->
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="true"
-            android:label="@string/title_activity_login">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
