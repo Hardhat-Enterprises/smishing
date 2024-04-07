@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        // NavigationView navigationView = binding.navView;
         // menu should be considered as top level destinations.
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        // NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        // NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        // NavigationUI.setupWithNavController(navigationView, navController);
     }
 
     @Override
