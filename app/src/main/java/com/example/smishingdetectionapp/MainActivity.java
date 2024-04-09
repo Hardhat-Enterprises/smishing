@@ -24,7 +24,6 @@ import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
 
     BottomNavigationView nav;
 
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.smishingdetectionapp.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
@@ -49,13 +48,11 @@ public class MainActivity extends AppCompatActivity {
                 else if(id == R.id.nav_news) {
                     Intent intent = new Intent(getApplicationContext(), NewsActivity.class);
                     startActivity(intent);
-                    finish();
                     return true;
                 }
                 else if(id == R.id.nav_settings){
                     Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                     startActivity(intent);
-                    finish();
                     return true;
                 }
                 return false;
