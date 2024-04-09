@@ -7,18 +7,29 @@
     tools:context=".ui.login.LoginActivity">
 
 
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="112dp"
+            android:layout_height="106dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/logo_description"
+            android:src="@drawable/hardhat_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/loginTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:text="@string/action_login_in"
             android:textColor="@color/navy_blue"
             android:textSize="42sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="54dp" />
+            app:layout_constraintStart_toStartOf="@id/logo"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/emailLabel"
