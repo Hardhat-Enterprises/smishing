@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -38,30 +40,31 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
         nav.setSelectedItemId(R.id.nav_home);
-        nav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        nav.setOnItemSelectedListener(menuItem -> {
 
-                int id = menuItem.getItemId();
-                if(id == R.id.nav_home){
-                    return true;
-                }
-                else if(id == R.id.nav_news) {
-                    Intent intent = new Intent(getApplicationContext(), NewsActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-                else if(id == R.id.nav_settings){
-                    Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-                return false;
+            int id = menuItem.getItemId();
+            if(id == R.id.nav_home){
+                return true;
             }
+            else if(id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                finish();
+                return true;
+            }
+            else if(id == R.id.nav_settings){
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                finish();
+                return true;
+            }
+            return false;
         });
 
+        //Detections button to switch to detections page
+        Button detections_btn = findViewById(R.id.detections_btn);
+        detections_btn.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, DetectionsActivity.class));
+            finish();
+        });
 
         /*setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {

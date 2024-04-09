@@ -25,7 +25,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smishingdetectionapp.NewsActivity;
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.ui.home.HomeFragment;
 import com.example.smishingdetectionapp.ui.login.LoginViewModel;
 import com.example.smishingdetectionapp.ui.login.LoginViewModelFactory;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
@@ -150,7 +152,9 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
+        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        //finish();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

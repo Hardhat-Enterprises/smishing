@@ -1,6 +1,9 @@
 package com.example.smishingdetectionapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +23,16 @@ public class DetectionsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //Back button to go back to main dashboard
+        ImageButton detections_back = findViewById(R.id.detections_back);
+        detections_back.setOnClickListener(v -> {
+            startActivity(new Intent(DetectionsActivity.this, MainActivity.class));
+            finish();
+        });
+
     }
+
+
+
 }

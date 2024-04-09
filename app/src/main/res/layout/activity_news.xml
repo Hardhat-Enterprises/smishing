@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="News"
+        android:text="@string/menu_news"
         android:textSize="50sp"
         android:textStyle="bold"
         android:layout_centerInParent="true"/>
@@ -29,6 +29,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        app:itemBackground="@color/baby_blue"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        android:theme="@style/Theme.SmishingDetectionApp"
         app:menu="@menu/activity_main_drawer" />
 
 </RelativeLayout>

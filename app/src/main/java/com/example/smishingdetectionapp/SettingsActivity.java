@@ -34,31 +34,24 @@ public class SettingsActivity extends AppCompatActivity {
 
         nav.setSelectedItemId(R.id.nav_settings);
 
-        nav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        nav.setOnItemSelectedListener(menuItem -> {
 
-                int id = menuItem.getItemId();
-                if(id == R.id.nav_home){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-                else if(id == R.id.nav_news) {
-                    Intent intent = new Intent(getApplicationContext(), NewsActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-                else if(id == R.id.nav_settings){
-                    return true;
-                }
-
-                return false;
+            int id = menuItem.getItemId();
+            if(id == R.id.nav_home) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+                return true;
+            }
+            else if(id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                finish();
+                return true;
+            }
+            else if(id == R.id.nav_settings){
+                return true;
             }
 
-
+            return false;
         });
 
    /* class SettingsFragment extends PreferenceFragmentCompat {
