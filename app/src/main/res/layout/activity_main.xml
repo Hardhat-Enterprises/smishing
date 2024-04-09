@@ -91,6 +91,28 @@
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
+
+        <Button
+            android:id="@+id/debug_btn"
+            android:layout_width="113dp"
+            android:layout_height="111dp"
+            android:layout_marginStart="149dp"
+            android:layout_marginTop="16dp"
+
+
+            android:layout_marginEnd="150dp"
+            android:alpha="0"
+            android:autoText="true"
+
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="@+id/HardhatLogo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

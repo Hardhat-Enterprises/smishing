@@ -58,12 +58,24 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+        //Debug Page Button
+        Button debug_btn = findViewById(R.id.debug_btn);
+        debug_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DebugActivity.class));
+            }
+        });
+
         //Detections button to switch to detections page
         Button detections_btn = findViewById(R.id.detections_btn);
         detections_btn.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, DetectionsActivity.class));
             finish();
         });
+
+
+
 
         /*setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
@@ -95,4 +107,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }

@@ -34,38 +34,20 @@ public class SettingsActivity extends AppCompatActivity {
         nav.setOnItemSelectedListener(menuItem -> {
 
             int id = menuItem.getItemId();
-            if(id == R.id.nav_home) {
+            if (id == R.id.nav_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
                 return true;
-            }
-            else if(id == R.id.nav_news) {
+            } else if (id == R.id.nav_news) {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 finish();
                 return true;
-            }
-            else if(id == R.id.nav_settings){
+            } else if (id == R.id.nav_settings) {
                 return true;
             }
 
             return false;
         });
 
-        Button notif_test_btn = findViewById(R.id.notif_test_btn);
-
-        notif_test_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //create test notification
-                NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                notificationHelper.createNotification("Test Title", "Test Message");
-            }
-        });
-
-   /* class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        }
-    }*/
-}}
+    }
+}
