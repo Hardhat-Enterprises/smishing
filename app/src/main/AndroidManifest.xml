@@ -26,8 +26,7 @@
             android:exported="false" />
         <activity
             android:name=".SignupActivity"
-            android:exported="false"
-            android:theme="@style/Theme.SmishingDetectionApp" />
+            android:exported="false" />
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />

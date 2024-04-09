@@ -32,29 +32,23 @@ public class NewsActivity extends AppCompatActivity {
 
         nav.setSelectedItemId(R.id.nav_news);
 
-        nav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        nav.setOnItemSelectedListener(menuItem -> {
 
-                int id = menuItem.getItemId();
-                if(id == R.id.nav_home){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-                else if(id == R.id.nav_news) {
-                    return true;
-                }
-                else if(id == R.id.nav_settings){
-                    Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-
-                return false;
+            int id = menuItem.getItemId();
+            if(id == R.id.nav_home){
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+                return true;
+            }
+            else if(id == R.id.nav_news) {
+                return true;
+            }
+            else if(id == R.id.nav_settings){
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                finish();
+                return true;
             }
 
-    });
+            return false;
+        });
 }}
