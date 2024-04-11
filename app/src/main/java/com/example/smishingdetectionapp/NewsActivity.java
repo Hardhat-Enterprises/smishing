@@ -16,7 +16,6 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class NewsActivity extends AppCompatActivity {
 
-    BottomNavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +36,7 @@ public class NewsActivity extends AppCompatActivity {
             int id = menuItem.getItemId();
             if(id == R.id.nav_home){
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(0,0);
                 finish();
                 return true;
             }
@@ -45,6 +45,7 @@ public class NewsActivity extends AppCompatActivity {
             }
             else if(id == R.id.nav_settings){
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(0,0);
                 finish();
                 return true;
             }

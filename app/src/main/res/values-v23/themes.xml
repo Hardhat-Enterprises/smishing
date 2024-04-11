@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.SmishingDetectionApp" parent="Base.Theme.SmishingDetectionApp">
         <!-- Transparent system bars for edge-to-edge. -->

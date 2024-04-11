@@ -16,6 +16,9 @@
             android:name=".SmishingRulesActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.account.AccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetectionsActivity"
             android:exported="false" />
         <activity
@@ -44,6 +47,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar">
+
         </activity>
     </application>
 

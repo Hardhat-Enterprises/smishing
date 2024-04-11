@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.smishingdetectionapp.NewsActivity;
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.SignupActivity;
 import com.example.smishingdetectionapp.ui.home.HomeFragment;
 import com.example.smishingdetectionapp.ui.login.LoginViewModel;
 import com.example.smishingdetectionapp.ui.login.LoginViewModelFactory;
@@ -136,6 +137,13 @@ public class LoginActivity extends AppCompatActivity {
                 navigateToMainActivity();
             }
         });
+
+        Button buttonregister = findViewById(R.id.registerButton);
+        buttonregister.setOnClickListener(v -> {
+            startActivity(new Intent(this, SignupActivity.class));
+            finish();
+        });
+
     }
 
     private boolean isUserLoggedIn() {

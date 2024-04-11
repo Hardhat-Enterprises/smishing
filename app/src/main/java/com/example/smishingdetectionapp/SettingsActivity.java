@@ -3,32 +3,23 @@ package com.example.smishingdetectionapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    BottomNavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-        /*if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.nav_settings, new SettingsActivity())
-                    .commit();
-        }
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }*/
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
@@ -39,11 +30,13 @@ public class SettingsActivity extends AppCompatActivity {
             int id = menuItem.getItemId();
             if(id == R.id.nav_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(0,0);
                 finish();
                 return true;
             }
             else if(id == R.id.nav_news) {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                overridePendingTransition(0,0);
                 finish();
                 return true;
             }
@@ -54,10 +47,22 @@ public class SettingsActivity extends AppCompatActivity {
             return false;
         });
 
-   /* class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        }
-    }*/
+        //Account button to switch to account page
+        Button accountBtn = findViewById(R.id.accountBtn);
+        accountBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, AccountActivity.class));
+            finish();
+        });
+        //Filtering button to switch to smishing rules page
+        Button filteringBtn = findViewById(R.id.filteringBtn);
+        filteringBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, SmishingRulesActivity.class));
+            finish();
+        });
+        //Report button to switch to reporting page
+        Button reportBtn = findViewById(R.id.reportBtn);
+        reportBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, ReportingActivity.class));
+            finish();
+        });
 }}

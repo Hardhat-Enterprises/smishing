@@ -8,8 +8,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_news">News</string>
-    <string name="menu_settings">Settings</string>
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -24,9 +23,58 @@
     <string name="login_failed">"Login failed"</string>
     <string name="logo_description">App Logo</string>
 
+    <!-- Page Titles -->
     <string name="login_page">Login</string>
-    <string name="signup_btn">Sign Up</string>
-    <string name="detections_btn">Detections</string>
+    <string name="detections_str">Detections</string>
+    <string name="menu_news">News</string>
+    <string name="menu_settings">Settings</string>
+    <string name="account_page">Account</string>
+    <string name="report_page">Report Smishing</string>
+    <string name="filtering_page">Smishing Rules</string>
+
+    <!-- Main Dashboard Strings -->
+    <string name="detectionsBtn">Detections</string>
+    <string name="new_detectionsTxt">New detections</string>
+    <string name="total_detectionsTxt">Total detections</string>
+
+    <!-- Account Settings Page Buttons -->
+    <string name="password_changeBtn">Password</string>
+    <string name="phone_changeBtn">Phone</string>
+    <string name="email_changeBtn">Email</string>
+    <string name="dark_modeBtn">Dark mode</string>
+    <string name="delete_accountBtn">Delete account</string>
+    <string name="sign_outBtn">Sign out</string>
+
+    <!-- Report Page Strings -->
+    <string name="phone_number">Phone Number</string>
+    <string name="report_message_prompt">Smishing message</string>
+    <string name="action_report">Send report</string>
+
+    <!-- Settings Page Buttons -->
+    <string name="account_btn">Account</string>
+    <string name="notifications_btn">Notifications</string>
+    <string name="filtering_btn">Filtering</string>
+    <string name="report_btn">Report</string>
+    <string name="help_btn">Help</string>
+
+    <!-- Filtering Rules Strings -->
+    <string name="keywords_label">Keywords</string>
+    <string name="pn_label">Phone numbers</string>
+    <string name="set_keyword_btn">Set keywords</string>
+    <string name="set_pn_btn">Set numbers</string>
+
+    <!-- Register Page Strings -->
+    <string name="name_label">Full name</string>
+    <string name="email_label">Email</string>
+    <string name="pn_register_label">Phone number</string>
+    <string name="pw_register_label">Password</string>
+    <string name="pw2_register_label">Re-enter password</string>
+    <string name="register_btn">Register</string>
+
+    <string name="info_icon">info</string>
+    <string name="new_icon">info</string>
+    <string name="time_icon">info</string>
+
 
     <!-- Settings Activity Title EXAMPLE-->
     <string name="title_activity_settings">SettingsActivity</string>
