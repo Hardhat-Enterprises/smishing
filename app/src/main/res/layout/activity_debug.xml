@@ -1,0 +1,103 @@
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/settings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout> -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DebugActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Debug Menu"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/baby_blue"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        android:theme="@style/Theme.SmishingDetectionApp"
+        app:menu="@menu/activity_main_drawer" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/basic_notif_btn"
+            android:layout_width="369dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="248dp"
+            android:text="Basic Notif Test"
+            android:textSize="20sp"
+            android:theme="@style/Theme.SmishingDetectionApp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/expand_notif_btn"
+            android:layout_width="369dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="160dp"
+            android:text="Expand Notif Test"
+            android:textSize="20sp"
+            android:theme="@style/Theme.SmishingDetectionApp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/message_notif_btn"
+            android:layout_width="369dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="75dp"
+            android:text="Message Notif Test"
+            android:textSize="20sp"
+            android:theme="@style/Theme.SmishingDetectionApp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/HardhatLogo"
+            android:layout_width="112dp"
+            android:layout_height="106dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/hardhat_logo" />
+
+        <TextView
+            android:id="@+id/DashboardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/app_name"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

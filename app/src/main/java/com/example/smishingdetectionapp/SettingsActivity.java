@@ -3,23 +3,31 @@ package com.example.smishingdetectionapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        //setContentView(R.layout.settings_activity);
+        setContentView(R.layout.activity_settings);
+        /*if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_settings, new SettingsActivity())
+                    .commit();
+        }
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }*/
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
@@ -28,19 +36,17 @@ public class SettingsActivity extends AppCompatActivity {
         nav.setOnItemSelectedListener(menuItem -> {
 
             int id = menuItem.getItemId();
-            if(id == R.id.nav_home) {
+            if (id == R.id.nav_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 overridePendingTransition(0,0);
                 finish();
                 return true;
-            }
-            else if(id == R.id.nav_news) {
+            } else if (id == R.id.nav_news) {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 overridePendingTransition(0,0);
                 finish();
                 return true;
-            }
-            else if(id == R.id.nav_settings){
+            } else if (id == R.id.nav_settings) {
                 return true;
             }
 
@@ -66,3 +72,4 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         });
 }}
+

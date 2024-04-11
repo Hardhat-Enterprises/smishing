@@ -58,12 +58,40 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+        //Debug Page Button
+        Button debug_btn = findViewById(R.id.debug_btn);
+        debug_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DebugActivity.class));
+            }
+        });
+
         //Detections button to switch to detections page
         Button detections_btn = findViewById(R.id.detections_btn);
         detections_btn.setOnClickListener(v -> {
             startActivity(new Intent(this, DetectionsActivity.class));
             finish();
         });
+
+
+
+
+        /*setSupportActionBar(binding.appBarMain.toolbar);
+        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .setAnchorView(R.id.fab).show();
+            }
+        });
+        DrawerLayout drawer = binding.drawerLayout;
+        // NavigationView navigationView = binding.navView;
+        // menu should be considered as top level destinations.
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);*/
     }
 
     @Override
@@ -79,4 +107,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
