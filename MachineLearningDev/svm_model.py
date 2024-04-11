@@ -55,6 +55,7 @@ input_message = ['Please Stay At Home. To encourage the notion of staying at hom
 input_message_features = tfidf_vectorizer.transform(input_message)
 prediction = model.predict(input_message_features)
 
+print(prediction)
 if prediction[0] == 0:
     print('Ham mail')
 elif prediction[0] == 1:

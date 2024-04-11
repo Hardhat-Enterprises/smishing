@@ -13,6 +13,8 @@ import ast
 import string 
 from tensorflow.keras.models import load_model 
 
+#original app 1.py from Teams
+
 nltk.download('wordnet')
 nltk.download('stopwords')
 nltk.download('omw-1.4')
