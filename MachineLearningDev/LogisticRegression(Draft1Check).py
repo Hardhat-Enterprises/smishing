@@ -8,7 +8,7 @@ from sklearn.linear_model import LogisticRegression
 #Provides a performance analytics capabilities
 from sklearn.metrics import accuracy_score
 
-df = pd.read_csv('Dataset_reduced_ham.csv')
+df = pd.read_csv('DatasetCombined.csv', encoding='ISO-8859-1')
 #print(df)
 
 data = df.where((pd.notnull(df)),'')

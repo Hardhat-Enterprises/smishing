@@ -21,7 +21,7 @@ from sklearn.svm import SVC  # Import SVM
 from sklearn.metrics import accuracy_score
 
 # Load the dataset
-df = pd.read_csv('/Users/gladizgregory2/desktop/dataset.csv')
+df = pd.read_csv('DatasetCombined.csv', encoding='ISO-8859-1')
 
 # Create a dictionary
 map_label = {'spam': 2, 'smishing': 1, 'ham': 0}

@@ -12,7 +12,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB  # Importing Naive Bayes
 from sklearn.metrics import accuracy_score
 
-df = pd.read_csv('/Users/gladizgregory2/desktop/dataset.csv')
+df = pd.read_csv('DatasetCombined.csv', encoding='ISO-8859-1')
 
 # Create a dictionary
 map_label = {'spam': 2, 'smishing': 1, 'ham': 0}

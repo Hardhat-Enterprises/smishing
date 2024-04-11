@@ -11,7 +11,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-df = pd.read_csv('/Users/gladizgregory2/desktop/dataset.csv')
+
+# Load the dataset
+df = pd.read_csv('DatasetCombined.csv', encoding='ISO-8859-1')
+#df = pd.read_csv('Dataset.csv')
 
 # Create a dictionary
 map_label = {'spam': 2, 'smishing': 1, 'ham': 0}
