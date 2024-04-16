@@ -18,7 +18,7 @@ predictions_random_forest = predict_random_forest(input_message)
 predictions_svm = predict_svm(input_message)
 predictions_naive_bayes = predict_naive_bayes(input_message)
 
-# Aggregate predictions whats good
+# Aggregate predictions 
 all_predictions = [
     predictions_logistic_regression,
     predictions_decision_tree,
