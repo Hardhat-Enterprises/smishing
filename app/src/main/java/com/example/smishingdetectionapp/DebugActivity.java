@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.smishingdetectionapp.notifications.NotificationHelper;
+import com.example.smishingdetectionapp.notifications.NotificationType;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DebugActivity extends AppCompatActivity {
@@ -58,7 +60,7 @@ public class DebugActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //create test notification
                 NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                notificationHelper.createNotification("Basic Title", "Basic Message");
+                notificationHelper.createNotification(NotificationType.DETECTION_ALERT,"basic_notification_test","short message");
             }
         });
 
@@ -69,7 +71,7 @@ public class DebugActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //create test notification
                 NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                notificationHelper.createNotification("Expand Test", "Details", "Notifications provide short, timely information about events in your app while it isn't in use. This document shows you how to create a notification with various features. For an introduction to how notifications appear on Android, see the Notifications overview. For sample code that uses notifications, see the People sample on GitHub.");
+                notificationHelper.createNotification(NotificationType.DETECTION_ALERT,"expand_notification_test","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
             }
         });
 
@@ -79,7 +81,7 @@ public class DebugActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //create test notification
                 NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                notificationHelper.createNotification("Test Title");
+                notificationHelper.createNotification(NotificationType.NEWS_UPDATE,"different_channel_test","short message");
             }
         });
 
