@@ -31,6 +31,7 @@
     <string name="account_page">Account</string>
     <string name="report_page">Report Smishing</string>
     <string name="filtering_page">Smishing Rules</string>
+    <string name="debug">Debug</string>
 
     <!-- Main Dashboard Strings -->
     <string name="detectionsBtn">Detections</string>
@@ -74,6 +75,20 @@
     <string name="info_icon">info</string>
     <string name="new_icon">info</string>
     <string name="time_icon">info</string>
+
+    <!--Notification Page Strings-->
+    <string name="notification_header">Notifications</string>
+    <string name="news_notification_title">News Updates</string>
+    <string name="smishing_detection_notification_title">Detection Alerts</string>
+    <string name="password_security_check">Password Security Checks</string>
+    <string name="backup_reminder">Backup Reminders</string>
+    <string name="update_notifications">Update Notifications</string>
+    <string name="suspicious_activity_alerts">Suspicious Activity Alerts</string>
+    <string name="incident_reports">Incident Reports</string>
+    <string name="open_notification_settings">Device Notification Settings</string>
+    <string name="security_alert_header">Security Alerts</string>
+    <string name="system_maintenance_header">System Maintenance</string>
+
 
     <!-- NotificationHelper Strings -->
 

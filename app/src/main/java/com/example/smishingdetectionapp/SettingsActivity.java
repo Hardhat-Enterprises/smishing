@@ -1,5 +1,6 @@
 package com.example.smishingdetectionapp;
 
+import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -71,5 +72,14 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, ReportingActivity.class));
             finish();
         });
-}}
+        //Notification button to switch to notification page
+
+    }
+
+    //Notification button to switch to notification page
+    public void openNotificationsActivity(View view) {
+        Intent intent = new Intent(this, NotificationActivity.class);
+        startActivity(intent);
+    }
+}
 

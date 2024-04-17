@@ -1,6 +1,9 @@
 package com.example.smishingdetectionapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+
+
         //Debug Page Button
         Button debug_btn = findViewById(R.id.debug_btn);
         debug_btn.setOnClickListener(new View.OnClickListener() {
@@ -73,25 +78,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, DetectionsActivity.class));
             finish();
         });
-
-
-
-
-        /*setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
-        // NavigationView navigationView = binding.navView;
-        // menu should be considered as top level destinations.
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);*/
     }
 
     @Override

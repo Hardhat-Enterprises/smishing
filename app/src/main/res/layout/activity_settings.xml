@@ -1,12 +1,3 @@
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <FrameLayout
-        android:id="@+id/settings"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout> -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -27,34 +18,6 @@
         app:itemActiveIndicatorStyle="@android:color/transparent"
         android:theme="@style/Theme.SmishingDetectionApp"
         app:menu="@menu/activity_main_drawer" />
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/HardhatLogo"
-            android:layout_width="112dp"
-            android:layout_height="106dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/hardhat_logo" />
-
-        <TextView
-            android:id="@+id/DashboardText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/app_name"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -91,11 +54,11 @@
             android:layout_height="100dp"
             android:layout_marginTop="200dp"
             android:background="@drawable/buttons_rounded"
-            android:gravity="bottom|start"
+            android:gravity="center"
             android:text="@string/account_btn"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.069"
+            app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,27 +68,42 @@
             android:layout_height="100dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/buttons_rounded"
-            android:gravity="bottom|start"
+            android:gravity="center"
             android:text="@string/filtering_btn"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.069"
+            app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/accountBtn" />
+
+        <Button
+            android:id="@+id/notificationsBtn"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="200dp"
+            android:background="@drawable/buttons_rounded"
+            android:gravity="center"
+            android:text="@string/notifications_btn"
+            android:textSize="20sp"
+            android:onClick="openNotificationsActivity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.92"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/reportBtn"
             android:layout_width="175dp"
             android:layout_height="100dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/buttons_rounded"
-            android:gravity="bottom|start"
+            android:gravity="center"
             android:text="@string/report_btn"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.932"
+            app:layout_constraintHorizontal_bias="0.92"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/notificationsBtn" />
 
         <Button
             android:id="@+id/helpBtn"
@@ -133,13 +111,13 @@
             android:layout_height="100dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/buttons_rounded"
-            android:gravity="bottom|start"
+            android:gravity="center"
             android:text="@string/help_btn"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.932"
+            app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reportBtn" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/filteringBtn" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
