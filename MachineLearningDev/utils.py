@@ -2,12 +2,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score
-#from sklearn.tree import DecisionTreeClassifier  # Importing Decision Tree Classifier
-#from sklearn.neighbors import KNeighborsClassifier  
 
 class ModelPipeline:
-    def __init__(self, model):
-        self.model = model
+    def __init__(self):
         self.dataset_path = None
         self.tfidf_vectorizer = None
         self.X_train = None
@@ -17,25 +14,20 @@ class ModelPipeline:
         self.input_message = None
         self.input_message_features = None
         self.prediction = None
+        self.model = None
         
-    
     # Load the dataset
-    def load_dataset(self, dataset_path='DatasetCombined.csv'):
+    def load_process_dataset(self, test_size=0.2, random_state=100, min_df=1):
+        dataset_path='DatasetCombined.csv'
         self.df = pd.read_csv(dataset_path, encoding='ISO-8859-1')
-
-    def process_data (self, test_size=0.2, random_state=100, min_df=1):
-        # updated for testing parameters, prefer anything else?
         # Create Dictionary
         map_label = {'spam': 2, 'smishing': 1, 'ham': 0}
         self.df['LABEL'] = self.df['LABEL'].map(map_label)
-
         # Split data into features (X) and labels (y)
         X = self.df['TEXT']
         y = self.df['LABEL']
-
         # Split data into training and testing sets
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
-
         # Feature extraction using TF-IDF
         self.tfidf_vectorizer = TfidfVectorizer(min_df=min_df, stop_words='english', lowercase=True)
         self.X_train_features = self.tfidf_vectorizer.fit_transform(self.X_train)
@@ -52,7 +44,7 @@ class ModelPipeline:
 
     # Make prediction
     def test_predict(self):
-        self.input_message_features = self.tfidf_vectorizer.transform(self.input_message)
+        self.input_message_features = self.tfidf_vectorizer.transform([self.input_message])
         self.prediction = self.model.predict(self.input_message_features)
 
     # Format result
@@ -76,8 +68,7 @@ class ModelPipeline:
             
     # Whole process
     def run_model_pipeline(self, test_size=0.2, random_state=100, min_df=1):
-        self.load_dataset()
-        self.process_data(test_size, random_state, min_df)
+        self.load_process_dataset(test_size, random_state, min_df)
         self.train_model()
         self.evaluate_model()
         result = self.test_predict()
@@ -85,13 +76,12 @@ class ModelPipeline:
 
 # Aggregate predictions
 def voting(all_predictions):
-    #print("All Predictions:")
     print("Let's vote! ")
+    # Count occurrences of each prediction
+    counts = {0: 0, 1: 0, 2: 0}
     for i, (name, prediction) in enumerate(all_predictions):
         print(f"{name}: {prediction}")
 
-    # Count occurrences of each prediction
-    counts = {0: 0, 1: 0, 2: 0}
     for name, prediction in all_predictions:
         counts[prediction] += 1
 
@@ -100,10 +90,8 @@ def voting(all_predictions):
 
     # Output the most common prediction
     if most_common_prediction == 0:
-        print('Final Decision: Ham mail')
+        print('Final Decision: Ham mail\n')
     elif most_common_prediction == 1:
-        print('Final Decision: Smishing Mail')
+        print('Final Decision: Smishing Mail\n')
     else:
-        print('Final Decision: Spam Mail')
-
-
+        print('Final Decision: Spam Mail\n')

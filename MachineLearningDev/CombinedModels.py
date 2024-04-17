@@ -33,7 +33,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
 
 # Load the dataset
-df = pd.read_csv('/Users/gladizgregory2/desktop/DatasetCombined.csv', encoding='latin1')
+df = pd.read_csv('DatasetCombined.csv', encoding='ISO-8859-1')
 
 # Create a dictionary for labels
 map_label = {'spam': 2, 'smishing': 1, 'ham': 0}
