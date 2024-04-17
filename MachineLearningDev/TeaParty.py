@@ -32,7 +32,7 @@ for message in sample_messages:
 # Initialise empty predictions list
     all_predictions = []
     pipeline.input_message = message
-    print(message)
+    print(f"Message: {message}")
     for name, model in models:
         pipeline.model = model
         pipeline.run_model_pipeline(0.2, 100, 1)
