@@ -33,18 +33,14 @@ for name, model in models:
     pipeline = ModelPipeline(model)
     pipeline.input_message = ['Please Stay At Home. To encourage the notion of staying at home. All tax-paying citizens are entitled to ï¿½305.96 or more emergency refund. smsg.io/fCVbD']
     pipeline.run_model_pipeline(0.2, 100, 1)
-    all_predictions.append(name, pipeline.prediction[0])
-    print(f"{name}: {pipeline.prediction[0]} - {what_mail(pipeline.prediction[0])}")
-    
-    
-'''
+    all_predictions.append((name, pipeline.prediction[0]))
+
 # Aggregate predictions 
 #print("All Predictions:")
 print("Let's vote: ")
 for i, (name, prediction) in enumerate(all_predictions):
-    result = what_mail(prediction)
-    print(f"{name}: {prediction} - {result}")
-'''
+    print(f"{name}: {prediction}")
+
 # Count occurrences of each prediction
 counts = {0: 0, 1: 0, 2: 0}
 for name, prediction in all_predictions:
