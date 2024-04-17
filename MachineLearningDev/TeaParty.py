@@ -7,14 +7,6 @@ from sklearn.naive_bayes import MultinomialNB  # Importing Naive Bayes
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC  # Import SVM
 
-def what_mail(prediction):
-    if prediction == 0:
-        print('Ham mail')
-    elif prediction == 1:
-        print('Smishing Mail')
-    else:
-        print('Spam Mail')
-
 
 # List of models
 models = [
@@ -28,7 +20,6 @@ models = [
 
 # Initialise empty predictions list
 all_predictions = []
-print("Let's vote: ")
 for name, model in models:
     pipeline = ModelPipeline(model)
     pipeline.input_message = ['Please Stay At Home. To encourage the notion of staying at home. All tax-paying citizens are entitled to ï¿½305.96 or more emergency refund. smsg.io/fCVbD']
@@ -36,24 +27,4 @@ for name, model in models:
     all_predictions.append((name, pipeline.prediction[0]))
 
 # Aggregate predictions 
-#print("All Predictions:")
-print("Let's vote: ")
-for i, (name, prediction) in enumerate(all_predictions):
-    print(f"{name}: {prediction}")
-
-# Count occurrences of each prediction
-counts = {0: 0, 1: 0, 2: 0}
-for name, prediction in all_predictions:
-    counts[prediction] += 1
-
-# Determine the most common prediction
-most_common_prediction = max(counts, key=counts.get)
-
-# Output the most common prediction
-if most_common_prediction == 0:
-    print('Final Decision: Ham mail')
-elif most_common_prediction == 1:
-    print('Final Decision: Smishing Mail')
-else:
-    print('Final Decision: Spam Mail')
-
+voting(all_predictions)

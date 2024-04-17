@@ -83,6 +83,27 @@ class ModelPipeline:
         result = self.test_predict()
         return result
 
+# Aggregate predictions
+def voting(all_predictions):
+    #print("All Predictions:")
+    print("Let's vote! ")
+    for i, (name, prediction) in enumerate(all_predictions):
+        print(f"{name}: {prediction}")
 
+    # Count occurrences of each prediction
+    counts = {0: 0, 1: 0, 2: 0}
+    for name, prediction in all_predictions:
+        counts[prediction] += 1
+
+    # Determine the most common prediction
+    most_common_prediction = max(counts, key=counts.get)
+
+    # Output the most common prediction
+    if most_common_prediction == 0:
+        print('Final Decision: Ham mail')
+    elif most_common_prediction == 1:
+        print('Final Decision: Smishing Mail')
+    else:
+        print('Final Decision: Spam Mail')
 
 
