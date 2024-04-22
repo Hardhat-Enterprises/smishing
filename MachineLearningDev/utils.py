@@ -5,7 +5,7 @@ from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.pipeline import Pipeline
 from collections import Counter
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV, cross_val_score
 from collections import defaultdict
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score
@@ -149,9 +149,14 @@ class ModelPipeline:
         best_scores = defaultdict(float)
         best_params = {}
         for name, (model, param_grid) in models_param_grid.items():
-            grid_search = GridSearchCV(model, param_grid, cv=num_folds, return_train_score=True)
+            if name == "Multi-layer Perceptron":
+                # Use RandomizedSearchCV for Multi-layer Perceptron since it's way too slow
+                grid_search = RandomizedSearchCV(model, param_distributions=param_grid, n_iter=100, cv=num_folds, return_train_score=True)
+            else:
+                # Use GridSearchCV for other models
+                grid_search = GridSearchCV(model, param_grid, cv=num_folds, return_train_score=True)
+            
             grid_search.fit(self.X_train_features, self.y_train)
-
             # Store the best score and best parameters for each model
             best_scores[name] = grid_search.best_score_
             best_params[name] = grid_search.best_params_
@@ -191,10 +196,10 @@ class ModelPipeline:
 
 
     # Run train model pipeline
-    def train_evaluate(self):
+    def basic_train_evaluate(self):
+        self.train_model()
         self.evaluate_model()
         self.print_accuracy()
-        self.cross_validation()
 
     # Save trained models
     def save_trained(self):
@@ -240,7 +245,7 @@ class ModelPipeline:
 
 
 '''
-# Create new reloadable trained models
+# Create new reloadable trained models (NOT WORKING)
     def new_models(self):
         trained_models = []
         for name, model in models_list:

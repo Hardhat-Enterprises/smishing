@@ -6,6 +6,7 @@ pipeline.load_process_dataset()
 
 #pipeline.save_trained()
 
+#trying to save and load model in utils not working yet
 '''
 # Train the models
 pipeline.trained_models = []
