@@ -1,38 +1,33 @@
 from utils import *
+from list_of_functions import *
+import time
+from tqdm import tqdm
 
-pipeline = ModelPipeline()
 
-pipeline.load_process_dataset()
+process_dataset()
 
-#pipeline.save_trained()
+for name, model in tqdm(models):
+    print(f"\n\nTraining model: {name}")
+    start_time = time.time()
+    model_pipeline(name, model)
+    end_time = time.time()
+    print(f"Training time: {int(end_time - start_time)} seconds")
+voting_system()
 
-#trying to save and load model in utils not working yet
-'''
-# Train the models
-pipeline.trained_models = []
-for name, model in models_list:
-    pipeline.model = model
-    pipeline.train_evaluate()
-    pipeline.trained_models.append((name, pipeline))
-    print(f"{name} ready!")
-'''
-pipeline.cross_validation()
-pipeline.train_evaluate()
-cross_val_scores = pipeline.evaluate_with_cross_validation()
-print(cross_val_score)
+pipeline.visualise_data()
 
 for message in sample_messages:
 # Initialise empty predictions list
     all_predictions = []
     print(f"Message: {message}")
 
-    for name, trained_model in pipeline.trained_models:
+    for name, model in models:
         pipeline.input_message = message
-        pipeline.test_predict()
-        pipeline.print_format_result()
+        predict_text(name, model)
         all_predictions.append((name, pipeline.prediction[0]))
     
     # Aggregate predictions 
-    voting(all_predictions)
+    predict_text('VOTE: ', pipeline.votingClassifier)
+    hard_voting(all_predictions)
 
 

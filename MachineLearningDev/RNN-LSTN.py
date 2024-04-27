@@ -15,6 +15,20 @@ from keras.utils import to_categorical
 from keras.callbacks import EarlyStopping
 from utils import *
 
+class LSTMClassifier:
+    def __init__(self):
+        self.max_words = 2000
+        self.max_len = 300
+        self.tokeniser = Tokenizer(num_words=self.max_words)
+
+        self.model = Sequential([Input(name='inputs',shape=[self.max_len]),
+        Embedding(self.max_words,50,input_length=self.max_len),
+        LSTM(64),
+        Dense(256,name='FC1'),
+        Activation('relu'),
+        Dropout(0.5),
+        Dense(1,name='out_layer'),
+        Activation('sigmoid')]);
 
 ###### N O T   W O R K I N G   Y E T ##########
 '''
