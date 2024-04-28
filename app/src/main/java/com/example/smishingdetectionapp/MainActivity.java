@@ -1,42 +1,44 @@
 package com.example.smishingdetectionapp;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageButton;
+import androidx.core.app.NotificationManagerCompat;
 
+import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    public MainActivity() {
+        super();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        com.example.smishingdetectionapp.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_news, R.id.nav_settings)
+                .build();
+
+        // Check if notifications are enabled and prompt if not
+        if (!areNotificationsEnabled()) {
+            showNotificationPermissionDialog();
+        }
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation); //variable assignment
         nav.setSelectedItemId(R.id.nav_home); //home page selected by default
@@ -61,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-
-
-        //Debug Page Button
         Button debug_btn = findViewById(R.id.debug_btn);
         debug_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Detections button to switch to detections page
         Button detections_btn = findViewById(R.id.detections_btn);
         detections_btn.setOnClickListener(v -> {
             startActivity(new Intent(this, DetectionsActivity.class));
@@ -80,9 +78,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private boolean areNotificationsEnabled() {
+        return NotificationManagerCompat.from(this).areNotificationsEnabled();
+    }
+
+    private void showNotificationPermissionDialog() {
+        NotificationPermissionDialogFragment dialogFragment = new NotificationPermissionDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "notificationPermission");
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -90,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
-
 }

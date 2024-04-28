@@ -112,6 +112,11 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="title_activity_signup">SignupActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- News Page Strings -->
+    <string name="api_key">a882bbf5f21b40a3b145509fe1f58e33</string>
 
 
 </resources>

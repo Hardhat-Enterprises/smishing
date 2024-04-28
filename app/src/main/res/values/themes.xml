@@ -29,4 +29,17 @@
          <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/baby_blue</item>
     </style>
+
+    <style name="AlertDialogCustom" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <!-- This is the Dialog Theme -->
+        <item name="android:textColor">@color/navy_blue</item>
+        <item name="colorAccent">@color/navy_blue</item> <!-- Color for the dialog buttons and other accents -->
+        <item name="android:buttonBarPositiveButtonStyle">@style/AlertDialogButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/AlertDialogButtonStyle</item>
+    </style>
+
+    <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/black</item> <!-- Set to your desired button text color -->
+    </style>
+
 </resources>

@@ -1,55 +1,97 @@
 package com.example.smishingdetectionapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.Log;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smishingdetectionapp.Models.NewsAPIResponse;
+import com.example.smishingdetectionapp.Models.NewsHeadlines;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
-public class NewsActivity extends AppCompatActivity {
+import java.util.List;
 
+public class NewsActivity extends AppCompatActivity implements SelectListener{
+    RecyclerView recyclerView;
+    NewsAdapter adapter;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_news);
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.bottom_navigation), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
-        nav.setSelectedItemId(R.id.nav_news);
+        nav.setSelectedItemId(R.id.nav_settings);
 
         nav.setOnItemSelectedListener(menuItem -> {
 
             int id = menuItem.getItemId();
-            if(id == R.id.nav_home){
+            if (id == R.id.nav_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
-            }
-            else if(id == R.id.nav_news) {
-                return true;
-            }
-            else if(id == R.id.nav_settings){
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                overridePendingTransition(0,0);
+            } else if (id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
-            }
-
-            return false;
+            } else return id == R.id.nav_settings;
         });
-}}
+
+        NewsRequestManager manager = new NewsRequestManager(this);
+        manager.getNewsHeadlines(listener, "technology", null);
+
+    }
+
+    private final OnFetchDataListener<NewsAPIResponse> listener = new OnFetchDataListener<NewsAPIResponse>() {
+        @Override
+        public void onFetchData(List<NewsHeadlines> list, String message) {
+            showNews(list);
+        }
+
+        @Override
+        public void onError(String message) {
+
+        }
+    };
+
+    private void showNews(List<NewsHeadlines> list) {
+        recyclerView = findViewById(R.id.news_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        adapter = new NewsAdapter(this, list, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void OnNewsClicked(NewsHeadlines headlines) {
+        Log.d("NewsActivity", "Article clicked");
+        if (headlines != null) {
+            String url = headlines.getUrl();
+            Log.d("NewsActivity", "URL: " + url);
+            if (url != null && !url.isEmpty()) {
+                try {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(browserIntent);
+                } catch (Exception e) {
+                    Log.e("NewsActivity", "Error opening URL", e);
+                }
+            } else {
+                Toast.makeText(this, "No URL available", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Log.d("NewsActivity", "Headlines data is null");
+        }
+    }
+
+
+}
