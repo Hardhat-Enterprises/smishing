@@ -11,7 +11,7 @@ pipeline = ModelPipeline()
 #models
 # Dictionaries:
 #param_grid
-#models_info: - name, model, param_grid, best_params, grid_score, cross_val_score, weight
+#models_info: - name, model, param_grid, best_params, grid_score, cross_val_score, weight, evaluation
 
 # Load and process the dataset
 def process_dataset():

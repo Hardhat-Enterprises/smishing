@@ -23,6 +23,9 @@ from sklearn.decomposition import PCA
 from sklearn.decomposition import TruncatedSVD
 from sklearn.decomposition import NMF
 from scipy.sparse import csr_matrix, hstack, vstack
+from matplotlib import colormaps
+from colorspacious import cspace_converter
+import matplotlib as mpl
 # Models
 from sklearn.neighbors import KNeighborsClassifier 
 from sklearn.tree import DecisionTreeClassifier
@@ -34,6 +37,31 @@ from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.naive_bayes import MultinomialNB, BernoulliNB
+
+
+cmaps = {}
+
+gradient = np.linspace(0, 1, 256)
+gradient = np.vstack((gradient, gradient))
+
+
+def plot_color_gradients(category, cmap_list):
+    # Create figure and adjust figure height to number of colormaps
+    nrows = len(cmap_list)
+    figh = 0.35 + 0.15 + (nrows + (nrows - 1) * 0.1) * 0.22
+    fig, axs = plt.subplots(nrows=nrows + 1, figsize=(6.4, figh))
+    fig.subplots_adjust(top=1 - 0.35 / figh, bottom=0.15 / figh,
+                        left=0.2, right=0.99)
+    axs[0].set_title(f'{category} colormaps', fontsize=14)
+    for ax, name in zip(axs, cmap_list):
+        ax.imshow(gradient, aspect='auto', cmap=mpl.colormaps[name])
+        ax.text(-0.01, 0.5, name, va='center', ha='right', fontsize=10,
+                transform=ax.transAxes)
+    # Turn off *all* ticks & spines, not just the ones with colormaps.
+    for ax in axs:
+        ax.set_axis_off()
+    # Save colormap list for later.
+    cmaps[category] = cmap_list
 
 #sample_msg = ['Please Stay At Home. To encourage the notion of staying at home. All tax-paying citizens are entitled to ï¿½305.96 or more emergency refund. smsg.io/fCVbD']
 sample_messages = [
@@ -54,14 +82,14 @@ sample_messages = [
 
 models = [
     ("Naive Bayes multinomial", MultinomialNB()),
-    ("AdaBoost", AdaBoostClassifier()),
-    ("Random Forest", RandomForestClassifier()),
+    #("AdaBoost", AdaBoostClassifier()),
+    #("Random Forest", RandomForestClassifier()),
     #("Multi-layer Perceptron", MLPClassifier()),
     ("Naive Bayes multivariate Bernoulli", BernoulliNB()),
     ("Decision Tree", DecisionTreeClassifier()),
-    ("KNN", KNeighborsClassifier()), 
-    ("Logistic Regression", LogisticRegression()),
-    ("Support Vector", SVC())
+    #("KNN", KNeighborsClassifier()), 
+    #("Logistic Regression", LogisticRegression()),
+    #("Support Vector", SVC())
 ]
 
 param_grid = {
@@ -209,8 +237,8 @@ class ModelPipeline:
         #        grid_search = GridSearchCV(RandomForestClassifier(), param_grid, cv=5)
         #else:
             # Use GridSearchCV for other models
-        grid_search = GridSearchCV(model, param_grid, cv=num_folds, return_train_score=True)
         with parallel_backend('threading'):
+            grid_search = GridSearchCV(model, param_grid, cv=num_folds, return_train_score=True)
             grid_search.fit(self.X_train_features, self.y_train)
         # Store the best score and best parameters for each model
         models_info[name]['best_param'] = grid_search.best_params_
@@ -233,7 +261,7 @@ class ModelPipeline:
         self.precision = precision_score(self.y_test, model.predict(self.X_test_features), average='weighted')
         self.recall = recall_score(self.y_test, model.predict(self.X_test_features), average='weighted')
         self.f1 = f1_score(self.y_test, model.predict(self.X_test_features), average='weighted')
-        models_info[name]['evaluation'] = [self.train_accuracy, self.test_accuracy, self.precision, self.recall, self.f1]
+        models_info[name]={'evaluation' : [self.train_accuracy, self.test_accuracy, self.precision, self.recall, self.f1]}
         print('Accuracy on training data: '.ljust(30), self.train_accuracy)
         print('Accuracy on test data: '.ljust(30), self.test_accuracy)
         print('Precision: '.ljust(30), self.precision)
@@ -241,25 +269,27 @@ class ModelPipeline:
         print('F1: '.ljust(30), self.f1)
 
     def visualise_data(self):
-        metrics = list(next(iter(models_info.values()))['evaluation'].keys())
-        # Create a bar plot for each metric
-        for metric in metrics:
-            # Get the values for this metric for each model
-            values = [info['evaluation'][metric] for info in models_info.values()]
-            plt.figure(figsize=(10, 5))
-            # Create an array with the positions of each bar on the x-axis
-            x_pos = np.arange(len(models_info.keys()))
-            # Create a bar plot
-        plt.bar(x_pos, values, align='center')
-        # Replace the x-ticks with the model names
-        plt.xticks(x_pos, models_info.keys())
-        # Add labels and title
-        plt.xlabel('Models')
-        plt.ylabel(metric)
-        plt.title(f'{metric} comparison')
-        # Show the plot
+        n = len(models_info)
+        m = len(next(iter(models_info.values()))['evaluation'])
+        width = 0.1
+        x = np.arange(n)
+        score_names = ['train_accuracy', 'test_accuracy', 'precision', 'recall', 'f1']
+        fig, ax = plt.subplots(figsize=(10, 5))
+        plot_color_gradients('Qualitative', ['Pastel1', 'Pastel2', 'Paired', 'Accent', 'Dark2', 'Set1', 'Set2', 'Set3', 'tab10', 'tab20', 'tab20b', 'tab20c'])
+        #colors = ['red', 'blue', 'green', 'orange', 'purple']  # Modify color scheme here
+        for i in range(m):
+            scores = [models_info[name]['evaluation'][i] for name in models_info]
+            ax.bar(x + i * width, scores, width, label=score_names[i])  #color=colors[i] Use the specified color
+        ax.set_xlabel('Models')
+        ax.set_ylabel('Scores')
+        ax.set_title('Model comparison')
+        ax.set_xticks(x)
+        ax.set_xticklabels([name for name in models_info])
+        ax.legend()
+        fig.tight_layout()
         plt.show()
 
+        
 # For model list
     def cross_validation(self):
         for name, model in models:
@@ -275,6 +305,16 @@ class ModelPipeline:
         weights = [models_info[name]['weight'] for name, _ in models]
         self.votingClassifier = VotingClassifier(estimators=models, voting='soft', weights=weights, verbose=True)
         self.votingClassifier.fit(self.X_train_features, self.y_train)
+        models_info['voting'] = {
+            'name': 'Voting',
+            'model': self.votingClassifier,
+            'param_grid': None,
+            'best_param': None,
+            'grid_score': None,
+            'cross_val_score': None,
+            'weight': None,
+            'evaluation': None
+        }
 
 
     def split_predict(self):
