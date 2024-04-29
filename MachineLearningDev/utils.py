@@ -54,14 +54,14 @@ sample_messages = [
 # Select what models to use
 models = [
     ("Naive Bayes multinomial", MultinomialNB()),
-    ("AdaBoost", AdaBoostClassifier()),
+    #("AdaBoost", AdaBoostClassifier()),
     ("Random Forest", RandomForestClassifier()),
     #("Multi-layer Perceptron", MLPClassifier()),
     ("Naive Bayes multivariate Bernoulli", BernoulliNB()),
-    ("Decision Tree", DecisionTreeClassifier()),
+    #("Decision Tree", DecisionTreeClassifier()),
     ("KNN", KNeighborsClassifier()), 
-    ("Logistic Regression", LogisticRegression()),
-    ("Support Vector", SVC())
+    #("Logistic Regression", LogisticRegression()),
+    #("Support Vector", SVC())
 ]
 
 param_grid = {
