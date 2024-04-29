@@ -14,14 +14,11 @@ from collections import defaultdict
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score
 from sklearn.datasets import load_digits
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import GridSearchCV
 from joblib import parallel_backend
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.decomposition import PCA
+from sklearn.decomposition import PCA, TruncatedSVD, NMF
 from sklearn.decomposition import TruncatedSVD
-from sklearn.decomposition import NMF
 from scipy.sparse import csr_matrix, hstack, vstack
 from matplotlib import colormaps
 from colorspacious import cspace_converter
@@ -39,30 +36,6 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.naive_bayes import MultinomialNB, BernoulliNB
 
 
-cmaps = {}
-
-gradient = np.linspace(0, 1, 256)
-gradient = np.vstack((gradient, gradient))
-
-
-def plot_color_gradients(category, cmap_list):
-    # Create figure and adjust figure height to number of colormaps
-    nrows = len(cmap_list)
-    figh = 0.35 + 0.15 + (nrows + (nrows - 1) * 0.1) * 0.22
-    fig, axs = plt.subplots(nrows=nrows + 1, figsize=(6.4, figh))
-    fig.subplots_adjust(top=1 - 0.35 / figh, bottom=0.15 / figh,
-                        left=0.2, right=0.99)
-    axs[0].set_title(f'{category} colormaps', fontsize=14)
-    for ax, name in zip(axs, cmap_list):
-        ax.imshow(gradient, aspect='auto', cmap=mpl.colormaps[name])
-        ax.text(-0.01, 0.5, name, va='center', ha='right', fontsize=10,
-                transform=ax.transAxes)
-    # Turn off *all* ticks & spines, not just the ones with colormaps.
-    for ax in axs:
-        ax.set_axis_off()
-    # Save colormap list for later.
-    cmaps[category] = cmap_list
-
 #sample_msg = ['Please Stay At Home. To encourage the notion of staying at home. All tax-paying citizens are entitled to ï¿½305.96 or more emergency refund. smsg.io/fCVbD']
 sample_messages = [
     "Hello, you still have a fine that has not been paid. Please pay it in time, otherwise it will affect your travel. https://linkstps.xyz/au",
@@ -76,20 +49,19 @@ sample_messages = [
     "AusPost:Your shipping address is invalid, Post Shop delivery has be deliveries have been stopped, more details:https://aupost.mypoca.services",
     "[DiDi]$15 off next 2 rides!* Savings automatically applied on your next ride request. Until Sunday. https://dd.me/k3M7s23 Opt out: https://dd.me/b6kHCl5",
     "JUST ANNOUNCED Big Apple $750 Scholarship Study in New York State (USA) this July. 4-week program designed for Australian Uni students! www.cisaustalia.com.au"
-
-
 ]
 
+# Select what models to use
 models = [
     ("Naive Bayes multinomial", MultinomialNB()),
-    #("AdaBoost", AdaBoostClassifier()),
-    #("Random Forest", RandomForestClassifier()),
+    ("AdaBoost", AdaBoostClassifier()),
+    ("Random Forest", RandomForestClassifier()),
     #("Multi-layer Perceptron", MLPClassifier()),
     ("Naive Bayes multivariate Bernoulli", BernoulliNB()),
     ("Decision Tree", DecisionTreeClassifier()),
-    #("KNN", KNeighborsClassifier()), 
-    #("Logistic Regression", LogisticRegression()),
-    #("Support Vector", SVC())
+    ("KNN", KNeighborsClassifier()), 
+    ("Logistic Regression", LogisticRegression()),
+    ("Support Vector", SVC())
 ]
 
 param_grid = {
@@ -190,13 +162,17 @@ class ModelPipeline:
         return self.X_train_features, self.X_test_features
     
     # testing to increase speed
-    def dimensionality_reduction(self):
-        # Apply NMF
-        self.nmf = NMF(n_components=100)
-        self.X_train_features = self.nmf.fit_transform(self.X_train_features)
-        self.X_test_features = self.nmf.transform(self.X_test_features)
+    def dimensionality_reduction(self, method='nmf'):
+        if method == 'nmf':
+            self.reduce = NMF(n_components=100)
+        elif method == 'pca':
+            self.reduce = self.pca = PCA(n_components=2)
+        self.X_train_features = self.reduce.fit_transform(self.X_train_features)
+        self.X_test_features = self.reduce.transform(self.X_test_features)
+
         
-    def pca_reduce(self, feature_input):
+    def predict_dim_reduce(self, feature_input):
+
         reduced = self.nmf.transform(feature_input)
         return reduced
             
@@ -275,11 +251,13 @@ class ModelPipeline:
         x = np.arange(n)
         score_names = ['train_accuracy', 'test_accuracy', 'precision', 'recall', 'f1']
         fig, ax = plt.subplots(figsize=(10, 5))
-        plot_color_gradients('Qualitative', ['Pastel1', 'Pastel2', 'Paired', 'Accent', 'Dark2', 'Set1', 'Set2', 'Set3', 'tab10', 'tab20', 'tab20b', 'tab20c'])
         #colors = ['red', 'blue', 'green', 'orange', 'purple']  # Modify color scheme here
         for i in range(m):
             scores = [models_info[name]['evaluation'][i] for name in models_info]
-            ax.bar(x + i * width, scores, width, label=score_names[i])  #color=colors[i] Use the specified color
+            bars = ax.bar(x + i * width, scores, width, label=score_names[i])  #color=colors[i] Use the specified color
+            for bar in bars:
+                yval = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width()/2, yval + 0.01, round(yval, 3), ha='center', va='bottom', fontsize=5)
         ax.set_xlabel('Models')
         ax.set_ylabel('Scores')
         ax.set_title('Model comparison')
@@ -339,8 +317,10 @@ class ModelPipeline:
         #self.input_message_features = self.pca_reduce(self.input_message_features)
 
     # Make prediction
-    def make_predict(self, model):
+    def make_predict(self, model, reduce=False):
         self.text_features = self.tfidf_vectorizer.transform([self.input_message])
+        if reduce:
+            self.predict_dim_reduce(self.text_features)
         #self.split_predict()
         if self.input_message_features != None:
             features = self.input_message_features
