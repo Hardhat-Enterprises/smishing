@@ -14,7 +14,6 @@ pipeline = ModelPipeline()
 # Load and process the dataset, true or false for dimensionality reduction
 def process_dataset(reduce=False):
     pipeline.load_dataset()
-    
     pipeline.split_dataset()
     pipeline.feature_extraction()
     
@@ -48,8 +47,8 @@ def voting_system():
 
 
 # Predict input text and print results, true or false for dimension reduction
-def predict_text(name, model, reduce=False):
-    pipeline.make_predict(model, reduce)
+def predict_text(name, model):
+    pipeline.make_predict(model)
     pipeline.get_result()
     print(name.ljust(40), pipeline.prediction, pipeline.result)
 

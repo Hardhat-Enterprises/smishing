@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 
 # Process dataset
-process_dataset(True)
+process_dataset()
 
 # Train each model from models list
 for name, model in tqdm(models):
@@ -13,7 +13,9 @@ for name, model in tqdm(models):
     start_time = time.time()
     model_pipeline(name, model)
     end_time = time.time()
-    print(f"Training time: {int(end_time - start_time)} seconds")
+    run_time = int(end_time - start_time)
+    print(f"Training time: {run_time} seconds")
+    pipeline.keep_record(name, run_time)
 # Train voting system on all the models
 voting_system()
 

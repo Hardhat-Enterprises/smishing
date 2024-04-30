@@ -1,7 +1,9 @@
 import joblib
 import pandas as pd
 import numpy as np	
+import os
 import re
+from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
 from imblearn.over_sampling import SMOTE
@@ -54,13 +56,13 @@ sample_messages = [
 # Select what models to use
 models = [
     ("Naive Bayes multinomial", MultinomialNB()),
-    #("AdaBoost", AdaBoostClassifier()),
+    ("AdaBoost", AdaBoostClassifier()),
     ("Random Forest", RandomForestClassifier()),
     #("Multi-layer Perceptron", MLPClassifier()),
     ("Naive Bayes multivariate Bernoulli", BernoulliNB()),
-    #("Decision Tree", DecisionTreeClassifier()),
+    ("Decision Tree", DecisionTreeClassifier()),
     ("KNN", KNeighborsClassifier()), 
-    #("Logistic Regression", LogisticRegression()),
+    ("Logistic Regression", LogisticRegression()),
     #("Support Vector", SVC())
 ]
 
@@ -89,6 +91,8 @@ for name, model in models:
         # Train Accuracy, Test Accuracy , Precision, Recall, F1
         'evaluation': None
     }
+
+
 
 class ModelPipeline:
     def __init__(self):
@@ -267,6 +271,7 @@ class ModelPipeline:
         fig.tight_layout()
         plt.show()
 
+
         
 # For model list
     def cross_validation(self):
@@ -278,7 +283,8 @@ class ModelPipeline:
         for name, model in models_info.items():
             model['weight'] = model['cross_val_score'] / total_score
             print(f"Weight for {name}:".ljust(50), model['weight'])
-# For model list
+
+# For voting model
     def train_voting_model(self):
         weights = [models_info[name]['weight'] for name, _ in models]
         self.votingClassifier = VotingClassifier(estimators=models, voting='soft', weights=weights, verbose=True)
@@ -293,7 +299,6 @@ class ModelPipeline:
             'weight': None,
             'evaluation': None
         }
-
 
     def split_predict(self):
         print(self.text_features.shape)
@@ -317,16 +322,16 @@ class ModelPipeline:
         #self.input_message_features = self.pca_reduce(self.input_message_features)
 
     # Make prediction
-    def make_predict(self, model, reduce=False):
+    def make_predict(self, model):
         self.text_features = self.tfidf_vectorizer.transform([self.input_message])
-        if reduce:
-            self.predict_dim_reduce(self.text_features)
+        #if reduce:
+            #self.predict_dim_reduce(self.text_features)
         #self.split_predict()
-        if self.input_message_features != None:
-            features = self.input_message_features
-        else:
-            features = self.text_features
-        self.prediction = model.predict(features)
+        #if self.input_message_features != None:
+            #features = self.input_message_features
+        #else:
+            #features = self.text_features
+        self.prediction = model.predict(self.text_features)
         #self.confidence = model.predict_proba(self.input_message_features)[:, 1]
         return self.prediction
     def print_predict(self):
@@ -344,6 +349,30 @@ class ModelPipeline:
     def print_result(self):
         self.get_result()
         print(self.result)
+
+    def keep_record(self, name, run_time):
+        # Define the columns of your log DataFrame
+        columns = ['run_time', 'model', 'train_accuracy', 'test_accuracy', 'precision', 'recall', 'f1_score',  'cv_score', 'best_param']
+        # Check if the log file already exists
+        if os.path.exists('test_log.csv'):
+            # If it exists, load it into a DataFrame
+            rec = pd.read_csv('test_log.csv')
+        else:
+            # If it doesn't exist, create a new DataFrame
+            rec = pd.DataFrame(columns=columns)
+        # Append a new row to the DataFrame
+        if 'best_param' in models_info[name]:
+            best_param = models_info[name]['best_param']
+        else:
+            best_param = None
+        if 'cross_val_score' in models_info[name]:
+            cross_val_score = models_info[name]['cross_val_score']
+        else:
+            cross_val_score = None   
+        record = [run_time, name, self.train_accuracy, self.test_accuracy, self.precision, self.recall, self.f1, cross_val_score, best_param] 
+        rec.loc[len(rec.index)] = record
+        # Write the DataFrame to a CSV file
+        rec.to_csv('test_log.csv', index=False)
 
 
 
