@@ -1,13 +1,19 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.chaquo.python")
 }
 
 android {
+    ndkVersion = "27.0.11718014"
     namespace = "com.example.smishingdetectionapp"
     compileSdk = 34
 
     defaultConfig {
+        ndk {
+            // On Apple silicon, you can omit x86_64.
+            abiFilters += listOf("arm64-v8a", "x86_64")
+        }
         applicationId = "com.example.smishingdetectionapp"
         minSdk = 24
         targetSdk = 34
@@ -18,7 +24,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-    }
+
+
+   }
 
     buildTypes {
         release {
@@ -26,6 +34,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+//    ndk {
+//        abiFilters("armeabi-v7a", "x86")
+//    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -45,10 +56,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/python")
+    }
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -73,4 +87,5 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+
 }
