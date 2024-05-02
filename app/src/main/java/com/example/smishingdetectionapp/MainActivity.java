@@ -2,32 +2,23 @@ package com.example.smishingdetectionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
-import android.webkit.WebView;
+import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
-
+    public TextView totalcount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +31,17 @@ public class MainActivity extends AppCompatActivity {
         nav.setOnItemSelectedListener(menuItem -> { //selected item listener
 
             int id = menuItem.getItemId();
-            if(id == R.id.nav_home){
+            if (id == R.id.nav_home) {
+
                 return true;
-            }
-            else if(id == R.id.nav_news) {
+            } else if (id == R.id.nav_news) {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
-            }
-            else if(id == R.id.nav_settings){
+            } else if (id == R.id.nav_settings) {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
             }
@@ -74,24 +64,16 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
+        //start database connection
+        DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.open();
+        //setting counter from result
+        totalcount = findViewById(R.id.total_counter);
+        totalcount.setText(""+databaseAccess.getCounter());
+        //closing the connection
+        databaseAccess.close();
 
 
-
-        /*setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
-        // NavigationView navigationView = binding.navView;
-        // menu should be considered as top level destinations.
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);*/
     }
 
     @Override
