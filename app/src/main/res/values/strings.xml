@@ -31,6 +31,7 @@
     <string name="account_page">Account</string>
     <string name="report_page">Report Smishing</string>
     <string name="filtering_page">Smishing Rules</string>
+    <string name="debug">Debug</string>
 
     <!-- Main Dashboard Strings -->
     <string name="detectionsBtn">Detections</string>
@@ -79,6 +80,43 @@
     <string name="info_icon">info</string>
     <string name="new_icon">info</string>
     <string name="time_icon">info</string>
+
+    <!--Notification Page Strings-->
+    <string name="notification_header">Notifications</string>
+    <string name="news_notification_title">News Updates</string>
+    <string name="smishing_detection_notification_title">Smishing Detections</string>
+    <string name="spam_detection_notification_title">Spam Detections</string>
+    <string name="password_security_check">Password Security Checks</string>
+    <string name="backup_reminder">Backup Reminders</string>
+    <string name="update_notifications">Update Notifications</string>
+    <string name="incident_reports">Incident Reports</string>
+    <string name="open_notification_settings">Device Notification Settings</string>
+    <string name="detection_notification_header">Detection Notifications</string>
+    <string name="push_notification_header">Push Notifications</string>
+    <string name="system_maintenance_header">System Maintenance Notifications</string>
+
+
+    <!-- NotificationHelper Strings -->
+    <string name="detection_channel_name">Detection Alerts</string>
+    <string name="detection_channel_id">detections_channel</string>
+    <string name="detection_channel_desc">Detection Notifications Channel</string>
+
+    <string name="push_channel_name">Push Notifications</string>
+    <string name="push_channel_id">push_channel</string>
+    <string name="push_channel_desc">Push Notifications Channel</string>
+
+    <string name="system_channel_name">System Notifications</string>
+    <string name="system_channel_id">system_channel</string>
+    <string name="system_channel_desc">system Notifications Channel</string>
+
+    <string name="smish_pref_key">smish_notif_pref</string>
+    <string name="spam_pref_key">spam_notif_pref</string>
+    <string name="news_pref_key">news_notif_pref</string>
+    <string name="incident_pref_key">incident_notif_pref</string>
+    <string name="update_pref_key">update_notif_pref</string>
+    <string name="backup_pref_key">backup_notif_pref</string>
+    <string name="password_pref_key">password_notif_pref</string>
+
 
 
     <!-- Settings Activity Title EXAMPLE-->

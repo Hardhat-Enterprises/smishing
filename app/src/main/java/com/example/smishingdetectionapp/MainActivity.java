@@ -1,6 +1,9 @@
 package com.example.smishingdetectionapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+
+
         //Debug Page Button
         Button debug_btn = findViewById(R.id.debug_btn);
         debug_btn.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
+
         //start database connection
         DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
@@ -72,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         totalcount.setText(""+databaseAccess.getCounter());
         //closing the connection
         databaseAccess.close();
-
 
     }
 

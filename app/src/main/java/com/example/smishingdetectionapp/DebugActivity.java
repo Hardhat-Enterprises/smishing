@@ -1,31 +1,28 @@
 package com.example.smishingdetectionapp;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smishingdetectionapp.notifications.NotificationHelper;
+import com.example.smishingdetectionapp.notifications.NotificationType;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DebugActivity extends AppCompatActivity {
 
     BottomNavigationView nav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
-        /*if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.nav_settings, new SettingsActivity())
-                    .commit();
-        }
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }*/
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
@@ -57,8 +54,9 @@ public class DebugActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //create test notification
+                NotificationType smishDetectionAlert = NotificationType.createSmishDetectionAlert(getApplicationContext());
                 NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                notificationHelper.createNotification("Basic Title", "Basic Message");
+                notificationHelper.createNotification(smishDetectionAlert,"SMISHING MESSAGE TEST", "SMISHY MESSAGE");
             }
         });
 
@@ -68,8 +66,10 @@ public class DebugActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //create test notification
+                NotificationType spamDetectionAlert = NotificationType.createSpamDetectionAlert(getApplicationContext());
                 NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                notificationHelper.createNotification("Expand Test", "Details", "Notifications provide short, timely information about events in your app while it isn't in use. This document shows you how to create a notification with various features. For an introduction to how notifications appear on Android, see the Notifications overview. For sample code that uses notifications, see the People sample on GitHub.");
+                notificationHelper.createNotification(spamDetectionAlert,"SPAM MESSAGE TEST","SPAMMY MESSAGE");
+
             }
         });
 
@@ -78,15 +78,10 @@ public class DebugActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //create test notification
+                NotificationType newsAlert = NotificationType.createNewsAlert(getApplicationContext());
                 NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                notificationHelper.createNotification("Test Title");
+                notificationHelper.createNotification(newsAlert,"NEWS NOTIFICATION","SOME NEWS");
             }
         });
 
-   /* class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        }
-    }*/
     }}

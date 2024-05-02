@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,6 +20,9 @@
         android:theme="@style/Theme.SmishingDetectionApp"
         tools:targetApi="31">
         <activity
+            android:name=".NotificationActivity"
+            android:exported="false" />
+        <activity
             android:name=".DebugActivity"
             android:exported="false" />
         <activity
@@ -27,7 +33,13 @@
             android:exported="false" />
         <activity
             android:name=".DetectionsActivity"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".NewsActivity"
             android:exported="false" />
@@ -39,7 +51,8 @@
             android:exported="false" />
         <activity
             android:name=".SettingsActivity"
-            android:exported="false" /> <!-- Set LoginActivity as the launcher activity -->
+            android:exported="false" />
+        <!-- Set LoginActivity as the launcher activity -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
@@ -48,12 +61,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- MainActivity is not the launcher anymore -->
+        </activity>
+        <!-- MainActivity is not the launcher anymore -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar">
         </activity>
+
     </application>
 
 </manifest>
