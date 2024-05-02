@@ -27,7 +27,13 @@
             android:exported="false" />
         <activity
             android:name=".DetectionsActivity"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".NewsActivity"
             android:exported="false" />
@@ -56,8 +62,6 @@
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar">
         </activity>
-
-        <receiver android:name="com.example.smishingdetectionapp.notifications.NotificationActionReceiver" />
 
     </application>
 
