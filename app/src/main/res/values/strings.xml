@@ -79,20 +79,40 @@
     <!--Notification Page Strings-->
     <string name="notification_header">Notifications</string>
     <string name="news_notification_title">News Updates</string>
-    <string name="smishing_detection_notification_title">Detection Alerts</string>
+    <string name="smishing_detection_notification_title">Smishing Detections</string>
+    <string name="spam_detection_notification_title">Spam Detections</string>
     <string name="password_security_check">Password Security Checks</string>
     <string name="backup_reminder">Backup Reminders</string>
     <string name="update_notifications">Update Notifications</string>
-    <string name="suspicious_activity_alerts">Suspicious Activity Alerts</string>
     <string name="incident_reports">Incident Reports</string>
     <string name="open_notification_settings">Device Notification Settings</string>
-    <string name="security_alert_header">Security Alerts</string>
-    <string name="system_maintenance_header">System Maintenance</string>
+    <string name="detection_notification_header">Detection Notifications</string>
+    <string name="push_notification_header">Push Notifications</string>
+    <string name="system_maintenance_header">System Maintenance Notifications</string>
 
 
     <!-- NotificationHelper Strings -->
+    <string name="detection_channel_name">Detection Alerts</string>
+    <string name="detection_channel_id">detections_channel</string>
+    <string name="detection_channel_desc">Detection Notifications Channel</string>
 
-    <string name="long_string_test">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="push_channel_name">Push Notifications</string>
+    <string name="push_channel_id">push_channel</string>
+    <string name="push_channel_desc">Push Notifications Channel</string>
+
+    <string name="system_channel_name">System Notifications</string>
+    <string name="system_channel_id">system_channel</string>
+    <string name="system_channel_desc">system Notifications Channel</string>
+
+    <string name="smish_pref_key">smish_notif_pref</string>
+    <string name="spam_pref_key">spam_notif_pref</string>
+    <string name="news_pref_key">news_notif_pref</string>
+    <string name="incident_pref_key">incident_notif_pref</string>
+    <string name="update_pref_key">update_notif_pref</string>
+    <string name="backup_pref_key">backup_notif_pref</string>
+    <string name="password_pref_key">password_notif_pref</string>
+
+
 
     <!-- Settings Activity Title EXAMPLE-->
     <string name="title_activity_settings">SettingsActivity</string>
