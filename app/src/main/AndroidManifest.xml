@@ -36,7 +36,7 @@
         </activity>
 
         <activity
-            android:name=".NewsActivity"
+            android:name=".news.NewsAdapter$NewsActivity"
             android:exported="false" />
         <activity
             android:name=".ReportingActivity"

@@ -1,16 +1,13 @@
 package com.example.smishingdetectionapp;
 
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.notifications.NotificationHelper;
 import com.example.smishingdetectionapp.notifications.NotificationType;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,7 +34,7 @@ public class DebugActivity extends AppCompatActivity {
                 return true;
             }
             else if(id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                startActivity(new Intent(getApplicationContext(), NewsAdapter.NewsActivity.class));
                 finish();
                 return true;
             }

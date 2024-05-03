@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.widget.Button;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             else if(id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                startActivity(new Intent(getApplicationContext(), NewsAdapter.NewsActivity.class));
                 overridePendingTransition(0,0);
                 finish();
                 return true;
