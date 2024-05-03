@@ -34,6 +34,9 @@
             android:background="@drawable/buttons_rounded"
             android:text="@string/detectionsBtn"
             android:textSize="20sp"
+            android:drawableLeft="@drawable/bell_svg"
+            android:paddingStart="105dp"
+            android:paddingEnd="125dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -70,7 +73,7 @@
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/buttons_rounded"
+            android:background="@drawable/counter_buttons"
             app:layout_constraintBottom_toTopOf="@+id/detections_btn"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -80,7 +83,7 @@
             android:layout_height="100dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/buttons_rounded"
+            android:background="@drawable/counter_buttons"
             app:layout_constraintBottom_toTopOf="@+id/detections_btn"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -104,7 +107,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:text="counter"
+            android:text="0"
+            android:textColor="#000000"
+            android:textSize="30dp"
             app:layout_constraintStart_toStartOf="@+id/new_detections"
             app:layout_constraintTop_toTopOf="@+id/new_detections" />
 
@@ -114,7 +119,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:text="counter"
+            android:text="0"
+            android:textColor="#000000"
+            android:textSize="30dp"
             app:layout_constraintStart_toStartOf="@+id/total_detections"
             app:layout_constraintTop_toTopOf="@+id/total_detections" />
 
@@ -125,6 +132,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginBottom="4dp"
             android:text="@string/new_detectionsTxt"
+            android:textColor="#000000"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/new_detections"
             app:layout_constraintStart_toStartOf="@+id/new_detections" />
@@ -136,6 +144,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginBottom="4dp"
             android:text="@string/total_detectionsTxt"
+            android:textColor="#000000"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/total_detections"
             app:layout_constraintStart_toStartOf="@+id/total_detections" />
@@ -180,7 +189,7 @@
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toEndOf="@+id/new_detections"
             app:layout_constraintTop_toTopOf="@+id/new_detections"
-            app:srcCompat="@drawable/icon_new"
+            app:srcCompat="@drawable/new_5_svg"
             android:contentDescription="@string/new_icon"
             app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
 

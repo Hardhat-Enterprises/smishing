@@ -72,6 +72,11 @@
     <string name="pw2_register_label">Re-enter password</string>
     <string name="register_btn">Register</string>
 
+    <!-- Detection Page Strings -->
+    <string name="pnTitle">Phone Number: </string>
+    <string name="msgTitle">Message:</string>
+    <string name="dateTitle">Date: </string>
+
     <string name="info_icon">info</string>
     <string name="new_icon">info</string>
     <string name="time_icon">info</string>

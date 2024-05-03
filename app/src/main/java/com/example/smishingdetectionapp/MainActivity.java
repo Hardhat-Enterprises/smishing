@@ -17,9 +17,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
 
     public MainActivity() {
@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         nav.setOnItemSelectedListener(menuItem -> { //selected item listener
 
             int id = menuItem.getItemId();
-            if(id == R.id.nav_home){
+            if (id == R.id.nav_home) {
+
                 return true;
             }
             else if(id == R.id.nav_news) {
@@ -54,10 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(0,0);
                 finish();
                 return true;
-            }
-            else if(id == R.id.nav_settings){
+            } else if (id == R.id.nav_settings) {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
             }
@@ -77,6 +77,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, DetectionsActivity.class));
             finish();
         });
+
+
+        //start database connection
+        DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.open();
+        //setting counter from result
+        totalcount = findViewById(R.id.total_counter);
+        totalcount.setText(""+databaseAccess.getCounter());
+        //closing the connection
+        databaseAccess.close();
+
     }
 
     private boolean areNotificationsEnabled() {
