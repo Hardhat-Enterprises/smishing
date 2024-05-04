@@ -47,11 +47,15 @@ public class NewsActivity extends AppCompatActivity implements SelectListener {
                 finish();
                 return true;
             } else if (id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+
+                return true;
+            } else if (id == R.id.nav_settings) {
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
-            } else return id == R.id.nav_settings;
+            }
+            return false;
         });
 
         NewsRequestManager manager = new NewsRequestManager(this); // Create an instance of NewsRequestManager

@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smishingdetectionapp.MainActivity;
+import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.SettingsActivity;
 import com.example.smishingdetectionapp.news.Models.NewsAPIResponse;
 import com.example.smishingdetectionapp.news.Models.NewsHeadlines;
-import com.example.smishingdetectionapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -85,7 +86,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder>{
 
             BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
-            nav.setSelectedItemId(R.id.nav_settings);
+            nav.setSelectedItemId(R.id.nav_news);
 
             nav.setOnItemSelectedListener(menuItem -> {
 
@@ -96,11 +97,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder>{
                     finish();
                     return true;
                 } else if (id == R.id.nav_news) {
-                    startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                    return true;
+                } else if (id == R.id.nav_settings) {
+                    startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                     overridePendingTransition(0, 0);
                     finish();
                     return true;
-                } else return id == R.id.nav_settings;
+                }
+                return false;
             });
 
             NewsRequestManager manager = new NewsRequestManager(this);

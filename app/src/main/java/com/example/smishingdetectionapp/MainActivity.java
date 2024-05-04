@@ -2,21 +2,21 @@ package com.example.smishingdetectionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
-
-import com.example.smishingdetectionapp.news.NewsAdapter;
-import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
+import com.example.smishingdetectionapp.news.NewsAdapter;
+import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
         //setting counter from result
+        TextView totalcount;
         totalcount = findViewById(R.id.total_counter);
         totalcount.setText(""+databaseAccess.getCounter());
         //closing the connection
