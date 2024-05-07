@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="DebugActivity">
-        <State />
-      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -13,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_8_API_UpsideDownCakePrivacySandbox.avd" />
+                  <value value="C:\Users\Excalibur 2.0\.android\avd\Copy_of_Pixel_3a_API_34_extension_level_7_x86_64.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-30T08:47:38.578531933Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-07T09:04:44.446906200Z" />
         </State>
       </entry>
     </value>

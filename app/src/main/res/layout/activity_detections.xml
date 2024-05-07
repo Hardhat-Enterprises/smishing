@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/hardhat_logo" />
 
     <TextView
-        android:id="@+id/DetectionsText"
+        android:id="@+id/AccountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -33,7 +33,7 @@
         android:textColor="@color/navy_blue"/>
 
     <ImageButton
-        android:id="@+id/detections_back"
+        android:id="@+id/account_back"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
@@ -44,7 +44,6 @@
         app:srcCompat="@drawable/back_button" />
 
     <ScrollView
-        android:id="@+id/detectionsList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -55,20 +54,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-            <ListView
-                android:id="@+id/lvDetectionsList"
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
-                android:layout_height="530dp" />
-
-
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:text="Phone number\nText message\nDate"
+                android:textSize="20sp"/>
+        </LinearLayout>
     </ScrollView>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

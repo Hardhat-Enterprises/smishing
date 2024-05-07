@@ -4,12 +4,46 @@ plugins {
     id("com.chaquo.python")
 }
 
+chaquopy {
+    defaultConfig {
+        version = "3.8"
+        buildPython("C:/Users/Excalibur 2.0/AppData/Local/Programs/Python/Python38-32/python.exe")
+        //buildPython("C:/Users/Excalibur 2.0/AppData/Local/Programs/Python/Python38-32/py.exe", "-3.8")
+//        pip{
+//            install("pandas")
+//            install("pandas")
+//            install("scikit-learn")
+//            install("pickle")
+//        }
+    }
+    productFlavors { }
+    sourceSets {
+        getByName("main") {
+            srcDir("src/main/python")
+        }
+    }
+}
+
 android {
+
     ndkVersion = "27.0.11718014"
     namespace = "com.example.smishingdetectionapp"
     compileSdk = 34
 
     defaultConfig {
+        sourceSets {
+            getByName("main").java.srcDirs("src/main/python")
+        }
+
+//        chaquopy {
+//            defaultConfig {
+//                pip {
+//                    install("numpy")
+//                    install("pandas==1.3.2")
+//                }
+//            }
+//        }
+
         ndk {
             // On Apple silicon, you can omit x86_64.
             abiFilters += listOf("arm64-v8a", "x86_64")
@@ -34,9 +68,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-//    ndk {
-//        abiFilters("armeabi-v7a", "x86")
-//    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -57,9 +88,6 @@ android {
         }
     }
 
-    sourceSets {
-        getByName("main").java.srcDirs("src/main/python")
-    }
 }
 
 dependencies {
@@ -80,7 +108,6 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.activity)
-    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -88,8 +115,5 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
-}
 
+}

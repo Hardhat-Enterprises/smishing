@@ -3,8 +3,6 @@ package com.example.smishingdetectionapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +11,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class DetectionsActivity extends AppCompatActivity {
-
-    private ListView detectionLV;
-    DatabaseAccess databaseAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +24,11 @@ public class DetectionsActivity extends AppCompatActivity {
         });
 
         //Back button to go back to main dashboard
-        ImageButton detections_back = findViewById(R.id.detections_back);
+        ImageButton detections_back = findViewById(R.id.account_back);
         detections_back.setOnClickListener(v -> {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
-
-        //Defining and populating listview from database.
-        detectionLV = findViewById(R.id.lvDetectionsList);
-        databaseAccess = new DatabaseAccess(getApplicationContext());
-        databaseAccess.open();
-        final SimpleCursorAdapter simpleCursorAdapter = databaseAccess.populateDetectionList();
-        detectionLV.setAdapter(simpleCursorAdapter);
-        databaseAccess.close();
 
     }
 
