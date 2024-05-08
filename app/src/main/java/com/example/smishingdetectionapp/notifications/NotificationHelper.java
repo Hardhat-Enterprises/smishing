@@ -16,7 +16,7 @@ import com.example.smishingdetectionapp.DetectionsActivity;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.smishingdetectionapp.news.NewsAdapter;
+import com.example.smishingdetectionapp.NewsActivity;
 import com.example.smishingdetectionapp.R;
 
 public class NotificationHelper {
@@ -78,7 +78,7 @@ public class NotificationHelper {
         if (type.getChannelID().equals(mContext.getString(R.string.push_channel_id)))
         {
             // this intent opens the update activity upon action
-            Intent intent = new Intent(mContext, NewsAdapter.NewsActivity.class);
+            Intent intent = new Intent(mContext, NewsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
