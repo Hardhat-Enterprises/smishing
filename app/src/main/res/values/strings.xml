@@ -46,6 +46,35 @@
     <string name="delete_accountBtn">Delete account</string>
     <string name="sign_outBtn">Sign out</string>
 
+    <!-- Password Change Window Strings -->
+    <string name="change_password_page">Change Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm Password</string>
+
+    <!-- Email Change Window Strings -->
+    <string name="change_email_page">Change Email</string>
+    <string name="new_email">New Email</string>
+    <string name="confirm_new_email">Confirm Email</string>
+
+    <!-- Sign Out Window Strings -->
+    <string name="sign_out_page">Sign Out</string>
+    <string name="confirmSOTxt">Do you want to sign out?</string>
+    <string name="cancelSOBtn">Cancel</string>
+
+    <!-- Delete Account Window Strings -->
+    <string name="delete_acc_page">Delete Account</string>
+    <string name="confirmDelTxt">Are you sure?</string>
+    <string name="confirmPNBtn">Change Phone Number</string>
+    <string name="confirmPN">Enter your phone number:</string>
+
+    <!-- Change Phone Number Window Strings -->
+    <string name="phone_number_page">Change Phone Number</string>
+    <string name="confirm_PNTxt">New number must be associated with this phone.</string>
+    <string name="cancelDelBtn">Cancel</string>
+    <string name="confirmDelBtn">Yes</string>
+    <string name="confirmPW">Enter your password:</string>
+
     <!-- Report Page Strings -->
     <string name="phone_number">Phone Number</string>
     <string name="report_message_prompt">Smishing message</string>
@@ -65,16 +94,16 @@
     <string name="set_pn_btn">Set numbers</string>
 
     <!-- Register Page Strings -->
-    <string name="name_label">Full name</string>
+    <string name="name_label">Full Name</string>
     <string name="email_label">Email</string>
-    <string name="pn_register_label">Phone number</string>
+    <string name="pn_register_label">Phone Number</string>
     <string name="pw_register_label">Password</string>
-    <string name="pw2_register_label">Re-enter password</string>
+    <string name="pw2_register_label">Confirm Password</string>
     <string name="register_btn">Register</string>
 
     <!-- Detection Page Strings -->
     <string name="pnTitle">Phone Number: </string>
-    <string name="msgTitle">Message:</string>
+    <string name="msgTitle">Message: </string>
     <string name="dateTitle">Date: </string>
 
     <string name="info_icon">info</string>
