@@ -9,11 +9,13 @@ from keras.models import Model
 from keras.layers import LSTM, Activation, Dense, Dropout, Input, Embedding
 from keras.optimizers import RMSprop
 from keras.preprocessing import text
-#from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.utils import to_categorical
 from keras.callbacks import EarlyStopping
 from utils import *
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing import sequence
+from keras.models import Sequential
 
 class LSTMClassifier:
     def __init__(self):
@@ -91,7 +93,7 @@ print("Class distribution after balancing:", Counter(y_train_resampled))
 # Update as X train features and y train
 X_train_features, y_train = X_train_resampled, y_train_resampled
 
-'''
+
 # Create input output
 # Process label
 X = df.v2
@@ -102,7 +104,7 @@ Y = Y.reshape(-1,1)
 
 # Split data
 X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.15)
-'''
+
 
 # Process data
 max_words = 1000
