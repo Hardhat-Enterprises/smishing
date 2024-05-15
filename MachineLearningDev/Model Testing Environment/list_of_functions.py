@@ -12,8 +12,11 @@ pipeline = ModelPipeline()
 #models_info: - name, model, param_grid, best_params, grid_score, cross_val_score, weight, evaluation
 
 # Load and process the dataset, true or false for dimensionality reduction
-def process_dataset(reduce=False):
-    pipeline.load_dataset()
+def process_dataset(reduce=False, dataset_path='DatasetCombined.csv'):
+    pipeline.load_dataset(dataset_path)
+    # If using for url enable it
+    #pipeline.extract_urls()
+    # If for url insert 'LINK' in split_dataset
     pipeline.split_dataset()
     pipeline.feature_extraction()
     
@@ -21,13 +24,17 @@ def process_dataset(reduce=False):
     if reduce:
         # reduce dimensionality optional
         pipeline.dimensionality_reduction()    
+
     pipeline.balance_data()
+
+    #pipeline.split_text_and_link()
     return pipeline.X_train_features, pipeline.X_test_features, pipeline.y_train, pipeline.y_test
 
 # Train the models
 def tune_train_model(name, model):
     pipeline.param_tuning(name, model)
     pipeline.train_model(name, model)
+    return models_info[name]['model']
 
 # Evaluate the model: accuracy, precision, recall, f1-score
 # pipeline.evaluate_model(model)
@@ -36,6 +43,7 @@ def tune_train_model(name, model):
 def model_pipeline(name, model):
     tune_train_model(name, model)
     pipeline.evaluate_model(name, model)
+    return model
 
 
 # Multi models cross-validation and voting system
@@ -44,6 +52,7 @@ def voting_system():
     pipeline.cross_validation()
     pipeline.train_voting_model()
     pipeline.evaluate_model('voting', pipeline.votingClassifier)
+    return pipeline.votingClassifier
 
 
 # Predict input text and print results, true or false for dimension reduction

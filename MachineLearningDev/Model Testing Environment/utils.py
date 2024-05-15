@@ -53,7 +53,7 @@ models = [
     ("Decision Tree", DecisionTreeClassifier()),
     ("KNN", KNeighborsClassifier()), #resource intensive
     ("Logistic Regression", LogisticRegression()),
-    #("Support Vector", SVC()) #quite slow
+    #("Support Vector", SVC()) #quite slow not tested much
 ]
 
 param_grid = {

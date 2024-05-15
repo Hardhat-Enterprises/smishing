@@ -236,10 +236,10 @@ def visualise_data():
         bars = ax.bar(x + i * width, scores, width, label=score_names[i])
         for bar in bars:
             yval = bar.get_height()
-            ax.text(bar.get_x() + bar.get_width()/2, yval + 0.01, round(yval, 3), ha='center', va='bottom', fontsize=5)
+            ax.text(bar.get_x() + bar.get_width()/2, yval + 0.01, round(yval, 3), ha='center', va='bottom', fontsize=5, rotation=45)
     ax.set_xlabel('Models')
     ax.set_ylabel('Scores')
-    ax.set_title('Model comparison')
+    ax.set_title(f'{os.path.basename(__file__)} Model comparison')
     ax.set_xticks(x)
     ax.set_xticklabels([name for name in models_info])
     ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
