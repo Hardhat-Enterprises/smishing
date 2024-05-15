@@ -129,10 +129,14 @@ class ModelPipeline:
         self.X_test, self.X_valid, self.y_test, self.y_valid = train_test_split(X_temp, y_temp, test_size=0.5, random_state=100)
         return self.X_train, self.X_test, self.y_train, self.y_test, self.X_valid, self.y_valid
     
-    def feature_extraction(self):
+    def feature_extraction(self, url=False):
         # Feature extraction using TF-IDF
         self.tfidf_vectorizer = None
-        self.tfidf_vectorizer = TfidfVectorizer(min_df=1, stop_words='english', lowercase=True)
+        if url:
+            # For url
+            self.tfidf_vectorizer = TfidfVectorizer(token_pattern=r'\b\w+\b', ngram_range=(1, 3), lowercase=False)
+        else:
+            self.tfidf_vectorizer = TfidfVectorizer(min_df=1, stop_words='english', lowercase=True)
         self.X_train_features = self.tfidf_vectorizer.fit_transform(self.X_train)
         self.X_test_features = self.tfidf_vectorizer.transform(self.X_test)
         self.X_valid_features = self.tfidf_vectorizer.transform(self.X_valid)

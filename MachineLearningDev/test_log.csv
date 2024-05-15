@@ -1,0 +1,2 @@
+run_time,model,train_accuracy,test_accuracy,precision,recall,f1_score,cv_score,best_param,comments
+1,Naive Bayes multinomial,0.9232460458095426,0.9541569541569541,0.9580493766229617,0.9541569541569541,0.9553670345225236,,"{'alpha': 0.1, 'fit_prior': False}",separate url

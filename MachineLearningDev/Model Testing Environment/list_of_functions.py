@@ -12,13 +12,13 @@ pipeline = ModelPipeline()
 #models_info: - name, model, param_grid, best_params, grid_score, cross_val_score, weight, evaluation
 
 # Load and process the dataset, true or false for dimensionality reduction
-def process_dataset(reduce=False, dataset_path='DatasetCombined.csv'):
+def process_dataset(url=False, reduce=False, dataset_path='DatasetCombined.csv'):
     pipeline.load_dataset(dataset_path)
     # If using for url enable it
     #pipeline.extract_urls()
     # If for url insert 'LINK' in split_dataset
     pipeline.split_dataset()
-    pipeline.feature_extraction()
+    pipeline.feature_extraction(url)
     
     #pipeline.merge_url_feature()
     if reduce:
