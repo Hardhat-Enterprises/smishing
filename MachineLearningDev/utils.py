@@ -9,28 +9,22 @@ import seaborn as sns
 from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.pipeline import Pipeline
-from collections import Counter
+from collections import Counter, defaultdict
 from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV, cross_val_score
 from sklearn.ensemble import VotingClassifier
-from collections import defaultdict
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import accuracy_score
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.datasets import load_digits
 from joblib import parallel_backend
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, recall_score, make_scorer
 from sklearn.decomposition import PCA, TruncatedSVD, NMF
-from sklearn.decomposition import TruncatedSVD
 from scipy.sparse import csr_matrix, hstack, vstack
 from matplotlib import colormaps
-from colorspacious import cspace_converter
-import matplotlib as mpl
 # Models
 from sklearn.neighbors import KNeighborsClassifier 
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-#for gpu acceleration
+#for gpu acceleration, not working yet
 #from cuml.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
@@ -45,25 +39,21 @@ sample_messages = [
     "We're unable to deliver your online package due to an address error. Please click promptly to update the address for re-delivery. https://ausorriso.xyz/i",
     "TODAY ONLY 40% off traditional and premium pizzas* ORDER NOW dominoes.au/7MKXrbmdRk T&Cs apply. To opt out send STOP to 0485865365",
     "Chemist Warehouse Fountain Gate sent you a Slyp receipt. View it here: https://reciepts.slyp.com.au/WRA-b94511379edf4de481438e-f4a6e952c0",
-    "Your parcel cannot be delivered due to an incorrect address. Please update your details https://postmab.life/au",
-    "Your $5.83 road toll bill is overdue, please process it online as soon as possible to avoid facing hefty fines https://linxaui.life/au",
-    "Your parcel cannot be delivered due to an incorrect address. Please update your details https://postmab.life/au",
-    "AusPost:Your shipping address is invalid, Post Shop delivery has be deliveries have been stopped, more details:https://aupost.mypoca.services",
     "[DiDi]$15 off next 2 rides!* Savings automatically applied on your next ride request. Until Sunday. https://dd.me/k3M7s23 Opt out: https://dd.me/b6kHCl5",
     "JUST ANNOUNCED Big Apple $750 Scholarship Study in New York State (USA) this July. 4-week program designed for Australian Uni students! www.cisaustalia.com.au"
 ]
 
-# Select what models to use
+# Select what models to use: comment out the ones you don't want to use, no need to change the param_grid etc.
 models = [
-    ("Naive Bayes multinomial", MultinomialNB()),
+    ("Naive Bayes multinomial", MultinomialNB()), #naive bayes ones are quick
     ("AdaBoost", AdaBoostClassifier()),
-    ("Random Forest", RandomForestClassifier()),
-    #("Multi-layer Perceptron", MLPClassifier()),
+    ("Random Forest", RandomForestClassifier()), #good accurcies
+    #("Multi-layer Perceptron", MLPClassifier()), #not working
     ("Naive Bayes multivariate Bernoulli", BernoulliNB()),
     ("Decision Tree", DecisionTreeClassifier()),
-    ("KNN", KNeighborsClassifier()), 
+    ("KNN", KNeighborsClassifier()), #resource intensive
     ("Logistic Regression", LogisticRegression()),
-    #("Support Vector", SVC())
+    #("Support Vector", SVC()) #quite slow
 ]
 
 param_grid = {
@@ -75,7 +65,7 @@ param_grid = {
     "Decision Tree": {'max_depth': [None, 10, 20, 50]},
     "KNN": {'n_neighbors': [3, 5, 10], 'weights': ['uniform', 'distance']},
     "Logistic Regression": {'C': [0.1, 1.0, 10.0], 'penalty': ['l2'], 'max_iter': [1000], 'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga']},
-    "Support Vector": {'C': [0.1, 1.0, 10.0], 'gamma': [0.1, 1.0, 10.0], 'random_state': [42]}
+    "Support Vector": {'probability':[True],'C': [0.1, 1.0, 10.0], 'gamma': [0.1, 1.0, 10.0], 'random_state': [42]}
 }
 
 models_info = {}
@@ -109,8 +99,7 @@ class ModelPipeline:
         self.model = None
 
 
-    def load_dataset(self):
-        dataset_path = 'DatasetCombined.csv'
+    def load_dataset(self, dataset_path='DatasetCombined.csv'):
         self.df = pd.read_csv(dataset_path, encoding='ISO-8859-1')
         # Create Dictionary
         map_label = {'spam': 2, 'smishing': 1, 'ham': 0}
@@ -130,9 +119,15 @@ class ModelPipeline:
         # Split data into features (X) and labels (y)
         X = self.df[column]
         y = self.df['LABEL']
+        if column == 'LINK':
+            self.df = self.df.dropna(subset=['LINK'])
         # Split data into training and testing sets
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=100)
-        return self.X_train, self.X_test, self.y_train, self.y_test
+        # Split data into training set and temporary set
+        self.X_train, X_temp, self.y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=100)
+        # Split temporary set into testing set and validation set
+        self.X_test, self.X_valid, self.y_test, self.y_valid = train_test_split(X_temp, y_temp, test_size=0.5, random_state=100)
+        return self.X_train, self.X_test, self.y_train, self.y_test, self.X_valid, self.y_valid
     
     def feature_extraction(self):
         # Feature extraction using TF-IDF
@@ -140,11 +135,13 @@ class ModelPipeline:
         self.tfidf_vectorizer = TfidfVectorizer(min_df=1, stop_words='english', lowercase=True)
         self.X_train_features = self.tfidf_vectorizer.fit_transform(self.X_train)
         self.X_test_features = self.tfidf_vectorizer.transform(self.X_test)
-        return self.X_train_features, self.X_test_features
+        self.X_valid_features = self.tfidf_vectorizer.transform(self.X_valid)
+        return self.tfidf_vectorizer
         
-    def split_text_and_link(self):
+    def split_text_and_link(self):# I think this has problem as vectorizer updated?
         self.split_dataset("TEXT")
-        self.text_X_train_features, self.text_X_test_features = self.feature_extraction()
+        self.text_X_train_features, self.text_X_test_features 
+        self.text_vectorizer= self.feature_extraction()
         self.extract_urls()
         self.split_dataset("LINK")
         self.url_X_train_features, self.url_X_test_features = self.feature_extraction()
@@ -176,7 +173,6 @@ class ModelPipeline:
 
         
     def predict_dim_reduce(self, feature_input):
-
         reduced = self.nmf.transform(feature_input)
         return reduced
             
@@ -232,6 +228,7 @@ class ModelPipeline:
         model.set_params(**best_parameters)
         model.fit(self.X_train_features, self.y_train)
         print(f"{name} trained with best parameters!")
+        return model
 
     
     # Evaluate the model
@@ -241,7 +238,7 @@ class ModelPipeline:
         self.precision = precision_score(self.y_test, model.predict(self.X_test_features), average='weighted')
         self.recall = recall_score(self.y_test, model.predict(self.X_test_features), average='weighted')
         self.f1 = f1_score(self.y_test, model.predict(self.X_test_features), average='weighted')
-        models_info[name]={'evaluation' : [self.train_accuracy, self.test_accuracy, self.precision, self.recall, self.f1]}
+        models_info[name]['evaluation']=[self.train_accuracy, self.test_accuracy, self.precision, self.recall, self.f1]
         print('Accuracy on training data: '.ljust(30), self.train_accuracy)
         print('Accuracy on test data: '.ljust(30), self.test_accuracy)
         print('Precision: '.ljust(30), self.precision)
@@ -261,22 +258,25 @@ class ModelPipeline:
             bars = ax.bar(x + i * width, scores, width, label=score_names[i])  #color=colors[i] Use the specified color
             for bar in bars:
                 yval = bar.get_height()
-                ax.text(bar.get_x() + bar.get_width()/2, yval + 0.01, round(yval, 3), ha='center', va='bottom', fontsize=5)
+                ax.text(bar.get_x() + bar.get_width()/2, yval + 0.01, round(yval, 3), ha='center', va='bottom', fontsize=5, rotation=45)
         ax.set_xlabel('Models')
         ax.set_ylabel('Scores')
-        ax.set_title('Model comparison')
+        ax.set_title(f'{os.path.basename(__file__)}Model comparison')
         ax.set_xticks(x)
         ax.set_xticklabels([name for name in models_info])
-        ax.legend()
+        ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
+          fancybox=True, shadow=True, ncol=5)
         fig.tight_layout()
         plt.show()
 
 
         
 # For model list
+## Key decision here: scoring system to use: recall (i.e. out of all positives how much is it able to predict) default is 'accuracy'
     def cross_validation(self):
+        recall_scorer = make_scorer(recall_score, average=None, labels=[1])
         for name, model in models:
-            scores = cross_val_score(model, self.X_train_features, self.y_train, cv=5, scoring='accuracy')
+            scores = cross_val_score(model, self.X_train_features, self.y_train, cv=5, scoring=recall_scorer, n_jobs=-1)
             models_info[name]['cross_val_score'] = scores.mean()
             print(f"Cross-validation scores for {name}: ".ljust(65), models_info[name]['cross_val_score'])
         total_score = sum(model['cross_val_score'] for model in models_info.values())
@@ -285,9 +285,10 @@ class ModelPipeline:
             print(f"Weight for {name}:".ljust(50), model['weight'])
 
 # For voting model
+## Key decision here: voting system to use: soft voting.
     def train_voting_model(self):
         weights = [models_info[name]['weight'] for name, _ in models]
-        self.votingClassifier = VotingClassifier(estimators=models, voting='soft', weights=weights, verbose=True)
+        self.votingClassifier = VotingClassifier(estimators=models, voting='soft', weights=weights, verbose=True, n_jobs=-1)
         self.votingClassifier.fit(self.X_train_features, self.y_train)
         models_info['voting'] = {
             'name': 'Voting',
@@ -299,8 +300,9 @@ class ModelPipeline:
             'weight': None,
             'evaluation': None
         }
+        return self.votingClassifier
 
-    def split_predict(self):
+    def split_predict(self): #not working yet, num. of feature don't match
         print(self.text_features.shape)
         print(self.X_test_features.shape)
         print(self.url_X_test_features.shape)
@@ -350,9 +352,9 @@ class ModelPipeline:
         self.get_result()
         print(self.result)
 
-    def keep_record(self, name, run_time):
+    def keep_record(self, name, run_time, comments=None):
         # Define the columns of your log DataFrame
-        columns = ['run_time', 'model', 'train_accuracy', 'test_accuracy', 'precision', 'recall', 'f1_score',  'cv_score', 'best_param']
+        columns = ['run_time', 'model', 'train_accuracy', 'test_accuracy', 'precision', 'recall', 'f1_score',  'cv_score', 'best_param', 'comments']
         # Check if the log file already exists
         if os.path.exists('test_log.csv'):
             # If it exists, load it into a DataFrame
@@ -368,8 +370,8 @@ class ModelPipeline:
         if 'cross_val_score' in models_info[name]:
             cross_val_score = models_info[name]['cross_val_score']
         else:
-            cross_val_score = None   
-        record = [run_time, name, self.train_accuracy, self.test_accuracy, self.precision, self.recall, self.f1, cross_val_score, best_param] 
+            cross_val_score = None 
+        record = [run_time, name, self.train_accuracy, self.test_accuracy, self.precision, self.recall, self.f1, cross_val_score, best_param, comments] 
         rec.loc[len(rec.index)] = record
         # Write the DataFrame to a CSV file
         rec.to_csv('test_log.csv', index=False)
