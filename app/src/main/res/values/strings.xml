@@ -118,7 +118,6 @@
     <string name="password_pref_key">password_notif_pref</string>
 
 
-
     <!-- Settings Activity Title EXAMPLE-->
     <string name="title_activity_settings">SettingsActivity</string>
 
