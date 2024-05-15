@@ -47,13 +47,13 @@ sample_messages = [
 # Select what models to use: comment out the models you don't want to use, no need to change param_grid etc.
 models = [
     ("Naive Bayes multinomial", MultinomialNB()),
-    ("AdaBoost", AdaBoostClassifier()),
-    ("Random Forest", RandomForestClassifier()),
+    #("AdaBoost", AdaBoostClassifier()),
+    #("Random Forest", RandomForestClassifier()),
     #("Multi-layer Perceptron", MLPClassifier()), #not working
     ("Naive Bayes multivariate Bernoulli", BernoulliNB()),
-    ("Decision Tree", DecisionTreeClassifier()),
-    ("KNN", KNeighborsClassifier()), #resource intensive
-    ("Logistic Regression", LogisticRegression()),
+    #("Decision Tree", DecisionTreeClassifier()),
+    #("KNN", KNeighborsClassifier()), #resource intensive
+    #("Logistic Regression", LogisticRegression()),
     #("Support Vector", SVC()) #quite slow
 ]
 
@@ -110,7 +110,9 @@ def split_dataset(df, column='TEXT', label = 'LABEL'):
 
 def feature_extraction(X_train, X_test, X_valid):
     # Feature extraction using TF-IDF
-    tfidf_vectorizer = TfidfVectorizer(min_df=1, stop_words='english', lowercase=True)
+    #tfidf_vectorizer = TfidfVectorizer(min_df=1, stop_words='english', lowercase=True)
+    # For url
+    tfidf_vectorizer = TfidfVectorizer(token_pattern=r'\b\w+\b', ngram_range=(1, 3), lowercase=False)
     X_train_features = tfidf_vectorizer.fit_transform(X_train)
     X_test_features = tfidf_vectorizer.transform(X_test)
     X_valid_features = tfidf_vectorizer.transform(X_valid)

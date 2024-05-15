@@ -30,7 +30,7 @@ for name, model in tqdm(models):
     end_time = time.time()
     run_time = int(end_time - start_time)
     print(f"Training time: {run_time} seconds")
-    keep_record(name, run_time, 'url')
+    keep_record(name, run_time, 'imported url')
 # Train voting system on all the models
 votingclassifier = voting_system(X_train_features, y_train, X_train_features, y_train, X_test_features, y_test)
 keep_record('voting', None, 'voting system')
