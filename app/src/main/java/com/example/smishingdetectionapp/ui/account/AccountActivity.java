@@ -2,6 +2,8 @@ package com.example.smishingdetectionapp.ui.account;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
@@ -10,8 +12,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.smishingdetectionapp.DetectionsActivity;
-import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SettingsActivity;
 
@@ -35,5 +35,45 @@ public class AccountActivity extends AppCompatActivity {
             finish();
         });
 
+        //Opens the password change window
+        Button password_changeBtn = findViewById(R.id.passwordBtn);
+        password_changeBtn.setOnClickListener(v -> {
+            PopupPW bottomSheet = new PopupPW();
+            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        });
+
+        //Opens the email change window
+        Button email_changeBtn = findViewById(R.id.emailBtn);
+        email_changeBtn.setOnClickListener(v -> {
+            PopupEmail bottomSheet = new PopupEmail();
+            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        });
+
+        //Opens the sign out window
+        Button sign_outBtn = findViewById(R.id.buttonSignOut);
+        sign_outBtn.setOnClickListener(v -> {
+            PopupSO bottomSheet = new PopupSO();
+            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        });
+
+        //Opens the delete account window
+        Button delete_accBtn = findViewById(R.id.account_delete);
+        delete_accBtn.setOnClickListener(v -> {
+            PopupDEL bottomSheet = new PopupDEL();
+            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        });
+
+        //Opens the phone number change window
+        Button change_phone_numberBtn = findViewById(R.id.phoneBtn);
+        change_phone_numberBtn.setOnClickListener(v -> {
+            PopupPN bottomSheet = new PopupPN();
+            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        });
+
+        //EXAMPLE: Used to change the colour of the SVG icons.
+        /*ImageView imageView = findViewById(R.id.imageView4);
+        imageView.setColorFilter(getColor(android.R.color.white));*/
+
     }
+
 }
