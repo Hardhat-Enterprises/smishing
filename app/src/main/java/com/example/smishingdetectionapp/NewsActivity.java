@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +29,8 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
     NewsAdapter adapter;
     NewsRequestManager manager;
     ProgressBar progressBar;
+    TextView errorMessage;
+    Button refreshButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -34,6 +38,11 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
+        errorMessage = findViewById(R.id.errorTextView);
+        recyclerView = findViewById(R.id.news_recycler_view);
+        refreshButton = findViewById(R.id.refreshButton);
+
+        // Navigation at the bottom of the page designed by Damian
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setSelectedItemId(R.id.nav_news);
         nav.setOnItemSelectedListener(menuItem -> {
@@ -55,35 +64,71 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
             return false;
         });
 
-        progressBar = findViewById(R.id.progressBar); // Initialize ProgressBar
-        // Before initiating the fetch
-        progressBar.setVisibility(View.VISIBLE);
+//        if (!isNetworkAvailable()) {
+//            showError();
+//        } else {
+            // Initialize ProgressBar and set it visible before fetching data
+            progressBar = findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
 
+            // Initialize NewsRequestManager and fetch RSS feed data
+            manager = new NewsRequestManager(this);
+            manager.fetchRSSFeed(new OnFetchDataListener<RSSFeedModel.Feed>() {
+                @Override
+                public void onFetchData(List<RSSFeedModel.Article> list, String message) {
+                    showNews(list);
+                    progressBar.setVisibility(View.GONE); // Hide ProgressBar after fetching data
+                }
+
+                @Override
+                public void onError(String message) {
+                    errorMessage.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE); // Hide ProgressBar on error
+                }
+
+                // Method to display the fetched news articles in the RecyclerView
+                private void showNews(List<RSSFeedModel.Article> list) {
+                    recyclerView = findViewById(R.id.news_recycler_view);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new GridLayoutManager(NewsActivity.this, 1));
+                    adapter = new NewsAdapter(list, NewsActivity.this); // Corrected this reference
+                    recyclerView.setAdapter(adapter);
+                }
+            });
+            
+        // Set up the refresh button click listener
+        refreshButton.setOnClickListener(v -> {
+            loadData(); // Reload the data when the refresh button is pressed
+        });
+        }
+
+    // This is for the refresh button
+    private void loadData() {
+        progressBar.setVisibility(View.VISIBLE);
         manager = new NewsRequestManager(this);
         manager.fetchRSSFeed(new OnFetchDataListener<RSSFeedModel.Feed>() {
             @Override
             public void onFetchData(List<RSSFeedModel.Article> list, String message) {
                 showNews(list);
-                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE); // Hide ProgressBar after fetching data
             }
 
             @Override
             public void onError(String message) {
-                Toast.makeText(NewsActivity.this, "Failed to fetch news: " + message, Toast.LENGTH_LONG).show();
+                errorMessage.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE); // Hide ProgressBar on error
             }
 
             private void showNews(List<RSSFeedModel.Article> list) {
-                recyclerView = findViewById(R.id.news_recycler_view);
+                adapter = new NewsAdapter(list, NewsActivity.this);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new GridLayoutManager(NewsActivity.this, 1));
-                adapter = new NewsAdapter(list, NewsActivity.this); // Corrected this reference
                 recyclerView.setAdapter(adapter);
             }
         });
-
     }
 
+    // Handle news article click events. Opens the article link in a browser.
     @Override
     public void OnNewsClicked(RSSFeedModel.Article article) {
         if (article != null && article.link != null && !article.link.isEmpty()) {

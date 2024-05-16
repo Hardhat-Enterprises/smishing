@@ -13,30 +13,39 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder>{
     private final List<RSSFeedModel.Article> articles;
     private final SelectListener listener;
 
+    // Constructor to initialize the adapter with articles and a click listener.
     public NewsAdapter(List<RSSFeedModel.Article> articles, SelectListener listener) {
         this.articles = articles;
         this.listener = listener;
     }
 
+    // Called when RecyclerView needs a new ViewHolder of the given type to represent an item.
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the item layout and create the ViewHolder
         return new NewsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.news_list_items, parent, false));
     }
 
+    // Called by RecyclerView to display the data at the specified position.
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
+        // Get the article for the current position
         RSSFeedModel.Article article = articles.get(position);
+
+        // Bind the article data to the ViewHolder's views
         holder.text_title.setText(article.title);
         holder.text_description.setText(article.description);
         holder.text_pubDate.setText(article.getFormattedDate());
 
+        // Set a click listener on the card view to handle item clicks
         holder.cardView.setOnClickListener(v -> listener.OnNewsClicked(article));
     }
 
-    @Override
+
+    // Returns the total number of items in the data set held by the adapter, MAX 9.
     public int getItemCount() {
-        return articles.size();
+        return Math.min(articles.size(), 9);
     }
 }
 

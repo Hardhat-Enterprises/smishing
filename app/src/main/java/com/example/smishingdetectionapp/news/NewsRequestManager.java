@@ -16,26 +16,32 @@ public class NewsRequestManager {
         this.context = context;
     }
 
-    // Fetching news from specific site
+    // Fetches RSS feed from a specified site using Retrofit and notifies the listener.
     public void fetchRSSFeed(OnFetchDataListener<RSSFeedModel.Feed> listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://krebsonsecurity.com/") // Example base URL
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
+        // Create an instance of the RSSApi interface
         RSSFeedModel.RSSApi rssApi = retrofit.create(RSSFeedModel.RSSApi.class);
+        // Enqueue the request to fetch articles
         rssApi.getArticles().enqueue(new Callback<RSSFeedModel.Feed>() {
             @Override
             public void onResponse(Call<RSSFeedModel.Feed> call, Response<RSSFeedModel.Feed> response) {
+                // Check if the response is successful and contains the expected data
                 if (response.isSuccessful() && response.body() != null) {
+                    // Notify listener of successful data fetch
                     listener.onFetchData(response.body().channel.articles, "Success");
                 } else {
+                    // Notify listener of failure in fetching data
                     listener.onError("Failed to fetch data");
                 }
             }
 
             @Override
             public void onFailure(Call<RSSFeedModel.Feed> call, Throwable t) {
+                // Notify listener of an error during the network request
                 listener.onError(t.getMessage());
             }
         });
