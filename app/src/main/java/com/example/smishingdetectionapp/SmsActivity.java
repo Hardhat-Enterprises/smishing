@@ -7,26 +7,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.smishingdetectionapp.data.model.Message;
+import com.example.smishingdetectionapp.data.model.SMSMessage;
 
 import java.util.ArrayList;
 
 public class SmsActivity extends AppCompatActivity {
-    private ArrayList<Message> messageList = new ArrayList<>();
+    private ArrayList<SMSMessage> smsMessageList = new ArrayList<>();
     private static final int READ_SMS_PERMISSION_CODE = 1;
 
     private TextView messagesText;
@@ -35,6 +30,11 @@ public class SmsActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms);
+
+        ImageButton back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(v -> {
+            finish();
+        });
 
         messagesText = findViewById(R.id.message_text);
 
@@ -66,15 +66,17 @@ public class SmsActivity extends AppCompatActivity {
             do {
                 String sender = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.ADDRESS));
                 String body = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.BODY));
-                Message message = new Message(sender, body);//create Message object
-                messageList.add(message); // add to the list
+                SMSMessage smsMessage = new SMSMessage(sender, body);//create Message object
+                smsMessageList.add(smsMessage); // add to the list
 
-                messagesText.append(message.getSender());
+                messagesText.append(smsMessage.getSender());
                 messagesText.append("\n");
-                messagesText.append(message.getBody());
+                messagesText.append(smsMessage.getBody());
                 messagesText.append("\n\n");
-                Log.e("SMISHING", message.getBody());
+                Log.e("SMISHING", smsMessage.getBody());
             } while (cursor.moveToNext());
+        } else {
+            messagesText.setText(getString(R.string.empty_sms));
         }
 
         if (cursor != null) {
