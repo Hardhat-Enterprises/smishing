@@ -1,71 +1,49 @@
 package com.example.smishingdetectionapp.news;
 
-import android.content.Context;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.example.smishingdetectionapp.news.Models.NewsAPIResponse;
-import com.example.smishingdetectionapp.R;
-
+import retrofit2.Retrofit;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import android.content.Context;
 
-// NewsRequestManager class to handle API requests for fetching news headlines
+import com.example.smishingdetectionapp.news.Models.RSSFeedModel;
+
 public class NewsRequestManager {
     Context context;
 
-    // Retrofit instance setup to make network requests
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://newsapi.org/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-    // Method to fetch news headlines using the News API
-    public void getNewsHeadlines(OnFetchDataListener<NewsAPIResponse> listener, String category, String q){
-        CallNewsApi callNewsApi = retrofit.create(CallNewsApi.class);
-        Call<NewsAPIResponse> call = callNewsApi.callHeadlines("au", category, q,context.getString(R.string.api_key));
-
-        try {
-            // Enqueue the call to be executed asynchronously
-            call.enqueue(new Callback<NewsAPIResponse>() {
-                @Override
-                public void onResponse(@NonNull Call<NewsAPIResponse> call, @NonNull Response<NewsAPIResponse> response) {
-                    if (!response.isSuccessful()){
-                        Toast.makeText(context, "Error!!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    assert response.body() != null;
-                    listener.onFetchData(response.body().getArticles(), response.message()); // Passing the fetched data to the listener
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<NewsAPIResponse> call, @NonNull Throwable throwable) {
-                    listener.onError("Request Failed!");
-                }
-            });
-        }
-        catch (Exception e){
-            e.printStackTrace(); // Print the stack trace if an exception occurs
-        }
+    public NewsRequestManager(Context context) {
+        this.context = context;
     }
 
-    // Constructor to initialize the NewsRequestManager with a context
-    public NewsRequestManager(Context context) {this.context = context;}
+    // Fetches RSS feed from a specified site using Retrofit and notifies the listener.
+    public void fetchRSSFeed(OnFetchDataListener<RSSFeedModel.Feed> listener) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://krebsonsecurity.com/") // Example base URL
+                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .build();
 
-    // Interface to define the endpoints for the News API
-    public interface CallNewsApi {
-        @GET("top-headlines") // Annotation for GET request for top headlines
-        Call<NewsAPIResponse> callHeadlines(
-            @Query("country") String country,
-            @Query("category") String category,
-            @Query("q") String q,
-            @Query("apiKey") String api_key
-        );
+        // Create an instance of the RSSApi interface
+        RSSFeedModel.RSSApi rssApi = retrofit.create(RSSFeedModel.RSSApi.class);
+        // Enqueue the request to fetch articles
+        rssApi.getArticles().enqueue(new Callback<RSSFeedModel.Feed>() {
+            @Override
+            public void onResponse(Call<RSSFeedModel.Feed> call, Response<RSSFeedModel.Feed> response) {
+                // Check if the response is successful and contains the expected data
+                if (response.isSuccessful() && response.body() != null) {
+                    // Notify listener of successful data fetch
+                    listener.onFetchData(response.body().channel.articles, "Success");
+                } else {
+                    // Notify listener of failure in fetching data
+                    listener.onError("Failed to fetch data");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RSSFeedModel.Feed> call, Throwable t) {
+                // Notify listener of an error during the network request
+                listener.onError(t.getMessage());
+            }
+        });
     }
 }

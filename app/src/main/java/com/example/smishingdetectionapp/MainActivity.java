@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             else if(id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsAdapter.NewsActivity.class));
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 overridePendingTransition(0,0);
                 finish();
                 return true;

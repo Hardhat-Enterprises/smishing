@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".news.NewsAdapter$NewsActivity"
+            android:name=".NewsActivity"
             android:exported="false" />
         <activity
             android:name=".ReportingActivity"
