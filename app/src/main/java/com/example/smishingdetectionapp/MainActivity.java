@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(id == R.id.nav_news) {
 
-                startActivity(new Intent(getApplicationContext(), NewsAdapter.NewsActivity.class));//Starts the News activity
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));//Starts the News activity
                 overridePendingTransition(0,0);//Removes the sliding animation
                 finish();
                 return true;
