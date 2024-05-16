@@ -1,10 +1,10 @@
 package com.example.smishingdetectionapp.data.model;
 
-public class Message {
+public class SMSMessage {
     private String sender;
     private String body;
 
-    public Message(String sender, String body) {
+    public SMSMessage(String sender, String body) {
         this.sender = sender;
         this.body = body;
     }
