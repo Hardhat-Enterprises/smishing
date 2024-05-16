@@ -122,7 +122,7 @@
         android:background="@color/navy_blue"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonSignOut"
         android:layout_width="0dp"
         android:layout_height="51dp"
         android:layout_marginStart="16dp"

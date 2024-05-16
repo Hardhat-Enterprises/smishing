@@ -1,7 +1,10 @@
 package com.example.smishingdetectionapp.news;
 
-import com.example.smishingdetectionapp.news.Models.NewsHeadlines;
+import com.example.smishingdetectionapp.news.Models.RSSFeedModel;
 
+// Interface for handling click events on news articles.
 public interface SelectListener {
-    void OnNewsClicked(NewsHeadlines headlines);
+    void OnNewsClicked(RSSFeedModel.Article article);
 }
+
+

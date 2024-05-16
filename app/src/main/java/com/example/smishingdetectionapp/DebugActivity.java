@@ -7,14 +7,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.notifications.NotificationHelper;
 import com.example.smishingdetectionapp.notifications.NotificationType;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DebugActivity extends AppCompatActivity {
-
-    BottomNavigationView nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +31,11 @@ public class DebugActivity extends AppCompatActivity {
                 return true;
             }
             else if(id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsAdapter.NewsActivity.class));
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 finish();
                 return true;
             }
-            else if(id == R.id.nav_settings){
-                return true;
-            }
-
-            return false;
+            else return id == R.id.nav_settings;
         });
 
         Button debug_btn = findViewById(R.id.debug_btn);

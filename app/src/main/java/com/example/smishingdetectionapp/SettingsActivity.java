@@ -31,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
                 return true;
             } else if (id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsAdapter.NewsActivity.class));
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 overridePendingTransition(0,0);
                 finish();
                 return true;
@@ -62,6 +62,12 @@ public class SettingsActivity extends AppCompatActivity {
         });
         //Notification button to switch to notification page
 
+        //Help button to switch to Help page
+        Button helpBtn = findViewById(R.id.helpBtn);
+        helpBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, HelpActivity.class));
+            finish();
+        });
     }
 
     //Notification button to switch to notification page

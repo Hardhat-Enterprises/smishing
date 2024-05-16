@@ -30,6 +30,8 @@ public class SignupActivity extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //TODO: Add account creation functionality.
+
         ImageButton imageButton = findViewById(R.id.signup_back);
         imageButton.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
