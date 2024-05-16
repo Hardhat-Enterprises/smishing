@@ -62,6 +62,12 @@ public class SettingsActivity extends AppCompatActivity {
         });
         //Notification button to switch to notification page
 
+        //Help button to switch to Help page
+        Button helpBtn = findViewById(R.id.helpBtn);
+        helpBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, HelpActivity.class));
+            finish();
+        });
     }
 
     //Notification button to switch to notification page

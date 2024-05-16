@@ -32,6 +32,7 @@
     <string name="report_page">Report Smishing</string>
     <string name="filtering_page">Smishing Rules</string>
     <string name="debug">Debug</string>
+    <string name="help_page">Help</string>
 
     <!-- Main Dashboard Strings -->
     <string name="detectionsBtn">Detections</string>
@@ -116,8 +117,8 @@
     <string name="update_pref_key">update_notif_pref</string>
     <string name="backup_pref_key">backup_notif_pref</string>
     <string name="password_pref_key">password_notif_pref</string>
-
-
+    <string name="what_is_the_app_for">What is the app for?</string>
+    <string name="how_to_use_the_app">how_to_use_the_app?</string>
 
     <!-- Settings Activity Title EXAMPLE-->
     <string name="title_activity_settings">SettingsActivity</string>
