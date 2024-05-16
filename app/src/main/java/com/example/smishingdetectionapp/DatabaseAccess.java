@@ -61,17 +61,22 @@ public class DatabaseAccess {
         }
     }
 
+    //Total detections counter
     public int getCounter() {
         Cursor cursor = db.rawQuery("select * from Detections", null);
         System.out.println("Number of Records: "+cursor.getCount());
         return cursor.getCount();
     }
+
+    //Used to get current device time
     private static String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "dd-MM-yyyy HH:mm", Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
     }
+
+    //Report sending function with database
     public static boolean sendReport(int phonenumber, String message) {
         SQLiteDatabase db = openHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

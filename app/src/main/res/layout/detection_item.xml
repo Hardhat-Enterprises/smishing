@@ -48,8 +48,8 @@
             android:id="@+id/dateTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_message"
-            android:layout_alignStart="@+id/item_message"
+            android:layout_below="@+id/spacer"
+            android:layout_alignStart="@+id/spacer"
             android:text="@string/dateTitle"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -69,4 +69,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/spacer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_message"
+            android:layout_alignStart="@+id/item_message" />
 </RelativeLayout>

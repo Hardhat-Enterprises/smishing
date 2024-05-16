@@ -1,9 +1,9 @@
 package com.example.smishingdetectionapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,10 +22,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
+
     public MainActivity() {
         super();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
             int id = menuItem.getItemId();
             if (id == R.id.nav_home) {
-
+                //Empty when currently selected.
                 return true;
             }
             else if(id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
-                overridePendingTransition(0,0);
+
+                startActivity(new Intent(getApplicationContext(), NewsAdapter.NewsActivity.class));//Starts the News activity
+                overridePendingTransition(0,0);//Removes the sliding animation
                 finish();
                 return true;
             } else if (id == R.id.nav_settings) {
@@ -65,13 +68,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button debug_btn = findViewById(R.id.debug_btn);
-        debug_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, DebugActivity.class));
-            }
-        });
+        debug_btn.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, DebugActivity.class)));
 
+        //Opens the detections page.
         Button detections_btn = findViewById(R.id.detections_btn);
         detections_btn.setOnClickListener(v -> {
             startActivity(new Intent(this, DetectionsActivity.class));
@@ -83,11 +83,12 @@ public class MainActivity extends AppCompatActivity {
         DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
         //setting counter from result
-        TextView totalcount;
-        totalcount = findViewById(R.id.total_counter);
-        totalcount.setText(""+databaseAccess.getCounter());
+        TextView total_count;
+        total_count = findViewById(R.id.total_counter);
+        total_count.setText(""+databaseAccess.getCounter());
         //closing the connection
         databaseAccess.close();
+        //TODO: Add functionality for new detections.
 
     }
 
