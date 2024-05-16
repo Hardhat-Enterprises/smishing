@@ -45,6 +45,14 @@ public class DebugActivity extends AppCompatActivity {
             return false;
         });
 
+        Button debug_btn = findViewById(R.id.debug_btn);
+        debug_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DebugActivity.this, SmsActivity.class));
+            }
+        });
+
         Button basic_notif_btn = findViewById(R.id.basic_notif_btn);
 
         basic_notif_btn.setOnClickListener(new View.OnClickListener() {
