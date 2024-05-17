@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_SMS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
         tools:targetApi="31">
+        <activity
+            android:name=".SmsActivity"
+            android:exported="false" />
         <activity
             android:name=".HelpActivity"
             android:exported="false" />
@@ -63,9 +72,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar">
-        </activity>
-
+            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar"></activity>
     </application>
 
 </manifest>
