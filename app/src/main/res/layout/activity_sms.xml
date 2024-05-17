@@ -54,6 +54,20 @@
         app:layout_constraintTop_toBottomOf="@id/SMS_text"
         tools:ignore="NotSibling" />
 
+    <TextView
+        android:id="@+id/no_messages_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:text="@string/empty_sms"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/SMS_text" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

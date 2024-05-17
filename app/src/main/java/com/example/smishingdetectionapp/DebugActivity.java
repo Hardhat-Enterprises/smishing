@@ -38,10 +38,12 @@ public class DebugActivity extends AppCompatActivity {
             else return id == R.id.nav_settings;
         });
 
-        Button debug_btn = findViewById(R.id.debug_btn);
-        debug_btn.setOnClickListener(new View.OnClickListener() {
+        Button sms_pull_btn = findViewById(R.id.sms_pull_btn);
+
+        sms_pull_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //open sms activity
                 startActivity(new Intent(DebugActivity.this, SmsActivity.class));
             }
         });

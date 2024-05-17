@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.sms.model.SMSMessage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SMSAdapter extends RecyclerView.Adapter<SMSAdapter.MessageViewHolder>{
-    private List<SMSMessage> messageList;
+    private List<SMSMessage> messageList = new ArrayList<>();
     private final SMSClickListener listener;
 
     public SMSAdapter(SMSClickListener listener) {

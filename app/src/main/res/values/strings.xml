@@ -36,8 +36,8 @@
     <string name="report_page">Report Smishing</string>
     <string name="filtering_page">Smishing Rules</string>
     <string name="debug">Debug</string>
-    <string name="sms_page">SMS Messages</string>
     <string name="help_page">Help</string>
+    <string name="sms_page">SMS Messages</string>
 
     <!-- Main Dashboard Strings -->
     <string name="detectionsBtn">Detections</string>
@@ -185,6 +185,6 @@
     <string name="message_sender">Message Sender</string>
     <string name="message_body">Message Body</string>
     <string name="dummy_smishing_report">This SMS message contains some text that might indicate it is a scam! Please beware!</string>
-
+    <string name="empty_sms">There are no SMS messages.</string>
 
 </resources>
