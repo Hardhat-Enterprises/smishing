@@ -2,12 +2,15 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+<<<<<<< Updated upstream
       <entry key="AccountActivity">
         <State />
       </entry>
       <entry key="PopupPW">
         <State />
       </entry>
+=======
+>>>>>>> Stashed changes
       <entry key="app">
         <State />
       </entry>
