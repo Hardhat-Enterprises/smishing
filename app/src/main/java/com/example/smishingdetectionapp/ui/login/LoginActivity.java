@@ -26,8 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.ui.login.LoginViewModel;
-import com.example.smishingdetectionapp.ui.login.LoginViewModelFactory;
+import com.example.smishingdetectionapp.SignupActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Check if the user is already logged in at the beginning of onCreate
@@ -52,10 +51,10 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.username;
+        final EditText usernameEditText = binding.email;
         final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
-        final ProgressBar loadingProgressBar = binding.loading;
+        final Button loginButton = binding.loginButton;
+        final ProgressBar loadingProgressBar = binding.progressbar;
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -127,11 +126,20 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                //loadingProgressBar.setVisibility(View.VISIBLE);
+                //loginViewModel.login(usernameEditText.getText().toString(),
+                //        passwordEditText.getText().toString());
+                // commenting out the above so the login button just goes straight to main.
+                navigateToMainActivity();
             }
         });
+
+        Button buttonregister = findViewById(R.id.registerButton);
+        buttonregister.setOnClickListener(v -> {
+            startActivity(new Intent(this, SignupActivity.class));
+            finish();
+        });
+
     }
 
     private boolean isUserLoggedIn() {
@@ -150,7 +158,9 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
+        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        //finish();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
