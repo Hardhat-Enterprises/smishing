@@ -13,7 +13,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 # Load the dataset
-df = pd.read_csv('/Users/gladizgregory2/desktop/DatasetCombined.csv', encoding='ISO-8859-1')
+df = pd.read_csv('DatasetCombined.csv', encoding='ISO-8859-1')
 
 # Check for missing values and calculate the missing value ratio
 missing_ratio = df.isnull().sum() / len(df)

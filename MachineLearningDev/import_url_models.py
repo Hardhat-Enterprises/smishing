@@ -1,5 +1,5 @@
 # Load model directly
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, BertTokenizer
 
 # Not working, something wrong with torch but don't know how to fix
 # Import url model and tokenizer from transformers
