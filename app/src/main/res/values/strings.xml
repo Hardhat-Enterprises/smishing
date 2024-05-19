@@ -83,7 +83,7 @@
 
     <!-- Report Page Strings -->
     <string name="phone_number">Phone Number</string>
-    <string name="report_message_prompt">Smishing smsMessage</string>
+    <string name="report_message_prompt">Smishing message</string>
     <string name="action_report">Send report</string>
 
     <!-- Settings Page Buttons -->
@@ -181,6 +181,10 @@
     <string name="click_to_read_more">Click to Read More</string>
 
     <!-- SMS Page Strings -->
+    <string name="message_details">Message Details</string>
+    <string name="message_sender">Message Sender</string>
+    <string name="message_body">Message Body</string>
+    <string name="dummy_smishing_report">This SMS message contains some text that might indicate it is a scam! Please beware!</string>
     <string name="empty_sms">There are no SMS messages.</string>
 
 </resources>
