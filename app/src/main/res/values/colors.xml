@@ -12,6 +12,8 @@
     <color name="blue_grotto">#FF189AB4</color>
     <color name="blue_green">#FF75E6DA</color>
     <color name="baby_blue">#FFD4F1F4</color>
-    <color name="grey">#949494</color>
     <color name="azure">#F0FFFF</color>
+    <color name="lavender">#8692f7</color>
+    <color name="grey">#aaa</color>
+    <color name="darkGrey">#ff424242</color>
 </resources>

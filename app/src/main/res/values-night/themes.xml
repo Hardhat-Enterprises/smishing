@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.SmishingDetectionApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/baby_blue</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/darkGrey</item>
+        <item name="colorPrimaryVariant">@color/darkGrey</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -18,4 +18,9 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    <!--added styles for theme-->
+    <style name="ScreenBackground"><item name="android:background">@color/black</item></style>
+    <style name="CardBackground"><item name="android:background">@color/darkGrey</item></style>
+    <style name="textcolor"><item name="android:textColor">@color/grey</item></style>
+
 </resources>

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.SmishingDetectionApp.er" parent="Theme.AppCompat">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/baby_blue</item>
-        <item name="colorPrimaryVariant">@color/baby_blue</item>
+        <item name="colorPrimary">@color/lavender</item>
+        <item name="colorPrimaryVariant">@color/lavender</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -41,5 +41,9 @@
     <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/black</item> <!-- Set to your desired button text color -->
     </style>
+      <!-- Added styles for theme -->
+    <style name="ScreenBackground"><item name="android:background">@color/white</item></style>
+    <style name="CardBackground"><item name="android:background">@color/white</item></style>
+    <style name="textcolor"><item name="android:textColor">@color/lavender</item></style>
 
 </resources>
