@@ -1,0 +1,28 @@
+[{
+    "dbid": 1,
+    "dbname": "Test One",
+    "dbusername": "testone",
+    "dbemail": "testone@test.com",
+    "dbpassword": "testone",
+    "dbdateofbirth": "01/01/2001",
+    "dbdatecreated": "17/05/2024"
+},
+{
+    "dbid": 2,
+    "dbname": "Test Two",
+    "dbusername": "testtwo",
+    "dbemail": "testtwo@test.com",
+    "dbpassword": "testtwo",
+    "dbdateofbirth": "02/02/2001",
+    "dbdatecreated": "17/05/2024"
+},
+{
+    "dbid": 3,
+    "dbname": "Test Three",
+    "dbusername": "testthree",
+    "dbemail": "testthree@test.com",
+    "dbpassword": "testthree",
+    "dbdateofbirth": "03/03/2001",
+    "dbdatecreated": "17/05/2024"
+}
+]
