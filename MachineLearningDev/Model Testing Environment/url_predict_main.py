@@ -4,6 +4,11 @@ import time
 from tqdm import tqdm
 from datasets import load_dataset
 
+# This version loads online dataset from huggingface
+# Maybe it's because the size of the ds, it's really slow 
+# ----BEWARE WHAT MODELS YOU USE, SOME CAN TAKE HOURS----
+# Utils2 is the same as utils but without class, so have to pass variables around
+# Also because this dataset is not csv, it's parquet, so have to change the way to load it
 
 url_dataset = load_dataset("kmack/Phishing_urls")
 # Convert the splits of the dataset to pandas DataFrames
@@ -61,107 +66,3 @@ for message in sample_messages:
         predict_text('VOTE: ', votingclassifier, message, tfidf_vectorizer)
         hard_voting(all_predictions)
 
-
-
-
-
-'''
-# Use GridSearchCV to tune the parameters of your model
-with parallel_backend('threading'):
-    grid_search = GridSearchCV(model, param_grid, cv=5, return_train_score=True)
-    grid_search.fit(X_valid, y_valid)
-
-
-# Train each model from models list
-for name, model in tqdm(models):
-    print(f"\n\nTraining model: {name}")
-    start_time = time.time()
-    model_pipeline(name, model)
-    end_time = time.time()
-    run_time = int(end_time - start_time)
-    print(f"Training time: {run_time} seconds")
-    pipeline.keep_record(name, run_time)
-# Train voting system on all the models
-voting_system()
-
-# Visualise model accuracies
-pipeline.visualise_data()
-
-# Test predictions on sample messages using all models and display results
-for message in sample_messages:
-# Initialise empty predictions list
-    all_predictions = []
-    print(f"Message: {message}")
-
-    for name, model in models:
-        pipeline.input_message = message
-        predict_text(name, model)
-        all_predictions.append((name, pipeline.prediction[0]))
-    
-    # Two methods to vote on results
-    # Aggregate predictions 
-    predict_text('VOTE: ', pipeline.votingClassifier)
-    hard_voting(all_predictions)
-
-
-
-
-
-# Store the best score and best parameters for each model
-models_info[name]['best_param'] = grid_search.best_params_
-models_info[name]['grid_score'] = grid_search.best_score_
-print(f"Best parameters for {name}: {models_info[name]['best_param']}")
-print(f"Best grid search score for {name}: {models_info[name]['grid_score']}")
-
-
-df = pd.read_parquet('train.parquet')
-pipeline.df = url_dataset.to_csv
-print(pipeline.df)
-
-#process_dataset(dataset_path=url_dataset)
-pipeline.split_dataset()
-pipeline.feature_extraction()
-pipeline.balance_data()
-
-pipeline.extract_urls()
-
-
-pipeline.split_dataset("LINK")
-url_vectorizer = pipeline.feature_extraction()
-pipeline.balance_data()
-
-
-# Train each model from models list
-for name, model in tqdm(models):
-    print(f"\n\nTraining model: {name}")
-    start_time = time.time()
-    model_pipeline(name, model)
-    end_time = time.time()
-    run_time = int(end_time - start_time)
-    print(f"Training time: {run_time} seconds")
-    pipeline.keep_record(name, run_time)
-# Train voting system on all the models
-voting_system()
-
-# Visualise model accuracies
-pipeline.visualise_data()
-
-# Test predictions on sample messages using all models and display results
-for message in sample_messages:
-# Initialise empty predictions list
-    all_predictions = []
-    print(f"Message: {message}")
-
-    for name, model in models:
-        pipeline.input_message = message
-        predict_text(name, model)
-        all_predictions.append((name, pipeline.prediction[0]))
-    
-    # Two methods to vote on results
-    # Aggregate predictions 
-    predict_text('VOTE: ', pipeline.votingClassifier)
-    hard_voting(all_predictions)
-
-
-
-'''

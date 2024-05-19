@@ -34,6 +34,9 @@ from sklearn.naive_bayes import MultinomialNB, BernoulliNB
 # This version is not in a class, need to put variables in functions and pass them around
 
 #sample_msg = ['Please Stay At Home. To encourage the notion of staying at home. All tax-paying citizens are entitled to ï¿½305.96 or more emergency refund. smsg.io/fCVbD']
+# These are some sample messages we found easy to get wrong. 
+# Particularly, pizza and DiDi should be spam (maybe ham) not smishing, Chemist Warehouse should be ham not smishing
+# The first 3 are smishing which they usually get right
 sample_messages = [
     "Hello, you still have a fine that has not been paid. Please pay it in time, otherwise it will affect your travel. https://linkstps.xyz/au",
     "Eastlink: There is an outstanding debt on the toll invoice. Settlement should always be made before the maturity datae. https://tolls.eastlink.click/online",
@@ -127,6 +130,7 @@ def split_text_and_link(df, X_train, X_test):# I think this has problem as vecto
     return url_X_train_features, url_X_test_features
 
 def merge_url_feature(df, X_train, X_test):
+    # This doesn't work yet, because of the number of features difference
     url_X_train_features, url_X_test_features = split_text_and_link(df, X_train, X_test)
     # Check if any URLs are missing
     if X_train.shape[0] > url_X_train_features.shape[0]:
@@ -153,6 +157,7 @@ def dimensionality_reduction(X_train_features, X_test_features, method='nmf'):
 
     
 def predict_dim_reduce(feature_input):
+    # This doesn't work yet, because of the number of features difference
     reduced = nmf.transform(feature_input)
     return reduced
         

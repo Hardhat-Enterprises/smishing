@@ -19,6 +19,7 @@ def process_dataset(url=False, reduce=False, dataset_path='DatasetCombined.csv')
     if url:
         # If using for url enable it
         pipeline.extract_urls()
+        pipeline.missing_ratio()
         # If for url insert 'LINK' in split_dataset
         pipeline.split_dataset('LINK')
         pipeline.feature_extraction(url)
