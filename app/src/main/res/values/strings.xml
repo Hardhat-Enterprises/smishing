@@ -32,6 +32,7 @@
     <string name="report_page">Report Smishing</string>
     <string name="filtering_page">Smishing Rules</string>
     <string name="debug">Debug</string>
+    <string name="accessibility_page">Accessibility</string>
 
     <!-- Main Dashboard Strings -->
     <string name="detectionsBtn">Detections</string>
@@ -57,6 +58,7 @@
     <string name="filtering_btn">Filtering</string>
     <string name="report_btn">Report</string>
     <string name="help_btn">Help</string>
+    <string name="access_btn">Accessibility</string>
 
     <!-- Filtering Rules Strings -->
     <string name="keywords_label">Keywords</string>
@@ -94,6 +96,10 @@
     <string name="detection_notification_header">Detection Notifications</string>
     <string name="push_notification_header">Push Notifications</string>
     <string name="system_maintenance_header">System Maintenance Notifications</string>
+
+
+    <!-- Accessibility Page Strings-->
+    <string name="enlarge_text">Enlarge Text</string>
 
 
     <!-- NotificationHelper Strings -->
@@ -142,6 +148,9 @@
 
     <!-- News Page Strings -->
     <string name="api_key">a882bbf5f21b40a3b145509fe1f58e33</string>
+=======
+    <string name="accessibility_btn" />
+>>>>>>> Stashed changes
 
 
 </resources>

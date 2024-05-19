@@ -60,8 +60,12 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, ReportingActivity.class));
             finish();
         });
-        //Notification button to switch to notification page
-
+        //Accessibility button to switch to Accessibility page
+        Button accessibilityBtn = findViewById(R.id.accessibilityBtn);
+        accessibilityBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, AccessibilityActivity.class));
+            finish();
+        });
     }
 
     //Notification button to switch to notification page

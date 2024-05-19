@@ -19,6 +19,13 @@ import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import androidx.appcompat.app.AlertDialog;
+import android.content.DialogInterface;
+
+
+
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -40,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         if (!areNotificationsEnabled()) {
             showNotificationPermissionDialog();
         }
+
+        showEducationalPopup();
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation); //variable assignment
         nav.setSelectedItemId(R.id.nav_home); //home page selected by default
@@ -90,6 +99,23 @@ public class MainActivity extends AppCompatActivity {
         databaseAccess.close();
 
     }
+
+    private void showEducationalPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Stay Safe from Smishing!");
+        builder.setMessage("Never click on suspicious links in unsolicited messages. " +
+                "Be cautious of messages requesting sensitive information like passwords or account details. " +
+                "Verify the sender's identity before responding to messages requesting personal information.");
+        builder.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(false); // Prevent dialog from being dismissed by tapping outside
+        builder.show();
+    }
+
 
     private boolean areNotificationsEnabled() {
         return NotificationManagerCompat.from(this).areNotificationsEnabled();

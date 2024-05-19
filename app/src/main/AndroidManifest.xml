@@ -7,6 +7,7 @@
 
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -49,6 +50,9 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />
+        <activity
+            android:name=".AccessibilityActivity"
+            android:exported="false" />
         <!-- Set LoginActivity as the launcher activity -->
         <activity
             android:name=".ui.login.LoginActivity"
@@ -65,6 +69,18 @@
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar">
         </activity>
+
+        <receiver
+            android:name=".DetectionsWidgetProvider"
+            android:label="DetectionsWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/detections_widget_info" />
+        </receiver>
 
     </application>
 

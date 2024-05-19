@@ -13,4 +13,10 @@
     <color name="blue_green">#FF75E6DA</color>
     <color name="baby_blue">#FFD4F1F4</color>
     <color name="grey">#949494</color>
+
+    <color name="normal_text_color">#000000</color>
+    <color name="normal_background_color">#FFFFFF</color>
+    <color name="colorblind_text_color">#FFFFFF</color>
+    <color name="colorblind_background_color">#000000</color>
+
 </resources>
