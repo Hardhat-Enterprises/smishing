@@ -12,6 +12,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import android.content.ComponentName;
+import android.appwidget.AppWidgetManager;
+
+
 public class DetectionsActivity extends AppCompatActivity {
 
     private ListView detectionLV;
@@ -45,6 +49,17 @@ public class DetectionsActivity extends AppCompatActivity {
 
     }
 
+    private void notifyWidgetDataChanged() {
+        Intent intent = new Intent(this, DetectionsWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(getApplicationContext()).getAppWidgetIds(new ComponentName(getApplicationContext(), DetectionsWidgetProvider.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        notifyWidgetDataChanged();
+    }
 }

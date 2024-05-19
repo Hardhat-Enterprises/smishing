@@ -21,13 +21,13 @@ public class DatabaseAccess {
 
     public static class DatabaseOpenHelper extends SQLiteAssetHelper {
 
-        private static final String DATABASE_NAME="detectlist.db";
-        private static final int DATABASE_VERSION=1;
+        private static final String DATABASE_NAME = "detectlist.db";
+        private static final int DATABASE_VERSION = 1;
         private static final String TABLE_DETECTIONS = "Detections";
         private static final String TABLE_REPORTS = "Reports";
         private static final String KEY_ROWID = "_id";
-        private static final String KEY_PHONENUMBER="Phone_Number";
-        private static final String KEY_MESSAGE = "Message";
+        private static final String KEY_PHONENUMBER = "Phone_Number";
+        public static final String KEY_MESSAGE = "Message";
         private static final String KEY_DATE = "Date";
 
         public DatabaseOpenHelper(Context context) {
@@ -38,24 +38,24 @@ public class DatabaseAccess {
 
     DatabaseAccess(Context context) {
 
-        openHelper= new DatabaseOpenHelper(context);
+        openHelper = new DatabaseOpenHelper(context);
         this.context = context;
     }
 
-    public static DatabaseAccess getInstance(Context context){
-        if(instance==null){
-            instance=new DatabaseAccess(context);
+    public static DatabaseAccess getInstance(Context context) {
+        if (instance == null) {
+            instance = new DatabaseAccess(context);
         }
         return instance;
     }
 
-    public void open(){
-        this.db=openHelper.getWritableDatabase();
+    public void open() {
+        this.db = openHelper.getWritableDatabase();
         System.out.println("Database Opened!");
     }
 
-    public void close(){
-        if(db!=null){
+    public void close() {
+        if (db != null) {
             this.db.close();
             System.out.println("Database Closed!");
         }
@@ -64,7 +64,7 @@ public class DatabaseAccess {
     //Total detections counter
     public int getCounter() {
         Cursor cursor = db.rawQuery("select * from Detections", null);
-        System.out.println("Number of Records: "+cursor.getCount());
+        System.out.println("Number of Records: " + cursor.getCount());
         return cursor.getCount();
     }
 
@@ -87,7 +87,7 @@ public class DatabaseAccess {
         return result != -1;
     }
 
-    public SimpleCursorAdapter populateDetectionList(){
+    public SimpleCursorAdapter populateDetectionList() {
 
         String[] columns = {
                 DatabaseOpenHelper.KEY_ROWID,
@@ -128,6 +128,16 @@ public class DatabaseAccess {
                 toViewIDs
         );
     }
-
-
+    public Cursor getRecentDetections() {
+        return db.query(
+                DatabaseOpenHelper.TABLE_DETECTIONS,
+                new String[]{DatabaseOpenHelper.KEY_MESSAGE}, // Adjust the columns as needed
+                null,
+                null,
+                null,
+                null,
+                DatabaseOpenHelper.KEY_DATE + " DESC",
+                "5"
+        );
+    }
 }

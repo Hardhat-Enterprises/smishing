@@ -6,4 +6,5 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="bottom_navigation_height">56dp</dimen>
+    <dimen name="text_size_multiplier">2.0</dimen>
 </resources>

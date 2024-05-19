@@ -66,6 +66,10 @@ public class SettingsActivity extends AppCompatActivity {
         Button helpBtn = findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, HelpActivity.class));
+        //Accessibility button to switch to Accessibility page
+        Button accessibilityBtn = findViewById(R.id.accessibilityBtn);
+        accessibilityBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, AccessibilityActivity.class));
             finish();
         });
     }

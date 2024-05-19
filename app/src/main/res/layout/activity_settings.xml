@@ -164,5 +164,21 @@
             app:layout_constraintTop_toTopOf="@+id/notificationsBtn"
             app:srcCompat="@drawable/notification_svg1" />
 
+        <Button
+            android:id="@+id/accessibilityBtn"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/buttons_rounded"
+            android:gravity="center"
+            android:text="@string/access_btn"
+            android:textSize="20sp"
+            android:onClick="openAccessibility"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.923"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filteringBtn" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

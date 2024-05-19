@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccessibilityActivity">
+
+    <ImageView
+        android:id="@+id/HardhatLogo"
+        android:layout_width="112dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="731dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.152"
+        app:srcCompat="@drawable/hardhat_logo" />
+
+    <TextView
+        android:id="@+id/ReportText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/accessibility_page"
+        android:textColor="@color/navy_blue"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="347dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/navy_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReportText" />
+
+    <ImageButton
+        android:id="@+id/accessibility_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_button" />
+
+    <SeekBar
+        android:id="@+id/seekBar3"
+        android:layout_width="303dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="99dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enlargetext" />
+
+    <TextView
+        android:id="@+id/enlargetext"
+        android:layout_width="112dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="false"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="68dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/enlarge_text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReportText" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="347dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="23dp"
+        android:background="@color/navy_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar3" />
+
+    <Switch
+        android:id="@+id/colorblindSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="97dp"
+        android:checked="false"
+        android:text="Colorblind Mode"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar3" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="347dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="23dp"
+        android:background="@color/navy_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorblindSwitch" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
