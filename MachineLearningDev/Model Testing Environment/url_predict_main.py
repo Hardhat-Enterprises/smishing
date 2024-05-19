@@ -53,7 +53,7 @@ for message in sample_messages:
             end_time = time.time()
             run_time = end_time - start_time
             print(f"Predicting time: {run_time} seconds")
-            all_predictions.append((name, all_predictions[0]))
+            all_predictions.append((name, prediction))
             keep_record(name, run_time, 'perdict time')
         
         # Two methods to vote on results

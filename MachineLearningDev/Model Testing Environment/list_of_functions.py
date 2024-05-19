@@ -14,11 +14,16 @@ pipeline = ModelPipeline()
 # Load and process the dataset, true or false for dimensionality reduction
 def process_dataset(url=False, reduce=False, dataset_path='DatasetCombined.csv'):
     pipeline.load_dataset(dataset_path)
-    # If using for url enable it
-    #pipeline.extract_urls()
-    # If for url insert 'LINK' in split_dataset
-    pipeline.split_dataset()
-    pipeline.feature_extraction(url)
+    #pipeline.missing_ratio()
+    if url:
+        # If using for url enable it
+        pipeline.extract_urls()
+        # If for url insert 'LINK' in split_dataset
+        pipeline.split_dataset('LINK')
+        pipeline.feature_extraction(url)
+    else:
+        pipeline.split_dataset()
+        pipeline.feature_extraction()
     
     #pipeline.merge_url_feature()
     if reduce:

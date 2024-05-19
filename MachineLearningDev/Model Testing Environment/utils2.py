@@ -47,20 +47,20 @@ sample_messages = [
 # Select what models to use: comment out the models you don't want to use, no need to change param_grid etc.
 models = [
     ("Naive Bayes multinomial", MultinomialNB()),
-    #("AdaBoost", AdaBoostClassifier()),
-    #("Random Forest", RandomForestClassifier()),
+    ("AdaBoost", AdaBoostClassifier()),
+    ("Random Forest", RandomForestClassifier()),
     #("Multi-layer Perceptron", MLPClassifier()), #not working
     ("Naive Bayes multivariate Bernoulli", BernoulliNB()),
-    #("Decision Tree", DecisionTreeClassifier()),
-    #("KNN", KNeighborsClassifier()), #resource intensive
-    #("Logistic Regression", LogisticRegression()),
+    ("Decision Tree", DecisionTreeClassifier()),
+    ("KNN", KNeighborsClassifier()), #resource intensive
+    ("Logistic Regression", LogisticRegression()),
     #("Support Vector", SVC()) #quite slow
 ]
 
 param_grid = {
     "Naive Bayes multinomial": {'alpha': [0.1, 1.0, 10.0], 'fit_prior': [True, False]},
     "AdaBoost": {'n_estimators': [50, 100, 200]},
-    "Random Forest": {'n_estimators': [50, 100], 'max_depth': [5, 10], 'min_samples_split': [2, 5, 10], 'min_samples_leaf': [1, 2, 4], 'max_features': ['sqrt', 'log2'], 'n_jobs': [-1]},
+    "Random Forest": {'n_estimators': [50, 100, 150], 'max_depth': [None, 5, 10, 15], 'min_samples_split': [2, 5, 10], 'min_samples_leaf': [1, 2, 4], 'max_features': ['sqrt', 'log2'], 'n_jobs': [-1]},
     "Multi-layer Perceptron": {'max_iter':10000, 'hidden_layer_sizes': [(50,50,50), (50,100,50), (100,)], 'activation': ['tanh', 'relu'], 'solver': ['sgd', 'adam'], 'alpha': [0.0001, 0.05],'learning_rate': ['constant','adaptive'], 'njobs':[-1]},
     "Naive Bayes multivariate Bernoulli": {'alpha': [0.1, 1.0, 10.0], 'fit_prior': [True, False]},
     "Decision Tree": {'max_depth': [None, 10, 20, 50]},

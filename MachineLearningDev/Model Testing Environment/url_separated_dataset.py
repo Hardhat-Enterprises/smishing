@@ -2,11 +2,10 @@ from utils import *
 from list_of_functions import *
 import time
 from tqdm import tqdm
-from transformers import BertTokenizer
 
 
 # Process dataset
-process_dataset()
+process_dataset(url=True)
 
 # Train each model from models list
 for name, model in tqdm(models):
