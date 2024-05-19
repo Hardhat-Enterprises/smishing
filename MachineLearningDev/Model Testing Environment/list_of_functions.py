@@ -14,6 +14,7 @@ pipeline = ModelPipeline()
 # Load and process the dataset, true or false for dimensionality reduction
 def process_dataset(url=False, reduce=False, dataset_path='DatasetCombined.csv'):
     pipeline.load_dataset(dataset_path)
+    # Optional missing ratio
     #pipeline.missing_ratio()
     if url:
         # If using for url enable it
