@@ -23,6 +23,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
+import static com.example.smishingdetectionapp.R.string.*;
+import android.view.LayoutInflater;
+import android.view.View;
+
+
 
 
 
@@ -103,18 +108,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void showEducationalPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Stay Safe from Smishing!");
-        builder.setMessage("Never click on suspicious links in unsolicited messages. " +
-                "Be cautious of messages requesting sensitive information like passwords or account details. " +
-                "Verify the sender's identity before responding to messages requesting personal information.");
-        builder.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.setCancelable(false); // Prevent dialog from being dismissed by tapping outside
-        builder.show();
+
+        // Inflate custom dialog layout
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_layout, null);
+        builder.setView(dialogView);
+
+        // Find and set title and message
+        TextView dialogTitle = dialogView.findViewById(R.id.dialog_title);
+        TextView dialogMessage = dialogView.findViewById(R.id.dialog_message);
+        Button dialogButton = dialogView.findViewById(R.id.dialog_button);
+
+        dialogTitle.setText(edu_popup_title);
+        dialogMessage.setText(edu_popup_message);
+        dialogButton.setText(edu_popup_button);
+
+        AlertDialog dialog = builder.create();
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
     }
 
 

@@ -1,14 +1,12 @@
 package com.example.smishingdetectionapp;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.TypedValue;
 import android.widget.TextView;
-import androidx.core.content.ContextCompat;
 
-public class MyApp extends Application {
+public class AppPreferences extends Application {
 
-    private static MyApp instance;
+    private static AppPreferences instance;
 
     @Override
     public void onCreate() {
@@ -16,7 +14,7 @@ public class MyApp extends Application {
         instance = this;
     }
 
-    public static MyApp getInstance() {
+    public static AppPreferences getInstance() {
         return instance;
     }
 

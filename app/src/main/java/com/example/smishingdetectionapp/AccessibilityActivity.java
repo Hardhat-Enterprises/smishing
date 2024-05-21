@@ -2,7 +2,6 @@ package com.example.smishingdetectionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -53,9 +52,9 @@ public class AccessibilityActivity extends AppCompatActivity {
             textSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    float textSize = progress * getResources().getDimension(R.dimen.text_size_multiplier);
-                    PreferenceManager.setFontSize(AccessibilityActivity.this, textSize);
-                    MyApp.applyFontSize(textView);
+                    // float textSize = progress * getResources().getDimension(R.dimen.text_size_multiplier);
+                    // PreferenceManager.setFontSize(AccessibilityActivity.this, textSize);
+                    // AppPreferences.applyFontSize(textView);
                 }
 
                 @Override

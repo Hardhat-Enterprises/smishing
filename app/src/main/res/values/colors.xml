@@ -20,4 +20,7 @@
     <color name="colorblind_text_color">#FFFFFF</color>
     <color name="colorblind_background_color">#000000</color>
 
+
+    <color name="darker_button_background">#3F51B5</color>
+
 </resources>

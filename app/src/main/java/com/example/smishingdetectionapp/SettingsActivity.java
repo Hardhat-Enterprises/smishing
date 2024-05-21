@@ -66,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
         Button helpBtn = findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, HelpActivity.class));
+        });
         //Accessibility button to switch to Accessibility page
         Button accessibilityBtn = findViewById(R.id.accessibilityBtn);
         accessibilityBtn.setOnClickListener(v -> {
@@ -73,11 +74,9 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         });
     }
-
     //Notification button to switch to notification page
     public void openNotificationsActivity(View view) {
         Intent intent = new Intent(this, NotificationActivity.class);
         startActivity(intent);
     }
 }
-

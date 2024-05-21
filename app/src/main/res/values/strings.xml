@@ -192,4 +192,9 @@
     <!-- SMS Page Strings -->
     <string name="empty_sms">There are no SMS messages.</string>
 
+    <!-- Educational Pop-Up Strings -->
+    <string name="edu_popup_title">Stay Safe from Smishing!</string>
+    <string name="edu_popup_message">Never click on suspicious links in unsolicited messages. Be cautious of messages requesting sensitive information like passwords or account details. Verify the senders identity before responding to messages requesting personal information. </string>
+    <string name="edu_popup_button">Got it</string>
+
 </resources>

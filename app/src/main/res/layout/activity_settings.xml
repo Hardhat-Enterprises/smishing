@@ -170,7 +170,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/buttons_rounded"
-            android:gravity="center"
+            android:gravity="bottom|start"
             android:text="@string/access_btn"
             android:textSize="20sp"
             android:onClick="openAccessibility"
@@ -178,6 +178,16 @@
             app:layout_constraintHorizontal_bias="0.923"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/filteringBtn" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/accessibilityBtn"
+            app:layout_constraintTop_toTopOf="@+id/accessibilityBtn"
+            app:srcCompat="@drawable/accessibility" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
