@@ -43,6 +43,9 @@
             android:name=".SmishingRulesActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.Register.RegisterMain"
+            android:exported="true" />
+        <activity
             android:name=".ui.account.AccountActivity"
             android:exported="false" />
         <activity

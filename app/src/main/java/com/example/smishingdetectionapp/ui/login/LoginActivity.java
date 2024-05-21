@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SignupActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
+import com.example.smishingdetectionapp.ui.Register.RegisterMain;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -126,21 +127,44 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadingProgressBar.setVisibility(View.VISIBLE);
-                //loginViewModel.login(usernameEditText.getText().toString(),
-                //        passwordEditText.getText().toString());
-                // commenting out the above so the login button just goes straight to main.
-                navigateToMainActivity();
+                String username = usernameEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+
+                // Show loading progress bar while validating
+                loadingProgressBar.setVisibility(View.VISIBLE);
+
+                if (!validateUsername(username) || !validatePassword(password)) {
+                    // Hide loading progress bar if validation fails
+                    loadingProgressBar.setVisibility(View.GONE);
+
+                    // Show error message if validation fails
+                    Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Assuming validation passes, you can proceed directly.
+                    Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
+                    navigateToMainActivity();
+                }
             }
         });
 
         Button buttonregister = findViewById(R.id.registerButton);
         buttonregister.setOnClickListener(v -> {
-            startActivity(new Intent(this, SignupActivity.class));
+            startActivity(new Intent(this, RegisterMain.class));
             finish();
         });
 
     }
+
+    private boolean validateUsername(String username) {
+        // Example validation: Username should not be empty and should contain an "@" symbol
+        return !username.isEmpty();
+    }
+
+    private boolean validatePassword(String password) {
+        // Example validation: Password should not be empty and must be at least 8 characters long
+        return !password.isEmpty() && password.length() >= 5;
+    }
+
 
     private boolean isUserLoggedIn() {
         // Implement this method based on your authentication mechanism
