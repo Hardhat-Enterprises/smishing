@@ -1,42 +1,64 @@
 package com.example.smishingdetectionapp;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Telephony;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.smishingdetectionapp.data.model.SMSMessage;
+import com.example.smishingdetectionapp.sms.SMSAdapter;
+import com.example.smishingdetectionapp.sms.SMSClickListener;
+import com.example.smishingdetectionapp.sms.model.SMSMessage;
 
 import java.util.ArrayList;
 
-public class SmsActivity extends AppCompatActivity {
+public class SmsActivity extends AppCompatActivity implements SMSClickListener {
     private ArrayList<SMSMessage> smsMessageList = new ArrayList<>();
     private static final int READ_SMS_PERMISSION_CODE = 1;
 
-    private TextView messagesText;
+    RecyclerView smsRecyclerView; // Holds the recyclerview which displays the sms messages list
+    SMSAdapter smsAdapter;
+    TextView noSMSMessagesText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sms);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         ImageButton back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(v -> {
             finish();
         });
 
-        messagesText = findViewById(R.id.message_text);
+        noSMSMessagesText = findViewById(R.id.no_messages_text);
+        smsRecyclerView = findViewById(R.id.messages_recycler_view);
+        smsRecyclerView.setHasFixedSize(true); // Set to improve performance since changes in content do not change layout size
+        smsRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager for RecyclerView
+        smsAdapter = new SMSAdapter(this); // Initialize the adapter with context
+        smsRecyclerView.setAdapter(smsAdapter);
 
         //checking the sms read permission on runtime
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS)
@@ -68,20 +90,23 @@ public class SmsActivity extends AppCompatActivity {
                 String body = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.BODY));
                 SMSMessage smsMessage = new SMSMessage(sender, body);//create Message object
                 smsMessageList.add(smsMessage); // add to the list
-
-                messagesText.append(smsMessage.getSender());
-                messagesText.append("\n");
-                messagesText.append(smsMessage.getBody());
-                messagesText.append("\n\n");
-                Log.e("SMISHING", smsMessage.getBody());
+                smsAdapter.updateMessagesList(smsMessageList);
             } while (cursor.moveToNext());
+            noSMSMessagesText.setVisibility(View.GONE);
         } else {
-            messagesText.setText(getString(R.string.empty_sms));
+            noSMSMessagesText.setVisibility(View.VISIBLE);
         }
 
         if (cursor != null) {
             cursor.close();
         }
+    }
+
+    @Override
+    public void OnMessageClicked(com.example.smishingdetectionapp.sms.model.SMSMessage message) {
+        Intent intent = new Intent(SmsActivity.this, SMSMessageDetailActivity.class);
+        intent.putExtra("SMS_MESSAGE", message);
+        startActivity(intent);
     }
 
     /**

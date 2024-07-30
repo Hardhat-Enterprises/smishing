@@ -22,7 +22,13 @@
         android:theme="@style/Theme.SmishingDetectionApp"
         tools:targetApi="31">
         <activity
+            android:name=".TermsAndConditionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SmsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SMSMessageDetailActivity"
             android:exported="false" />
         <activity
             android:name=".HelpActivity"
@@ -72,7 +78,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar"></activity>
+            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
     </application>
 
 </manifest>
