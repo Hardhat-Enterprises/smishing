@@ -38,8 +38,11 @@ android {
 //        abiFilters("armeabi-v7a", "x86")
 //    }
     compileOptions {
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
+
     }
     buildFeatures {
         viewBinding = true
@@ -96,6 +99,10 @@ dependencies {
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))
+
+
+
+
 
 }
 
