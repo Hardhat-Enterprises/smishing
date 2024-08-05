@@ -1,8 +1,10 @@
 package com.example.smishingdetectionapp.ui.login;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
-
+import com.example.smishingdetectionapp.DataBase.DBresult;
+import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
 
 import androidx.lifecycle.Observer;
@@ -26,18 +28,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.SignupActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
+
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
 
+    private Retrofit retrofit;
+    private Retrofitinterface retrofitinterface;
+    private String BASE_URL = "http://192.168.88.154:3000";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        retrofitinterface = retrofit.create(Retrofitinterface.class);
 
         // Check if the user is already logged in at the beginning of onCreate
         if (isUserLoggedIn()) {
@@ -127,23 +149,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+                handleLoginDialog();
 
-                // Show loading progress bar while validating
-                loadingProgressBar.setVisibility(View.VISIBLE);
-
-                if (!validateUsername(username) || !validatePassword(password)) {
-                    // Hide loading progress bar if validation fails
-                    loadingProgressBar.setVisibility(View.GONE);
-
-                    // Show error message if validation fails
-                    Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Assuming validation passes, you can proceed directly.
-                    Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
-                    navigateToMainActivity();
-                }
             }
         });
 
@@ -154,6 +161,34 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+    private void handleLoginDialog() {
+        final EditText usernameEditText = binding.email;
+        final EditText passwordEditText = binding.password;
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("email", usernameEditText.getText().toString());
+        map.put("password", passwordEditText.getText().toString());
+
+        Call<DBresult> call = retrofitinterface.executeLogin(map);
+        call.enqueue(new Callback<DBresult>() {
+            @Override
+            public void onResponse(Call<DBresult> call, Response<DBresult> response) {
+                if (response.code() == 200) {
+                    navigateToMainActivity();
+                } else if (response.code() == 404) {
+                    Toast.makeText(LoginActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DBresult> call, Throwable throwable) {
+                Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
 
     private boolean validateUsername(String username) {
         // Example validation: Username should not be empty and should contain an "@" symbol
