@@ -21,7 +21,7 @@ voting_system()
 pipeline.keep_record('voting', None, 'voting system')
 
 # Visualise model accuracies
-pipeline.visualise_data()
+pipeline.visualise_data("MsgPredict")
 
 # Test predictions on sample messages using all models and display results
 for message in sample_messages:
