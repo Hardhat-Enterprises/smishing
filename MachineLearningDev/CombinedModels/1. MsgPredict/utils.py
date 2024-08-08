@@ -15,7 +15,7 @@ from sklearn.ensemble import VotingClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.datasets import load_digits
 from joblib import parallel_backend
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, recall_score, make_scorer
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, recall_score, make_scorer, roc_auc_score, confusion_matrix, balanced_accuracy_score
 from sklearn.decomposition import PCA, TruncatedSVD, NMF
 from scipy.sparse import csr_matrix, hstack, vstack
 from matplotlib import colormaps
@@ -76,9 +76,11 @@ for name, model in models:
         'param_grid': param_grid[name],
         'best_param': None,  
         'grid_score': None, 
-        'cross_val_score': None, 
+        'cross_val_score': None,
+        'roc_auc': None, 
+        'balanced accuracy': None,
         'weight': None, 
-        # Train Accuracy, Test Accuracy , Precision, Recall, F1
+        # Train Accuracy, Test Accuracy, Balanced Accuracy , Precision, Recall, F1
         'evaluation': None
     }
 
@@ -248,35 +250,83 @@ class ModelPipeline:
     
     # Evaluate the model
     def evaluate_model(self, name, model):
+        self.y_pred = model.predict(self.X_test_features)
+        thresholds = np.arange(0.0, 1.1, 0.1)
+        accuracies = []
+        precisions = []
+        recalls = []
+        f1s = []
+        try:
+            y_pred_proba = model.predict_proba(self.X_test_features)
+        except AttributeError:
+            raise ValueError(f"The model {name} does not support probability predictions.")
+        # Ensure y_pred_proba is a 2D array
+        if y_pred_proba.ndim == 1:
+            y_pred_proba = y_pred_proba.reshape(-1, 1)
+            self.roc_auc = roc_auc_score(self.y_test, y_pred_proba, multi_class='ovr')
+        else: 
+            self.roc_auc = None
+
+        for threshold in thresholds:
+            y_pred = np.argmax(y_pred_proba, axis=1)
+            accuracies.append(accuracy_score(self.y_test, y_pred))
+            precisions.append(precision_score(self.y_test, y_pred, average='weighted'))
+            recalls.append(recall_score(self.y_test, y_pred, average='weighted'))
+            f1s.append(f1_score(self.y_test, y_pred, average='weighted'))
+        # Plot the metrics by threshold
+        plt.figure(figsize=(10, 6))
+        plt.plot(thresholds, accuracies, label='Accuracy')
+        plt.plot(thresholds, precisions, label='Precision')
+        plt.plot(thresholds, recalls, label='Recall')
+        plt.plot(thresholds, f1s, label='F1 Score')
+        plt.xlabel('Threshold')
+        plt.ylabel('Score')
+        plt.title('Evaluation Metrics by Threshold')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
         self.train_accuracy = accuracy_score(self.y_train, model.predict(self.X_train_features))
-        self.test_accuracy = accuracy_score(self.y_test, model.predict(self.X_test_features))
-        self.precision = precision_score(self.y_test, model.predict(self.X_test_features), average='weighted')
-        self.recall = recall_score(self.y_test, model.predict(self.X_test_features), average='weighted')
-        self.f1 = f1_score(self.y_test, model.predict(self.X_test_features), average='weighted')
-        models_info[name]['evaluation']=[self.train_accuracy, self.test_accuracy, self.precision, self.recall, self.f1]
+        self.test_accuracy = accuracy_score(self.y_test, self.y_pred)
+        self.balanced_accuracy = balanced_accuracy_score(self.y_test, y_pred)
+        self.precision = precision_score(self.y_test, self.y_pred, average='weighted')
+        self.recall = recall_score(self.y_test, self.y_pred, average='weighted')
+        self.f1 = f1_score(self.y_test, self.y_pred, average='weighted')
+        
+        models_info[name]['evaluation']=[self.train_accuracy, self.test_accuracy, self.balanced_accuracy, self.precision, self.recall, self.f1]
         print('Accuracy on training data: '.ljust(30), self.train_accuracy)
         print('Accuracy on test data: '.ljust(30), self.test_accuracy)
+        print('Balanced accuracy: '.ljust(30), self.balanced_accuracy)
         print('Precision: '.ljust(30), self.precision)
         print('Recall: '.ljust(30), self.recall)
         print('F1: '.ljust(30), self.f1)
+        if self.roc_auc != None: 
+            print('roc_auc: '.ljust(30), self.roc_auc)
+        # Visualize confusion matrix
+        plt.figure(figsize=(10, 7))
+        conf_matrix = confusion_matrix(self.y_test, y_pred)
+        sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+        plt.xlabel('Predicted')
+        plt.ylabel('Actual')
+        plt.title(f'Confusion Matrix for {name}')
+        plt.show()
 
-    def visualise_data(self):
+    def visualise_data(self, file_name):
+
         n = len(models_info)
         m = len(next(iter(models_info.values()))['evaluation'])
         width = 0.1
         x = np.arange(n)
-        score_names = ['train_accuracy', 'test_accuracy', 'precision', 'recall', 'f1']
+        score_names = ['train_accuracy', 'test_accuracy', 'balanced_accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'balanced accuracy']
         fig, ax = plt.subplots(figsize=(10, 5))
-        #colors = ['red', 'blue', 'green', 'orange', 'purple']  # Modify color scheme here
         for i in range(m):
             scores = [models_info[name]['evaluation'][i] for name in models_info]
-            bars = ax.bar(x + i * width, scores, width, label=score_names[i])  #color=colors[i] Use the specified color
+            bars = ax.bar(x + i * width, scores, width, label=score_names[i])
             for bar in bars:
                 yval = bar.get_height()
                 ax.text(bar.get_x() + bar.get_width()/2, yval + 0.01, round(yval, 3), ha='center', va='bottom', fontsize=5, rotation=45)
         ax.set_xlabel('Models')
         ax.set_ylabel('Scores')
-        ax.set_title(f'{os.path.basename(__file__)}Model comparison')
+        ax.set_title(f'{file_name}Model comparison')
         ax.set_xticks(x)
         ax.set_xticklabels([name for name in models_info])
         ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
