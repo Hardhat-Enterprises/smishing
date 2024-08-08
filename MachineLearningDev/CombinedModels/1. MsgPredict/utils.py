@@ -46,13 +46,13 @@ sample_messages = [
 # Select what models to use: comment out the ones you don't want to use, no need to change the param_grid etc.
 models = [
     ("Naive Bayes multinomial", MultinomialNB()), #naive bayes ones are quick
-    #("AdaBoost", AdaBoostClassifier()),
-    #("Random Forest", RandomForestClassifier()), #good accurcies
+    ("AdaBoost", AdaBoostClassifier()),
+    ("Random Forest", RandomForestClassifier()), #good accurcies
     #("Multi-layer Perceptron", MLPClassifier()), #not working
     ("Naive Bayes multivariate Bernoulli", BernoulliNB()),
-    #("Decision Tree", DecisionTreeClassifier()),
-    #("KNN", KNeighborsClassifier()), #resource intensive
-    #("Logistic Regression", LogisticRegression()),
+    ("Decision Tree", DecisionTreeClassifier()),
+    ("KNN", KNeighborsClassifier()), #resource intensive
+    ("Logistic Regression", LogisticRegression()),
     #("Support Vector", SVC()) #quite slow not tested much
 ]
 
@@ -311,6 +311,7 @@ class ModelPipeline:
         plt.show()
 
     def visualise_data(self, file_name):
+
         n = len(models_info)
         m = len(next(iter(models_info.values()))['evaluation'])
         width = 0.1
