@@ -38,8 +38,11 @@ android {
 //        abiFilters("armeabi-v7a", "x86")
 //    }
     compileOptions {
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
+
     }
     buildFeatures {
         viewBinding = true
@@ -93,6 +96,13 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
     implementation ("com.google.android.material:material:1.2.0-alpha02")
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/mail.jar"))
+
+
+
+
 
 }
 

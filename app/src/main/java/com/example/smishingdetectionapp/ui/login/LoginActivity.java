@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SignupActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
+import com.example.smishingdetectionapp.ui.Register.RegisterMain;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -136,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Button buttonregister = findViewById(R.id.registerButton);
         buttonregister.setOnClickListener(v -> {
-            startActivity(new Intent(this, SignupActivity.class));
+            startActivity(new Intent(this, RegisterMain.class));
             finish();
         });
 
