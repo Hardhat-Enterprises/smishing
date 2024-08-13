@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -15,7 +16,7 @@ import java.util.Locale;
 
 public class DatabaseAccess {
     private static SQLiteOpenHelper openHelper;
-    private SQLiteDatabase db;
+    static SQLiteDatabase db;
     private static DatabaseAccess instance;
     Context context;
 
@@ -26,9 +27,9 @@ public class DatabaseAccess {
         private static final String TABLE_DETECTIONS = "Detections";
         private static final String TABLE_REPORTS = "Reports";
         private static final String KEY_ROWID = "_id";
-        private static final String KEY_PHONENUMBER="Phone_Number";
-        private static final String KEY_MESSAGE = "Message";
-        private static final String KEY_DATE = "Date";
+        public static final String KEY_PHONENUMBER="Phone_Number";
+        public static final String KEY_MESSAGE = "Message";
+        public static final String KEY_DATE = "Date";
 
         public DatabaseOpenHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -115,14 +116,14 @@ public class DatabaseAccess {
 
         int[] toViewIDs = new int[]{
                 R.id.item_id,
-                R.id.item_pn,
-                R.id.item_date,
-                R.id.item_message
+                R.id.detectionPhoneText,
+                R.id.detectionDateText,
+                R.id.detectionMessageText
         };
 
         return new SimpleCursorAdapter(
                 context,
-                R.layout.detection_item,
+                R.layout.detection_items,
                 cursor,
                 columnsStr,
                 toViewIDs

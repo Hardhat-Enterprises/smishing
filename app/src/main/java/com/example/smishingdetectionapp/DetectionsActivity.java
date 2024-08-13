@@ -1,7 +1,13 @@
 package com.example.smishingdetectionapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -16,6 +22,21 @@ public class DetectionsActivity extends AppCompatActivity {
 
     private ListView detectionLV;
     DatabaseAccess databaseAccess;
+
+    private DisplayDataAdapterView adapter;
+
+    public void searchDB(String search){
+        String searchQuery = (" SELECT * FROM Detections WHERE " +
+                "Phone_Number LIKE '%" + search + "%' OR " +
+                "Message Like '%" + search + "%' OR " +
+                "Date Like '%" + search + "%'");
+
+        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
+
+        adapter = new DisplayDataAdapterView(this, cursor);
+        detectionLV.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +62,28 @@ public class DetectionsActivity extends AppCompatActivity {
         databaseAccess.open();
         final SimpleCursorAdapter simpleCursorAdapter = databaseAccess.populateDetectionList();
         detectionLV.setAdapter(simpleCursorAdapter);
-        databaseAccess.close();
+
+
+
+        EditText detSearch = findViewById(R.id.searchTextBox);
+        detSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String search = s.toString();
+                searchDB(search);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
-
-
-
 }

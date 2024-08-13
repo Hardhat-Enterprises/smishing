@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         total_count = findViewById(R.id.total_counter);
         total_count.setText(""+databaseAccess.getCounter());
         //closing the connection
-        databaseAccess.close();
+        //databaseAccess.close();
         //TODO: Add functionality for new detections.
 
     }
