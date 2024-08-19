@@ -34,9 +34,6 @@ android {
         }
 
 
-
-
-
    }
 
     buildTypes {
@@ -110,6 +107,9 @@ dependencies {
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))
+    implementation("com.chaquo.python:android:15.0.1") // Add Chaquopy dependency
+    implementation("com.google.cloud:google-cloud-vision:2.4.5") // Add Google Cloud Vision dependency
+    implementation("com.google.cloud:google-cloud-translate:1.94.4") // Add Google Cloud Translation dependency
 
 }
 

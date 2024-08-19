@@ -2,11 +2,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        google()
         // Add other repositories here
     }
     dependencies {
         classpath("com.chaquo.python:gradle:15.0.1")
-
         // Add other classpaths here
     }
 }
