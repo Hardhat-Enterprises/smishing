@@ -1,28 +1,38 @@
 [versions]
 agp = "8.6.0"
+android = "11.0.1"
+googleCloudTranslate = "2.47.0"
+googleCloudVision = "3.45.0"
+gradle = "15.0.1"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-appcompat = "1.6.1"
-material = "1.10.0"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+kotlinxCoroutinesAndroid = "1.7.3"
+material = "1.12.0"
 constraintlayout = "2.1.4"
-lifecycleLivedataKtx = "2.6.1"
-lifecycleViewmodelKtx = "2.6.1"
-navigationFragment = "2.6.0"
-navigationUi = "2.6.0"
-annotation = "1.6.0"
-preference = "1.2.0"
+lifecycleLivedataKtx = "2.8.4"
+lifecycleViewmodelKtx = "2.8.4"
+navigationFragment = "2.7.7"
+navigationUi = "2.7.7"
+annotation = "1.8.2"
+preference = "1.2.1"
 kotlin = "1.9.0"
-lifecycleRuntimeKtx = "2.7.0"
-activityCompose = "1.7.0"
-composeBom = "2023.08.00"
-activity = "1.8.0"
+lifecycleRuntimeKtx = "2.8.4"
+activityCompose = "1.9.1"
+composeBom = "2024.06.00"
+activity = "1.9.1"
 
 [libraries]
+android = { module = "com.chaquo.python:android", version.ref = "android" }
+google-cloud-translate = { module = "com.google.cloud:google-cloud-translate", version.ref = "googleCloudTranslate" }
+google-cloud-vision = { module = "com.google.cloud:google-cloud-vision", version.ref = "googleCloudVision" }
+gradle = { module = "com.chaquo.python:gradle", version.ref = "gradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
