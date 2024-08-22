@@ -8,10 +8,12 @@ import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.util.Log;
 
+import com.example.smishingdetectionapp.SmishingDetector;
 import com.example.smishingdetectionapp.sms.model.SMSMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class SMSExtractor {
     private final Context context;
@@ -39,9 +41,15 @@ public class SMSExtractor {
                 // Check if the sender is not in the contacts
                 if (!isSenderInContacts(sender)) {
                     // If not, create an SMSMessage object and add it to the list
-                    SMSMessage smsMessage = new SMSMessage(sender, body);
-                    suspiciousMessages.add(smsMessage);
+                    boolean isSmishing = SmishingDetector.isSmishingMessage(body.toLowerCase());
+
+                    if (isSmishing) {
+                        SMSMessage smsMessage = new SMSMessage(sender, body);
+                        suspiciousMessages.add(smsMessage);
+                    }
                 }
+//                    }
+//                }
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -65,4 +73,32 @@ public class SMSExtractor {
 
         return isInContacts;
     }
+
+//    private String analyzeSms(Set<String> contactNumbers) {
+//        StringBuilder analyzedMessages = new StringBuilder();
+//        Uri uri = Uri.parse("content://sms/inbox");
+//        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+//
+//        if (cursor != null && cursor.moveToFirst()) {
+//            int addressColumnIndex = cursor.getColumnIndex("address");
+//            int bodyColumnIndex = cursor.getColumnIndex("body");
+//
+//            if (addressColumnIndex != -1 && bodyColumnIndex != -1) {
+//                do {
+//                    String address = cursor.getString(addressColumnIndex);
+//                    String body = cursor.getString(bodyColumnIndex);
+//                    if (!contactNumbers.contains(address.replaceAll("[^0-9]", ""))) {
+//                        boolean isSmishing = SmishingDetector.isSmishingMessage(body.toLowerCase());
+//                        analyzedMessages.append(body)
+//                                .append("\nSmishing: ").append(isSmishing).append("\n\n");
+//                    }
+//                } while (cursor.moveToNext());
+//            }
+//            cursor.close();
+//        }
+//
+//        return analyzedMessages.toString();
+//    }
+
+
 }
