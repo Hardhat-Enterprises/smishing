@@ -15,11 +15,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
+import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
+
 
     public MainActivity() {
         super();
@@ -69,27 +71,25 @@ public class MainActivity extends AppCompatActivity {
         debug_btn.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, DebugActivity.class)));
 
-        // Opens the detections page
+        //Opens the detections page.
         Button detections_btn = findViewById(R.id.detections_btn);
         detections_btn.setOnClickListener(v -> {
             startActivity(new Intent(this, DetectionsActivity.class));
             finish();
         });
 
-        // Start database connection
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+
+        //start database connection
+        DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
-        // Setting counter from result
+        //setting counter from result
         TextView total_count;
         total_count = findViewById(R.id.total_counter);
-        total_count.setText("" + databaseAccess.getCounter());
-        // Closing the connection
+        total_count.setText(""+databaseAccess.getCounter());
+        //closing the connection
         databaseAccess.close();
-        // TODO: Add functionality for new detections.
+        //TODO: Add functionality for new detections.
 
-        // Automatically detect and submit report
-        ReportSubmissionHelper reportSubmissionHelper = new ReportSubmissionHelper(this);
-        reportSubmissionHelper.detectAndSubmitReport();
     }
 
     private boolean areNotificationsEnabled() {
