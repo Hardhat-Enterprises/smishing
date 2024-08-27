@@ -69,7 +69,7 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.READ_SMS}, READ_SMS_PERMISSION_CODE);
         } else {
-            smsAdapter.updateMessagesList(smsExtractor.extractSuspiciousMessages());
+            smsAdapter.updateMessagesList(smsExtractor.extractAllMessages());
         }
     }
 

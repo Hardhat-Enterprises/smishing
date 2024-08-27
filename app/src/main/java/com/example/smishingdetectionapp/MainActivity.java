@@ -2,10 +2,7 @@ package com.example.smishingdetectionapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,9 +17,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -82,10 +76,6 @@ public class MainActivity extends AppCompatActivity {
         // Closing the connection
         databaseAccess.close();
 
-        // Contact numbers retrieval and SMS analysis
-//        Set<String> contactNumbers = getContactNumbers();
-//        String analyzedMessages = analyzeSms(contactNumbers);
-//        total_count.setText(analyzedMessages);
     }
 
     private boolean areNotificationsEnabled() {
@@ -96,51 +86,6 @@ public class MainActivity extends AppCompatActivity {
         NotificationPermissionDialogFragment dialogFragment = new NotificationPermissionDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), "notificationPermission");
     }
-
-//    private Set<String> getContactNumbers() {
-//        Set<String> contactNumbers = new HashSet<>();
-//        Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-//                null, null, null, null);
-//
-//        if (cursor != null) {
-//            int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-//
-//            while (cursor.moveToNext()) {
-//                if (numberIndex != -1) {
-//                    String number = cursor.getString(numberIndex);
-//                    contactNumbers.add(number.replaceAll("[^0-9]", ""));  // Normalize phone numbers
-//                }
-//            }
-//            cursor.close();
-//        }
-//        return contactNumbers;
-//    }
-
-//    private String analyzeSms(Set<String> contactNumbers) {
-//        StringBuilder analyzedMessages = new StringBuilder();
-//        Uri uri = Uri.parse("content://sms/inbox");
-//        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-//
-//        if (cursor != null && cursor.moveToFirst()) {
-//            int addressColumnIndex = cursor.getColumnIndex("address");
-//            int bodyColumnIndex = cursor.getColumnIndex("body");
-//
-//            if (addressColumnIndex != -1 && bodyColumnIndex != -1) {
-//                do {
-//                    String address = cursor.getString(addressColumnIndex);
-//                    String body = cursor.getString(bodyColumnIndex);
-//                    if (!contactNumbers.contains(address.replaceAll("[^0-9]", ""))) {
-//                        boolean isSmishing = SmishingDetector.isSmishingMessage(body.toLowerCase());
-//                        analyzedMessages.append(body)
-//                                .append("\nSmishing: ").append(isSmishing).append("\n\n");
-//                    }
-//                } while (cursor.moveToNext());
-//            }
-//            cursor.close();
-//        }
-//
-//        return analyzedMessages.toString();
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

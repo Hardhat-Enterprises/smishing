@@ -1,19 +1,22 @@
 package com.example.smishingdetectionapp.sms;
 
-import android.content.ContentResolver;
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+
 import com.example.smishingdetectionapp.SmishingDetector;
 import com.example.smishingdetectionapp.sms.model.SMSMessage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class SMSExtractor {
     private final Context context;
@@ -22,13 +25,62 @@ public class SMSExtractor {
         this.context = context;
     }
 
-    public List<SMSMessage> extractSuspiciousMessages() {
-        List<SMSMessage> suspiciousMessages = new ArrayList<>();
+    private boolean hasSmsPermission() {
+        return ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED;
+    }
 
+    private boolean hasContactsPersmission() {
+        return ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Nullable
+    private Cursor getSmsCursor() {
+
+        if (!hasSmsPermission()) {
+            return null;
+        }
         // Get the SMS messages from the device
         Uri smsUri = Telephony.Sms.Inbox.CONTENT_URI;
         String[] projection = {Telephony.Sms.ADDRESS, Telephony.Sms.BODY};
-        Cursor cursor = context.getContentResolver().query(smsUri, projection, null, null, null);
+        return context.getContentResolver().query(smsUri, projection, null, null, null);
+    }
+
+    @Nullable
+    private Cursor getContactsCursor(String sender){
+        if (!hasContactsPersmission()){
+            return null;
+        }
+        // Get Contacts from the device
+        Uri contactsUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(sender));
+        String[] projection = {ContactsContract.PhoneLookup._ID};
+        return context.getContentResolver().query(contactsUri, projection, null, null, null);
+    }
+
+    public List<SMSMessage> extractAllMessages(){
+        List<SMSMessage> messages = new ArrayList<>();
+        Cursor cursor = getSmsCursor();
+
+        if (cursor != null && cursor.moveToFirst()){
+            int senderIndex = cursor.getColumnIndex(Telephony.Sms.ADDRESS);
+            int bodyIndex = cursor.getColumnIndex(Telephony.Sms.BODY);
+
+            do {
+                String sender = cursor.getString(senderIndex);
+                String body = cursor.getString(bodyIndex);
+                SMSMessage smsMessage = new SMSMessage(sender, body);
+                messages.add(smsMessage);
+
+            }while (cursor.moveToNext());
+        }else {
+            Log.e("SMSExtractor", "Failed to retrieve SMS messages.");
+        }
+        return messages;
+    }
+
+    public List<SMSMessage> extractSuspiciousMessages() {
+        List<SMSMessage> suspiciousMessages = new ArrayList<>();
+
+        Cursor cursor = getSmsCursor();
 
         if (cursor != null && cursor.moveToFirst()) {
             int senderIndex = cursor.getColumnIndex(Telephony.Sms.ADDRESS);
@@ -48,57 +100,23 @@ public class SMSExtractor {
                         suspiciousMessages.add(smsMessage);
                     }
                 }
-//                    }
-//                }
             } while (cursor.moveToNext());
 
             cursor.close();
         } else {
             Log.e("SMSExtractor", "Failed to retrieve SMS messages.");
         }
-
         return suspiciousMessages;
     }
 
     private boolean isSenderInContacts(String sender) {
-        Uri lookupUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(sender));
-        String[] projection = {ContactsContract.PhoneLookup._ID};
-        Cursor cursor = context.getContentResolver().query(lookupUri, projection, null, null, null);
 
+        Cursor cursor = getContactsCursor(sender);
         boolean isInContacts = (cursor != null && cursor.getCount() > 0);
 
         if (cursor != null) {
             cursor.close();
         }
-
         return isInContacts;
     }
-
-//    private String analyzeSms(Set<String> contactNumbers) {
-//        StringBuilder analyzedMessages = new StringBuilder();
-//        Uri uri = Uri.parse("content://sms/inbox");
-//        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
-//
-//        if (cursor != null && cursor.moveToFirst()) {
-//            int addressColumnIndex = cursor.getColumnIndex("address");
-//            int bodyColumnIndex = cursor.getColumnIndex("body");
-//
-//            if (addressColumnIndex != -1 && bodyColumnIndex != -1) {
-//                do {
-//                    String address = cursor.getString(addressColumnIndex);
-//                    String body = cursor.getString(bodyColumnIndex);
-//                    if (!contactNumbers.contains(address.replaceAll("[^0-9]", ""))) {
-//                        boolean isSmishing = SmishingDetector.isSmishingMessage(body.toLowerCase());
-//                        analyzedMessages.append(body)
-//                                .append("\nSmishing: ").append(isSmishing).append("\n\n");
-//                    }
-//                } while (cursor.moveToNext());
-//            }
-//            cursor.close();
-//        }
-//
-//        return analyzedMessages.toString();
-//    }
-
-
 }
