@@ -17,6 +17,9 @@ import androidx.navigation.ui.NavigationUI;
 import android.widget.ImageButton;
 
 import com.example.smishingdetectionapp.databinding.ActivitySignupBinding;
+import android.widget.TextView;
+import android.widget.Button;
+import android.widget.CheckBox;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -38,6 +41,21 @@ public class SignupActivity extends AppCompatActivity {
             finish();
         });
 
+        // Navigate to Terms and Conditions Activity
+        TextView termsTextView = findViewById(R.id.terms_conditions);
+        termsTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(SignupActivity.this, TermsAndConditionsActivity.class);
+            startActivity(intent);
+        });
+
+        // Enable register button only when terms are accepted
+        CheckBox termsCheckbox = findViewById(R.id.terms_conditions_checkbox);
+        Button registerButton = findViewById(R.id.registerBtn);
+        registerButton.setEnabled(false); // Disable the register button initially
+
+        termsCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            registerButton.setEnabled(isChecked);
+        });
     }
 
     @Override
