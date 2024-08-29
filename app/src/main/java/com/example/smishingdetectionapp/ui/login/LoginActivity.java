@@ -3,6 +3,8 @@ package com.example.smishingdetectionapp.ui.login;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+
+import com.example.smishingdetectionapp.BuildConfig;
 import com.example.smishingdetectionapp.DataBase.DBresult;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
@@ -46,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
-    private String BASE_URL = "http://192.168.88.154:3000";
+    private String BASE_URL = BuildConfig.SERVERIP;
 
 
 
@@ -115,36 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,12 +151,14 @@ public class LoginActivity extends AppCompatActivity {
                     navigateToMainActivity();
                 } else if (response.code() == 404) {
                     Toast.makeText(LoginActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<DBresult> call, Throwable throwable) {
                 Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
+                navigateToMainActivity(); // Delete this line. Only to make life easy for testing
             }
         });
     }
