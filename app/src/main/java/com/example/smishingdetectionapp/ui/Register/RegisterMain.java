@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.smishingdetectionapp.BuildConfig;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.DataBase.SignupResponse;
-import com.example.smishingdetectionapp.MainActivity;
+
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.TermsAndConditionsActivity;
 import com.example.smishingdetectionapp.databinding.ActivitySignupBinding;
