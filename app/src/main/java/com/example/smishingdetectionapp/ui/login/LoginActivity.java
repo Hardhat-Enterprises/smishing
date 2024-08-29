@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.example.smishingdetectionapp.MainActivity;
 
+import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
