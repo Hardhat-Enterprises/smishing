@@ -30,7 +30,7 @@
     <string name="login_page">Login</string>
     <string name="detections_str">Detections</string>
     <string name="menu_news">News</string>
-    <string name="menu_Cyber_news">Krebs on Security News</string>
+    <string name="menu_Cyber_news">ACCC Scamwatch News</string>
     <string name="menu_settings">Settings</string>
     <string name="account_page">Account</string>
     <string name="report_page">Report Smishing</string>
