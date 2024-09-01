@@ -9,6 +9,11 @@ android {
     namespace = "com.example.smishingdetectionapp"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
+
     defaultConfig {
         ndk {
             // On Apple silicon, you can omit x86_64.
@@ -21,9 +26,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
+        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
+        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
         vectorDrawables {
             useSupportLibrary = true
         }
+
+
+
 
 
    }
