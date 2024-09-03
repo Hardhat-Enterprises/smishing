@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/baby_blue"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
-        app:itemActiveIndicatorStyle="@android:color/transparent"
-        android:theme="@style/Theme.SmishingDetectionApp"
-        app:menu="@menu/activity_main_drawer" />
+        android:layout_height="match_parent">
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -69,23 +64,24 @@
 
         <TextView
             android:id="@+id/new_detections"
-            android:layout_width="175dp"
+            android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/counter_buttons"
             app:layout_constraintBottom_toTopOf="@+id/detections_btn"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/total_detections"
+            app:layout_constraintStart_toStartOf="@+id/information_box" />
 
         <TextView
             android:id="@+id/total_detections"
-            android:layout_width="175dp"
+            android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/counter_buttons"
             app:layout_constraintBottom_toTopOf="@+id/detections_btn"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/information_box"
+            app:layout_constraintStart_toEndOf="@id/new_detections" />
 
         <TextView
             android:id="@+id/information_box"
@@ -216,4 +212,27 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="?android:attr/windowBackground"
+            app:itemBackground="@color/baby_blue"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+            app:itemActiveIndicatorStyle="@android:color/transparent"
+            android:theme="@style/Theme.SmishingDetectionApp"
+            app:menu="@menu/activity_main_drawer" />
+
+
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
