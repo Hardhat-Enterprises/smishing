@@ -1,9 +1,10 @@
 The dataset will look something like this:
 
 Example:
-Urls -----------Label
-Spam.com------- Phishing
-Google.com----- Harmless
+Spam.com------- Phishing;
+Google.com----- Harmless;
+downloadme.com----Malware;
+Youtube.com---Harmless;
 
 You may also modify the code if you are working on feature extraction or machine learning model training. I have excluded some additional data to streamline the process, but it can be reintegrated with modifications to the code as needed.
 
