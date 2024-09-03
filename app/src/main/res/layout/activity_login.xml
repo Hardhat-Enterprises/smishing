@@ -131,6 +131,8 @@
             android:id="@+id/registerButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+
             android:layout_marginTop="@dimen/margin_large"
             android:background="@drawable/buttons_rounded"
             android:backgroundTint="@color/baby_blue"

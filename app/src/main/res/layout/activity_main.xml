@@ -1,347 +1,391 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/baby_blue"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
-        app:itemActiveIndicatorStyle="@android:color/transparent"
-        android:theme="@style/Theme.SmishingDetectionApp"
-        app:menu="@menu/activity_main_drawer" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/detections_btn"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="75dp"
-            android:background="@drawable/buttons_rounded"
-            android:text="@string/detectionsBtn"
-            android:textSize="20sp"
-            android:drawableLeft="@drawable/bell_svg"
-            android:paddingStart="105dp"
-            android:paddingEnd="125dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/HardhatLogo"
-            android:layout_width="112dp"
-            android:layout_height="106dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/hardhat_logo"
-            android:contentDescription="@string/logo_description"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/DashboardText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/app_name"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
-            android:textColor="@color/navy_blue"/>
+            <Button
+                android:id="@+id/detections_btn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/element_height_large"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:background="@drawable/buttons_rounded"
+                android:drawableLeft="@drawable/bell_svg"
+                android:paddingStart="105dp"
+                android:paddingEnd="125dp"
+                android:text="@string/detectionsBtn"
+                android:textSize="@dimen/text_size_large"
+                app:layout_constraintBottom_toTopOf="@id/guideline3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/new_detections"
-            android:layout_width="175dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/counter_buttons"
-            app:layout_constraintBottom_toTopOf="@+id/detections_btn"
-            app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:id="@+id/HardhatLogo"
+                android:layout_width="112dp"
+                android:layout_height="106dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:contentDescription="@string/logo_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/hardhat_logo" />
 
-        <TextView
-            android:id="@+id/total_detections"
-            android:layout_width="175dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/counter_buttons"
-            app:layout_constraintBottom_toTopOf="@+id/detections_btn"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/DashboardText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="@string/app_name"
+                android:textColor="@color/navy_blue"
+                android:textSize="@dimen/text_size_xxlarge"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
 
-        <TextView
-            android:id="@+id/information_box"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="200dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/new_detections"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:cardBackgroundColor="@color/white"
-            app:strokeColor="@color/navy_blue"
-            app:strokeWidth="1dp"
-            />
+            <TextView
+                android:id="@+id/new_detections"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/detections_tv_height"
+                android:layout_marginRight="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:background="@drawable/counter_buttons"
+                app:layout_constraintBottom_toTopOf="@+id/detections_btn"
+                app:layout_constraintEnd_toStartOf="@+id/total_detections"
+                app:layout_constraintStart_toStartOf="@+id/information_box" />
 
-        <TextView
-            android:id="@+id/new_counter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:text="@string/zero"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="@+id/new_detections"
-            app:layout_constraintTop_toTopOf="@+id/new_detections" />
+            <TextView
+                android:id="@+id/total_detections"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/detections_tv_height"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:background="@drawable/counter_buttons"
+                app:layout_constraintBottom_toTopOf="@+id/detections_btn"
+                app:layout_constraintEnd_toEndOf="@+id/information_box"
+                app:layout_constraintStart_toEndOf="@id/new_detections" />
 
-        <TextView
-            android:id="@+id/total_counter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:text="@string/zero"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="@+id/total_detections"
-            app:layout_constraintTop_toTopOf="@+id/total_detections" />
+            <TextView
+                android:id="@+id/information_box"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/new_detectionsTxt"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/new_detections"
-            app:layout_constraintStart_toStartOf="@+id/new_detections" />
+                app:layout_constraintBottom_toTopOf="@+id/new_detections"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DashboardText"
+                app:layout_constraintVertical_bias="0.0"
+                app:cardBackgroundColor="@color/white"
+                app:strokeColor="@color/navy_blue"
+                app:strokeWidth="1dp" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/total_detectionsTxt"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/total_detections"
-            app:layout_constraintStart_toStartOf="@+id/total_detections" />
+            <TextView
+                android:id="@+id/new_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xsmall"
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:text="0"
+                android:textColor="#000000"
+                android:textSize="@dimen/text_size_xlarge"
+                app:layout_constraintStart_toStartOf="@+id/new_detections"
+                app:layout_constraintTop_toTopOf="@+id/new_detections" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toEndOf="@+id/total_detections"
-            app:layout_constraintTop_toTopOf="@+id/total_detections"
-            app:srcCompat="@drawable/baseline_access_time_24"
-            android:contentDescription="@string/time_icon"/>
+            <TextView
+                android:id="@+id/total_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xsmall"
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:text="0"
+                android:textColor="#000000"
+                android:textSize="@dimen/text_size_xlarge"
+                app:layout_constraintStart_toStartOf="@+id/total_detections"
+                app:layout_constraintTop_toTopOf="@+id/total_detections" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toEndOf="@+id/new_detections"
-            app:layout_constraintTop_toTopOf="@+id/new_detections"
-            app:srcCompat="@drawable/new_5_svg"
-            android:contentDescription="@string/new_icon"
-            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xsmall"
+                android:layout_marginBottom="@dimen/margin_xsmall"
+                android:text="@string/new_detectionsTxt"
+                android:textColor="#000000"
+                android:textSize="@dimen/text_size_medium"
+                app:layout_constraintBottom_toBottomOf="@+id/new_detections"
+                app:layout_constraintStart_toStartOf="@+id/new_detections" />
 
-        <Button
-            android:id="@+id/debug_btn"
-            android:layout_width="113dp"
-            android:layout_height="111dp"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="150dp"
-            android:alpha="0"
-            android:autoText="true"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="@+id/HardhatLogo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xsmall"
+                android:layout_marginBottom="@dimen/margin_xsmall"
+                android:text="@string/total_detectionsTxt"
+                android:textColor="#000000"
+                android:textSize="@dimen/text_size_medium"
+                app:layout_constraintBottom_toBottomOf="@+id/total_detections"
+                app:layout_constraintStart_toStartOf="@+id/total_detections" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="200dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/new_detections"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="10dp">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:layout_marginEnd="@dimen/margin_xsmall"
+                android:contentDescription="@string/time_icon"
+                app:layout_constraintEnd_toEndOf="@+id/total_detections"
+                app:layout_constraintTop_toTopOf="@+id/total_detections"
+                app:srcCompat="@drawable/baseline_access_time_24" />
 
             <TextView
                 android:id="@+id/information_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/overviewTxt"
-                android:textColor="@color/navy_blue"/>
+                android:layout_marginStart="@dimen/margin_xsmall"
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:text="Information"
+                app:layout_constraintStart_toStartOf="@+id/information_box"
+                app:layout_constraintTop_toTopOf="@+id/information_box" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:layout_marginEnd="@dimen/margin_xsmall"
+                android:contentDescription="@string/info_icon"
+                app:layout_constraintEnd_toEndOf="@+id/information_box"
+                app:layout_constraintTop_toTopOf="@+id/information_box"
+                app:srcCompat="@drawable/icon_information" />
 
-                <org.eazegraph.lib.charts.PieChart
-                    android:id="@+id/piechart"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:padding="6dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginBottom="15dp" />
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:layout_marginEnd="@dimen/margin_xsmall"
+                android:contentDescription="@string/new_icon"
+                app:layout_constraintEnd_toEndOf="@+id/new_detections"
+                app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
+                app:layout_constraintTop_toTopOf="@+id/new_detections"
+                app:srcCompat="@drawable/new_5_svg" />
+
+            <Button
+                android:id="@+id/debug_btn"
+                android:layout_width="113dp"
+                android:layout_height="111dp"
+                android:layout_marginStart="149dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="150dp"
+                android:alpha="0"
+                android:autoText="true"
+                android:text="Button"
+                app:layout_constraintBottom_toBottomOf="@+id/HardhatLogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.95"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="200dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/new_detections"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:id="@+id/information_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/overviewTxt"
+                    android:textColor="@color/navy_blue"/>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginStart="20dp"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical"
-                    >
+                    android:orientation="horizontal">
+
+                    <org.eazegraph.lib.charts.PieChart
+                        android:id="@+id/piechart"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="6dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginStart="20dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
 
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/red"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/smishingTxt"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="1dp"
-                            android:textColor="@color/navy_blue"/>
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/red"/>
 
-                        <TextView
-                            android:id="@+id/smishCount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/zero"
-                            android:gravity="end"
-                            android:paddingStart="1dp"
-                            android:paddingEnd="50dp"
-                            android:textColor="@color/navy_blue"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/smishingTxt"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="1dp"
+                                android:textColor="@color/navy_blue"/>
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/smishCount"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/zero"
+                                android:gravity="end"
+                                android:paddingStart="1dp"
+                                android:paddingEnd="50dp"
+                                android:textColor="@color/navy_blue"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="5dp">
+                        </LinearLayout>
 
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/green"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/hamTxt"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="1dp"
-                            android:textColor="@color/navy_blue"/>
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/green"/>
 
-                        <TextView
-                            android:id="@+id/hamCount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/zero"
-                            android:gravity="end"
-                            android:paddingStart="1dp"
-                            android:paddingEnd="50dp"
-                            android:textColor="@color/navy_blue"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/hamTxt"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="1dp"
+                                android:textColor="@color/navy_blue"/>
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/hamCount"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/zero"
+                                android:gravity="end"
+                                android:paddingStart="1dp"
+                                android:paddingEnd="50dp"
+                                android:textColor="@color/navy_blue"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="5dp">
+                        </LinearLayout>
 
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/orange"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/spamTxt"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="1dp"
-                            android:textColor="@color/navy_blue"/>
+                            <View
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/orange"/>
 
-                        <TextView
-                            android:id="@+id/spamCount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/zero"
-                            android:gravity="end"
-                            android:paddingStart="1dp"
-                            android:paddingEnd="50dp"
-                            android:textColor="@color/navy_blue"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/spamTxt"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="1dp"
+                                android:textColor="@color/navy_blue"/>
+
+                            <TextView
+                                android:id="@+id/spamCount"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/zero"
+                                android:gravity="end"
+                                android:paddingStart="1dp"
+                                android:paddingEnd="50dp"
+                                android:textColor="@color/navy_blue"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_navigation_height"
+            android:layout_alignParentBottom="true"
+            android:background="?android:attr/windowBackground"
+            app:itemBackground="@color/baby_blue"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+            app:itemActiveIndicatorStyle="@android:color/transparent"
+            android:theme="@style/Theme.SmishingDetectionApp"
+            app:menu="@menu/activity_main_drawer" />
 
+    </RelativeLayout>
 
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

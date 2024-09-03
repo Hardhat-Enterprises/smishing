@@ -6,13 +6,21 @@ import android.graphics.Color;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.Manifest;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,6 +34,7 @@ import com.example.smishingdetectionapp.notifications.NotificationPermissionDial
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
@@ -36,11 +45,20 @@ public class MainActivity extends AppCompatActivity {
 
     TextView pcSmish, pcHam, pcSpam;
     PieChart pieChart;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private BottomNavigationView bottomNavigationView;
+
+    public MainActivity() {
+        super();
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         com.example.smishingdetectionapp.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -70,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
             showNotificationPermissionDialog();
         }
 
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+/*
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setSelectedItemId(R.id.nav_home);
         nav.setOnItemSelectedListener(menuItem -> {
@@ -88,7 +111,63 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             return false;
+        })*/
+
+// Setup Drawer Toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Drawer Menu Item Selection Handling
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.nav_home) {
+                    // Handle Home navigation
+                } else if (id == R.id.nav_settings) {
+                    startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                } else if (id == R.id.nav_settings) {
+                    startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+                }
+
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
         });
+
+        // Bottom Navigation Setup
+        bottomNavigationView.setSelectedItemId(R.id.nav_home); // Home page selected by default
+        bottomNavigationView.setOnItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (id == R.id.nav_home) {
+                // Empty when currently selected.
+                return true;
+            } else if (id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class)); // Starts the News activity
+                overridePendingTransition(0, 0); // Removes the sliding animation
+                finish();
+                return true;
+            } else if (id == R.id.nav_settings) {
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            }
+            return false;
+        });
+
+
+        // Determine if running on a tablet
+        //boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        boolean isTablet = false;
+        if (isTablet) {
+            bottomNavigationView.setVisibility(View.GONE); // Hide BottomNavigationView on tablets
+        } else {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); // Lock the Drawer closed on phones
+        }
 
         Button debug_btn = findViewById(R.id.debug_btn);
         debug_btn.setOnClickListener(v ->
@@ -208,7 +287,14 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
