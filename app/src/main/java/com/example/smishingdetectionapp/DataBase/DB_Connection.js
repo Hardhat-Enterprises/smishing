@@ -21,33 +21,45 @@ app.use(express.json());
 
 // Sign-Up Endpoint
 app.post('/signup', async (req, res) => {
-    try {
-        const existingUser = await details.findOne({ Email: req.body.Email });
-        if (existingUser) {
-            return res.status(409).json({ message: 'Email already exists' });
-        }
 
+    const { FullName, PhoneNumber, Email, Password, VerificationCode } = req.body;
 
-
-        const hashedPassword = await bcrypt.hash(req.body.Password, 10); // Hash the password
+        const hashedPassword = await bcrypt.hash(Password, 10);
 
         const user = new details({
-            FullName: req.body.FullName,
-            PhoneNumber: req.body.PhoneNumber,
-            Email: req.body.Email,
+            FullName,
+            PhoneNumber,
+            Email,
             Password: hashedPassword,
-            verificationCode: req.body.VerificationCode, // Store the code sent from the Android app
+            verificationCode: VerificationCode,
             isVerified: false
         });
 
         await user.save();
 
         res.status(201).json({ message: 'Registration successful! Please check your email for verification.' });
+
+});
+
+// Email Check Endpoint
+app.post('/checkemail', async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        // Check if the email exists in the database
+        const existingUser = await details.findOne({ Email: email });
+        if (existingUser) {
+            return res.status(409).json({ message: 'Email already exists' });
+        } else {
+            return res.status(200).json({ message: 'Email is available' });
+        }
     } catch (err) {
-        console.error("Error during signup:", err);
+        console.error("Error checking email:", err);
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+
 
 // Login endpoint
 app.post('/login', async (req, res) => {

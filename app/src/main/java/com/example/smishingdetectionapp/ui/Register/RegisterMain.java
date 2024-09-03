@@ -159,12 +159,14 @@ public class RegisterMain extends AppCompatActivity {
     private void validateAndCheckEmail(final String fullName, final String phoneNumber, final String email, final String password) {
         if (isValidEmailAddress(email)) {
             HashMap<String, String> map = new HashMap<>();
+            map.put("email", email);
+
             // Step 2: Check if the email exists in the database via an API call
-            Call<SignupResponse> call = retrofitinterface.executeSignup(map);
+            Call<SignupResponse> call = retrofitinterface.checkEmail(map);
             call.enqueue(new Callback<SignupResponse>() {
                 @Override
                 public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
-                    if (response.code() != 409) {
+                    if (response.isSuccessful()) {
                         // Email does not exist, proceed with verification
                         String verificationCode = generateVerificationCode(); // Generate the 6-digit code
                         sendVerificationEmail(email, verificationCode); // Send email
