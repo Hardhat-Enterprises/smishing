@@ -1,13 +1,12 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+        google()
         mavenCentral()
-        // Add other repositories here
     }
     dependencies {
-        classpath("com.chaquo.python:gradle:15.0.1")
-
-        // Add other classpaths here
+        classpath(libs.gradle) // Android Gradle plugin
+        classpath(libs.kotlin.gradle.plugin) // Kotlin Gradle plugin
+        classpath(libs.python.gradle) // Chaquopy Gradle plugin
     }
 }
 
