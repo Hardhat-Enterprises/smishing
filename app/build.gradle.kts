@@ -11,13 +11,13 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
+        compose = true
     }
-
 
     defaultConfig {
         ndk {
-            // On Apple silicon, you can omit x86_64.
-            abiFilters += listOf("arm64-v8a", "x86_64")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
         applicationId = "com.example.smishingdetectionapp"
         minSdk = 24
@@ -27,17 +27,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
-        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
+        buildConfigField("String", "EMAIL PASSWORD", "\"xedr gaek jdsv ujxw\"")
+        buildConfigField("String", "SERVERIP", "\"http://192.168.?.?:3000\"")
         vectorDrawables {
             useSupportLibrary = true
         }
-
-
-
-
-
-   }
+    }
 
     buildTypes {
         release {
@@ -47,23 +42,18 @@ android {
     }
 
     compileOptions {
-
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-
-
     }
 
-    buildFeatures {
-        viewBinding = true
-        compose = true
-    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -90,18 +80,13 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
-    implementation ("com.google.android.material:material:1.2.0-alpha02")
+    implementation(libs.okhttp.v490)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.converter.simplexml)
+    implementation(libs.material.v120alpha02)
     implementation(files("libs/activation.jar"))
-    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/additional.jar"))
     implementation(files("libs/mail.jar"))
-
-
-
-
-
+    implementation(libs.kotlin.stdlib)
 }
-
