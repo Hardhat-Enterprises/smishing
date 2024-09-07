@@ -79,6 +79,7 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
             List<SMSMessage> suspiciousMessages = smsExtractor.extractSuspiciousMessages();
             for (SMSMessage smsMessage : suspiciousMessages) {
                 // to do implement a function to display notification
+                showNotification(smsMessage);
             }
         }
     }
@@ -139,6 +140,36 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
                 getInboxMessages();
             }
         }
+    }
+    private void showNotification(SMSMessage smsMessage) {
+        String channelId = "smishing_alert_channel";
+        String channelName = "Smishing Alerts";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent intent = new Intent(this, SMSMessageDetailActivity.class);
+        intent.putExtra("SMS_MESSAGE", smsMessage);
+        // Use FLAG_IMMUTABLE for PendingIntent if you do not need it to be mutable
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.hardhat_logo) // Replace with your app's icon
+                .setContentTitle("Suspicious Message Detected")
+                .setContentText("Possible phishing message from " + smsMessage.getSender())
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent) // Opens detail activity on click
+                .setAutoCancel(true); // Dismisses notification on click
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQUEST_CODE);
+            return;
+        }
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build()); // Use unique ID
     }
 
 }
