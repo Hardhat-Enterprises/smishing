@@ -10,23 +10,21 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        ndk {
-            // On Apple silicon, you can omit x86_64.
-            abiFilters += listOf("arm64-v8a", "x86_64")
-        }
         applicationId = "com.example.smishingdetectionapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
+        ndk {
+            abiFilters += listOf("arm64-v8a", "x86_64")
+        }
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-
-
-   }
+    }
 
     buildTypes {
         release {
@@ -34,26 +32,36 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-//    ndk {
-//        abiFilters("armeabi-v7a", "x86")
-//    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         viewBinding = true
         compose = true
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
+
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += setOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "/META-INF/DEPENDENCIES",
+                "/META-INF/LICENSE",
+                "/META-INF/LICENSE.txt",
+                "/META-INF/NOTICE",
+                "/META-INF/NOTICE.txt",
+                "META-INF/INDEX.LIST"
+            )
         }
     }
 
@@ -80,7 +88,8 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.activity)
-    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
+
+    // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -88,15 +97,27 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
-    implementation ("com.google.android.material:material:1.12.0")
-    implementation(libs.android)
-    implementation(libs.google.cloud.vision) // Google Cloud Vision API
-    implementation(libs.google.cloud.translate) // Google Cloud Translation API
-    implementation(libs.kotlinx.coroutines.android)
 
+    // External libraries
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.converter.simplexml)
+    implementation(libs.material)
+
+    // Google Cloud Vision API
+    implementation(libs.google.cloud.vision.v11000)
+
+    // Google Cloud Translate API
+    implementation(libs.google.cloud.translate.v1950)
+
+    // gRPC and Protobuf dependencies
+    implementation(libs.grpc.okhttp)
+    implementation(libs.grpc.protobuf)
+    implementation(libs.grpc.stub)
+    implementation(libs.grpc.auth)
+    implementation(libs.grpc.core)
 }
+
+
 
