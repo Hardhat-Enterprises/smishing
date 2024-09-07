@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -141,6 +142,7 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
             }
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void showNotification(SMSMessage smsMessage) {
         String channelId = "smishing_alert_channel";
         String channelName = "Smishing Alerts";
