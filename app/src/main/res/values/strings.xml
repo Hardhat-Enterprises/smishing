@@ -242,4 +242,9 @@
     <string name="start_a_new_post">Start a new post</string>
     <string name="submitfeedback">Submit Feedback</string>
     <string name="community">Community</string>
+    <string name="todo">TODO</string>
+    <string name="image_to_be_processed">Image to be processed</string>
+    <string name="process_image">Process Image</string>
+    <string name="extracted_text_will_appear_here">Extracted text will appear here</string>
+    <string name="translated_text_will_appear_here">Translated text will appear here</string>
 </resources>
