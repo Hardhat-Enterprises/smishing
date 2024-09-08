@@ -4,12 +4,12 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
 
-public class EmailService {
+public abstract class EmailService {
 
-    private static final String SMTP_HOST = System.getenv("SMTP_HOST"); // Set in environment
-    private static final String SMTP_PORT = System.getenv("SMTP_PORT"); // Set in environment
-    private static final String EMAIL_USER = System.getenv("EMAIL_USER"); // Set in environment
-    private static final String EMAIL_PASSWORD = System.getenv("EMAIL_PASSWORD"); // Set in environment
+    private static final String SMTP_HOST = System.getenv("SMTP_HOST");
+    private static final String SMTP_PORT = System.getenv("SMTP_PORT");
+    private static final String EMAIL_USER = System.getenv("EMAIL_USER");
+    private static final String EMAIL_PASSWORD = System.getenv("EMAIL_PASSWORD");
 
     public static void send(String to, String subject, String body) {
         // Set up email server properties
@@ -48,6 +48,8 @@ public class EmailService {
         String subject = "Account Locked";
         String body = "Your account has been locked due to multiple failed login attempts. Please contact support if you believe this is an error.";
         send(userEmail, subject, body);
-    }
-}
+    }}
+
+
+
 

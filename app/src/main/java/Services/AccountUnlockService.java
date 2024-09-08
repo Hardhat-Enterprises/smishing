@@ -1,16 +1,15 @@
 package Services;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
-public class AccountLockService {
+class AccountUnLockService {
     private static final long LOCK_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
-
-    // ScheduledExecutorService for periodic tasks
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
+    private static final Logger logger = Logger.getLogger(String.valueOf(AccountUnLockService.class));
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1); // ScheduledExecutorService for periodic tasks
     public void startUnlockingService() {
         scheduler.scheduleWithFixedDelay(this::unlockAccounts, 0, LOCK_DURATION, TimeUnit.MILLISECONDS);
     }
@@ -20,10 +19,13 @@ public class AccountLockService {
             List<User> users = getAllLockedUsers(); // Fetch locked users from the database
             long currentTime = System.currentTimeMillis();
             for (User user : users) {
-                if (currentTime - user.getLastFailedAttempt() > LOCK_DURATION) {
-                    user.setLocked(false);
-                    user.setFailedAttempts(0);
-                    updateUserInDatabase(user); // Persist changes in the database
+                if (user.getLastFailedAttempt() != null) {
+                    long lastFailedAttemptTime = user.getLastFailedAttempt().getTime(); // Convert Date to milliseconds for comparison
+                    if (currentTime - lastFailedAttemptTime > LOCK_DURATION) {
+                        user.setLocked(false);
+                        user.setFailedAttempts(0);
+                        updateUserInDatabase(user);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -32,17 +34,17 @@ public class AccountLockService {
         }
     }
 
+
+    private void stopService() {
+        scheduler.shutdownNow();
+    }
+
     private List<User> getAllLockedUsers() {
-        // Replace with actual database retrieval logic
-        // This method should return a list of users whose accounts are locked
-        return null;
+        return new ArrayList<>();
     }
 
     private void updateUserInDatabase(User user) {
-        // Replace with actual database update logic
-    }
-
-    public void stopService() {
-        scheduler.shutdownNow();
     }
 }
+
+

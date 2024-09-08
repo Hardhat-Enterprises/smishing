@@ -8,21 +8,18 @@ public class AuthenticationService {
 
     public boolean authenticate(String username, String password) {
         User User = getUserFromDatabase(username);
-        if (user == null) {
-            return false; // User not found
-        }
 
-        if (isAccountLocked(user)) {
+        if (isAccountLocked(User)) {
             return false; // Account is locked
         }
 
-        if (passwordMatches(user, password)) {
-            user.setFailedAttempts(0); // Reset failed attempts on successful login
-            user.setLockoutStart(null); // Clear lockout start time
-            updateUserInDatabase(user);
+        if (passwordMatches(User, password)) {
+            User.setFailedAttempts(0); // Reset failed attempts on successful login
+            User.setLockoutStart(null); // Clear lockout start time
+            updateUserInDatabase(User);
             return true; // Authentication successful
         } else {
-            handleFailedLogin(user); // Handle the failed login attempt
+            handleFailedLogin(User); // Handle the failed login attempt
             return false; // Authentication failed
         }
     }
@@ -63,6 +60,13 @@ public class AuthenticationService {
         updateUserInDatabase(user);
     }
 
+    private void sendLockoutNotification(User user) {
+        // Use EmailService to send the lockout notification
+        String userEmail = user.getEmail();
+        EmailService emailService = new EmailServiceImpl();
+        emailService.sendLockoutNotification(userEmail);
+    }
+
     private User getUserFromDatabase(String username) {
         // Replace with actual database retrieval logic
         return new User(username, "hashedPassword"); // Replace with actual logic
@@ -71,11 +75,5 @@ public class AuthenticationService {
     private void updateUserInDatabase(User user) {
         // Replace with actual database update logic
     }
-
-    private void sendLockoutNotification(User user) {
-        // Use EmailService to send the lockout notification
-        String userEmail = user.getEmail();
-        EmailService emailService = new EmailServiceImpl();
-        emailService.sendLockoutNotification(userEmail);
-    }
-}
+    public static class EmailServiceImpl extends EmailService {
+}}
