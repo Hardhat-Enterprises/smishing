@@ -78,6 +78,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(files("libs/activation.jar"))
     implementation(files("libs/mail.jar"))
+    implementation(libs.preference)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
