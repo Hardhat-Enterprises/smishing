@@ -83,4 +83,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     debugImplementation(libs.ui.tooling)
+    implementation(libs.javax.mail.api)
+    implementation(libs.gson)
 }
