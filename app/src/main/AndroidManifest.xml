@@ -37,6 +37,9 @@
             android:name=".HelpActivity"
             android:exported="false" />
         <activity
+            android:name=".AboutMeActivity"
+            android:exported="false" />
+        <activity
             android:name=".NotificationActivity"
             android:exported="false" />
         <activity
