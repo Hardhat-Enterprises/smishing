@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -29,7 +28,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
-        buildConfigField("String", "EMAIL PASSWORD", "\"xedr gaek jdsv ujxw\"")
+        buildConfigField("String", "EMAIL_PASSWORD", "\"xedr gaek jdsv ujxw\"")
         buildConfigField("String", "SERVERIP", "\"http://192.168.?.?:3000\"")
         vectorDrawables {
             useSupportLibrary = true
@@ -63,7 +62,8 @@ android {
     }
 
     sourceSets {
-        getByName("main").java.srcDirs("src/main/python")
+        getByName("main").java.srcDirs("src/main/java")
+        getByName("main").resources.srcDirs("src/main/resources")
     }
 }
 
