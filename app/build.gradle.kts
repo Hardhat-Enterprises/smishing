@@ -1,7 +1,9 @@
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.chaquo.python")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -51,7 +53,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
+        kotlinCompilerExtensionVersion = "2.0.0"
     }
 
     packaging {
@@ -73,20 +75,11 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(platform(libs.compose.bom))
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/mail.jar"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
-    implementation(libs.okhttp.v490)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.converter.simplexml)
-    implementation(libs.material.v120alpha02)
-    implementation(files("libs/activation.jar"))
-    implementation(files("libs/additional.jar"))
-    implementation(files("libs/mail.jar"))
-    implementation(libs.kotlin.stdlib)
 }
