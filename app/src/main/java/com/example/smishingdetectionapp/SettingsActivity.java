@@ -68,11 +68,6 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, HelpActivity.class));
             finish();
         });
-        Button aboutMeButton = findViewById(R.id.aboutMeBtn);
-        aboutMeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(SettingsActivity.this, AboutMeActivity.class);
-            startActivity(intent);
-        });
     }
 
     //Notification button to switch to notification page
