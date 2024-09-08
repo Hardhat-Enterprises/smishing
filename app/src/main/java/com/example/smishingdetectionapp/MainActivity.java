@@ -1,5 +1,4 @@
 package com.example.smishingdetectionapp;
-
 import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -7,7 +6,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import com.chaquo.python.Python;
 import com.chaquo.python.PyObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
