@@ -1,9 +1,102 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
+
+   <!----  <dimen name="activity_horizontal_margin">16dp</dimen>
+                Previous Version
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="bottom_navigation_height">56dp</dimen>
-</resources>
+    <dimen name="bottom_navigation_height">56dp</dimen> -->
+
+        <!-- Universal Dimensions (Commonly used across the app) -->
+        <!-- Margins -->
+        <dimen name="margin_xsmall">4dp</dimen>
+        <dimen name="margin_small">8dp</dimen>
+        <dimen name="margin_medium">16dp</dimen>
+        <dimen name="margin_large">24dp</dimen>
+        <dimen name="margin_xlarge">32dp</dimen>
+        <dimen name="margin_xxlarge">48dp</dimen>
+
+        <!-- Padding -->
+        <dimen name="padding_xsmall">4dp</dimen>
+        <dimen name="padding_small">8dp</dimen>
+        <dimen name="padding_medium">16dp</dimen>
+        <dimen name="padding_large">24dp</dimen>
+        <dimen name="padding_xlarge">32dp</dimen>
+        <dimen name="padding_xxlarge">48dp</dimen>
+
+        <!-- Text Sizes -->
+        <dimen name="text_size_xsmall">10sp</dimen>
+        <dimen name="text_size_small">12sp</dimen>
+        <dimen name="text_size_medium">16sp</dimen>
+        <dimen name="text_size_large">20sp</dimen>
+        <dimen name="text_size_xlarge">24sp</dimen>
+        <dimen name="text_size_xxlarge">32sp</dimen>
+
+        <!-- Element Sizes -->
+        <dimen name="element_height_small">40dp</dimen>
+        <dimen name="element_height_medium">48dp</dimen>
+        <dimen name="element_height_large">56dp</dimen>
+        <dimen name="element_width_small">100dp</dimen>
+        <dimen name="element_width_medium">200dp</dimen>
+        <dimen name="element_width_large">300dp</dimen>
+
+        <!-- Icon Sizes -->
+        <dimen name="icon_size_small">16dp</dimen>
+        <dimen name="icon_size_medium">24dp</dimen>
+        <dimen name="icon_size_large">32dp</dimen>
+        <dimen name="icon_size_xlarge">48dp</dimen>
+
+        <!-- Border Radius -->
+        <dimen name="border_radius_small">4dp</dimen>
+        <dimen name="border_radius_medium">8dp</dimen>
+        <dimen name="border_radius_large">16dp</dimen>
+
+        <!-- Elevation -->
+        <dimen name="elevation_small">2dp</dimen>
+        <dimen name="elevation_medium">4dp</dimen>
+        <dimen name="elevation_large">8dp</dimen>
+
+        <!-- Buttons -->
+        <dimen name="button_height_small">40dp</dimen>
+        <dimen name="button_height_medium">48dp</dimen>
+        <dimen name="button_height_large">56dp</dimen>
+        <dimen name="button_width_small">100dp</dimen>
+        <dimen name="button_width_medium">200dp</dimen>
+        <dimen name="button_width_large">300dp</dimen>
+        <dimen name="button_primary_height">48dp</dimen>
+        <dimen name="button_secondary_height">40dp</dimen>
+        <dimen name="button_tertiary_height">32dp</dimen>
+
+        <!-- Images -->
+        <dimen name="image_size_small">80dp</dimen>
+        <dimen name="image_size_medium">120dp</dimen>
+        <dimen name="image_size_large">160dp</dimen>
+        <dimen name="image_size_xlarge">200dp</dimen>
+
+            <!-- Logo -->
+         <dimen name="logo_width">112dp</dimen>
+         <dimen name="logo_height">106dp</dimen>
+
+        <dimen name="toolbar_height">56dp</dimen>
+
+        <dimen name="actionbar_height">56dp</dimen>
+
+        <dimen name="nav_drawer_width">280dp</dimen>
+        <dimen name="nav_bar_height">48dp</dimen>
+
+        <dimen name="card_corner_radius">8dp</dimen>
+        <dimen name="card_elevation">4dp</dimen>
+
+        <dimen name="dialog_width">300dp</dimen>
+        <dimen name="dialog_height">400dp</dimen>
+
+        <dimen name="grid_item_width">100dp</dimen>
+        <dimen name="grid_item_height">100dp</dimen>
+        <dimen name="grid_item_spacing">8dp</dimen>
+
+        <dimen name="fab_size">56dp</dimen>
+        <dimen name="fab_margin">16dp</dimen>
+
+    </resources>
