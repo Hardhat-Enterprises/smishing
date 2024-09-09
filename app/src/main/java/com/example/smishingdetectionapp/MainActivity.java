@@ -15,47 +15,35 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
-import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
-
-    public MainActivity() {
-        super();
-    }
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_news, R.id.nav_settings)
                 .build();
 
-        // Check if notifications are enabled and prompt if not
         if (!areNotificationsEnabled()) {
             showNotificationPermissionDialog();
         }
 
-        BottomNavigationView nav = findViewById(R.id.bottom_navigation); //variable assignment
-        nav.setSelectedItemId(R.id.nav_home); //home page selected by default
-        nav.setOnItemSelectedListener(menuItem -> { //selected item listener
-
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        nav.setSelectedItemId(R.id.nav_home);
+        nav.setOnItemSelectedListener(menuItem -> {
             int id = menuItem.getItemId();
             if (id == R.id.nav_home) {
-                //Empty when currently selected.
                 return true;
-            }
-            else if(id == R.id.nav_news) {
-
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));//Starts the News activity
-                overridePendingTransition(0,0);//Removes the sliding animation
+            } else if (id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
             } else if (id == R.id.nav_settings) {
@@ -71,24 +59,22 @@ public class MainActivity extends AppCompatActivity {
         debug_btn.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, DebugActivity.class)));
 
-        //Opens the detections page.
         Button detections_btn = findViewById(R.id.detections_btn);
         detections_btn.setOnClickListener(v -> {
             startActivity(new Intent(this, DetectionsActivity.class));
             finish();
         });
 
-
-        //start database connection
-        DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
+        // Database connection
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
-        //setting counter from result
-        TextView total_count;
-        total_count = findViewById(R.id.total_counter);
-        total_count.setText(""+databaseAccess.getCounter());
-        //closing the connection
+
+        // Setting counter from the result
+        TextView total_count = findViewById(R.id.total_counter);
+        total_count.setText("" + databaseAccess.getCounter());
+
+        // Closing the connection
         databaseAccess.close();
-        //TODO: Add functionality for new detections.
 
     }
 
