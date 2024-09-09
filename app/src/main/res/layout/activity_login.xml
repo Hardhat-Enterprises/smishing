@@ -5,18 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
-
-
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="112dp"
-            android:layout_height="106dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="@dimen/logo_width"
+            android:layout_height="@dimen/logo_height"
+            android:layout_marginTop="@dimen/margin_medium"
             android:contentDescription="@string/logo_description"
             android:src="@drawable/hardhat_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+       <!-- <ImageView
+            android:id="@+id/logo"
+            android:layout_width="@dimen/logo_width"
+            android:layout_height="@dimen/logo_height"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/logo_description"
+            android:src="@drawable/hardhat_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" /> -->
 
         <TextView
             android:id="@+id/loginTitle"
@@ -32,6 +42,72 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
+            android:id="@+id/loginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/action_login_in"
+            android:textColor="@color/navy_blue"
+            android:textSize="@dimen/text_size_xxlarge"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/logo"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            tools:ignore="MissingConstraints" />
+
+        <TextView  android:id="@+id/emailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_xxlarge"
+            android:text="@string/prompt_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:autofillHints="emailAddress"
+            app:layout_constraintTop_toBottomOf="@id/emailLabel"
+            app:layout_constraintStart_toStartOf="@id/emailLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/margin_large"/>
+
+        <TextView
+            android:id="@+id/passwordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prompt_password"
+            app:layout_constraintStart_toStartOf="@id/emailLabel"
+            app:layout_constraintTop_toBottomOf="@id/email"
+            android:layout_marginTop="@dimen/margin_medium"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:autofillHints="password"
+            app:layout_constraintTop_toBottomOf="@id/passwordLabel"
+            app:layout_constraintStart_toStartOf="@id/passwordLabel"
+            app:layout_constraintEnd_toEndOf="@id/email"/>
+
+        <Button
+            android:id="@+id/forgotPasswordButton"
+            android:layout_width="@dimen/button_width_small"
+            android:layout_height="@dimen/button_height_small"
+            android:layout_marginStart="@dimen/margin_xlarge"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/forgot_password"
+            android:textColor="@color/navy_blue"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintStart_toStartOf="@id/password"
+            app:layout_constraintTop_toBottomOf="@id/password" />
+
+        <Button
+
+      <!--  <TextView
             android:id="@+id/emailLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +152,7 @@
             android:id="@+id/forgotPasswordButton"
             android:layout_width="165dp"
             android:layout_height="44dp"
-            android:layout_marginStart="180dp"
+            android:layout_marginStart="88dp"
             android:background="?android:attr/selectableItemBackground"
             android:text="@string/forgot_password"
             android:textColor="@color/navy_blue"
@@ -122,7 +198,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/loginButton"
             app:layout_constraintTop_toBottomOf="@id/loginButton" />
-
+-->
 
         <ProgressBar
             android:id="@+id/progressbar"
