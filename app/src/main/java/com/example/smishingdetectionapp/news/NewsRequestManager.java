@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.smishingdetectionapp.news.Models.RSSFeedModel;
 
@@ -36,6 +37,7 @@ public class NewsRequestManager {
                 } else {
                     // Notify listener of failure in fetching data
                     listener.onError("Failed to fetch data");
+                    Log.d("Invalid RSS Feed URL","Invalid RSS URL. Check network inspector for further details.");
                 }
             }
 
