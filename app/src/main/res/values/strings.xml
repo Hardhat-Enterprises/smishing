@@ -24,7 +24,7 @@
     <string name="logo_description">App Logo</string>
 
     <!-- Error messages -->
-    <string name="no_network_message">No available network. Please check your internet connection or try again later</string>
+    <string name="no_network_message">No available network. Please check your internet connection or try again later.</string>
 
     <!-- Page Titles -->
     <string name="login_page">Login</string>
