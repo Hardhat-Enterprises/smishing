@@ -46,7 +46,7 @@
             android:name=".ui.account.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".DetectionsActivity"
+            android:name=".detections.DetectionsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

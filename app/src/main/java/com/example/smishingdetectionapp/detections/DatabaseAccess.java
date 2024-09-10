@@ -1,13 +1,13 @@
-package com.example.smishingdetectionapp;
+package com.example.smishingdetectionapp.detections;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 
+import com.example.smishingdetectionapp.R;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +26,7 @@ public class DatabaseAccess {
         private static final int DATABASE_VERSION=1;
         private static final String TABLE_DETECTIONS = "Detections";
         private static final String TABLE_REPORTS = "Reports";
-        private static final String KEY_ROWID = "_id";
+        public static final String KEY_ROWID = "_id";
         public static final String KEY_PHONENUMBER="Phone_Number";
         public static final String KEY_MESSAGE = "Message";
         public static final String KEY_DATE = "Date";

@@ -15,7 +15,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
-import com.example.smishingdetectionapp.news.NewsAdapter;
+import com.example.smishingdetectionapp.detections.DatabaseAccess;
+import com.example.smishingdetectionapp.detections.DetectionsActivity;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

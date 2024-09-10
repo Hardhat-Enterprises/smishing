@@ -1,18 +1,23 @@
-package com.example.smishingdetectionapp;
+package com.example.smishingdetectionapp.detections;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.smishingdetectionapp.R;
 
 //Used for populating listview with correct data while searching.
 public class DisplayDataAdapterView extends CursorAdapter {
 
-    public DisplayDataAdapterView(Context context, Cursor c) {
+    public DisplayDataAdapterView(DetectionsActivity context, Cursor c) {
         super(context, c, 0);
+
     }
 
     @Override
@@ -27,6 +32,8 @@ public class DisplayDataAdapterView extends CursorAdapter {
         TextView MessageTextView = view.findViewById(R.id.detectionMessageText);
         TextView DateTextView = view.findViewById(R.id.detectionDateText);
 
+        int _id =
+                cursor.getColumnIndex(DatabaseAccess.DatabaseOpenHelper.KEY_ROWID);
         int Phone_Number =
                 cursor.getColumnIndex(DatabaseAccess.DatabaseOpenHelper.KEY_PHONENUMBER);
         int Message =
@@ -41,11 +48,11 @@ public class DisplayDataAdapterView extends CursorAdapter {
         PhoneTextView.setText(Phone);
         MessageTextView.setText(Messages);
         DateTextView.setText(Dates);
-
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         return super.getView(position, convertView, parent);
     }
+
 }
