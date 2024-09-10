@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         databaseAccess.open();
 
         // Setting counter from the result
-        TextView total_count = findViewById(R.id.total_counter);
+        total_count = findViewById(R.id.total_counter);
         total_count.setText("" + databaseAccess.getCounter());
 
         // Closing the connection

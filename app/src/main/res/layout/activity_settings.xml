@@ -118,14 +118,15 @@
             android:id="@+id/aboutMeBtn"
             android:layout_width="175dp"
             android:layout_height="100dp"
-            android:layout_marginStart="16dp"
+            android:maxHeight="100dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/buttons_rounded"
             android:gravity="bottom|start"
             android:text="@string/about_btn"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helpBtn"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportBtn"/>
 
         <Button
             android:id="@+id/feedbackBtn"
@@ -193,6 +194,16 @@
             app:layout_constraintEnd_toEndOf="@+id/helpBtn"
             app:layout_constraintTop_toTopOf="@+id/helpBtn"
             app:srcCompat="@drawable/help_svg" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/aboutMeBtn"
+            app:layout_constraintTop_toTopOf="@+id/aboutMeBtn"
+            app:srcCompat="@drawable/icon_information" />
 
         <ImageView
             android:id="@+id/imageView10"
