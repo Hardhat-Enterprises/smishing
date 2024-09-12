@@ -80,7 +80,9 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
             List<SMSMessage> suspiciousMessages = smsExtractor.extractSuspiciousMessages();
             for (SMSMessage smsMessage : suspiciousMessages) {
                 // to do implement a function to display notification
-                showNotification(smsMessage);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    showNotification(smsMessage);
+                }
             }
         }
     }
@@ -88,7 +90,7 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
     /**
      * get all the inbox messages
      */
-    private void getInboxMessages() {
+    void getInboxMessages() {
         ContentResolver contentResolver = getContentResolver();
         Uri inboxUri = Uri.parse("content://sms/inbox");
         Cursor cursor = contentResolver.query(
