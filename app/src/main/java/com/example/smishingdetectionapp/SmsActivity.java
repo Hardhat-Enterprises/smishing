@@ -1,5 +1,6 @@
 package com.example.smishingdetectionapp;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -23,16 +25,30 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.example.smishingdetectionapp.sms.SMSAdapter;
 import com.example.smishingdetectionapp.sms.SMSClickListener;
 import com.example.smishingdetectionapp.sms.model.SMSMessage;
 import com.example.smishingdetectionapp.sms.SMSExtractor;
 
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class SmsActivity extends AppCompatActivity implements SMSClickListener {
     private ArrayList<SMSMessage> smsMessageList = new ArrayList<>();
     private static final int READ_SMS_PERMISSION_CODE = 1;
+    private static final int NOTIFICATION_ID = 1001;
+    private static final int PERMISSION_REQUEST_CODE = 123;
 
     RecyclerView smsRecyclerView; // Holds the recyclerview which displays the sms messages list
     SMSAdapter smsAdapter;
@@ -41,35 +57,31 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sms);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        ImageButton back_btn = findViewById(R.id.back_btn);
-        back_btn.setOnClickListener(v -> {
-            finish();
-        });
 
         noSMSMessagesText = findViewById(R.id.no_messages_text);
         smsRecyclerView = findViewById(R.id.messages_recycler_view);
-        smsRecyclerView.setHasFixedSize(true); // Set to improve performance since changes in content do not change layout size
-        smsRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager for RecyclerView
-        smsAdapter = new SMSAdapter(this); // Initialize the adapter with context
+        smsRecyclerView.setHasFixedSize(true);
+        smsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        smsAdapter = new SMSAdapter(this);
         smsRecyclerView.setAdapter(smsAdapter);
+
         SMSExtractor smsExtractor = new SMSExtractor(getApplicationContext());
 
-        //checking the sms read permission on runtime
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            //requesting permission if not granted
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.READ_SMS}, READ_SMS_PERMISSION_CODE);
+        // Check SMS permission
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, READ_SMS_PERMISSION_CODE);
         } else {
-            smsAdapter.updateMessagesList(smsExtractor.extractSuspiciousMessages());
+            // Extract and display all messages
+            List<SMSMessage> allMessages = smsExtractor.extractAllMessages();
+            smsAdapter.updateMessagesList(allMessages);
+
+            // Check for suspicious messages and show notifications
+            List<SMSMessage> suspiciousMessages = smsExtractor.extractSuspiciousMessages();
+            for (SMSMessage smsMessage : suspiciousMessages) {
+                // to do implement a function to display notification
+                showNotification(smsMessage);
+            }
         }
     }
 
@@ -130,4 +142,36 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
             }
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    private void showNotification(SMSMessage smsMessage) {
+        String channelId = "smishing_alert_channel";
+        String channelName = "Smishing Alerts";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent intent = new Intent(this, SMSMessageDetailActivity.class);
+        intent.putExtra("SMS_MESSAGE", smsMessage);
+        // Use FLAG_IMMUTABLE for PendingIntent if you do not need it to be mutable
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.hardhat_logo) // Replace with your app's icon
+                .setContentTitle("Suspicious Message Detected")
+                .setContentText("Possible phishing message from " + smsMessage.getSender())
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent) // Opens detail activity on click
+                .setAutoCancel(true); // Dismisses notification on click
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQUEST_CODE);
+            return;
+        }
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build()); // Use unique ID
+    }
+
 }
