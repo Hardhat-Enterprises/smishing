@@ -12,7 +12,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
-import com.example.smishingdetectionapp.DetectionsActivity;
+import com.example.smishingdetectionapp.detections.DetectionsActivity;
 
 import androidx.core.app.NotificationCompat;
 
