@@ -1,8 +1,12 @@
 package com.example.smishingdetectionapp;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.chaquo.python.Python;
 import com.chaquo.python.PyObject;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         testPythonScriptWithPickledFiles(py);
     }
 
+    @SuppressLint("SetTextI18n")
     private void testPythonScriptWithPickledFiles(Python py) {
         AssetManager assetManager = getAssets();
         try {

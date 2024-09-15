@@ -39,7 +39,7 @@ public class DatabaseAccess {
 
     DatabaseAccess(Context context) {
 
-        openHelper= new DatabaseOpenHelper(context);
+        openHelper= new SQLiteOpenHelper(context);
         this.context = context;
     }
 

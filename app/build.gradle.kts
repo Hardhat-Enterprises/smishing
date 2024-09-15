@@ -91,7 +91,6 @@ dependencies {
     implementation (libs.converter.simplexml)
     implementation (libs.material.v120alpha02)
     implementation(files("libs/activation.jar"))
-    implementation(files("libs/additional.jar"))
     implementation(files("libs/mail.jar"))
 
 }
