@@ -9,6 +9,7 @@ import com.example.smishingdetectionapp.DataBase.DBresult;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
 
+import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
