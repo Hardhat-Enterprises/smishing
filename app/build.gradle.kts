@@ -111,6 +111,7 @@ dependencies {
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))
     implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation ("com.tbuonomo:dotsindicator:4.3")
 
 }
 

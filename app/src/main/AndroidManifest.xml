@@ -23,8 +23,12 @@
         android:roundIcon="@drawable/hardhat_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
-        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false" />
+        <activity
             android:name=".TermsAndConditionsActivity"
             android:exported="false" />
         <activity
@@ -84,12 +88,13 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- MainActivity is not the launcher anymore -->
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false" /> <!-- MainActivity is not the launcher anymore -->
+            android:name=".IntroActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
