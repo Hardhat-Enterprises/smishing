@@ -64,9 +64,7 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
             return false;
         });
 
-//        if (!isNetworkAvailable()) {
-//            showError();
-//        } else {
+
             // Initialize ProgressBar and set it visible before fetching data
             progressBar = findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);

@@ -9,6 +9,18 @@ import com.chaquo.python.PyObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
+import com.example.smishingdetectionapp.detections.DatabaseAccess;
+import com.example.smishingdetectionapp.detections.DetectionsActivity;
+
+import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +78,55 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("MainActivity", "Unexpected error", e);
         }
+
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        nav.setSelectedItemId(R.id.nav_home);
+        nav.setOnItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (id == R.id.nav_home) {
+                return true;
+            } else if (id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (id == R.id.nav_settings) {
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            }
+            return false;
+        });
+
+        Button debug_btn = findViewById(R.id.debug_btn);
+        debug_btn.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, DebugActivity.class)));
+
+        Button detections_btn = findViewById(R.id.detections_btn);
+        detections_btn.setOnClickListener(v -> {
+            startActivity(new Intent(this, DetectionsActivity.class));
+            finish();
+        });
+
+        // Database connection
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.open();
+        //setting counter from result
+        TextView total_count;
+        total_count = findViewById(R.id.total_counter);
+        total_count.setText(""+databaseAccess.getCounter());
+        //closing the connection
+        //databaseAccess.close();
+        //TODO: Add functionality for new detections.
+
+        // Setting counter from the result
+        TextView total_count = findViewById(R.id.total_counter);
+        total_count.setText("" + databaseAccess.getCounter());
+
+        // Closing the connection
+        databaseAccess.close();
+
     }
 
     private byte[] readBytesFromInputStream(InputStream inputStream) throws IOException {

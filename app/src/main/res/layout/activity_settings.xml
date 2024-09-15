@@ -114,6 +114,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/filteringBtn" />
 
+        <Button
+            android:id="@+id/aboutMeBtn"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/buttons_rounded"
+            android:gravity="bottom|start"
+            android:text="@string/about_btn"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helpBtn"/>
+
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="wrap_content"

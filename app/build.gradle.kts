@@ -85,4 +85,14 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     implementation(libs.javax.mail.api)
     implementation(libs.gson)
+    debugImplementation(libs.ui.test.manifest)
+    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
+    implementation ("com.google.android.material:material:1.2.0-alpha02")
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/mail.jar"))
+
 }
