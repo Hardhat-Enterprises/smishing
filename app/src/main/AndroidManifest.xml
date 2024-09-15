@@ -23,6 +23,7 @@
         android:roundIcon="@drawable/hardhat_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".TermsAndConditionsActivity"
@@ -58,7 +59,7 @@
             android:name=".ui.account.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".DetectionsActivity"
+            android:name=".detections.DetectionsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
