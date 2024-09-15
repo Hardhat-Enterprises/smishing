@@ -133,6 +133,7 @@ dependencies {
     implementation(libs.converter.simplexml)
     implementation(libs.material)
     implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation ("com.tbuonomo:dotsindicator:4.3")
 
     // Google Cloud Vision API
     implementation(libs.google.cloud.vision.v11000)

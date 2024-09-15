@@ -32,13 +32,34 @@
 
         <!-- Launcher Activity -->
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.App.Starting"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".IntroActivity"
+            android:exported="true" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ui.login.LoginActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
 
         <!-- Main Activity -->
         <activity
@@ -121,23 +142,14 @@
 
         <!-- Miscellaneous -->
         <activity
-            android:name=".SmishingRulesActivity"
-            android:exported="false" />
-        <activity
             android:name=".TermsAndConditionsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.account.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
-            android:theme="@style/Theme.App.Starting"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".SmishingRulesActivity"
+            android:exported="false" />
         <activity
             android:name=".OCRActivity"
             android:exported="true"
