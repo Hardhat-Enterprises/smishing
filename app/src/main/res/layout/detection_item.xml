@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
         <TextView
             android:id="@+id/pnTitle"
@@ -29,9 +29,9 @@
             android:id="@+id/item_pn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/pnTitle"
-            android:layout_alignBottom="@+id/pnTitle"
             android:layout_alignBaseline="@+id/pnTitle"
+            android:layout_alignBottom="@+id/pnTitle"
+            android:layout_toEndOf="@+id/pnTitle"
             android:text="pn"
             android:textSize="18sp" />
 
@@ -39,8 +39,8 @@
             android:id="@+id/item_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/messageTitle"
             android:layout_below="@+id/messageTitle"
+            android:layout_alignStart="@+id/messageTitle"
             android:text="msg"
             android:textSize="18sp" />
 
