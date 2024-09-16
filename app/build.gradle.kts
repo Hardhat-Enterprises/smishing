@@ -9,21 +9,32 @@ android {
     namespace = "com.example.smishingdetectionapp"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
+        ndk {
+            // On Apple silicon, you can omit x86_64.
+            abiFilters += listOf("arm64-v8a", "x86_64")
+        }
         applicationId = "com.example.smishingdetectionapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
-        ndk {
-            abiFilters += listOf("arm64-v8a", "x86_64")
-        }
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Merge the vectorDrawables from both branches
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Include the buildConfigFields from master
+        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
+        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
+        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
     }
 
     buildTypes {
@@ -89,7 +100,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.activity)
 
-    // Testing dependencies
+    // Merge testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -98,12 +109,11 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
-    // External libraries
+    // External libraries from feature/ocr-functionality
     implementation(libs.okhttp)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.converter.simplexml)
-    implementation(libs.material)
 
     // Google Cloud Vision API
     implementation(libs.google.cloud.vision.v11000)
@@ -117,7 +127,15 @@ dependencies {
     implementation(libs.grpc.stub)
     implementation(libs.grpc.auth)
     implementation(libs.grpc.core)
+
+    // Additional dependencies from master
+    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:converter-simplexml:2.11.0")
+    implementation("com.google.android.material:material:1.2.0-alpha02")
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/mail.jar"))
 }
-
-
-
