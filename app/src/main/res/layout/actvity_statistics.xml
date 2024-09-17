@@ -50,34 +50,55 @@
         android:textColor="@color/navy_blue"/>
 
     <!-- Total Messages Analyzed - Backend logic needed to update the text -->
+
+    <!-- Smishing Messages Count - Backend logic needed to update the text -->
+
+    <!-- Refresh Button - Backend logic for onClick handling -->
+
     <TextView
         android:id="@+id/totalMessagesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Total Messages Analyzed: 0"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statisticsText"/>
+        app:layout_constraintTop_toBottomOf="@+id/statisticsText" />
 
-    <!-- Smishing Messages Count - Backend logic needed to update the text -->
     <TextView
         android:id="@+id/smishingMessagesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:text="Smishing Messages Count: 0"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalMessagesTextView"/>
+        app:layout_constraintTop_toBottomOf="@+id/totalMessagesTextView" />
 
-    <!-- Refresh Button - Backend logic for onClick handling -->
+    <ProgressBar
+        android:id="@+id/messagesProgressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="387dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="4dp"
+        android:max="100"
+        android:progress="0"
+        android:progressBackgroundTint="@color/green"
+        android:progressTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/smishingMessagesTextView" />
+
     <Button
         android:id="@+id/refreshButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
         android:text="@string/refresh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
