@@ -81,6 +81,7 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
         }
     };
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,19 +94,37 @@ public class SmsActivity extends AppCompatActivity implements SMSClickListener {
         smsAdapter = new SMSAdapter(this);
         smsRecyclerView.setAdapter(smsAdapter);
 
-        // Register receiver for incoming SMS
-        registerReceiver(smsReceiver, new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
+        // Check if activity was started from notification
+        Intent intent = getIntent();
+        String sender = intent.getStringExtra("SMS_SENDER");
+        String messageBody = intent.getStringExtra("SMS_BODY");
 
-        // Check SMS permission
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, READ_SMS_PERMISSION_CODE);
+        if (sender != null && messageBody != null) {
+            // If sender and message body are present, open the details activity directly
+            openSMSMessageDetailActivity(sender, messageBody);
         } else {
-            // Extract and display all messages
-            getInboxMessages();
+            // Otherwise, handle the regular case of showing all messages
+            // Register receiver for incoming SMS
+            registerReceiver(smsReceiver, new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
+
+            // Check SMS permission
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, READ_SMS_PERMISSION_CODE);
+            } else {
+                // Extract and display all messages
+                getInboxMessages();
+            }
         }
     }
 
+    // New helper method to open SMS details
+    private void openSMSMessageDetailActivity(String sender, String messageBody) {
+        Intent detailIntent = new Intent(SmsActivity.this, SMSMessageDetailActivity.class);
+        detailIntent.putExtra("SMS_SENDER", sender);
+        detailIntent.putExtra("SMS_BODY", messageBody);
+        startActivity(detailIntent);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
