@@ -2,18 +2,21 @@ package com.example.smishingdetectionapp;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.Manifest;
 import androidx.appcompat.app.AppCompatActivity;
 import com.chaquo.python.Python;
 import com.chaquo.python.PyObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -143,5 +146,28 @@ public class MainActivity extends AppCompatActivity {
         }
         inputStream.close();
         return byteArrayOutputStream.toByteArray();
+    private boolean areNotificationsEnabled() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 1);
+        }
+
+        return NotificationManagerCompat.from(this).areNotificationsEnabled();
+    }
+
+    private void showNotificationPermissionDialog() {
+        NotificationPermissionDialogFragment dialogFragment = new NotificationPermissionDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "notificationPermission");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 }
