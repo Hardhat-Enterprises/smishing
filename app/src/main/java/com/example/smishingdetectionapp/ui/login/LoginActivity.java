@@ -1,36 +1,31 @@
 package com.example.smishingdetectionapp.ui.login;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.smishingdetectionapp.BuildConfig;
 import com.example.smishingdetectionapp.DataBase.DBresult;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
+
+
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
 
 import java.util.HashMap;
@@ -41,21 +36,25 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
-
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
     private String BASE_URL = BuildConfig.SERVERIP;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
+
+        // Initialize Retrofit for network communication
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -63,141 +62,127 @@ public class LoginActivity extends AppCompatActivity {
 
         retrofitinterface = retrofit.create(Retrofitinterface.class);
 
-        // Check if the user is already logged in at the beginning of onCreate
-        if (isUserLoggedIn()) {
-            // User is already logged in, redirect to MainActivity
-            navigateToMainActivity();
-            return; // Stop further execution of this method
-        }
+        // Check if the user is already logged in
+
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.email;
+
+        final EditText emailEditText = binding.email;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.loginButton;
         final ProgressBar loadingProgressBar = binding.progressbar;
-
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
-            }
-        });
-
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
-            }
-        });
+        CheckBox remember = binding.Remember;
 
 
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleLoginDialog();
 
-            }
-        });
+        loginButton.setOnClickListener(v -> handleLogin());
 
-        Button buttonregister = findViewById(R.id.registerButton);
-        buttonregister.setOnClickListener(v -> {
+        Button registerButton = findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterMain.class));
             finish();
         });
 
+        // Checks if the checkbox is checked and saves user data if checked
+        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(compoundButton.isChecked()) {
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+                }
+                else if (!compoundButton.isChecked()) {
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "false");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
-
-    private void handleLoginDialog() {
-        final EditText usernameEditText = binding.email;
+    private void handleLogin() {
+        final EditText emailEditText = binding.email;
         final EditText passwordEditText = binding.password;
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
+        // Validate email and password input
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Prepare the login credentials for the backend
         HashMap<String, String> map = new HashMap<>();
-        map.put("email", usernameEditText.getText().toString());
-        map.put("password", passwordEditText.getText().toString());
+        map.put("email", email);
+        map.put("password", password);
 
+        // Make the login request to the backend
         Call<DBresult> call = retrofitinterface.executeLogin(map);
         call.enqueue(new Callback<DBresult>() {
             @Override
             public void onResponse(Call<DBresult> call, Response<DBresult> response) {
-                if (response.code() == 200) {
-                    navigateToMainActivity();
-                } else if (response.code() == 404) {
-                    Toast.makeText(LoginActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
-
+                if (response.isSuccessful()) {
+                    DBresult result = response.body();
+                    if (result != null && result.getToken() != null) {
+                        // JWT token received, store it in SharedPreferences
+                        storeToken(result.getToken());
+                        navigateToMainActivity();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login failed. No token received.", Toast.LENGTH_LONG).show();
+                    }
+                } else if (response.code() == 401) {
+                    Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login failed. Try again.", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DBresult> call, Throwable throwable) {
-                Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
-                navigateToMainActivity(); // Delete this line. Only to make life easy for testing
+                Toast.makeText(LoginActivity.this, "Error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-
-
-    private boolean validateUsername(String username) {
-        // Example validation: Username should not be empty and should contain an "@" symbol
-        return !username.isEmpty();
-    }
-
-    private boolean validatePassword(String password) {
-        // Example validation: Password should not be empty and must be at least 8 characters long
-        return !password.isEmpty() && password.length() >= 5;
+    // Store JWT token in SharedPreferences
+    private void storeToken(String token) {
+        SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("jwt_token", token);
+        editor.apply();
     }
 
 
-    private boolean isUserLoggedIn() {
-        // Implement this method based on your authentication mechanism
-        // Example for Firebase Auth:
-        // return FirebaseAuth.getInstance().getCurrentUser() != null;
-        return false; // Placeholder implementation
-    }
 
+    // Navigate to the main activity after successful login
     private void navigateToMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish(); // Ensure LoginActivity is finished and removed from the back stack
+        finish();  // Ensure LoginActivity is finished and removed from the back stack
+
+
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-        //finish();
-    }
-
+    // Display a failed login message
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
+
+    // Update the UI with logged-in user's details
+    private void updateUiWithUser(LoggedInUserView model) {
+        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+    }
+
+
+
 }
