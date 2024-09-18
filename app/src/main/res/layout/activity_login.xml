@@ -133,7 +133,13 @@
             android:visibility="gone"
             tools:ignore="MissingConstraints" />
 
-
+        <CheckBox
+            android:id="@+id/Remember"
+            android:layout_width="239dp"
+            android:layout_height="50dp"
+            android:text="Remember details"
+            tools:layout_editor_absoluteX="92dp"
+            tools:layout_editor_absoluteY="203dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
