@@ -90,7 +90,4 @@ dependencies {
     implementation (libs.converter.gson)
     implementation (libs.converter.simplexml)
     implementation (libs.material.v120alpha02)
-    implementation(files("libs/activation.jar"))
-    implementation(files("libs/mail.jar"))
-
 }

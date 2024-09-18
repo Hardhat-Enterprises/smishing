@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.smishingdetectionapp.R;
-import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,14 +32,14 @@ public class DatabaseAccess {
         public static final String KEY_DATE = "Date";
 
         public DatabaseOpenHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            super();
 
         }
     }
 
     DatabaseAccess(Context context) {
 
-        openHelper= new SQLiteOpenHelper(context);
+        openHelper= new MySQLiteOpenHelper(context);
         this.context = context;
     }
 
@@ -131,4 +131,20 @@ public class DatabaseAccess {
     }
 
 
-}
+    private static class MySQLiteOpenHelper extends SQLiteOpenHelper {
+        public MySQLiteOpenHelper(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+    }}
+
+
