@@ -93,6 +93,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation ("androidx.core:core-ktx:1.6.0")
     implementation(libs.activity)
     implementation(files("libs/sqliteassethelper-2.0.1.jar"))
     testImplementation(libs.junit)
