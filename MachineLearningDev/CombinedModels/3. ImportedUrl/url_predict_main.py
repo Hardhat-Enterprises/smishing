@@ -3,6 +3,7 @@ from list_of_functions2 import *
 import time
 from tqdm import tqdm
 from datasets import load_dataset
+import pickle
 
 # This version loads online dataset from huggingface
 # Maybe it's because the size of the ds, it's really slow 
@@ -37,9 +38,13 @@ for name, model in tqdm(models):
     print(f"Training time: {run_time} seconds")
     keep_record(name, run_time, 'imported url')
 # Train voting system on all the models
-votingclassifier = voting_system(X_train_features, y_train, X_train_features, y_train, X_test_features, y_test)
+votingclassifier = voting_system(X_train_features, y_train, X_valid_features, y_valid, X_test_features, y_test)
 keep_record('voting', None, 'voting system')
 
+# Pickle the models
+with open('voting_classifier.pkl', 'wb') as voiting_file:
+    pickle.dump(votingclassifier, voiting_file)
+    
 # Visualise model accuracies
 visualise_data()
 

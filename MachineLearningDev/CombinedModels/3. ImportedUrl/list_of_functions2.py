@@ -45,9 +45,9 @@ def model_pipeline(name, model, X_train_features, X_test_features, y_train, y_te
 
 # Multi models cross-validation and voting system
 # Use model list
-def voting_system(X_features, y, X_train_features, y_train, X_test_features, y_test):
-    cross_validation(X_features, y)
-    votingClassifier = train_voting_model(X_train_features, y_train)
+def voting_system(X_train_features, y_train, X_valid_features, y_valid, X_test_features, y_test):
+    cross_validation(X_train_features, y_train)
+    votingClassifier = train_voting_model(X_valid_features, y_valid)
     evaluate_model('voting', votingClassifier, X_train_features, X_test_features, y_train, y_test)
     return votingClassifier
 
