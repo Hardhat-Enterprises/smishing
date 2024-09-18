@@ -1,20 +1,53 @@
 package com.example.smishingdetectionapp;
 
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
+import com.example.smishingdetectionapp.DataBase.UserResponse;
+import com.example.smishingdetectionapp.news.NewsAdapter;
+
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
+import com.example.smishingdetectionapp.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private TextView emailTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        // Initialize TextView
+        emailTextView = findViewById(R.id.email);
+
+        // Retrieve JWT token from SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        String token = prefs.getString("jwt_token", null);
+
+        if (token != null) {
+            // Send the JWT token to the backend to fetch the email
+            fetchUserEmail(token);
+        } else {
+            // Handle case where no JWT is found (e.g., user is logged out)
+            emailTextView.setText("No token found. Please log in.");
+        }
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
@@ -94,10 +127,46 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+
+        private void fetchUserEmail(String token) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BuildConfig.SERVERIP)  // Set your backend URL
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            Retrofitinterface apiService = retrofit.create(Retrofitinterface.class);
+
+            // Send JWT token in the Authorization header to get the user's email
+            Call<UserResponse> call = apiService.getUserDetails("Bearer " + token);
+            call.enqueue(new Callback<UserResponse>() {
+                @Override
+                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    if (response.isSuccessful()) {
+                        // Fetch the user's email from the response
+                        String userEmail = response.body().getEmail();
+                        emailTextView.setText(userEmail);
+                    } else {
+                        emailTextView.setText("Failed to fetch email");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserResponse> call, Throwable t) {
+                    emailTextView.setText("Error: " + t.getMessage());
+                }
+            });
+        }
+
+
     //Notification button to switch to notification page
     public void openNotificationsActivity(View view) {
         Intent intent = new Intent(this, NotificationActivity.class);
         startActivity(intent);
     }
+
+
+
+
 }
 

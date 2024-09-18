@@ -48,6 +48,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
 
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="109dp"
+            android:layout_height="44dp"
+            android:text="Email"
+            android:textSize="18sp" />
+
+
         <Button
             android:id="@+id/accountBtn"
             android:layout_width="0dp"
