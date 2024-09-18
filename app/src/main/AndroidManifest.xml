@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -16,11 +18,13 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:usesCleartextTraffic="true"
         android:icon="@drawable/hardhat_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/hardhat_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".TermsAndConditionsActivity"
@@ -35,6 +39,9 @@
             android:name=".HelpActivity"
             android:exported="false" />
         <activity
+            android:name=".AboutMeActivity"
+            android:exported="false" />
+        <activity
             android:name=".NotificationActivity"
             android:exported="false" />
         <activity
@@ -44,10 +51,16 @@
             android:name=".SmishingRulesActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.Register.RegisterMain"
+            android:exported="true" />
+        <activity
+            android:name=".ui.Register.EmailVerify"
+            android:exported="true" />
+        <activity
             android:name=".ui.account.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".DetectionsActivity"
+            android:name=".detections.DetectionsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
