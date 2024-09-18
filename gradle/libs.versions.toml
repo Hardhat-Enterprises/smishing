@@ -7,6 +7,12 @@ gradle = "8.5.2"
 gradleVersion = "15.0.1"
 gson = "2.10.1"
 javaxMailApi = "1.6.2"
+android = "15.0.1"
+googleCloudTranslateVersion = "2.48.0"
+googleCloudVisionVersion = "3.46.0"
+gradle = "15.0.1"
+grpcOkhttp = "1.66.0"
+grpcProtobuf = "1.66.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -45,6 +51,35 @@ androidx-preference-ktx = { module = "androidx.preference:preference-ktx", versi
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 javax-mail-api = { module = "javax.mail:javax.mail-api", version.ref = "javaxMailApi" }
+kotlinxCoroutinesAndroid = "1.8.1"
+material = "1.12.0"
+constraintlayout = "2.1.4"
+lifecycleLivedataKtx = "2.8.4"
+lifecycleViewmodelKtx = "2.8.4"
+navigationFragment = "2.7.7"
+navigationUi = "2.7.7"
+annotation = "1.8.2"
+okhttp = "4.12.0"
+preference = "1.2.1"
+kotlin = "1.9.0"
+lifecycleRuntimeKtx = "2.8.4"
+activityCompose = "1.9.1"
+composeBom = "2024.08.00"
+activity = "1.9.1"
+retrofit = "2.11.0"
+
+[libraries]
+android = { module = "com.chaquo.python:android", version.ref = "android" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+converter-simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "retrofit" }
+google-cloud-translate-v1950 = { module = "com.google.cloud:google-cloud-translate", version.ref = "googleCloudTranslateVersion" }
+google-cloud-vision-v11000 = { module = "com.google.cloud:google-cloud-vision", version.ref = "googleCloudVisionVersion" }
+gradle = { module = "com.chaquo.python:gradle", version.ref = "gradle" }
+grpc-auth = { module = "io.grpc:grpc-auth", version.ref = "grpcOkhttp" }
+grpc-core = { module = "io.grpc:grpc-core", version.ref = "grpcOkhttp" }
+grpc-okhttp = { module = "io.grpc:grpc-okhttp", version.ref = "grpcOkhttp" }
+grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpcProtobuf" }
+grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpcOkhttp" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -52,6 +87,7 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
 #noinspection SimilarGradleDependency
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 #noinspection SimilarGradleDependency
@@ -72,6 +108,7 @@ activity-compose = { group = "androidx.activity", name = "activity-compose", ver
 #noinspection SimilarGradleDependency
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 python-gradle = { module = "com.chaquo.python:gradle", version.ref = "chaquopy" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
