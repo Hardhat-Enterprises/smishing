@@ -145,6 +145,8 @@ dependencies {
     implementation(libs.grpc.stub)
     implementation(libs.grpc.auth)
     implementation(libs.grpc.core)
+    implementation ("com.github.blackfizz:eazegraph:1.2.2@aar")
+    implementation ("com.nineoldandroids:library:2.4.0")
 }
 
 

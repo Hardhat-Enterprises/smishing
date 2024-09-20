@@ -2,6 +2,7 @@ package com.example.smishingdetectionapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,9 +27,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
+
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private TextView total_count;
+
+    TextView pcSmish, pcHam, pcSpam;
+    PieChart pieChart;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -100,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
         TextView total_count;
         total_count = findViewById(R.id.total_counter);
         total_count.setText(""+databaseAccess.getCounter());
-        //closing the connection
-        //databaseAccess.close();
         //TODO: Add functionality for new detections.
 
         // Setting counter from the result
@@ -111,6 +116,26 @@ public class MainActivity extends AppCompatActivity {
         // Closing the connection
         databaseAccess.close();
 
+        //Pie Chart
+        pieChart = findViewById(R.id.piechart);
+        pcSmish = findViewById(R.id.smishCount);
+        pcHam = findViewById(R.id.hamCount);
+        pcSpam = findViewById(R.id.spamCount);
+
+        pcSmish.setText(Integer.toString(databaseAccess.SmishingCounter()));
+        pcHam.setText(Integer.toString(databaseAccess.HamCounter()));
+        pcSpam.setText(Integer.toString(databaseAccess.SpamCounter()));
+        setPieData();
+        System.out.println("Smishing Counter: "+databaseAccess.SmishingCounter());
+        System.out.println("Ham Counter: "+databaseAccess.HamCounter());
+        System.out.println("Spam Counter: "+databaseAccess.SpamCounter());
+    }
+
+    private void setPieData(){
+        pieChart.addPieSlice(new PieModel("Smishing", Integer.parseInt(pcSmish.getText().toString()), Color.parseColor("#FFFF0000")));
+        pieChart.addPieSlice(new PieModel("Ham", Integer.parseInt(pcHam.getText().toString()), Color.parseColor("#66BB6A")));
+        pieChart.addPieSlice(new PieModel("Spam", Integer.parseInt(pcSpam.getText().toString()), Color.parseColor("#FFA726")));
+        pieChart.startAnimation();
     }
 
     private boolean areNotificationsEnabled() {

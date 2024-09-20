@@ -43,6 +43,11 @@
     <string name="detectionsBtn">Detections</string>
     <string name="new_detectionsTxt">New detections</string>
     <string name="total_detectionsTxt">Total detections</string>
+    <string name="smishingTxt">Smishing</string>
+    <string name="hamTxt">Ham</string>
+    <string name="spamTxt">Spam</string>
+    <string name="zero">0</string>
+    <string name="overviewTxt">Overview</string>
 
     <!-- Account Settings Page Buttons -->
     <string name="password_changeBtn">Password</string>
@@ -114,6 +119,7 @@
     <string name="pnTitle">Phone: </string>
     <string name="msgTitle">Message: </string>
     <string name="dateTitle">Date: </string>
+    <string name="searchString">Search detections...</string>
 
     <string name="info_icon">info</string>
     <string name="new_icon">info</string>

@@ -95,11 +95,14 @@
             android:layout_marginTop="200dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/buttons_rounded"
             app:layout_constraintBottom_toTopOf="@+id/new_detections"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/navy_blue"
+            app:strokeWidth="1dp"
+            />
 
         <TextView
             android:id="@+id/new_counter"
@@ -107,9 +110,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:text="0"
+            android:text="@string/zero"
             android:textColor="#000000"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="@+id/new_detections"
             app:layout_constraintTop_toTopOf="@+id/new_detections" />
 
@@ -119,9 +122,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:text="0"
+            android:text="@string/zero"
             android:textColor="#000000"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="@+id/total_detections"
             app:layout_constraintTop_toTopOf="@+id/total_detections" />
 
@@ -160,27 +163,6 @@
             app:srcCompat="@drawable/baseline_access_time_24"
             android:contentDescription="@string/time_icon"/>
 
-        <TextView
-            android:id="@+id/information_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:text="Information"
-            app:layout_constraintStart_toStartOf="@+id/information_box"
-            app:layout_constraintTop_toTopOf="@+id/information_box" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toEndOf="@+id/information_box"
-            app:layout_constraintTop_toTopOf="@+id/information_box"
-            app:srcCompat="@drawable/icon_information"
-            android:contentDescription="@string/info_icon"/>
-
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
@@ -199,12 +181,9 @@
             android:layout_height="111dp"
             android:layout_marginStart="149dp"
             android:layout_marginTop="16dp"
-
-
             android:layout_marginEnd="150dp"
             android:alpha="0"
             android:autoText="true"
-
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="@+id/HardhatLogo"
             app:layout_constraintEnd_toEndOf="parent"
@@ -213,6 +192,155 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/new_detections"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp">
+
+            <TextView
+                android:id="@+id/information_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/overviewTxt"
+                android:textColor="@color/navy_blue"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <org.eazegraph.lib.charts.PieChart
+                    android:id="@+id/piechart"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:padding="6dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="15dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="20dp"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical">
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/red"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/smishingTxt"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="1dp"
+                            android:textColor="@color/navy_blue"/>
+
+                        <TextView
+                            android:id="@+id/smishCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/zero"
+                            android:gravity="end"
+                            android:paddingStart="1dp"
+                            android:paddingEnd="50dp"
+                            android:textColor="@color/navy_blue"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="5dp">
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/green"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hamTxt"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="1dp"
+                            android:textColor="@color/navy_blue"/>
+
+                        <TextView
+                            android:id="@+id/hamCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/zero"
+                            android:gravity="end"
+                            android:paddingStart="1dp"
+                            android:paddingEnd="50dp"
+                            android:textColor="@color/navy_blue"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="5dp">
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/orange"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/spamTxt"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="1dp"
+                            android:textColor="@color/navy_blue"/>
+
+                        <TextView
+                            android:id="@+id/spamCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/zero"
+                            android:gravity="end"
+                            android:paddingStart="1dp"
+                            android:paddingEnd="50dp"
+                            android:textColor="@color/navy_blue"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

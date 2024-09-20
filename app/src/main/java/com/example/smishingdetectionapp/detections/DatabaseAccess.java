@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
+import android.view.View;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.example.smishingdetectionapp.forum.model.ForumTopic;
 import com.example.smishingdetectionapp.R;
@@ -33,6 +36,7 @@ public class DatabaseAccess {
         public static final String KEY_PHONENUMBER="Phone_Number";
         public static final String KEY_MESSAGE = "Message";
         public static final String KEY_DATE = "Date";
+        public static final String KEY_TYPE = "Type";
 
         // Forum table columns and names
         private static final String TABLE_FORUM_TOPICS = "ForumTopics";
@@ -89,6 +93,36 @@ public class DatabaseAccess {
         return cursor.getCount();
     }
 
+    public int SmishingCounter(){
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Detections WHERE Type = 'Smishing'", null);
+        int count = 0;
+        if (cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    public int HamCounter(){
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Detections WHERE Type = 'Ham'", null);
+        int count = 0;
+        if (cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    public int SpamCounter(){
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Detections WHERE Type = 'Spam'", null);
+        int count = 0;
+        if (cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
     //Used to get current device time
     private static String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -108,46 +142,12 @@ public class DatabaseAccess {
         return result != -1;
     }
 
-    public SimpleCursorAdapter populateDetectionList(){
+    public Cursor populateList(){
+        SQLiteDatabase db = openHelper.getReadableDatabase();
 
-        String[] columns = {
-                DatabaseOpenHelper.KEY_ROWID,
-                DatabaseOpenHelper.KEY_PHONENUMBER,
-                DatabaseOpenHelper.KEY_MESSAGE,
-                DatabaseOpenHelper.KEY_DATE
-        };
+        String query = "SELECT _id, Phone_Number, Message, Date, Type FROM Detections";
 
-        Cursor cursor = db.query(
-                DatabaseOpenHelper.TABLE_DETECTIONS,
-                columns,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-        String[] columnsStr = new String[]{
-                DatabaseOpenHelper.KEY_ROWID,
-                DatabaseOpenHelper.KEY_PHONENUMBER,
-                DatabaseOpenHelper.KEY_DATE,
-                DatabaseOpenHelper.KEY_MESSAGE
-        };
-
-        int[] toViewIDs = new int[]{
-                R.id.item_id,
-                R.id.detectionPhoneText,
-                R.id.detectionDateText,
-                R.id.detectionMessageText
-        };
-
-        return new SimpleCursorAdapter(
-                context,
-                R.layout.detection_items,
-                cursor,
-                columnsStr,
-                toViewIDs
-        );
+        return db.rawQuery(query, null);
     }
 
     public static boolean sendFeedback(String name, String feedback, float rating) {
