@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/menu_Cyber_news"
+        android:text="@string/menu_Scamwatch_news"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,13 +62,23 @@
         app:layout_constraintTop_toBottomOf="@id/news_recycler_view" />
 
     <Button
-        android:id="@+id/refreshButton"
+        android:id="@+id/KrebsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/refresh"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/Krebs"
+        app:layout_constraintEnd_toStartOf="@id/ACCCButton"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NewsText" />
+
+    <Button
+        android:id="@+id/ACCCButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ACCC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toEndOf="@+id/KrebsButton"
         app:layout_constraintTop_toBottomOf="@+id/NewsText" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -79,7 +89,7 @@
         android:scrollbars="vertical"
         android:scrollbarThumbVertical="@android:color/darker_gray"
         android:scrollbarSize="5dp"
-        app:layout_constraintTop_toBottomOf="@id/refreshButton"
+        app:layout_constraintTop_toBottomOf="@id/KrebsButton"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

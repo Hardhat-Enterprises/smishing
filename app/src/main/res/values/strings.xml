@@ -23,13 +23,14 @@
     <string name="logo_description">App Logo</string>
 
     <!-- Error messages -->
-    <string name="no_network_message">No available network. Please check your internet connection or try again later</string>
+    <string name="no_network_message">No available network. Please check your internet connection or try again later.</string>
 
     <!-- Page Titles -->
     <string name="login_page">Login</string>
     <string name="detections_str">Detections</string>
     <string name="menu_news">News</string>
-    <string name="menu_Cyber_news">ACCC Scamwatch News</string>
+    <string name="menu_Scamwatch_news">ACCC Scamwatch News</string>
+    <string name="menu_Krebs_news">Krebs On Security News</string>
     <string name="menu_settings">Settings</string>
     <string name="account_page">Account</string>
     <string name="report_page">Report Smishing</string>
@@ -179,7 +180,8 @@
 
     <!-- News Page Strings -->
     <string name="api_key">a882bbf5f21b40a3b145509fe1f58e33</string>
-    <string name="refresh">Refresh</string>
+    <string name="Krebs">Krebs</string>
+    <string name="ACCC">ACCC</string>
     <string name="click_to_read_more">Click to Read More</string>
 
     <!-- SMS Page Strings -->
