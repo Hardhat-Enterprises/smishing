@@ -29,7 +29,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
         buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http:192.168.88.154:3000\"")
+        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -107,7 +107,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
-    implementation ("com.google.android.material:material:1.2.0-alpha02")
+
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))
