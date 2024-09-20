@@ -9,20 +9,18 @@ const userSchema = new Schema({
     },
     PhoneNumber: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     Email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     Password: {
         type: String,
         required: true
     },
-
-
-
-
 
 
 });
