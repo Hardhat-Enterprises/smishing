@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('./Collection.js');
+
 const JWT_SECRET = 'your_jwt_secret';
 
 // Middleware to verify JWT
@@ -19,17 +19,3 @@ const authenticateJWT = (req, res, next) => {
     }
 };
 
-// Example of a protected route
-app.get('/protected-route', authenticateJWT, async (req, res) => {
-    try {
-        // Find the user by MongoDB _id (from the token)
-        const user = await User.findById(req.userId);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.json({ message: 'Access granted', user });
-    } catch (err) {
-        res.status(500).json({ message: 'Server error' });
-    }
-});

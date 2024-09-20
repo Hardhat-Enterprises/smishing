@@ -5,6 +5,7 @@ const details = require('./Collection');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const jwt = require('jsonwebtoken');
+const authenticateJWT = require('./authenticateJWT');
 
 
 
@@ -12,6 +13,29 @@ const jwt = require('jsonwebtoken');
 
 
 const app = express();
+
+
+
+
+
+// Protected route
+app.get('/protected-route', authenticateJWT, async (req, res) => {
+    try {
+        // Find the user by MongoDB _id (from the token)
+        const user = await details.findById(req.userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json({ message: 'Access granted', user });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+
+
 
 
 
@@ -33,22 +57,7 @@ app.use(express.json());
 
 
 
-// Middleware to verify Firebase token
-const verifyToken = async (req, res, next) => {
-  const idToken = req.headers.authorization?.split(' ')[1]; // Extract the token from the Authorization header
 
-  if (!idToken) {
-    return res.status(401).send('Unauthorized');
-  }
-
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    req.user = decodedToken; // Attach decoded token to the request
-    next();
-  } catch (error) {
-    return res.status(401).send('Unauthorized');
-  }
-};
 
 const JWT_SECRET = 'your_jwt_secret';  // Use a strong, secure secret
 
@@ -56,39 +65,31 @@ const JWT_SECRET = 'your_jwt_secret';  // Use a strong, secure secret
 
 // Sign-Up Endpoint
 app.post('/signup', async (req, res) => {
+    const { FullName, PhoneNumber, Email, Password, VerificationCode } = req.body;
 
-    const { FullName, PhoneNumber, Email, Password, VerificationCode} = req.body;
-
-
-
-        try {
-
+    try {
         const hashedPassword = await bcrypt.hash(Password, 10);
 
 
 
 
-
         const user = new details({
+
             FullName,
             PhoneNumber,
             Email,
-            Password,
+            Password: hashedPassword,  // Use the hashed password here
             verificationCode: VerificationCode,
-
-
         });
 
         await user.save();
 
-        res.status(201).json({ message: 'Registration successful! Please check your email for verification.'
+        res.status(201).json({ message: 'Registration successful! Please check your email for verification.' });
 
-        });
-
-        } catch (err) {
-                console.error(err);
-                res.status(500).json({ message: 'Error during registration.' });
-            }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error during registration.' });
+    }
 });
 
 
@@ -99,6 +100,7 @@ app.post('/login', async (req, res) => {
     try {
         // Find the user by email
         const user = await details.findOne({ Email: email });
+
 
         if (!user) {
             return res.status(401).json({ message: 'Invalid email or password' });
@@ -132,6 +134,29 @@ app.post('/login', async (req, res) => {
     }
 });
 
+
+
+// Middleware to verify JWT
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization?.split(' ')[1]; // Get the token from the Authorization header
+
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.user = decoded; // Attach the decoded token (user data) to the request
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Invalid token' });
+    }
+};
+
+
+
+
+
 // Route to get the logged-in user's details
 app.get('/user', async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];  // Get the token from Authorization header
@@ -146,7 +171,7 @@ app.get('/user', async (req, res) => {
         const userId = decoded.userId;
 
         // Find the user in MongoDB using the user ID
-        const user = await User.findById(userId);
+        const user = await details.findById(userId);
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -182,13 +207,13 @@ app.post('/checkemail', async (req, res) => {
 
 // Express.js route to verify the user's email
 app.post('/verify', async (req, res) => {
-const user = await User.findOne({ email, verificationCode });
+const user = await details.findOne({ email, verificationCode });
 
     try {
         const { email, verificationCode } = req.body;
 
         // Find the user by email and verification code
-        const user = await User.findOne({ email, verificationCode });
+        const user = await details.findOne({ email, verificationCode });
 
         if (!user) {
             return res.status(400).json({ message: 'Invalid or expired verification code.' });
@@ -205,15 +230,5 @@ const user = await User.findOne({ email, verificationCode });
     }
 });
 
-// Endpoint to get all users
-app.get('/users', async (req, res) => {
-    try {
-        const users = await getAllUsers();
-        res.status(200).json(users);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error fetching users' });
-    }
-});
 
 
