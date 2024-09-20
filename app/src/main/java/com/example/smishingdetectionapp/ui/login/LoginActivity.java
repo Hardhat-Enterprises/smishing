@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.smishingdetectionapp.BuildConfig;
 import com.example.smishingdetectionapp.DataBase.DBresult;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
+import com.example.smishingdetectionapp.DataBase.UserResponse;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
@@ -97,26 +98,20 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
-        // Checks if the checkbox is checked and saves user data if checked
-        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(compoundButton.isChecked()) {
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-                }
-                else if (!compoundButton.isChecked()) {
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "false");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
-                }
+        // Handle "Remember Me" checkbox behavior
+        remember.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            if (isChecked) {
+                editor.putString("remember", "true");
+                Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+            } else {
+                editor.putString("remember", "false");
+                Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
             }
+            editor.apply();
         });
+
     }
     private void handleLogin() {
         final EditText emailEditText = binding.email;
@@ -145,6 +140,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (result != null && result.getToken() != null) {
                         // JWT token received, store it in SharedPreferences
                         storeToken(result.getToken());
+                        // After storing the token, fetch user details
+                        fetchUserDetails(result.getToken());
                         navigateToMainActivity();
                     } else {
                         Toast.makeText(LoginActivity.this, "Login failed. No token received.", Toast.LENGTH_LONG).show();
@@ -172,6 +169,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    // Fetch user details using the stored JWT token
+    private void fetchUserDetails(String token) {
+        // Use the JWT token from SharedPreferences or from login response
+        Call<UserResponse> call = retrofitinterface.getUserDetails("Bearer " + token);
+
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.isSuccessful()) {
+                    UserResponse userDetails = response.body();
+                    // Update the UI with user details or navigate to another activity
+                    Toast.makeText(LoginActivity.this, "Welcome, " + userDetails.getName(), Toast.LENGTH_LONG).show();
+                } else if (response.code() == 401) {
+                    Toast.makeText(LoginActivity.this, "Unauthorized: Invalid or expired token", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Failed to fetch user details", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     // Navigate to the main activity after successful login
     private void navigateToMainActivity() {
@@ -182,16 +205,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    // Display a failed login message
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-    }
 
-    // Update the UI with logged-in user's details
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-    }
+
+
 
 
 
