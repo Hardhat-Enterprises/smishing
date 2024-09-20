@@ -93,5 +93,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
     implementation ("com.google.android.material:material:1.2.0-alpha02")
+    implementation ("com.github.blackfizz:eazegraph:1.2.2@aar")
+    implementation ("com.nineoldandroids:library:2.4.0")
 }
 
