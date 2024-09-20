@@ -18,9 +18,9 @@ public class NewsRequestManager {
     }
 
     // Fetches RSS feed from a specified site using Retrofit and notifies the listener.
-    public void fetchRSSFeed(OnFetchDataListener<RSSFeedModel.Feed> listener) {
+    public void fetchRSSFeed(OnFetchDataListener<RSSFeedModel.Feed> listener, String RSSurl) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.scamwatch.gov.au/rss/news-feed.xml/") // Example base URL
+                .baseUrl(RSSurl) // Example base URL
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 

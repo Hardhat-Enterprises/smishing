@@ -41,15 +41,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder>{
         // LOG BELOW GIVES THE DESC STRING AS PLAIN
         Log.d("DebugTag1", "Value " + article.description);
 
-
         formattedDescription = (article.description);
-        // Formats description data to remove HTML tags if they are present. This is specifically setup to format SCAMWATCHs' RSS feed.
-        formattedDescription = formattedDescription.replaceAll("\\<.*?\\>", "");
-        // Removes whitespace and leftover tags
-        formattedDescription = formattedDescription.substring(84, formattedDescription.length() - 14);
-        holder.text_description.setText(formattedDescription);
+        // Checks for HTML tags in desc field
+        if (formattedDescription.contains("<")){
+            // Formats description data to remove HTML tags if they are present. This is specifically setup to format SCAMWATCHs' RSS feed.
+            formattedDescription = formattedDescription.replaceAll("\\<.*?\\>", "");
+            // Removes whitespace and leftover tags
+            formattedDescription = formattedDescription.substring(84, formattedDescription.length() - 14);
+        }
 
-        Log.d("DebugTag2", "Value " + holder.text_description);
+        //Final Output Data
+        holder.text_description.setText(formattedDescription);
 
 
         holder.text_pubDate.setText(article.getFormattedDate());

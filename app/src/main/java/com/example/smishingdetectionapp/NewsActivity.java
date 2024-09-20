@@ -30,7 +30,9 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
     NewsRequestManager manager;
     ProgressBar progressBar;
     TextView errorMessage;
-    Button refreshButton;
+    TextView NewsText;
+    Button KrebsButton;
+    Button ACCCButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -40,7 +42,9 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
 
         errorMessage = findViewById(R.id.errorTextView);
         recyclerView = findViewById(R.id.news_recycler_view);
-        refreshButton = findViewById(R.id.refreshButton);
+        // Define buttons to be used on the page
+        KrebsButton = findViewById(R.id.KrebsButton);
+        ACCCButton = findViewById(R.id.ACCCButton);
 
         // Navigation at the bottom of the page designed by Damian
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
@@ -69,7 +73,7 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
             progressBar = findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
 
-            // Initialize NewsRequestManager and fetch RSS feed data
+            // Initialize NewsRequestManager and fetch RSS feed data - DEFAULT DATA LOAD
             manager = new NewsRequestManager(this);
             manager.fetchRSSFeed(new OnFetchDataListener<RSSFeedModel.Feed>() {
                 @Override
@@ -92,18 +96,37 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
                     adapter = new NewsAdapter(list, NewsActivity.this); // Corrected this reference
                     recyclerView.setAdapter(adapter);
                 }
-            });
-            
+                //Default RSS feed to load
+            }, "https://www.scamwatch.gov.au/rss/news-feed.xml/");
+
         // Set up the refresh button click listener
-        refreshButton.setOnClickListener(v -> {
-            loadData(); // Reload the data when the refresh button is pressed
+        // Set up the feed button listeners with their respective ID's - these must match in loadData
+        KrebsButton.setOnClickListener(v -> {
+            loadData(2); // Reload the data when the refresh button is pressed
+        });
+
+        ACCCButton.setOnClickListener(v -> {
+            loadData(1); // Reload the data when the refresh button is pressed
         });
         }
 
+
     // This is for the refresh button
-    private void loadData() {
+    private void loadData(int feednumber) {
         progressBar.setVisibility(View.VISIBLE);
         manager = new NewsRequestManager(this);
+        TextView NewsText = findViewById(R.id.NewsText);
+        String RSSURL = "";
+        //Feed URLs and page titles - ID must match the OnClickListener values
+        if (feednumber == 1){
+            RSSURL = "https://www.scamwatch.gov.au/rss/news-feed.xml/";
+            NewsText.setText("ACCC Scamwatch News");
+
+        } else if (feednumber == 2){
+            RSSURL = "https://krebsonsecurity.com/feed/";
+            NewsText.setText("Krebs On Security News");
+        }
+
         manager.fetchRSSFeed(new OnFetchDataListener<RSSFeedModel.Feed>() {
             @Override
             public void onFetchData(List<RSSFeedModel.Article> list, String message) {
@@ -123,7 +146,8 @@ public class NewsActivity extends AppCompatActivity implements SelectListener{
                 recyclerView.setLayoutManager(new GridLayoutManager(NewsActivity.this, 1));
                 recyclerView.setAdapter(adapter);
             }
-        });
+            // Feed URL to be loaded
+        }, RSSURL);
     }
 
     // Handle news article click events. Opens the article link in a browser.
