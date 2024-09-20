@@ -3,13 +3,16 @@ package com.example.smishingdetectionapp;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.Manifest;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         //start database connection
         DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
+      
         //setting counter from result
         TextView total_count;
         total_count = findViewById(R.id.total_counter);
@@ -116,9 +120,14 @@ public class MainActivity extends AppCompatActivity {
         pieChart.addPieSlice(new PieModel("Ham", Integer.parseInt(pcHam.getText().toString()), Color.parseColor("#66BB6A")));
         pieChart.addPieSlice(new PieModel("Spam", Integer.parseInt(pcSpam.getText().toString()), Color.parseColor("#FFA726")));
         pieChart.startAnimation();
+
     }
 
     private boolean areNotificationsEnabled() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 1);
+        }
+
         return NotificationManagerCompat.from(this).areNotificationsEnabled();
     }
 
