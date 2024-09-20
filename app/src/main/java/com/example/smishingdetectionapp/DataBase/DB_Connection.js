@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const details = require('./Collection');
 const bcrypt = require('bcryptjs');
-const session = require('express-session');
+
 const jwt = require('jsonwebtoken');
 const authenticateJWT = require('./authenticateJWT');
 

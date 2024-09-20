@@ -19,3 +19,4 @@ const authenticateJWT = (req, res, next) => {
     }
 };
 
+module.exports = authenticateJWT;  // Export as a function
