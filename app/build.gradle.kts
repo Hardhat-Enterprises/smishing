@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.chaquo.python")
+
 }
 
 android {
@@ -32,7 +33,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-    }
+
+
+
+
+
+   }
 
     buildTypes {
         release {
@@ -40,7 +46,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-
+//    ndk {
+//        abiFilters("armeabi-v7a", "x86")
+//    }
     compileOptions {
 
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -48,31 +56,19 @@ android {
 
 
     }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
     buildFeatures {
         viewBinding = true
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
     packaging {
         resources {
-            excludes += setOf(
-                "/META-INF/{AL2.0,LGPL2.1}",
-                "/META-INF/DEPENDENCIES",
-                "/META-INF/LICENSE",
-                "/META-INF/LICENSE.txt",
-                "/META-INF/NOTICE",
-                "/META-INF/NOTICE.txt",
-                "META-INF/INDEX.LIST"
-            )
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 
@@ -98,10 +94,10 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation ("androidx.core:core-ktx:1.6.0")
     implementation(libs.activity)
 
     // Testing dependencies
+    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -149,6 +145,14 @@ dependencies {
     implementation(libs.grpc.core)
     implementation ("com.github.blackfizz:eazegraph:1.2.2@aar")
     implementation ("com.nineoldandroids:library:2.4.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
+
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/mail.jar"))
 }
 
 
