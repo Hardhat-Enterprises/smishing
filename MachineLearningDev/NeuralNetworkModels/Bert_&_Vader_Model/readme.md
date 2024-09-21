@@ -6,7 +6,7 @@ This repository contains the implementation of two models for phishing and smish
 1. BERT: Fine-tuned for classifying messages and emails as either "Safe" or "Phishing".
 2. VADER: Used for sentiment analysis to identify emotional manipulation or urgency in messages.
 
-The BERT model has been fine-tuned and saved in the subfolder, ready for use. You can download the required datasets and use the provided Jupyter notebook to either retrain the model or evaluate it on new data.
+Unfortunately, the pre-trained BERT model could not be uploaded to GitHub due to size limitations. If you would like to use the model, you will need to download the datasets and retrain the model by running the provided Jupyter notebook.
 
 ## How to Run the Code
 
@@ -18,9 +18,11 @@ The original datasets are too large to include in this repository. To run the fu
 
 Once downloaded, place the dataset files in the same directory as the Jupyter notebook before running the code.
 
-### 2. Using the Pre-trained BERT Model
+### 2. Training the BERT Model
+Since the BERT model could not be uploaded, you will need to train the model yourself using the provided Jupyter notebook. Here’s how:
 
-If you prefer not to retrain the model, you can use the pre-trained BERT model provided in the BERT_Model/ subfolder.
+Download the datasets and place them in the same directory as the notebook.
+Run the Implementing and Evaluating BERT and VADER Model.ipynb notebook to fine-tune the BERT model.
 
 #### Example for Loading the Pre-trained Model:
 ```python
