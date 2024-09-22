@@ -178,7 +178,7 @@ app.get('/user', async (req, res) => {
         }
 
         // Send back the user's email
-        res.json({ email: user.email });
+        res.json({ email: user.Email });
     } catch (error) {
         res.status(401).json({ message: 'Invalid token' });
     }
