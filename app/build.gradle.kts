@@ -25,8 +25,9 @@ android {
             useSupportLibrary = true
         }
 
-
-   }
+        // Add your local IP address and port for backend API connection
+        buildConfigField("String", "BASE_URL", "\"http://192.168.0.12:3000/\"")
+    }
 
     buildTypes {
         release {
@@ -34,9 +35,12 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-//    ndk {
-//        abiFilters("armeabi-v7a", "x86")
-//    }
+
+    // Enable custom BuildConfig fields
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -88,11 +92,16 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
-    implementation ("com.google.android.material:material:1.2.0-alpha02")
 
+    // Retrofit dependencies
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:converter-simplexml:2.11.0")
+
+    // Google Material Design
+    implementation("com.google.android.material:material:1.2.0-alpha02")
+
+    // Security Crypto dependency
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }
-
