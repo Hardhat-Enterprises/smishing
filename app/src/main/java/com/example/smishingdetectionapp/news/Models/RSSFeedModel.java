@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public class RSSFeedModel {
 
@@ -61,7 +62,7 @@ public class RSSFeedModel {
 
     // Interface representing the API for fetching RSS feed articles.
     public interface RSSApi {
-        @GET("feed/")
-        Call<Feed> getArticles();
+        @GET("{Feed}")
+        Call<Feed> getArticles(@Path("Feed") String Feed);
     }
 }

@@ -19,14 +19,14 @@ public class NewsRequestManager {
     // Fetches RSS feed from a specified site using Retrofit and notifies the listener.
     public void fetchRSSFeed(OnFetchDataListener<RSSFeedModel.Feed> listener) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://krebsonsecurity.com/") // Example base URL
+                .baseUrl("https://www.scamwatch.gov.au/rss/news-feed.xml/") // Example base URL
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
         // Create an instance of the RSSApi interface
         RSSFeedModel.RSSApi rssApi = retrofit.create(RSSFeedModel.RSSApi.class);
         // Enqueue the request to fetch articles
-        rssApi.getArticles().enqueue(new Callback<RSSFeedModel.Feed>() {
+        rssApi.getArticles("").enqueue(new Callback<RSSFeedModel.Feed>() {
             @Override
             public void onResponse(Call<RSSFeedModel.Feed> call, Response<RSSFeedModel.Feed> response) {
                 // Check if the response is successful and contains the expected data
