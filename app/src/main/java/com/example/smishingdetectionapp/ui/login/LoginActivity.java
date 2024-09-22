@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.loginButton;
         final ProgressBar loadingProgressBar = binding.progressbar;
-        CheckBox remember = binding.Remember;
+
 
 
 
@@ -98,19 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
-        // Handle "Remember Me" checkbox behavior
-        remember.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            if (isChecked) {
-                editor.putString("remember", "true");
-                Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-            } else {
-                editor.putString("remember", "false");
-                Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
-            }
-            editor.apply();
-        });
+
 
     }
     private void handleLogin() {
@@ -166,6 +154,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("jwt_token", token);
         editor.apply();
+
+        Log.d("LoginActivity", "JWT Token stored: " + token);
     }
 
 
