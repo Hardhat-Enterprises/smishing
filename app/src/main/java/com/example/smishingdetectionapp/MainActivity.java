@@ -29,6 +29,7 @@ import org.eazegraph.lib.models.PieModel;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView total_count;
 
 
     public MainActivity() {
@@ -120,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         pieChart.addPieSlice(new PieModel("Ham", Integer.parseInt(pcHam.getText().toString()), Color.parseColor("#66BB6A")));
         pieChart.addPieSlice(new PieModel("Spam", Integer.parseInt(pcSpam.getText().toString()), Color.parseColor("#FFA726")));
         pieChart.startAnimation();
-
     }
 
     private boolean areNotificationsEnabled() {
