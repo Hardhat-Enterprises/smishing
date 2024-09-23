@@ -221,4 +221,7 @@
         </ul>
         ]]>
     </string>
+    <string name="enter_url">Enter URL</string>
+    <string name="check_url_safety">Check URL Safety</string>
+    <string name="result_will_appear_here">Result will appear here</string>
 </resources>
