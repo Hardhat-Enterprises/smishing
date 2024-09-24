@@ -8,7 +8,6 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -30,7 +29,7 @@
     <string name="login_page">Login</string>
     <string name="detections_str">Detections</string>
     <string name="menu_news">News</string>
-    <string name="menu_Cyber_news">Krebs on Security News</string>
+    <string name="menu_Cyber_news">ACCC Scamwatch News</string>
     <string name="menu_settings">Settings</string>
     <string name="account_page">Account</string>
     <string name="report_page">Report Smishing</string>
@@ -92,6 +91,7 @@
     <string name="filtering_btn">Filtering</string>
     <string name="report_btn">Report</string>
     <string name="help_btn">Help</string>
+    <string name="about_btn">Privacy Policy</string>
 
     <!-- Filtering Rules Strings -->
     <string name="keywords_label">Keywords</string>
@@ -110,7 +110,7 @@
     <string name="agree_terms_and_conditions">I agree to the terms and conditions</string>
 
     <!-- Detection Page Strings -->
-    <string name="pnTitle">Phone Number: </string>
+    <string name="pnTitle">Phone: </string>
     <string name="msgTitle">Message: </string>
     <string name="dateTitle">Date: </string>
 
