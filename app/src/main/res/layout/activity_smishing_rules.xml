@@ -111,10 +111,10 @@
 
     <ImageButton
         android:id="@+id/filtering_back"
-        android:layout_width="35dp"
-        android:layout_height="@dimen/button_tertiary_height"
-        android:layout_marginStart="@dimen/padding_medium"
-        android:layout_marginTop="@dimen/padding_medium"
+        android:layout_width="@dimen/padding_xlarge"
+        android:layout_height="@dimen/padding_xlarge"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
         android:background="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
