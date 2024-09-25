@@ -14,6 +14,7 @@ public interface Retrofitinterface {
     @POST("/signup")
     Call<SignupResponse> executeSignup(@Body HashMap<String, String> map);
 
-    @POST("/verify")
-    Call<VerificationResponse> executeVerify(@Body HashMap<String, String> map); // New method for verification
+
+    @POST("/checkemail")
+    Call<SignupResponse> checkEmail(@Body HashMap<String, String> map);
 }
