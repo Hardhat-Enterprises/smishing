@@ -1,105 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="31">
 
     <!-- Permissions -->
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
-    <!-- Features -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
 
+    <!-- Application Tag -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:usesCleartextTraffic="true"
         android:icon="@drawable/hardhat_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/hardhat_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
-        tools:targetApi="31">
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:usesCleartextTraffic="false">
 
-        <!-- MainActivity as the launcher activity -->
+        <!-- Activities -->
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.SmishingDetectionApp" />
+
+        <activity android:name=".TermsAndConditionsActivity" android:exported="false" />
+        <activity android:name=".SmsActivity" android:exported="false" />
+        <activity android:name=".SMSMessageDetailActivity" android:exported="false" />
+        <activity android:name=".HelpActivity" android:exported="false" />
+        <activity android:name=".NotificationActivity" android:exported="false" />
+        <activity android:name=".DebugActivity" android:exported="false" />
+        <activity android:name=".SmishingRulesActivity" android:exported="false" />
+        <activity android:name=".ui.account.AccountActivity" android:exported="false" />
+        <activity android:name=".DetectionsActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".NewsActivity" android:exported="false" />
+        <activity android:name=".ReportingActivity" android:exported="false" />
+        <activity android:name=".SignupActivity" android:exported="false" />
+        <activity android:name=".SettingsActivity" android:exported="false" />
+
+        <!-- Set LoginActivity as the launcher activity -->
+        <activity android:name=".ui.login.LoginActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Other Activities -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
-        <activity
-            android:name=".TermsAndConditionsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SmsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SMSMessageDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HelpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AboutMeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NotificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DebugActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SmishingRulesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.Register.RegisterMain"
-            android:exported="true" />
-        <activity
-            android:name=".ui.Register.EmailVerify"
-            android:exported="true" />
-        <activity
-            android:name=".ui.account.AccountActivity"
-            android:exported="false" />
-        <activity
-            android:name=".detections.DetectionsActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".NewsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ReportingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OCRActivity"
-            android:exported="true"
-            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
-        <receiver android:name=".SmsReceiver"
-            android:exported="true">
+        <!-- SMSReceiver to handle incoming SMS for encryption/decryption -->
+        <receiver android:name=".SmsReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -107,4 +70,3 @@
 
     </application>
 </manifest>
-

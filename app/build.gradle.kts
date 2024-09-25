@@ -9,10 +9,6 @@ android {
     namespace = "com.example.smishingdetectionapp"
     compileSdk = 34
 
-    buildFeatures {
-        buildConfig = true
-    }
-
     defaultConfig {
         ndk {
             // On Apple silicon, you can omit x86_64.
@@ -25,16 +21,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        
-        // Merge the vectorDrawables from both branches
         vectorDrawables {
             useSupportLibrary = true
         }
 
-        // Include the buildConfigFields from master
-        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
-        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
+        // Add your local IP address and port for backend API connection
+        buildConfigField("String", "BASE_URL", "\"http://192.168.0.12:3000/\"")
     }
 
     buildTypes {
@@ -44,35 +36,28 @@ android {
         }
     }
 
+    // Enable custom BuildConfig fields
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
     buildFeatures {
         viewBinding = true
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
     packaging {
         resources {
-            excludes += setOf(
-                "/META-INF/{AL2.0,LGPL2.1}",
-                "/META-INF/DEPENDENCIES",
-                "/META-INF/LICENSE",
-                "/META-INF/LICENSE.txt",
-                "/META-INF/NOTICE",
-                "/META-INF/NOTICE.txt",
-                "META-INF/INDEX.LIST"
-            )
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 
@@ -98,10 +83,8 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation ("androidx.core:core-ktx:1.6.0")
     implementation(libs.activity)
-
-    // Merge testing dependencies
+    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -110,33 +93,15 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
-    // External libraries from feature/ocr-functionality
-    implementation(libs.okhttp)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.converter.simplexml)
-
-    // Google Cloud Vision API
-    implementation(libs.google.cloud.vision.v11000)
-
-    // Google Cloud Translate API
-    implementation(libs.google.cloud.translate.v1950)
-
-    // gRPC and Protobuf dependencies
-    implementation(libs.grpc.okhttp)
-    implementation(libs.grpc.protobuf)
-    implementation(libs.grpc.stub)
-    implementation(libs.grpc.auth)
-    implementation(libs.grpc.core)
-
-    // Additional dependencies from master
-    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
+    // Retrofit dependencies
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.retrofit2:converter-simplexml:2.11.0")
+
+    // Google Material Design
     implementation("com.google.android.material:material:1.2.0-alpha02")
-    implementation(files("libs/activation.jar"))
-    implementation(files("libs/additionnal.jar"))
-    implementation(files("libs/mail.jar"))
+
+    // Security Crypto dependency
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }
