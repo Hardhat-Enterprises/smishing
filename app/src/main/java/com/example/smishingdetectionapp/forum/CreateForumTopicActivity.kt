@@ -10,8 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.smishingdetectionapp.DatabaseAccess
 import com.example.smishingdetectionapp.R
+import com.example.smishingdetectionapp.detections.DatabaseAccess
 
 class CreateForumTopicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

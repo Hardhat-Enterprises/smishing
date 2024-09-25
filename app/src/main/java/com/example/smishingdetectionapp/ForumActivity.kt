@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.smishingdetectionapp.detections.DatabaseAccess
 import com.example.smishingdetectionapp.forum.CreateForumTopicActivity
 import com.example.smishingdetectionapp.forum.ForumTopicAdapter
 import com.example.smishingdetectionapp.forum.model.ForumTopic
