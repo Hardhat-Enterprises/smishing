@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.smishingdetectionapp.detections.DatabaseAccess;
+
 public class FeedbackActivity extends AppCompatActivity {
 
     @Override

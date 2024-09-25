@@ -115,6 +115,22 @@
             android:name=".ui.account.AccountActivity"
             android:exported="false" />
         <activity
+            android:name=".OCRActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
+<!--        <receiver android:name=".SmsReceiver"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+        <activity
+            android:name=".FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForumActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignupActivity"
             android:exported="false" />
         <receiver android:name=".SmsReceiver"
