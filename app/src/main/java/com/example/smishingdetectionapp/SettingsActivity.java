@@ -48,13 +48,13 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, SmishingRulesActivity.class));
             finish();
         });
+
         //Report button to switch to reporting page
         Button reportBtn = findViewById(R.id.reportBtn);
         reportBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, ReportingActivity.class));
             finish();
         });
-        //Notification button to switch to notification page
 
         //Help button to switch to Help page
         Button helpBtn = findViewById(R.id.helpBtn);
@@ -69,12 +69,19 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, FeedbackActivity.class));
             finish();
         });
+
         //Forum Button to switch to Forum page
         Button forumBtn = findViewById(R.id.forumBtn);
         forumBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, ForumActivity.class));
-            finish();
         });
+
+        //SDBot Button to switch to SDBot page
+        Button SDBotBtn = findViewById(R.id.SDBotBtn);
+        SDBotBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, SDBotActivity.class));
+        });
+
 
     }
 

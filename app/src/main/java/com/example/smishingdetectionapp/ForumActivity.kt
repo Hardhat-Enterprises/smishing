@@ -1,106 +1,74 @@
-package com.example.smishingdetectionapp;
+package com.example.smishingdetectionapp
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.smishingdetectionapp.forum.CreateForumTopicActivity
+import com.example.smishingdetectionapp.forum.ForumTopicAdapter
+import com.example.smishingdetectionapp.forum.model.ForumTopic
+import com.example.smishingdetectionapp.sms.SMSAdapter
 
-import androidx.appcompat.app.AppCompatActivity;
 
-public class ForumActivity extends AppCompatActivity {
+class ForumActivity : AppCompatActivity(), ForumTopicAdapter.ClickListener {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forums);
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: ForumTopicAdapter
+    lateinit var noForumTopicsText: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_forums)
 
         // Initialize the back button to go back to the previous screen
-        ImageButton report_back = findViewById(R.id.forum_back_button);
-        report_back.setOnClickListener(v -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-            finish();
-        });
+        val report_back = findViewById<ImageButton>(R.id.forum_back_button)
+        report_back.setOnClickListener {
+            finish()
+        }
 
-        // Initializing input fields and submit buttons
-        final EditText userThoughtsInput = findViewById(R.id.userThoughtsInput);
-        final Button submitThoughtsButton = findViewById(R.id.submitThoughtsButton);
-        final EditText commentInput = findViewById(R.id.commentInput);
-        final Button submitCommentButton = findViewById(R.id.submitCommentButton);
+        noForumTopicsText = findViewById(R.id.no_forums_text)
+        recyclerView = findViewById(R.id.recycler_view)
+        recyclerView.setHasFixedSize(true) // Set to improve performance since changes in content do not change layout size
+        recyclerView.setLayoutManager(LinearLayoutManager(this)) // Set layout manager for RecyclerView
+        adapter = ForumTopicAdapter(this) // Initialize the adapter with context
+        recyclerView.setAdapter(adapter)
 
-        // Disabling submit buttons initially
-        submitThoughtsButton.setEnabled(false);
-        submitCommentButton.setEnabled(false);
+        // Start a new forum button
+        val startNewPostButton = findViewById<Button>(R.id.startNewForumButton)
+        startNewPostButton.setOnClickListener {
+            startActivity(Intent(this, CreateForumTopicActivity::class.java))
+        }
+    }
 
-        // TextWatcher to enable the submit thoughts button only when the input field is filled
-        userThoughtsInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    override fun onResume() {
+        super.onResume()
+        refreshList()
+    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Enable the submit button only if the user has entered text
-                submitThoughtsButton.setEnabled(!s.toString().trim().isEmpty());
-            }
+    private fun refreshList() {
+        //start database connection
+        val databaseAccess = DatabaseAccess.getInstance(applicationContext)
+        databaseAccess.open()
+        val forumTopics: List<ForumTopic> = databaseAccess.getForumTopics()
+        //closing the connection
+        databaseAccess.close()
 
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+        adapter.updateList(forumTopics)
+        if (forumTopics.isEmpty()) {
+            noForumTopicsText.visibility = View.VISIBLE
+        } else {
+            noForumTopicsText.visibility = View.GONE
+        }
+    }
 
-        // TextWatcher to enable the submit comment button only when the comment field is filled
-        commentInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Enable the submit button only if the user has entered a comment
-                submitCommentButton.setEnabled(!s.toString().trim().isEmpty());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        // Submit thoughts button functionality
-        submitThoughtsButton.setOnClickListener(v -> {
-            String userThoughts = userThoughtsInput.getText().toString().trim();
-            if (!userThoughts.isEmpty()) {
-                // Simulate thoughts submission
-                boolean isSubmitted = DatabaseAccess.submitThoughts(userThoughts);
-                if (isSubmitted) {
-                    userThoughtsInput.setText(null);
-                    Toast.makeText(ForumActivity.this, "Thoughts submitted successfully!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(ForumActivity.this, "Failed to submit thoughts. Please try again.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        // Submit comment button functionality
-        submitCommentButton.setOnClickListener(v -> {
-            String comment = commentInput.getText().toString().trim();
-            if (!comment.isEmpty()) {
-                // Simulate comment submission
-                boolean isSubmitted = DatabaseAccess.submitComment(comment);
-                if (isSubmitted) {
-                    commentInput.setText(null);
-                    Toast.makeText(ForumActivity.this, "Comment submitted successfully!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(ForumActivity.this, "Failed to submit comment. Please try again.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        // Start a new post button (If you have functionality to handle new posts)
-        Button startNewPostButton = findViewById(R.id.startNewPostButton);
-        startNewPostButton.setOnClickListener(v -> {
-            // Logic for starting a new post goes here (e.g., open a new activity or dialog)
-            Toast.makeText(ForumActivity.this, "Starting a new post...", Toast.LENGTH_SHORT).show();
-        });
+    override fun OnTopicClicked(topic: ForumTopic) {
+        // Need to complete this to open the forum topic
     }
 }
 

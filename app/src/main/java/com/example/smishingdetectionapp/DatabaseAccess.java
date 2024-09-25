@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.SimpleCursorAdapter;
 
+import com.example.smishingdetectionapp.forum.model.ForumTopic;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class DatabaseAccess {
@@ -18,34 +21,6 @@ public class DatabaseAccess {
     private SQLiteDatabase db;
     private static DatabaseAccess instance;
     Context context;
-
-    public static boolean sendFeedback(String name, String feedback, float rating) {
-        // Here you would add your logic to send feedback to the database.
-        // This could involve inserting the feedback into a SQLite database,
-        // sending it to a remote server via an API call, etc.
-
-        // For now, we will simulate a successful insertion
-        // by always returning true.
-
-        if (name.isEmpty() || feedback.isEmpty()) {
-            return false; // Fail if name or feedback is empty
-        }
-
-        // Simulated success
-        return true;
-    }
-
-    // Simulate submission of thoughts
-    public static boolean submitThoughts(String thoughts) {
-        // Add your database logic or API call here
-        return !thoughts.isEmpty(); // Simulating success
-    }
-
-    // Simulate submission of comments
-    public static boolean submitComment(String comment) {
-        // Add your database logic or API call here
-        return !comment.isEmpty(); // Simulating success
-    }
 
     public static class DatabaseOpenHelper extends SQLiteAssetHelper {
 
@@ -58,6 +33,23 @@ public class DatabaseAccess {
         private static final String KEY_MESSAGE = "Message";
         private static final String KEY_DATE = "Date";
 
+        // Forum table columns and names
+        private static final String TABLE_FORUM_TOPICS = "ForumTopics";
+        private static final String KEY_FORUM_TOPIC_ID = "_id";
+        private static final String KEY_FORUM_TOPIC_TITLE = "Title";
+        private static final String KEY_FORUM_TOPIC_DESCRIPTION = "Description";
+        private static final String TABLE_FORUM_POSTS = "ForumPosts";
+        private static final String KEY_FORUM_POST_ID = "_id";
+        private static final String KEY_FORUM_POST_TITLE = "Title";
+        private static final String KEY_FORUM_POST_CONTENT = "Content";
+
+        // SQL Statement to Create the Table
+        private static final String TABLE_FORUM_TOPICS_CREATE =
+                "CREATE TABLE IF NOT EXISTS " + TABLE_FORUM_TOPICS + " (" +
+                        KEY_FORUM_TOPIC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        KEY_FORUM_TOPIC_TITLE + " TEXT NOT NULL, " +
+                        KEY_FORUM_TOPIC_DESCRIPTION + " TEXT NOT NULL);";
+
         public DatabaseOpenHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
@@ -65,7 +57,6 @@ public class DatabaseAccess {
     }
 
     DatabaseAccess(Context context) {
-
         openHelper= new DatabaseOpenHelper(context);
         this.context = context;
     }
@@ -80,6 +71,7 @@ public class DatabaseAccess {
     public void open(){
         this.db=openHelper.getWritableDatabase();
         System.out.println("Database Opened!");
+        db.execSQL(DatabaseOpenHelper.TABLE_FORUM_TOPICS_CREATE);
     }
 
     public void close(){
@@ -157,5 +149,79 @@ public class DatabaseAccess {
         );
     }
 
+    public static boolean sendFeedback(String name, String feedback, float rating) {
+        // Here you would add your logic to send feedback to the database.
+        // This could involve inserting the feedback into a SQLite database,
+        // sending it to a remote server via an API call, etc.
 
+        // For now, we will simulate a successful insertion
+        // by always returning true.
+
+        if (name.isEmpty() || feedback.isEmpty()) {
+            return false; // Fail if name or feedback is empty
+        }
+
+        // Simulated success
+        return true;
+    }
+
+    // Simulate submission of thoughts
+    public static boolean submitThoughts(String thoughts) {
+        // Add your database logic or API call here
+        return !thoughts.isEmpty(); // Simulating success
+    }
+
+    // Simulate submission of comments
+    public static boolean submitComment(String comment) {
+        // Add your database logic or API call here
+        return !comment.isEmpty(); // Simulating success
+    }
+
+    public static boolean submitForumTopic(String title, String description) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseOpenHelper.KEY_FORUM_TOPIC_TITLE, title);
+        contentValues.put(DatabaseOpenHelper.KEY_FORUM_TOPIC_DESCRIPTION, description);
+        long result = db.insert(DatabaseOpenHelper.TABLE_FORUM_TOPICS, null, contentValues);
+        return result != -1;
+    }
+
+    // Method to fetch a list of forum topics
+    public List<ForumTopic> getForumTopics() {
+        List<ForumTopic> forumTopics = new ArrayList<>();
+
+        // Open database for reading
+        SQLiteDatabase db = openHelper.getReadableDatabase();
+
+        // Define the columns to retrieve
+        String[] columns = {
+                DatabaseOpenHelper.KEY_FORUM_TOPIC_TITLE,
+                DatabaseOpenHelper.KEY_FORUM_TOPIC_DESCRIPTION
+        };
+
+        // Query the table
+        Cursor cursor = db.query(
+                DatabaseOpenHelper.TABLE_FORUM_TOPICS, // Table name
+                columns, // Columns to return
+                null,    // Selection (WHERE clause)
+                null,    // Selection arguments
+                null,    // Group by
+                null,    // Having
+                null     // Order by
+        );
+
+        // Iterate through the results and add to the list
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_FORUM_TOPIC_TITLE));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_FORUM_TOPIC_DESCRIPTION));
+                forumTopics.add(new ForumTopic(title, description));
+            } while (cursor.moveToNext());
+
+            // Close the cursor when done
+            cursor.close();
+        }
+
+        return forumTopics;
+    }
 }
