@@ -33,6 +33,7 @@ import android.util.Log;
 public class MainActivity extends AppCompatActivity {
     private static final int SMS_PERMISSION_CODE = 101;
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView total_count;
 
     @SuppressLint("SetTextI18n")
     @Override
