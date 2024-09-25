@@ -98,12 +98,12 @@
             android:name=".OCRActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
-        <receiver android:name=".SmsReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
+<!--        <receiver android:name=".SmsReceiver"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
         <activity
             android:name=".FeedbackActivity"
             android:exported="false" />
