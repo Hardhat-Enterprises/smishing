@@ -18,12 +18,12 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:usesCleartextTraffic="true"
         android:icon="@drawable/hardhat_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/hardhat_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <!-- MainActivity as the launcher activity -->
@@ -41,6 +41,9 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
+        <activity
+            android:name=".forum.CreateForumTopicActivity"
+            android:exported="false" />
         <activity
             android:name=".TermsAndConditionsActivity"
             android:exported="false" />
@@ -95,6 +98,15 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
+            android:name=".FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SDBotActivity"
+            android:exported="false" />
+        <activity
             android:name=".OCRActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
@@ -104,12 +116,6 @@
 <!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
 <!--            </intent-filter>-->
 <!--        </receiver>-->
-        <activity
-            android:name=".FeedbackActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ForumActivity"
-            android:exported="false" />
     </application>
 </manifest>
 
