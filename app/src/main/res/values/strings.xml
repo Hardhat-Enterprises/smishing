@@ -231,15 +231,20 @@
     <string name="submit_feedback">Submit_feedback</string>
     <string name="forums">Forums</string>
     <string name="community_forum">Community Forum</string>
-    <string name="back_button" />
+    <string name="create_forum_topic">Create Forum Topic</string>
+    <string name="back_button">Back</string>
     <string name="search_bar">Search Bar</string>
     <string name="forum_1">Forum 1</string>
-    <string name="share_your_thoughts">Share your thoughts...</string>
+    <string name="forum_title">Forum Title</string>
+    <string name="forum_description">Forum Description</string>
+    <string name="share_your_thoughts">Share your thoughts…</string>
     <string name="submit">Submit</string>
     <string name="comments">Comments</string>
-    <string name="add_a_comment">Add a comment...</string>
+    <string name="add_a_comment">Add a comment…</string>
     <string name="submit_comment">Submit Comment</string>
-    <string name="start_a_new_post">Start a new post</string>
+    <string name="empty_forum">There are no forums.\nStart a new one today!</string>
+    <string name="start_a_new_forum">Start a New Forum</string>
+    <string name="start_a_new_post">Start a New Post</string>
     <string name="submitfeedback">Submit Feedback</string>
     <string name="community">Community</string>
     <string name="todo">TODO</string>
@@ -247,4 +252,7 @@
     <string name="process_image">Process Image</string>
     <string name="extracted_text_will_appear_here">Extracted text will appear here</string>
     <string name="translated_text_will_appear_here">Translated text will appear here</string>
+    <string name="sd_chatbot">SD Chatbot</string>
+    <string name="ask_your_question">Ask your question…</string>
+    <string name="sdbot2">SDBot</string>
 </resources>
