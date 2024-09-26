@@ -23,6 +23,8 @@ import com.example.smishingdetectionapp.databinding.ActivitySignupBinding;
 import com.example.smishingdetectionapp.ui.login.LoginActivity;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -111,48 +113,54 @@ public class RegisterMain extends AppCompatActivity {
     }
 
     private boolean validateInput(String fullName, String phoneNumber, String email, String password) {
+
+        TextView pw2Error = (TextView) findViewById(R.id.pw2InputError);
+        TextView emailError = (TextView) findViewById(R.id.emailInputError);
+        TextView phError = (TextView) findViewById(R.id.pnInputError);
+        TextView nameError = (TextView) findViewById(R.id.nameInputError);
+
         if (TextUtils.isEmpty(fullName)) {
-            Snackbar.make(binding.getRoot(), "Please enter your full name.", Snackbar.LENGTH_LONG).show();
+            nameError.setText("Please enter your full name");
             return false;
         }
 
         if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
-            Snackbar.make(binding.getRoot(), "Please enter a valid phone number.", Snackbar.LENGTH_LONG).show();
+            phError.setText("Please enter a valid phone number");
             return false;
         }
 
         if (!isValidEmailAddress(email)) {
-            Snackbar.make(binding.getRoot(), "Please enter a valid email address.", Snackbar.LENGTH_LONG).show();
+            emailError.setText("Please enter a valid email address");
             return false;
         }
 
         String confirmPassword = binding.pw2Input.getText().toString();
         if (password.length() < 8) {
-            Snackbar.make(binding.getRoot(), "Password must be at least 8 characters long.", Snackbar.LENGTH_LONG).show();
+            pw2Error.setText("Password must be at least 8 characters long");
             return false;
         }
         if (!password.equals(confirmPassword)) {
-            Snackbar.make(binding.getRoot(), "Passwords do not match.", Snackbar.LENGTH_LONG).show();
+            pw2Error.setText("Password do not match");
             return false;
         }
 
         if (!password.matches(".*\\d.*")) {
-            Snackbar.make(binding.getRoot(), "Please add number to password", Snackbar.LENGTH_LONG).show();
+            pw2Error.setText("Please add number to password");
             return false;
         }
 
         if (!password.matches(".*[A-Z].*")) {
-            Snackbar.make(binding.getRoot(), "Please add Upper case to password", Snackbar.LENGTH_LONG).show();
+            pw2Error.setText("Please add uppercase to password");
             return false;
         }
 
         if (!password.matches(".*[a-z].*")) {
-            Snackbar.make(binding.getRoot(), "Please add lower case to password", Snackbar.LENGTH_LONG).show();
+            pw2Error.setText("Please add lower case to password");
             return false;
         }
 
         if (!password.matches(".*[!@#$%^&*+=?-].*")) {
-            Snackbar.make(binding.getRoot(), "Please add special character to password ", Snackbar.LENGTH_LONG).show();
+            pw2Error.setText("Please add special character to password");
             return false;
         }
 

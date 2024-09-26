@@ -114,6 +114,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailLbl" />
 
+    <TextView
+        android:id="@+id/nameInputError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-6dp"
+        android:textSize="12sp"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/full_name_input" />
+
+    <TextView
+        android:id="@+id/emailInputError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-6dp"
+        android:textSize="12sp"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailInput" />
+
+
     <!-- Password Label -->
     <TextView
         android:id="@+id/pw_registerLbl"
@@ -126,6 +149,17 @@
         app:layout_constraintTop_toBottomOf="@id/emailInput" />
 
     <!-- Password Input -->
+    <TextView
+        android:id="@+id/pnInputError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-6dp"
+        android:textSize="12sp"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pnInput" />
+
     <EditText
         android:id="@+id/pwInput"
         android:layout_width="0dp"
@@ -160,6 +194,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pw2_registerLbl" />
 
+    <TextView
+        android:id="@+id/pw2InputError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:textSize="12sp"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pwInput" />
+
+
     <!-- Register Button -->
     <Button
         android:id="@+id/registerBtn"
@@ -168,12 +214,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/register_btn"
+        android:background="@drawable/buttons_rounded"
         android:enabled="false"
+        android:text="@string/register_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pw2Input"
-        android:background="@drawable/buttons_rounded" />
+        app:layout_constraintTop_toBottomOf="@id/pw2Input"  />
 
     <!-- Terms and Conditions CheckBox -->
     <CheckBox
@@ -182,21 +228,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/agree_terms_and_conditions"
-        app:layout_constraintTop_toBottomOf="@id/registerBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerBtn" />
 
     <!-- Terms and Conditions Text -->
     <TextView
         android:id="@+id/terms_conditions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/terms_and_conditions"
         android:layout_marginTop="16dp"
+        android:text="@string/terms_and_conditions"
         android:textColor="@color/red"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/terms_conditions_checkbox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/terms_conditions_checkbox" />
 </androidx.constraintlayout.widget.ConstraintLayout>
