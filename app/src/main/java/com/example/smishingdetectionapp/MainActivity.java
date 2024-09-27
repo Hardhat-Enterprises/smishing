@@ -2,6 +2,7 @@ package com.example.smishingdetectionapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,19 +17,27 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import android.Manifest;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
-import com.example.smishingdetectionapp.news.NewsAdapter;
+import com.example.smishingdetectionapp.detections.DatabaseAccess;
+import com.example.smishingdetectionapp.detections.DetectionsActivity;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
+
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
@@ -37,22 +46,25 @@ public class MainActivity extends AppCompatActivity {
         super();
     }
 
+    private TextView total_count;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_news, R.id.nav_settings)
                 .build();
 
-        // Check if notifications are enabled and prompt if not
         if (!areNotificationsEnabled()) {
             showNotificationPermissionDialog();
         }
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -63,15 +75,16 @@ public class MainActivity extends AppCompatActivity {
         nav.setSelectedItemId(R.id.nav_home); //home page selected by default
         nav.setOnItemSelectedListener(menuItem -> { //selected item listener
 
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        nav.setSelectedItemId(R.id.nav_home);
+        nav.setOnItemSelectedListener(menuItem -> {
+
             int id = menuItem.getItemId();
             if (id == R.id.nav_home) {
-                //Empty when currently selected.
                 return true;
-            }
-            else if(id == R.id.nav_news) {
-
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));//Starts the News activity
-                overridePendingTransition(0,0);//Removes the sliding animation
+            } else if (id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
             } else if (id == R.id.nav_settings) {
@@ -143,28 +156,29 @@ public class MainActivity extends AppCompatActivity {
         debug_btn.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, DebugActivity.class)));
 
-        //Opens the detections page.
         Button detections_btn = findViewById(R.id.detections_btn);
         detections_btn.setOnClickListener(v -> {
             startActivity(new Intent(this, DetectionsActivity.class));
             finish();
         });
 
-
-        //start database connection
-        DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
+        // Database connection
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
-        //setting counter from result
-        TextView total_count;
-        total_count = findViewById(R.id.total_counter);
-        total_count.setText(""+databaseAccess.getCounter());
-        //closing the connection
-        databaseAccess.close();
-        //TODO: Add functionality for new detections.
 
+        // Setting counter from the result
+        total_count = findViewById(R.id.total_counter);
+        total_count.setText("" + databaseAccess.getCounter());
+
+        // Closing the connection
+        databaseAccess.close();
     }
 
     private boolean areNotificationsEnabled() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 1);
+        }
+
         return NotificationManagerCompat.from(this).areNotificationsEnabled();
     }
 
