@@ -113,9 +113,35 @@
     <dimen name="grid_item_spacing">8dp</dimen>
 
     <dimen name="fab_size">56dp</dimen>
+        <!-- Specific Use Cases (Login Screen, Button Sizes, etc.) -->
+        <!-- Login Screen -->
+        <dimen name="login_logo_size">120dp</dimen>
+        <dimen name="login_input_height">48dp</dimen>
+        <dimen name="login_input_width">280dp</dimen>
+        <dimen name="login_button_height">48dp</dimen>
+        <dimen name="login_button_width">200dp</dimen>
+
+        <!-- Home Screen -->
+        <dimen name="detections_tv_height">100dp</dimen>
+
+        <!-- Buttons -->
+        <dimen name="button_height_small">40dp</dimen>
+        <dimen name="button_height_medium">48dp</dimen>
+        <dimen name="button_height_large">56dp</dimen>
+        <dimen name="button_width_small">100dp</dimen>
+        <dimen name="button_width_medium">200dp</dimen>
+        <dimen name="button_width_large">300dp</dimen>
+
+        <!-- Images -->
+        <dimen name="image_size_small">80dp</dimen>
+        <dimen name="image_size_medium">120dp</dimen>
+        <dimen name="image_size_large">160dp</dimen>
+        <dimen name="image_size_xlarge">200dp</dimen>
+
 
     <!-- Dynamic Screen Size Handling -->
     <!-- Define sizes for different screen densities or sizes -->
     <!-- These can be overridden in separate values folders for different configurations -->
 
-</resources>
+
+    </resources>
