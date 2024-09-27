@@ -2,7 +2,19 @@ package com.example.smishingdetectionapp.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
+
+
+import com.example.smishingdetectionapp.BuildConfig;
+import com.example.smishingdetectionapp.DataBase.DBresult;
+import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
+import com.example.smishingdetectionapp.MainActivity;
+
+import androidx.core.splashscreen.SplashScreen;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
