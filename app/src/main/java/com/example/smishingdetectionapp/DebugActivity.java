@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +22,11 @@ public class DebugActivity extends AppCompatActivity {
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
         nav.setSelectedItemId(R.id.nav_settings);
+
+        ImageButton back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(v -> {
+            finish();
+        });
 
         nav.setOnItemSelectedListener(menuItem -> {
 
@@ -81,6 +87,15 @@ public class DebugActivity extends AppCompatActivity {
                 NotificationType newsAlert = NotificationType.createNewsAlert(getApplicationContext());
                 NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
                 notificationHelper.createNotification(newsAlert,"NEWS NOTIFICATION","SOME NEWS");
+            }
+        });
+
+        Button statistics_btn = findViewById(R.id.statistics_btn);
+        statistics_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open StatisticsActivity
+                startActivity(new Intent(DebugActivity.this, StatisticsActivity.class));
             }
         });
 

@@ -14,15 +14,27 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.smishingdetectionapp.SmishingDetector;
 import com.example.smishingdetectionapp.sms.model.SMSMessage;
+import com.example.smishingdetectionapp.sms.OnStatsUpdateListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SMSExtractor {
     private final Context context;
+    private int totalMessagesAnalyzed = 0;
+    private int smishingMessagesCount = 0;
+    private OnStatsUpdateListener statsUpdateListener;
 
     public SMSExtractor(Context context) {
         this.context = context;
+    }
+
+    public int getTotalMessagesAnalyzed() {
+        return totalMessagesAnalyzed;
+    }
+
+    public int getSmishingMessagesCount() {
+        return smishingMessagesCount;
     }
 
     private boolean hasSmsPermission() {
@@ -31,6 +43,16 @@ public class SMSExtractor {
 
     private boolean hasContactsPersmission() {
         return ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void setOnStatsUpdateListener(OnStatsUpdateListener listener) {
+        this.statsUpdateListener = listener;
+    }
+
+    private void notifyStatsUpdate() {
+        if (statsUpdateListener != null) {
+            statsUpdateListener.onStatsUpdated(totalMessagesAnalyzed, smishingMessagesCount);
+        }
     }
 
     @Nullable
@@ -59,6 +81,7 @@ public class SMSExtractor {
     public List<SMSMessage> extractAllMessages(){
         List<SMSMessage> messages = new ArrayList<>();
         Cursor cursor = getSmsCursor();
+        //totalMessagesAnalyzed = 0;
 
         if (cursor != null && cursor.moveToFirst()){
             int senderIndex = cursor.getColumnIndex(Telephony.Sms.ADDRESS);
@@ -69,17 +92,20 @@ public class SMSExtractor {
                 String body = cursor.getString(bodyIndex);
                 SMSMessage smsMessage = new SMSMessage(sender, body);
                 messages.add(smsMessage);
+                totalMessagesAnalyzed++;
 
             }while (cursor.moveToNext());
         }else {
             Log.e("SMSExtractor", "Failed to retrieve SMS messages.");
         }
+        notifyStatsUpdate();
         return messages;
     }
 
     public List<SMSMessage> extractSuspiciousMessages() {
         List<SMSMessage> suspiciousMessages = new ArrayList<>();
-
+        totalMessagesAnalyzed = 0;
+        smishingMessagesCount = 0;
         Cursor cursor = getSmsCursor();
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -89,6 +115,7 @@ public class SMSExtractor {
             do {
                 String sender = cursor.getString(senderIndex);
                 String body = cursor.getString(bodyIndex);
+                totalMessagesAnalyzed++;
 
                 // Check if the sender is not in the contacts
                 if (!isSenderInContacts(sender)) {
@@ -98,6 +125,7 @@ public class SMSExtractor {
                     if (isSmishing) {
                         SMSMessage smsMessage = new SMSMessage(sender, body);
                         suspiciousMessages.add(smsMessage);
+                        smishingMessagesCount++;
                     }
                 }
             } while (cursor.moveToNext());
@@ -106,6 +134,7 @@ public class SMSExtractor {
         } else {
             Log.e("SMSExtractor", "Failed to retrieve SMS messages.");
         }
+        notifyStatsUpdate();
         return suspiciousMessages;
     }
 
@@ -119,4 +148,5 @@ public class SMSExtractor {
         }
         return isInContacts;
     }
+
 }

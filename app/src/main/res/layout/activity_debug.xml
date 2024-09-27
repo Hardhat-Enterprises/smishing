@@ -24,7 +24,6 @@
         app:itemBackground="@color/baby_blue"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
-        app:itemActiveIndicatorStyle="@android:color/transparent"
         android:theme="@style/Theme.SmishingDetectionApp"
         app:menu="@menu/activity_main_drawer" />
 
@@ -41,6 +40,18 @@
             android:textSize="20sp"
             android:theme="@style/Theme.SmishingDetectionApp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/statistics_btn"
+            android:layout_width="369dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="104dp"
+            android:text="Show Statistics"
+            android:textSize="20sp"
+            android:theme="@style/Theme.SmishingDetectionApp"
+            app:layout_constraintBottom_toTopOf="@+id/basic_notif_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -103,6 +114,18 @@
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back_button" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
