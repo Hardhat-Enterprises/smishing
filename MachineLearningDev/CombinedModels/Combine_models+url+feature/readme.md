@@ -1,4 +1,4 @@
-# Combine models + Feature engineering + URL model (T2 2024)
+# Combine models + Feature engineering + URL model integration (T2 2024)
 
 *Support Vector, voting classifier, url vectorizer and  url classifier pickles are too large to commit to GitHub
 
@@ -36,4 +36,4 @@
 
 ![topo.png](I:\My%20Drive\Colab%20Notebooks\smishingAI\MachineLearningDev\CombinedModels\Combine_models+url+feature\topo.png)
 
-*now only has one focus on recall*
+* currently only has one focus on recall*
