@@ -1,22 +1,40 @@
 package com.example.smishingdetectionapp;
 
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
+import com.example.smishingdetectionapp.DataBase.UserResponse;
 import com.example.smishingdetectionapp.news.NewsAdapter;
+
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
+import com.example.smishingdetectionapp.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private TextView emailTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
 
@@ -68,12 +86,22 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, HelpActivity.class));
             finish();
         });
+        Button aboutMeButton = findViewById(R.id.aboutMeBtn);
+        aboutMeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, AboutMeActivity.class);
+            startActivity(intent);
+        });
     }
+
 
     //Notification button to switch to notification page
     public void openNotificationsActivity(View view) {
         Intent intent = new Intent(this, NotificationActivity.class);
         startActivity(intent);
     }
+
+
+
+
 }
 
