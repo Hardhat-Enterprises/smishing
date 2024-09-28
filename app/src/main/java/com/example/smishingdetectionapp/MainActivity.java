@@ -19,9 +19,18 @@ import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+//kim
+import android.widget.Toast;
+//kim
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
+
+//kim
+
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
-
+    private AccessControl accessControl;
 
     public MainActivity() {
         super();
@@ -32,8 +41,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //report tool test <kim>
+        setContentView(R.layout.activity_main);
+        SmishingReportServiceTest.runTests();
+        //
+
+        //
+        setContentView(R.layout.activity_main);
+        Intent serviceIntent = new Intent(this, MyService.class);
+        startService(serviceIntent);
+
+
+
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_news, R.id.nav_settings)
                 .build();
@@ -112,4 +134,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
+
+
+
+
 }
+
