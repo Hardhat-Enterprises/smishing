@@ -1,11 +1,14 @@
 <resources>
+    <!-- Default screen margins, based on Android design guidelines -->
     <!-- Default screen margins, per the Android Design guidelines. -->
-
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_spacing_vertical">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="bottom_navigation_height">60dp</dimen>
+
+    <!-- Universal Dimensions: Margins -->
     <dimen name="bottom_navigation_height">60dp</dimen>  <!-- 60dp -->
 
     <!-- Universal Dimensions (Commonly used across the app) -->
@@ -17,6 +20,7 @@
     <dimen name="margin_xlarge">32dp</dimen>
     <dimen name="margin_xxlarge">48dp</dimen>
 
+    <!-- Universal Dimensions: Padding -->
     <!-- Padding -->
     <dimen name="padding_xsmall">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
@@ -25,6 +29,7 @@
     <dimen name="padding_xlarge">32dp</dimen>
     <dimen name="padding_xxlarge">48dp</dimen>
 
+    <!-- Universal Dimensions: Text Sizes -->
     <!-- Text Sizes -->
     <dimen name="text_size_xsmall">10sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
@@ -33,6 +38,7 @@
     <dimen name="text_size_xlarge">24sp</dimen>
     <dimen name="text_size_xxlarge">32sp</dimen>
 
+    <!-- Universal Dimensions: Element Sizes -->
     <!-- Element Sizes -->
     <dimen name="element_height_small">40dp</dimen>
     <dimen name="element_height_medium">48dp</dimen>
@@ -58,6 +64,7 @@
     <dimen name="elevation_medium">4dp</dimen>
     <dimen name="elevation_large">8dp</dimen>
 
+    <!-- Specific Dimensions: Login Screen -->
     <!-- Specific Use Cases (Login Screen, Button Sizes, etc.) -->
     <!-- Login Screen -->
     <dimen name="login_logo_size">120dp</dimen>
@@ -66,6 +73,10 @@
     <dimen name="login_button_height">48dp</dimen>
     <dimen name="login_button_width">200dp</dimen>
 
+    <!-- Specific Dimensions: Home Screen -->
+    <dimen name="home_detections_tv_height">100dp</dimen>
+
+    <!-- Button Dimensions -->
     <!-- Home Screen -->
     <dimen name="detections_tv_height">100dp</dimen>
 
@@ -84,6 +95,11 @@
     <dimen name="button_secondary_height">40dp</dimen>
     <dimen name="button_tertiary_height">32dp</dimen>
 
+    <!-- Logo Dimensions -->
+    <dimen name="logo_width">112dp</dimen>
+    <dimen name="logo_height">106dp</dimen>
+
+    <!-- Image Sizes -->
     <!-- Logo -->
     <dimen name="logo_width">112dp</dimen>
     <dimen name="logo_height">106dp</dimen>
@@ -94,6 +110,23 @@
     <dimen name="image_size_large">160dp</dimen>
     <dimen name="image_size_xlarge">200dp</dimen>
 
+    <!-- Toolbar and Action Bar Dimensions -->
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="actionbar_height">56dp</dimen>
+
+    <!-- Navigation Dimensions -->
+    <dimen name="nav_drawer_width">280dp</dimen>
+    <dimen name="nav_bar_height">48dp</dimen>
+
+    <!-- Card Dimensions -->
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+
+    <!-- Dialog Dimensions -->
+    <dimen name="dialog_width">300dp</dimen>
+    <dimen name="dialog_height">400dp</dimen>
+
+    <!-- Grid Dimensions -->
     <dimen name="toolbar_height">56dp</dimen>
 
     <dimen name="actionbar_height">56dp</dimen>
@@ -111,6 +144,13 @@
     <dimen name="grid_item_width">100dp</dimen>
     <dimen name="grid_item_height">100dp</dimen>
     <dimen name="grid_item_spacing">8dp</dimen>
+
+    <!-- Floating Action Button (FAB) -->
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Dynamic Screen Size Handling -->
+    <!-- You can override these values in separate values folders for different screen configurations -->
 
     <dimen name="fab_size">56dp</dimen>
         <!-- Specific Use Cases (Login Screen, Button Sizes, etc.) -->
@@ -138,10 +178,8 @@
         <dimen name="image_size_large">160dp</dimen>
         <dimen name="image_size_xlarge">200dp</dimen>
 
-
     <!-- Dynamic Screen Size Handling -->
     <!-- Define sizes for different screen densities or sizes -->
     <!-- These can be overridden in separate values folders for different configurations -->
-
 
     </resources>
