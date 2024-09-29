@@ -13,7 +13,6 @@ android {
         buildConfig = true
     }
 
-
     defaultConfig {
         ndk {
             // On Apple silicon, you can omit x86_64.
@@ -26,18 +25,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
-        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
+
+        // Merge the vectorDrawables from both branches
         vectorDrawables {
             useSupportLibrary = true
         }
 
 
-
-
-
-   }
+        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"") // Gmail Email for emailing user the verification code
+        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"") // Gmail Password
+        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"") //Server IP address
+    }
 
     buildTypes {
         release {
@@ -45,29 +43,36 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-//    ndk {
-//        abiFilters("armeabi-v7a", "x86")
-//    }
-    compileOptions {
 
+    compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-
-
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         viewBinding = true
         compose = true
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
+
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += setOf(
+                    "/META-INF/{AL2.0,LGPL2.1}",
+                    "/META-INF/DEPENDENCIES",
+                    "/META-INF/LICENSE",
+                    "/META-INF/LICENSE.txt",
+                    "/META-INF/NOTICE",
+                    "/META-INF/NOTICE.txt",
+                    "META-INF/INDEX.LIST"
+            )
         }
     }
 
@@ -93,8 +98,10 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation("androidx.core:core-ktx:1.6.0")
     implementation(libs.activity)
-    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
+
+    // Merge testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -102,14 +109,42 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
-    implementation ("com.google.android.material:material:1.2.0-alpha02")
+
+    // External libraries from feature/ocr-functionality
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.converter.simplexml)
+
+    // Google Cloud Vision API
+    implementation(libs.google.cloud.vision.v11000)
+
+    // Google Cloud Translate API
+    implementation(libs.google.cloud.translate.v1950)
+
+    // gRPC and Protobuf dependencies
+    implementation(libs.grpc.okhttp)
+    implementation(libs.grpc.protobuf)
+    implementation(libs.grpc.stub)
+    implementation(libs.grpc.auth)
+    implementation(libs.grpc.core)
+
+    // For email system
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))
 
-}
+    // Additional dependencies from master
+    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:converter-simplexml:2.11.0")
+    implementation("com.google.android.material:material:1.2.0-alpha02")
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/mail.jar"))
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation ("com.tbuonomo:dotsindicator:4.3")
 
+}
