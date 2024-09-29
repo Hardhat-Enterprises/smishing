@@ -2,6 +2,7 @@ package com.example.smishingdetectionapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,6 +36,9 @@ import com.example.smishingdetectionapp.notifications.NotificationPermissionDial
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
+
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -48,10 +52,19 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView total_count;
 
+
+    public MainActivity() {
+        super();
+    }
+
+    TextView pcSmish, pcHam, pcSpam;
+    PieChart pieChart;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -61,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_news, R.id.nav_settings)
                 .build();
 
+        // Check if notifications are enabled and prompt if not
         if (!areNotificationsEnabled()) {
             showNotificationPermissionDialog();
         }
-
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -75,16 +88,20 @@ public class MainActivity extends AppCompatActivity {
         nav.setSelectedItemId(R.id.nav_home); //home page selected by default
         nav.setOnItemSelectedListener(menuItem -> { //selected item listener
 
+
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setSelectedItemId(R.id.nav_home);
         nav.setOnItemSelectedListener(menuItem -> {
 
             int id = menuItem.getItemId();
             if (id == R.id.nav_home) {
+                //Empty when currently selected.
                 return true;
-            } else if (id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
-                overridePendingTransition(0, 0);
+            }
+            else if(id == R.id.nav_news) {
+
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));//Starts the News activity
+                overridePendingTransition(0,0);//Removes the sliding animation
                 finish();
                 return true;
             } else if (id == R.id.nav_settings) {
@@ -156,22 +173,44 @@ public class MainActivity extends AppCompatActivity {
         debug_btn.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, DebugActivity.class)));
 
+        //Opens the detections page.
         Button detections_btn = findViewById(R.id.detections_btn);
         detections_btn.setOnClickListener(v -> {
             startActivity(new Intent(this, DetectionsActivity.class));
             finish();
         });
 
-        // Database connection
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+
+        //start database connection
+        DatabaseAccess databaseAccess=DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
-
-        // Setting counter from the result
+      
+        //setting counter from result
+        TextView total_count;
         total_count = findViewById(R.id.total_counter);
-        total_count.setText("" + databaseAccess.getCounter());
+        total_count.setText(""+databaseAccess.getCounter());
+        //TODO: Add functionality for new detections.
 
-        // Closing the connection
-        databaseAccess.close();
+        //Pie Chart
+        pieChart = findViewById(R.id.piechart);
+        pcSmish = findViewById(R.id.smishCount);
+        pcHam = findViewById(R.id.hamCount);
+        pcSpam = findViewById(R.id.spamCount);
+
+        pcSmish.setText(Integer.toString(databaseAccess.SmishingCounter()));
+        pcHam.setText(Integer.toString(databaseAccess.HamCounter()));
+        pcSpam.setText(Integer.toString(databaseAccess.SpamCounter()));
+        setPieData();
+        System.out.println("Smishing Counter: "+databaseAccess.SmishingCounter());
+        System.out.println("Ham Counter: "+databaseAccess.HamCounter());
+        System.out.println("Spam Counter: "+databaseAccess.SpamCounter());
+    }
+
+    private void setPieData(){
+        pieChart.addPieSlice(new PieModel("Smishing", Integer.parseInt(pcSmish.getText().toString()), Color.parseColor("#FFFF0000")));
+        pieChart.addPieSlice(new PieModel("Ham", Integer.parseInt(pcHam.getText().toString()), Color.parseColor("#66BB6A")));
+        pieChart.addPieSlice(new PieModel("Spam", Integer.parseInt(pcSpam.getText().toString()), Color.parseColor("#FFA726")));
+        pieChart.startAnimation();
     }
 
     private boolean areNotificationsEnabled() {
