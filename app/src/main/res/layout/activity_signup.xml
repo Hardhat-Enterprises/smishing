@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Signup Title -->
-    <TextView
+    <TextViews
         android:id="@+id/signupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
