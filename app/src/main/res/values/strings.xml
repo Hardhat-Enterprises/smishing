@@ -42,6 +42,11 @@
     <string name="detectionsBtn">Detections</string>
     <string name="new_detectionsTxt">New detections</string>
     <string name="total_detectionsTxt">Total detections</string>
+    <string name="smishingTxt">Smishing</string>
+    <string name="hamTxt">Ham</string>
+    <string name="spamTxt">Spam</string>
+    <string name="zero">0</string>
+    <string name="overviewTxt">Overview</string>
 
     <!-- Account Settings Page Buttons -->
     <string name="password_changeBtn">Password</string>
@@ -113,6 +118,7 @@
     <string name="pnTitle">Phone: </string>
     <string name="msgTitle">Message: </string>
     <string name="dateTitle">Date: </string>
+    <string name="searchString">Search detections...</string>
 
     <string name="info_icon">info</string>
     <string name="new_icon">info</string>
@@ -188,6 +194,14 @@
     <string name="message_body">Message Body</string>
     <string name="dummy_smishing_report">This SMS message contains some text that might indicate it is a scam! Please beware!</string>
     <string name="empty_sms">There are no SMS messages.</string>
+
+
+    <!-- ORC page Strings -->
+
+    <string name="image_to_be_processed">Image to be processed</string>
+    <string name="process_image">Process Image</string>
+    <string name="extracted_text_will_appear_here">Extracted text will appear here</string>
+    <string name="translated_text_will_appear_here">Translated text will appear here</string>
 
     <!-- Terms and Conditions Content -->
     <string name="terms_and_conditions_content">

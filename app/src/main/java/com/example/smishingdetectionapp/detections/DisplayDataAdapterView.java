@@ -2,6 +2,7 @@ package com.example.smishingdetectionapp.detections;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,23 +32,35 @@ public class DisplayDataAdapterView extends CursorAdapter {
         TextView PhoneTextView = view.findViewById(R.id.detectionPhoneText);
         TextView MessageTextView = view.findViewById(R.id.detectionMessageText);
         TextView DateTextView = view.findViewById(R.id.detectionDateText);
+        TextView TypeTextView = view.findViewById(R.id.detectionType);
 
-        int _id =
-                cursor.getColumnIndex(DatabaseAccess.DatabaseOpenHelper.KEY_ROWID);
         int Phone_Number =
                 cursor.getColumnIndex(DatabaseAccess.DatabaseOpenHelper.KEY_PHONENUMBER);
         int Message =
                 cursor.getColumnIndex(DatabaseAccess.DatabaseOpenHelper.KEY_MESSAGE);
         int Date =
                 cursor.getColumnIndex(DatabaseAccess.DatabaseOpenHelper.KEY_DATE);
+        int Type =
+                cursor.getColumnIndex(DatabaseAccess.DatabaseOpenHelper.KEY_TYPE);
 
         String Phone = cursor.getString(Phone_Number);
         String Messages = cursor.getString(Message);
         String Dates = cursor.getString(Date);
+        String Types = cursor.getString(Type);
 
         PhoneTextView.setText(Phone);
         MessageTextView.setText(Messages);
         DateTextView.setText(Dates);
+        TypeTextView.setText(Types);
+
+        String detectionType = cursor.getString(cursor.getColumnIndexOrThrow("Type"));
+        if (detectionType.equalsIgnoreCase("Smishing")) {
+            TypeTextView.setTextColor(Color.RED);
+        } else if (detectionType.equalsIgnoreCase("Spam")) {
+            TypeTextView.setTextColor(Color.parseColor("#FFA726"));
+        } else if (detectionType.equalsIgnoreCase("Ham")) {
+            TypeTextView.setTextColor(Color.parseColor("#008a22"));
+        }
     }
 
     @Override
