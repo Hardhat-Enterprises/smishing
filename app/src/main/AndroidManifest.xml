@@ -21,12 +21,12 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:usesCleartextTraffic="true"
         android:icon="@drawable/hardhat_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/hardhat_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <!-- MainActivity as the launcher activity -->
@@ -45,6 +45,7 @@
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
         <activity
+            android:name=".forum.CreateForumTopicActivity"
             android:name=".ui.login.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
@@ -102,6 +103,24 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
+            android:name=".FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SDBotActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OCRActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
+<!--        <receiver android:name=".SmsReceiver"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
             android:name=".SplashActivity"
             android:theme="@style/Theme.App.Starting"
             android:name=".OCRActivity"

@@ -9,6 +9,7 @@ android {
     namespace = "com.example.smishingdetectionapp"
     compileSdk = 34
 
+
     buildFeatures {
         buildConfig = true
     }
@@ -27,15 +28,23 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Merge the vectorDrawables from both branches
+
         vectorDrawables {
             useSupportLibrary = true
         }
 
+   }
+
+        // Include the buildConfigFields from master
+        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
+        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
+        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
 
         buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"") // Gmail Email for emailing user the verification code
         buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"") // Gmail Password
         buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"") //Server IP address
     }
+
 
     buildTypes {
         release {
@@ -43,11 +52,14 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-
+    
+//    ndk {
+//        abiFilters("armeabi-v7a", "x86")
+//    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
+
 
     kotlinOptions {
         jvmTarget = "1.8"
