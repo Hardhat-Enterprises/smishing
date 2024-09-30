@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:showIn="navigation_view">
+
+        <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:title="@string/menu_home"
@@ -12,4 +16,21 @@
             android:id="@+id/nav_settings"
             android:title="@string/menu_settings"
             android:icon="@drawable/icons8_settings_48" />
+        </group>
 </menu>
+
+        <!-- Additional items for Inbox, Sent Mail etc. -->
+       <!--item
+            android:id="@+id/nav_inbox"
+            android:title="Inbox"
+            android:icon="@drawable/icons8_settings_48" />
+        <item
+            android:id="@+id/nav_sent_mail"
+            android:title="Sent Mail"
+            android:icon="@drawable/icons8_settings_48" />
+        <item
+            android:id="@+id/nav_drafts"
+            android:title="Drafts"
+            android:icon="@drawable/icons8_settings_48" />
+
+
