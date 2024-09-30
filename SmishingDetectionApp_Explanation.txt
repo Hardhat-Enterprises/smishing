@@ -1,0 +1,29 @@
+
+### Java Code Explanation - Smishing Detection App
+
+1. **File Upload Handling (`handleFileUpload`):**
+   - The main controller method accepts a file through a POST request. If no file is uploaded, it returns a `400 BAD_REQUEST` status. 
+   - If the file is uploaded successfully, it proceeds with three main analyses: 
+     - Metadata Analysis
+     - Video Content Analysis
+     - Audio-Visual Sync Analysis
+   - The results of each analysis are returned as part of the response.
+
+2. **Metadata Analysis (`analyzeFileMetadata`):**
+   - Uses Apache Tika's `AutoDetectParser` to extract metadata from the uploaded file.
+   - It validates:
+     - MIME type (to ensure it's an audio/video file)
+     - Creation date (if missing, it flags as suspicious)
+     - Codec (checks if the codec is one of the trusted ones like mp3, mp4, aac)
+   - If any of these checks fail, the file is flagged as suspicious.
+
+3. **Video Content Analysis (`analyzeVideoContent`):**
+   - This function is a placeholder for analyzing video content for visual artifacts or motion inconsistencies, which may indicate manipulation.
+   - You could use machine learning models, such as TensorFlow or OpenCV, to analyze frames and detect any manipulation. The current implementation is simulated.
+
+4. **Audio-Visual Sync Analysis (`analyzeSyncIssues`):**
+   - Placeholder function that checks for synchronization issues between audio and video (lip-sync problems).
+   - In a real implementation, AI libraries specializing in AV sync can be utilized to determine if the audio is out of sync with the video.
+
+5. **Trusted Codec Validation (`isTrustedCodec`):**
+   - A helper function that checks if the codec used in the file is a known and trusted codec (e.g., mp3, mp4, aac). If not, it flags the file as suspicious.
