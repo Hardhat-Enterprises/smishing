@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.chaquo.python")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -12,12 +13,13 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
+        compose = true
     }
 
     defaultConfig {
         ndk {
-            // On Apple silicon, you can omit x86_64.
-            abiFilters += listOf("arm64-v8a", "x86_64")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
         applicationId = "com.example.smishingdetectionapp"
         minSdk = 24
@@ -26,6 +28,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
+        buildConfigField("String", "EMAIL_PASSWORD", "\"xedr gaek jdsv ujxw\"")
+        buildConfigField("String", "SERVERIP", "\"http://192.168.?.?:3000\"")
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+        
 
         // Merge the vectorDrawables from both branches
 
@@ -65,13 +74,13 @@ android {
         jvmTarget = "1.8"
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "2.0.0"
+    }
+
     buildFeatures {
         viewBinding = true
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
     }
 
     packaging {
@@ -89,7 +98,8 @@ android {
     }
 
     sourceSets {
-        getByName("main").java.srcDirs("src/main/python")
+        getByName("main").java.srcDirs("src/main/java")
+        getByName("main").resources.srcDirs("src/main/resources")
     }
 }
 
@@ -101,11 +111,10 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation(libs.annotation)
-    implementation(libs.preference)
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/mail.jar"))
+    implementation(libs.preference)
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
@@ -117,9 +126,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
+    implementation(libs.javax.mail.api)
+    implementation(libs.gson)
+    implementation (libs.okhttp.v490)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.converter.simplexml)
+    implementation (libs.material.v120alpha02)
     debugImplementation(libs.ui.test.manifest)
 
     // External libraries from feature/ocr-functionality

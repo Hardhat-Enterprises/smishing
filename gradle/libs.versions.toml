@@ -1,4 +1,13 @@
 [versions]
+agp = "8.5.2"
+appcompatVersion = "1.7.0"
+composeBomVersion = "2024.09.00"
+googleMaterial = "1.12.0"
+googleMaterialVersion = "1.2.0-alpha02"
+gradle = "8.5.2"
+gradleVersion = "15.0.1"
+gson = "2.10.1"
+javaxMailApi = "1.6.2"
 agp = "8.6.0"
 android = "15.0.1"
 googleCloudTranslateVersion = "2.48.0"
@@ -10,6 +19,44 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+kotlinGradlePlugin = "2.0.20"
+lifecycleLivedataKtxVersion = "2.8.5"
+lifecycleRuntimeKtxVersion = "2.8.5"
+material = "1.12.0"
+constraintlayout = "2.1.4"
+lifecycleLivedataKtx = "2.8.5"
+lifecycleViewmodelKtx = "2.8.5"
+materialVersion = "1.12.0"
+navigationFragment = "2.8.0"
+navigationUi = "2.8.0"
+annotation = "1.8.2"
+okhttp = "4.10.0"
+okhttpVersion = "4.9.0"
+preference = "1.2.1"
+kotlin = "2.0.20"
+lifecycleRuntimeKtx = "2.8.5"
+activityCompose = "1.9.2"
+composeBom = "2024.09.00"
+activity = "1.9.2"
+chaquopy = "15.0.1"
+retrofit = "2.11.0"
+
+[libraries]
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityCompose" }
+#noinspection SimilarGradleDependency
+androidx-appcompat-v170 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+#noinspection SimilarGradleDependency
+androidx-compose-bom-v202410 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
+#noinspection SimilarGradleDependency
+androidx-lifecycle-livedata-ktx-v284 = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtxVersion" }
+#noinspection SimilarGradleDependency
+androidx-lifecycle-runtime-ktx-v261 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
+androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preference" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+converter-simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "retrofit" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+javax-mail-api = { module = "javax.mail:javax.mail-api", version.ref = "javaxMailApi" }
 kotlinxCoroutinesAndroid = "1.8.1"
 material = "1.12.0"
 constraintlayout = "2.1.4"
@@ -42,26 +89,37 @@ grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpcOkhttp" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+#noinspection SimilarGradleDependency
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+#noinspection SimilarGradleDependency
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+#noinspection SimilarGradleDependency
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+#noinspection SimilarGradleDependency
+material-v1120 = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
+#noinspection SimilarGradleDependency
+material-v120alpha02 = { module = "com.google.android.material:material", version.ref = "googleMaterialVersion" }
+material-v180 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-v490 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttpVersion" }
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
+#noinspection SimilarGradleDependency
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+#noinspection SimilarGradleDependency
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+python-gradle = { module = "com.chaquo.python:gradle", version.ref = "chaquopy" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
@@ -69,3 +127,5 @@ activity = { group = "androidx.activity", name = "activity", version.ref = "acti
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+chaquopy = { id = "com.chaquopy", version.ref = "chaquopy" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

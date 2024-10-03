@@ -15,6 +15,8 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.READ_SMS" />
+
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
@@ -28,6 +30,8 @@
         android:theme="@style/Theme.SmishingDetectionApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!-- Other activities here -->
 
         <!-- MainActivity as the launcher activity -->
         <activity
@@ -102,6 +106,10 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />
+
+        <!-- MainActivity as launcher activity -->
+        <activity
+            android:name=".MainActivity"
         <activity
             android:name=".FeedbackActivity"
             android:exported="false" />
@@ -114,6 +122,12 @@
         <activity
             android:name=".OCRActivity"
             android:exported="true"
+            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
 <!--        <receiver android:name=".SmsReceiver"-->
 <!--            android:exported="true">-->
@@ -145,3 +159,4 @@
     </application>
 </manifest>
 
+</manifest>

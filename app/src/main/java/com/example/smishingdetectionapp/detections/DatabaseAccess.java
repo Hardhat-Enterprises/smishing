@@ -11,6 +11,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.example.smishingdetectionapp.R;
+
 import com.example.smishingdetectionapp.forum.model.ForumTopic;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -56,12 +57,14 @@ public class DatabaseAccess {
                         KEY_FORUM_TOPIC_DESCRIPTION + " TEXT NOT NULL);";
 
         public DatabaseOpenHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            super();
 
         }
     }
 
     DatabaseAccess(Context context) {
+
+        openHelper= new MySQLiteOpenHelper(context);
         openHelper= new DatabaseOpenHelper(context);
         this.context = context;
     }
@@ -166,6 +169,23 @@ public class DatabaseAccess {
         // Add your database logic or API call here
         return !thoughts.isEmpty(); // Simulating success
     }
+
+    private static class MySQLiteOpenHelper extends SQLiteOpenHelper {
+        public MySQLiteOpenHelper(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+    }}
+
 
     // Simulate submission of comments
     public static boolean submitComment(String comment) {
