@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin">
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/forum_back_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@null"
+        android:contentDescription="@string/image_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_button" />
+
+    <!-- Hardhat Logo -->
+    <ImageView
+        android:id="@+id/hardhatLogo"
+        android:layout_width="112dp"
+        android:layout_height="106dp"
+        android:layout_below="@+id/forum_back_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:contentDescription="@string/logo_description"
+        app:srcCompat="@drawable/hardhat_logo" />
+
+    <!-- Community Forum Header -->
+    <TextView
+        android:id="@+id/communityForumHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hardhatLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:text="@string/community"
+        android:textColor="@color/navy_blue"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/no_forums_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:text="@string/empty_forum"
+        android:layout_below="@id/communityForumHeader"
+        android:layout_above="@id/startNewForumButton" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:layout_below="@id/communityForumHeader"
+        android:layout_above="@id/startNewForumButton"
+        android:paddingVertical="@dimen/nav_header_vertical_spacing"
+        tools:ignore="NotSibling" />
+
+    <Button
+        android:id="@+id/startNewForumButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:backgroundTint="@color/navy_blue"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:text="@string/start_a_new_forum"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+</RelativeLayout>
