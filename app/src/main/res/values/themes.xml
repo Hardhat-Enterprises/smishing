@@ -28,6 +28,7 @@
     <style name="Base.Theme.SmishingDetectionApp" parent="Theme.Material3.DayNight.NoActionBar">
          <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/baby_blue</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="AlertDialogCustom" parent="Theme.MaterialComponents.Light.Dialog.Alert">
@@ -40,6 +41,12 @@
 
     <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/black</item> <!-- Set to your desired button text color -->
+    </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <item name="postSplashScreenTheme">@style/Theme.SmishingDetectionApp.NoActionBar</item>
     </style>
 
 </resources>

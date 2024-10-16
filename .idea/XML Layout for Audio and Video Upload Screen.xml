@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+
+    android:layout_width="match_parent" android:layout_height="match_parent" android:padding="16dp"
+    tools:context=".AudioVideoUploadActivity">
+
+  <!-- Title for the Upload Screen -->
+  <TextView
+      android:id="@+id/upload_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Upload Audio and Video Files"
+      android:textSize="24sp"
+      android:textColor="@color/black"
+      android:textStyle="bold"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginBottom="24dp" />
+
+  <!-- Button to Select Video File -->
+  <Button
+      android:id="@+id/select_video_button"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="Select Video"
+      app:layout_constraintTop_toBottomOf="@id/upload_title"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginBottom="16dp" />
+
+  <!-- TextView to Display Selected Video File Name -->
+  <TextView
+      android:id="@+id/video_file_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="No video selected"
+      android:textColor="@color/gray"
+      android:padding="8dp"
+      android:background="@drawable/file_name_background"
+      app:layout_constraintTop_toBottomOf="@id/select_video_button"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginBottom="24dp" />
+
+  <!-- Button to Select Audio File -->
+  <Button
+      android:id="@+id/select_audio_button"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="Select Audio"
+      app:layout_constraintTop_toBottomOf="@id/video_file_name"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginBottom="16dp" />
+
+  <!-- TextView to Display Selected Audio File Name -->
+  <TextView
+      android:id="@+id/audio_file_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="No audio selected"
+      android:textColor="@color/gray"
+      android:padding="8dp"
+      android:background="@drawable/file_name_background"
+      app:layout_constraintTop_toBottomOf="@id/select_audio_button"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginBottom="24dp" />
+
+  <!-- Upload Button -->
+  <Button
+      android:id="@+id/upload_button"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="Upload Files"
+      android:enabled="false"
+      android:backgroundTint="@color/purple_500"
+      app:layout_constraintTop_toBottomOf="@id/audio_file_name"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

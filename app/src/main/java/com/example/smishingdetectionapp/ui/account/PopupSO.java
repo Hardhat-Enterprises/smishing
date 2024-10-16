@@ -1,6 +1,9 @@
 package com.example.smishingdetectionapp.ui.account;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +13,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.SettingsActivity;
 import com.example.smishingdetectionapp.ui.login.LoginActivity;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+
+
 
 public class PopupSO extends BottomSheetDialogFragment {
 
@@ -23,11 +31,9 @@ public class PopupSO extends BottomSheetDialogFragment {
 
         Button sign_outYes = v.findViewById(R.id.confirmYesBtn);
         sign_outYes.setOnClickListener(v1 -> {
-            //TODO: Add sign out functionality.
-            Intent intent = new Intent(getContext(), LoginActivity.class);
-            startActivity(intent);
-            dismiss();
-            Toast.makeText(getContext(), "You have been signed out.", Toast.LENGTH_LONG).show();
+
+
+
         });
 
         Button sign_outNo = v.findViewById(R.id.confirmNoBtn);
@@ -37,4 +43,16 @@ public class PopupSO extends BottomSheetDialogFragment {
 
         return v;
     }
+
+
+
+
+    private void moveToLogin() {
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Clears the activity stack
+        startActivity(intent);
+        requireActivity().finish();  // Close the current activity
+    }
+
+
 }

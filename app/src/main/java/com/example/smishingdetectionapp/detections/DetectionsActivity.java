@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
+import android.view.Display;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -42,47 +44,76 @@ public class DetectionsActivity extends AppCompatActivity {
 
     private ListView detectionLV;
     DatabaseAccess databaseAccess;
+    private DisplayDataAdapterView adapter;
 
-    public void searchDB(String search){
-        String searchQuery = ("SELECT * FROM Detections WHERE Phone_Number LIKE '%" + search + "%' OR Message Like '%" + search + "%' OR Date Like '%" + search + "%'");
+    //adapter used to search standard queries.
+    public void dataAdapter(String searchQuery){
         Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
         DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
         detectionLV.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    //adapter used to search the database using a parameterised query to prevent SQL injection.
+    public void dataSearchAdapter(String searchQuery, String[] selectionArgs){
+        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, selectionArgs);
+        DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
+        detectionLV.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    //Securely searching the database.
+    public void searchDB(String search){
+        String searchQuery = ("SELECT * FROM Detections WHERE " +
+                "Phone_Number LIKE ?" +
+                "OR Message LIKE ?" +
+                "OR Date LIKE ?" +
+                "OR Type LIKE ?");
+
+        String dataSearch = "%" + search + "%";
+        String[] selectionArgs = new String[]{dataSearch, dataSearch, dataSearch, dataSearch};
+        dataSearchAdapter(searchQuery, selectionArgs);
     }
 
     //Sorting Oldest Date to Newest Date
     public void sortONDB(){
         String searchQuery = ("SELECT * FROM Detections ORDER BY Date ASC");
-
-        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
-        DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
-        detectionLV.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        dataAdapter(searchQuery);
     }
 
     //Sorting Newest Date to Oldest Date
     public void sortNODB(){
         String searchQuery = ("SELECT * FROM Detections ORDER BY Date DESC");
-
-        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
-        DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
-        detectionLV.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        dataAdapter(searchQuery);
     }
 
+    //Sorting by Smishing detections first
+    public void sortSMISHING(){
+        String searchQuery = ("SELECT * FROM Detections ORDER BY CASE WHEN Type = 'Smishing' THEN 1 WHEN Type = 'Spam' THEN 2 WHEN Type = 'Ham' THEN 3 END");
+        dataAdapter(searchQuery);
+    }
+
+    //Sorting by Spam detections first
+    public void sortSpam(){
+        String searchQuery = ("SELECT * FROM Detections ORDER BY CASE WHEN Type = 'Spam' THEN 1 WHEN Type = 'Ham' THEN 2 WHEN Type = 'Smishing' THEN 3 END");
+        dataAdapter(searchQuery);
+    }
+
+    //Sorting by Ham detections first
+    public void sortHam(){
+        String searchQuery = ("SELECT * FROM Detections ORDER BY CASE WHEN Type = 'Ham' THEN 1 WHEN Type = 'Spam' THEN 2 WHEN Type = 'Smishing' THEN 3 END");
+        dataAdapter(searchQuery);
+    }
+
+    //Used for updating the list when an item is deleted.
     public void refreshList(){
         String searchQuery = ("SELECT * FROM Detections");
-
-        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
-        DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
-        detectionLV.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        dataAdapter(searchQuery);
     }
 
+    //Deleting a row (detection)
     public void DeleteRow(String id) {
         DatabaseAccess.db.delete("Detections", "_id" + "=" + id, null);
-
     }
 
     //Saving checked state of radio buttons in the filter popup.
@@ -131,8 +162,9 @@ public class DetectionsActivity extends AppCompatActivity {
         detectionLV = findViewById(R.id.lvDetectionsList);
         databaseAccess = new DatabaseAccess(getApplicationContext());
         databaseAccess.open();
-        final SimpleCursorAdapter simpleCursorAdapter = databaseAccess.populateDetectionList();
-        detectionLV.setAdapter(simpleCursorAdapter);
+        Cursor cursor = databaseAccess.populateList();
+        adapter = new DisplayDataAdapterView(this, cursor);
+        detectionLV.setAdapter(adapter);
 
         EditText detSearch = findViewById(R.id.searchTextBox);
         detSearch.addTextChangedListener(new TextWatcher() {
@@ -166,14 +198,23 @@ public class DetectionsActivity extends AppCompatActivity {
             //defining radio buttons in the PopupFilter window.
             RadioButton OldToNewRB = bottomSheet.findViewById(R.id.OldToNewRB);
             RadioButton NewToOldRB = bottomSheet.findViewById(R.id.NewToOldRB);
+            RadioButton radioSmishing = bottomSheet.findViewById(R.id.radioSmishing);
+            RadioButton radioSpam = bottomSheet.findViewById(R.id.radioSpam);
+            RadioButton radioHam = bottomSheet.findViewById(R.id.radioHam);
 
             //default value of radio buttons before saving preference.
             OldToNewRB.setChecked(sharedPreferences.getBoolean("OldToNewRB", false));
             NewToOldRB.setChecked(sharedPreferences.getBoolean("NewToOldRB", false));
+            radioSmishing.setChecked(sharedPreferences.getBoolean("radioSmishing", false));
+            radioSpam.setChecked(sharedPreferences.getBoolean("radioSpam", false));
+            radioHam.setChecked(sharedPreferences.getBoolean("radioHam", false));
 
             OldToNewRB.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if(OldToNewRB.isChecked()) {
                     NewToOldRB.setChecked(false);//unchecks other radio button when this one is checked.
+                    radioSpam.setChecked(false);
+                    radioHam.setChecked(false);
+                    radioSmishing.setChecked(false);
                     sortONDB();//uses sort function
                 }
                 saveRadioButtonState("OldToNewRB", isChecked); //saves the radio button checked state.
@@ -181,9 +222,42 @@ public class DetectionsActivity extends AppCompatActivity {
             NewToOldRB.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if(NewToOldRB.isChecked()) {
                     OldToNewRB.setChecked(false);
+                    radioSpam.setChecked(false);
+                    radioHam.setChecked(false);
+                    radioSmishing.setChecked(false);
                     sortNODB();
                 }
                 saveRadioButtonState("NewToOldRB", isChecked);
+            });
+            radioSmishing.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if(radioSmishing.isChecked()) {
+                    radioSpam.setChecked(false);
+                    radioHam.setChecked(false);
+                    NewToOldRB.setChecked(false);
+                    OldToNewRB.setChecked(false);
+                    sortSMISHING();
+                }
+                saveRadioButtonState("radioSmishing", isChecked);
+            });
+            radioSpam.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if(radioSpam.isChecked()) {
+                    radioSmishing.setChecked(false);
+                    radioHam.setChecked(false);
+                    NewToOldRB.setChecked(false);
+                    OldToNewRB.setChecked(false);
+                    sortSpam();
+                }
+                saveRadioButtonState("radioSpam", isChecked);
+            });
+            radioHam.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if(radioHam.isChecked()) {
+                    radioSpam.setChecked(false);
+                    radioSmishing.setChecked(false);
+                    NewToOldRB.setChecked(false);
+                    OldToNewRB.setChecked(false);
+                    sortHam();
+                }
+                saveRadioButtonState("radioHam", isChecked);
             });
 
         });
@@ -205,8 +279,6 @@ public class DetectionsActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Detection Deleted!", Toast.LENGTH_SHORT).show();
             });
-
-
             return true;
         });
 

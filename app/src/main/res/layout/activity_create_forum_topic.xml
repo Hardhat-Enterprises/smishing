@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin"
+    tools:context=".forum.CreateForumTopicActivity">
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/forum_back_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@null"
+        android:contentDescription="@string/image_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_button" />
+
+    <!-- Hardhat Logo -->
+    <ImageView
+        android:id="@+id/hardhatLogo"
+        android:layout_width="112dp"
+        android:layout_height="106dp"
+        android:layout_below="@+id/forum_back_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:contentDescription="@string/logo_description"
+        app:srcCompat="@drawable/hardhat_logo" />
+
+    <TextView
+        android:id="@+id/communityForumHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hardhatLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:gravity="center"
+        android:text="@string/create_forum_topic"
+        android:textColor="@color/navy_blue"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <EditText
+            android:id="@+id/input_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/forum_title"
+            android:inputType="textCapWords" />
+
+        <EditText
+            android:id="@+id/input_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="@string/forum_description"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:backgroundTint="@color/navy_blue"
+            android:text="@string/submit"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

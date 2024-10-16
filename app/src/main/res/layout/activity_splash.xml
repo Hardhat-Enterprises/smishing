@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/splash_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/hardhat_logo" />
+
+    <TextView
+        android:id="@+id/splash_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/splash_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Smishing\nDetection"
+        android:textSize="36sp"
+        android:textColor="@color/navy_blue"
+        android:fontFamily="sans-serif-medium"
+        android:textAlignment="center"
+        android:lineSpacingMultiplier="0.8"
+        android:letterSpacing="0.1"
+        android:textStyle="bold" /> <!-- Set text to bold -->
+</RelativeLayout>

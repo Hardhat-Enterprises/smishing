@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/sdBot_back_button"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        app:srcCompat="@drawable/back_button" />
+
+    <!-- Hardhat Logo -->
+    <ImageView
+        android:id="@+id/hardhatLogo"
+        android:layout_width="112dp"
+        android:layout_height="106dp"
+        android:layout_below="@+id/sdBot_back_button"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/logo_description"
+        app:srcCompat="@drawable/hardhat_logo" />
+
+    <!-- SD Chatbot Header -->
+    <TextView
+        android:id="@+id/sdChatbotHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hardhatLogo"
+        android:layout_centerHorizontal="true"
+        android:text="SD Chatbot"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/navy_blue" />
+
+    <!-- Scrollable Chat Area -->
+    <ScrollView
+        android:id="@+id/chatScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/sdChatbotHeader"
+        android:layout_above="@id/messageInputLayout"
+        android:fillViewport="true"
+        android:padding="8dp"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:id="@+id/chatLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
+    <!-- User Input and Send Button Layout -->
+    <LinearLayout
+        android:id="@+id/messageInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@color/baby_blue">
+
+        <!-- Input Text Field -->
+        <EditText
+            android:id="@+id/userInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/ask_your_question"
+            android:padding="10dp"
+            android:inputType="text" />
+
+        <!-- Send Button -->
+        <ImageButton
+            android:id="@+id/sendMessageButton"
+            android:layout_width="32dp"
+            android:layout_height="29dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Send Message"
+            android:padding="8dp"
+            app:srcCompat="@drawable/icon_information" />
+
+    </LinearLayout>
+
+</RelativeLayout>

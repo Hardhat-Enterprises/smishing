@@ -9,28 +9,29 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:contentDescription="@string/image_to_be_processed"
         android:src="@mipmap/ic_launcher" />
-
+<!--    android:contentDescription="@string/image_to_be_processed" -->
     <Button
         android:id="@+id/buttonProcess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/process_image" />
+        android:text="Button" />
+    <!--    android:text="@string/process_image" -->
 
     <TextView
         android:id="@+id/textViewExtractedText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/extracted_text_will_appear_here"
+        android:text=""
         android:textSize="16sp"
         android:paddingTop="16dp" />
-
+    <!--    android:text="@string/extracted_text_will_appear_here" -->
     <TextView
         android:id="@+id/textViewTranslatedText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/translated_text_will_appear_here"
+        android:text=""
         android:textSize="16sp"
         android:paddingTop="16dp" />
+    <!--    android:text="@string/translated_text_will_appear_here" -->
 </LinearLayout>

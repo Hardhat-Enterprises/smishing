@@ -15,4 +15,6 @@
     <color name="grey">#949494</color>
     <color name="azure">#F0FFFF</color>
     <color name="red">#FFFF0000</color>
+    <color name="orange">#FFA726</color>
+    <color name="green">#008a22</color>
 </resources>

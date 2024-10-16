@@ -7,15 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".ReportingActivity">
 
+    <TextView
+        android:id="@+id/phonenumberLabel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_xlarge"
+        android:text="@string/phone_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <EditText
         android:id="@+id/reportmessage"
         android:layout_width="0dp"
-        android:layout_height="259dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="@dimen/element_width_large"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
         android:autofillHints="Smishing Message"
+        android:background="@drawable/edit_text_background"
         android:gravity="top|start"
         android:inputType="text"
+        android:outlineProvider="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,54 +38,59 @@
         android:id="@+id/messageLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_large"
         android:text="@string/report_message_prompt"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/PhoneNumber"
+        tools:text="Message" />
 
     <Button
         android:id="@+id/reportButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/buttons_rounded"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:backgroundTint="@color/baby_blue"
+        android:enabled="false"
         android:text="@string/action_report"
+        android:textColor="@color/navy_blue"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reportmessage"
-        android:enabled="false"/>
+        app:layout_constraintTop_toBottomOf="@+id/reportmessage" />
 
     <EditText
         android:id="@+id/PhoneNumber"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_xlarge"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
         android:autofillHints="Phone Number"
+        android:background="@drawable/edit_text_background"
         android:ems="10"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phonenumberLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/phonenumberLabel1" />
 
     <TextView
-        android:id="@+id/phonenumberLabel"
+        android:id="@+id/phonenumberLabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginStart="@dimen/margin_xlarge"
         android:text="@string/phone_number"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/HardhatLogo"
-        android:layout_width="112dp"
-        android:layout_height="106dp"
+        android:layout_width="@dimen/logo_width"
+        android:layout_height="@dimen/logo_height"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -84,24 +102,38 @@
         android:id="@+id/ReportText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_small"
         android:text="@string/report_page"
-        android:textSize="32sp"
+        android:textColor="@color/navy_blue"
+        android:textSize="@dimen/text_size_xxlarge"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
-        android:textColor="@color/navy_blue"/>
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/report_back"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="@dimen/padding_xlarge"
+        android:layout_height="@dimen/padding_xlarge"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
         android:background="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/Report Undetected SMS messages"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReportText"
+        tools:text="Report Undetected SMS messages" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,6 +42,14 @@
                 android:textColor="@color/black"
                 tools:ignore="RtlSymmetry" />
 
+            <TextView
+                android:id="@+id/detectionType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:gravity="end"/>
+
         </LinearLayout>
 
         <TextView

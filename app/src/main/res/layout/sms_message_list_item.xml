@@ -10,18 +10,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_margin="6dp"
-        android:weightSum="3"
-        android:padding="8dp">
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:weightSum="3">
 
         <TextView
             android:id="@+id/text_sender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:textSize="22sp"
             android:textColor="@color/navy_blue"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:maxLines="3"
-            android:textSize="14sp"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

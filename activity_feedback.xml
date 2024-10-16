@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/feedback_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:src="@drawable/back_button" />
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/hardhatLogo"
+        android:layout_width="112dp"
+        android:layout_height="106dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/hardhat_logo" />
+
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/feedback_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Feedback"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Instruction Label -->
+    <TextView
+        android:id="@+id/feedback_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please provide your feedback:"
+        android:textSize="18sp"/>
+
+    <!-- Feedback Input -->
+    <EditText
+        android:id="@+id/feedback_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your feedback here"/>
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Submit"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>
