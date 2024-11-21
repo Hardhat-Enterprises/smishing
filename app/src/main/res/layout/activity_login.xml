@@ -74,9 +74,9 @@
 
         <Button
             android:id="@+id/forgotPasswordButton"
-            android:layout_width="165dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="180dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="?android:attr/selectableItemBackground"
             android:text="@string/forgot_password"
             android:textColor="@color/navy_blue"
