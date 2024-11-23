@@ -4,8 +4,9 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report
 import pandas as pd
+import re
 
 # Load the dataset
 dataset_path = 'Randomized_TestData_Harmful_and_Harmless_URLs.csv'
@@ -35,10 +36,8 @@ df[label_column] = label_encoder.fit_transform(df[label_column])
 
 # Define a function to map the original labels to new ones
 def map_labels(label):
-    if label == 1:  # Assuming 1 indicates harmful and 0 indicates harmless
-        return 'Harmful'
-    else:
-        return 'Harmless'
+    harmful_labels = [1, 2]  # Update based on dataset (e.g., 1=Harmful, 2=Suspicious)
+    return 'Harmful' if label in harmful_labels else 'Harmless'
 
 # Apply the mapping to the label column to create new labels
 df['new_label'] = df[label_column].apply(map_labels)
@@ -47,19 +46,39 @@ df['new_label'] = df[label_column].apply(map_labels)
 new_label_encoder = LabelEncoder()
 df['new_label'] = new_label_encoder.fit_transform(df['new_label'])
 
+# Text Preprocessing Function
+def preprocess_url(url):
+    url = url.lower()  # Convert to lowercase
+    url = re.sub(r'https?://(www\.)?', '', url)  # Remove http:// or https:// and www
+    url = re.sub(r'/.*', '', url)  # Keep only the domain
+    return url
+
+# Apply text preprocessing
+df[url_column] = df[url_column].apply(preprocess_url)
+
+# Advanced Feature Engineering
+def extract_features(url):
+    return {
+        'url_length': len(url),  # Length of the URL
+        'special_chars': sum(1 for char in url if char in '@?%&'),  # Count special characters
+        'contains_ip': int(bool(re.search(r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b', url))),  # Check for IP address
+        'entropy': -sum((url.count(c) / len(url)) * (url.count(c) / len(url)).bit_length() for c in set(url)),  # Entropy
+    }
+
+# Add feature columns to the DataFrame
+feature_df = pd.DataFrame(df[url_column].apply(extract_features).tolist())
+df = pd.concat([df, feature_df], axis=1)
+
 # Split the data into train and test sets (30% for testing)
-X = df[url_column]
+X = df[[url_column, 'url_length', 'special_chars', 'contains_ip', 'entropy']]
 y = df['new_label']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-# Additional ngrams feature to create similarity with other NLTK URL Program for a feature processing pipeline
-X_train = X_train.to_frame()  # Reshape for ColumnTransformer compatibility
-X_test = X_test.to_frame()
-
+# Prepare a ColumnTransformer for text and numeric features
 preprocessor = ColumnTransformer([
-    ('tfidf', TfidfVectorizer(max_features=1000), url_column),
-    ('ngrams', CountVectorizer(ngram_range=(2, 3)), url_column)
-])
+    ('tfidf', TfidfVectorizer(max_features=1000), url_column),  # Extract textual features
+    ('ngrams', CountVectorizer(ngram_range=(2, 3)), url_column)  # Add n-gram features
+], remainder='passthrough')  # Keep numeric features as-is
 
 # Build a pipeline for feature extraction and classification
 pipeline = Pipeline([
@@ -75,3 +94,5 @@ y_pred = pipeline.predict(X_test)
 
 # Evaluate the model
 print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred, target_names=new_label_encoder.classes_))
