@@ -74,10 +74,10 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        Button yourReportBtn = findViewById(R.id.YourReportBtn);
-        yourReportBtn.setOnClickListener(v ->{
-            Intent intent = new Intent(
-        });
+//        Button yourReportBtn = findViewById(R.id.YourReportBtn);
+//        yourReportBtn.setOnClickListener(v ->{
+//            Intent intent = new Intent(
+//        });
     }
 
     //Notification button to switch to notification page
