@@ -78,7 +78,7 @@ public class DatabaseAccess {
     }
 
     //Report sending function with database
-    public static boolean sendReport(int phonenumber, String message) {
+    public static boolean sendReport(String phonenumber, String message) {
         SQLiteDatabase db = openHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_PHONENUMBER, phonenumber);
