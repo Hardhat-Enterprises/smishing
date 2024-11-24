@@ -73,11 +73,12 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(SettingsActivity.this, AboutMeActivity.class);
             startActivity(intent);
         });
-
-//        Button yourReportBtn = findViewById(R.id.YourReportBtn);
-//        yourReportBtn.setOnClickListener(v ->{
-//            Intent intent = new Intent(
-//        });
+        //Button to access the Log of Reports upon Click
+        Button yourReportBtn = findViewById(R.id.YourReportBtn);
+        yourReportBtn.setOnClickListener(v ->{
+            Intent intent = new Intent(SettingsActivity.this, YourReportsActivity.class);
+            startActivity(intent);
+        });
     }
 
     //Notification button to switch to notification page

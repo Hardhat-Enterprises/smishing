@@ -222,4 +222,11 @@
         </ul>
         ]]>
     </string>
+
+    <!-- Report Log -->
+    <string name="reportLog"> Your Reports </string>
+    <string name="number">Number</string>
+    <string name="spammsg">Message</string>
+    <string name="reportDate">Date</string>
+
 </resources>

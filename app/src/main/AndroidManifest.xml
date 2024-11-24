@@ -76,6 +76,8 @@
         <activity
             android:name=".SignupActivity"
             android:exported="false" />
+        <!-- Your Reports Activity-->
+        <activity android:name=".YourReportsActivity" android:exported="false"/>
         <activity
             android:name=".SettingsActivity"
             android:exported="false" /> <!-- Set LoginActivity as the launcher activity -->

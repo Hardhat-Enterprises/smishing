@@ -184,7 +184,7 @@
             android:layout_marginStart="28dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/buttons_rounded"
-            android:text="Your Report"
+            android:text="Your Reports"
             android:textSize="20sp"
             android:gravity="bottom"
             app:layout_constraintStart_toEndOf="@+id/helpBtn"
