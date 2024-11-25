@@ -7,6 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+
     <string name="menu_home">Home</string>
 
     <string name="title_activity_login">LoginActivity</string>
@@ -189,6 +190,27 @@
     <string name="message_body">Message Body</string>
     <string name="dummy_smishing_report">This SMS message contains some text that might indicate it is a scam! Please beware!</string>
     <string name="empty_sms">There are no SMS messages.</string>
+
+    <!-- User Profile Strings -->
+
+    <string name="company_logo_desc">Company Logo</string>
+    <string name="username">Imalka Dilusha</string>
+    <string name="email">imalka@gmail.com</string>
+    <string name="name_label1">NAME</string>
+    <string name="phone_label">PHONE</string>
+    <string name="phone">+1-123-456-7890</string>
+    <string name="address_label">ADDRESS</string>
+    <string name="address">123, Melbourne, Australia</string>
+    <string name="age_label">AGE</string>
+    <string name="age">23</string>
+    <string name="occupation_label">OCCUPATION</string>
+    <string name="occupation"> Software Engineer</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="edit_button">Edit Your Personal Details</string>
+    <string name="profile_picture_desc">User Profile Picture</string>
+
+
+
 
     <!-- Terms and Conditions Content -->
     <string name="terms_and_conditions_content">
