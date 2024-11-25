@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -71,6 +72,17 @@ public class ReportingActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
             }
+
+            try {
+                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+                databaseAccess.open();
+                databaseAccess.logAllReports();
+                databaseAccess.close();
+            } catch (Exception e) {
+                // Log the exception details
+                Log.d("DatabaseAccessError", "Error occurred while accessing the database: " + e.getMessage(), e);
+            }
+
         });
 
         // For enabling the report button when both text fields are filled in.

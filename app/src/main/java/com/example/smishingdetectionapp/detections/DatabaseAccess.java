@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.smishingdetectionapp.R;
@@ -128,6 +129,45 @@ public class DatabaseAccess {
                 columnsStr,
                 toViewIDs
         );
+    }
+
+    public void logAllReports() {
+        final String TAG = "DatabaseReports"; // Define a unique tag for Logcat
+
+        String[] columns = {
+                DatabaseOpenHelper.KEY_PHONENUMBER,
+                DatabaseOpenHelper.KEY_MESSAGE,
+                DatabaseOpenHelper.KEY_DATE
+        };
+
+        Cursor cursor = db.query(
+                DatabaseOpenHelper.TABLE_REPORTS, // Table name
+                columns,                          // Columns to retrieve
+                null,                             // WHERE clause
+                null,                             // WHERE arguments
+                null,                             // GROUP BY clause
+                null,                             // HAVING clause
+                null                              // ORDER BY clause
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_PHONENUMBER));
+                String message = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_MESSAGE));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_DATE));
+
+                // Log the details of each report using Log.d
+                Log.d(TAG, "Phone Number: " + phoneNumber +
+                        ", Message: " + message +
+                        ", Date: " + date);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d(TAG, "No reports found in the table.");
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
     }
 
 
