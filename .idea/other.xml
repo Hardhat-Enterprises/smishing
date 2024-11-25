@@ -4,6 +4,7 @@
     <option name="deviceSelectionList">
       <list>
         <PersistentDeviceSelectionData>
+<<<<<<< HEAD
           <option name="api" value="27" />
           <option name="brand" value="DOCOMO" />
           <option name="codename" value="F01L" />
@@ -319,6 +320,8 @@
     <option name="deviceSelectionList">
       <list>
         <PersistentDeviceSelectionData>
+=======
+>>>>>>> master
           <option name="api" value="27" />
           <option name="brand" value="DOCOMO" />
           <option name="codename" value="F01L" />
