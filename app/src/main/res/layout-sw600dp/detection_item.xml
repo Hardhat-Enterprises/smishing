@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/pnTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/pnTitle"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/messageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pnTitle"
+            android:layout_alignStart="@+id/pnTitle"
+            android:text="@string/msgTitle"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/item_pn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/pnTitle"
+            android:layout_alignBottom="@+id/pnTitle"
+            android:layout_alignBaseline="@+id/pnTitle"
+            android:text="pn"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/item_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/messageTitle"
+            android:layout_below="@+id/messageTitle"
+            android:text="msg"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/dateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spacer"
+            android:layout_alignStart="@+id/spacer"
+            android:text="@string/dateTitle"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/dateTitle"
+            android:layout_alignBottom="@+id/dateTitle"
+            android:layout_toEndOf="@+id/dateTitle"
+            android:text="date"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/item_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/spacer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_message"
+            android:layout_alignStart="@+id/item_message" />
+</RelativeLayout>

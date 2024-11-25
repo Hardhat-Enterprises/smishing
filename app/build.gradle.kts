@@ -25,16 +25,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        
+
         // Merge the vectorDrawables from both branches
         vectorDrawables {
             useSupportLibrary = true
         }
 
-        // Include the buildConfigFields from master
-        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
-        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
+
+        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"") // Gmail Email for emailing user the verification code
+        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"") // Gmail Password
+        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"") //Server IP address
     }
 
     buildTypes {
@@ -65,13 +65,13 @@ android {
     packaging {
         resources {
             excludes += setOf(
-                "/META-INF/{AL2.0,LGPL2.1}",
-                "/META-INF/DEPENDENCIES",
-                "/META-INF/LICENSE",
-                "/META-INF/LICENSE.txt",
-                "/META-INF/NOTICE",
-                "/META-INF/NOTICE.txt",
-                "META-INF/INDEX.LIST"
+                    "/META-INF/{AL2.0,LGPL2.1}",
+                    "/META-INF/DEPENDENCIES",
+                    "/META-INF/LICENSE",
+                    "/META-INF/LICENSE.txt",
+                    "/META-INF/NOTICE",
+                    "/META-INF/NOTICE.txt",
+                    "META-INF/INDEX.LIST"
             )
         }
     }
@@ -98,7 +98,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation ("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.core:core-ktx:1.6.0")
     implementation(libs.activity)
 
     // Merge testing dependencies
@@ -129,6 +129,11 @@ dependencies {
     implementation(libs.grpc.auth)
     implementation(libs.grpc.core)
 
+    // For email system
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/mail.jar"))
+
     // Additional dependencies from master
     implementation(files("libs/sqliteassethelper-2.0.1.jar"))
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
@@ -139,4 +144,7 @@ dependencies {
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation ("com.tbuonomo:dotsindicator:4.3")
+
 }
