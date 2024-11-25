@@ -43,14 +43,18 @@ public class ReportingActivity extends AppCompatActivity {
 
         //DATABASE REPORT FUNCTION
         sendReportButton.setOnClickListener(v -> {
-            boolean isInserted = DatabaseAccess.sendReport(Integer.parseInt(phonenumber.getText().toString()),
-                    message.getText().toString());
-            if (isInserted){
-                phonenumber.setText(null);
-                message.setText(null);
-                Toast.makeText(getApplicationContext(), "Report sent!", Toast.LENGTH_LONG).show();}
-            else
-                Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
+
+            String phoneNumberInput = phonenumber.getText().toString();
+            if(validatePhoneNumber(phoneNumberInput)) {
+                boolean isInserted = DatabaseAccess.sendReport(Integer.parseInt(phonenumber.getText().toString()),
+                        message.getText().toString());
+                if (isInserted) {
+                    phonenumber.setText(null);
+                    message.setText(null);
+                    Toast.makeText(getApplicationContext(), "Report sent!", Toast.LENGTH_LONG).show();
+                } else
+                    Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
+            }
         });
 
         //For enabling the report button when both text fields are filled in.
@@ -75,5 +79,16 @@ public class ReportingActivity extends AppCompatActivity {
         };
         phonenumber.addTextChangedListener(afterTextChangedListener);
         message.addTextChangedListener(afterTextChangedListener);
+    }
+    private boolean validatePhoneNumber(String phonenumber){
+        if(phonenumber.length() != 10){
+            Toast.makeText(getApplicationContext(),"Phone number must be 10 digits!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!phonenumber.matches("\\d+")){
+            Toast.makeText(getApplicationContext(),"Phone number must contain digits only!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }
