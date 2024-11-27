@@ -107,4 +107,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
+
+    <Button
+        android:id="@+id/fingerverify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verify with Fingerprint"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

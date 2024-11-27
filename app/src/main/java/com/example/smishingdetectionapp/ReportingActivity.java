@@ -11,12 +11,17 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
+
+import java.util.concurrent.Executor;
 
 public class ReportingActivity extends AppCompatActivity {
 
@@ -25,24 +30,41 @@ public class ReportingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_reporting);
+
+        // Handle system insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Back button to go back to settings dashboard
+        // Back button to return to SettingsActivity
         ImageButton report_back = findViewById(R.id.report_back);
         report_back.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
         });
 
+        // Initialize UI elements
         final EditText phonenumber = findViewById(R.id.PhoneNumber);
         final EditText message = findViewById(R.id.reportmessage);
         final Button sendReportButton = findViewById(R.id.reportButton);
+        final Button fingerVerifyButton = findViewById(R.id.fingerverify);
 
-        // DATABASE REPORT FUNCTION
+        // Disable the "Send Report" button initially
+        sendReportButton.setEnabled(false);
+
+        // Biometric authentication setup
+        fingerVerifyButton.setOnClickListener(view -> {
+            BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("Please Verify")
+                    .setDescription("User Authentication is required to proceed")
+                    .setNegativeButtonText("Cancel")
+                    .build();
+            getPrompt().authenticate(promptInfo);
+        });
+
+        // Action for the "Send Report" button
         sendReportButton.setOnClickListener(v -> {
             String rawPhoneNumber = phonenumber.getText().toString();
             String rawMessage = message.getText().toString();
@@ -58,11 +80,11 @@ public class ReportingActivity extends AppCompatActivity {
                 return;
             }
 
-            String sanitizedPhoneNumber = sanitizeInput(rawPhoneNumber); // probably not necessary because only numbers are allowed
-            String sanitizedRawMessage = sanitizeInput(rawMessage);
+            String sanitizedPhoneNumber = sanitizeInput(rawPhoneNumber);
+            String sanitizedMessage = sanitizeInput(rawMessage);
 
             // Insert into the database
-            boolean isInserted = DatabaseAccess.sendReport(sanitizedPhoneNumber, sanitizedRawMessage);
+            boolean isInserted = DatabaseAccess.sendReport(sanitizedPhoneNumber, sanitizedMessage);
 
             // Handle result
             if (isInserted) {
@@ -73,39 +95,21 @@ public class ReportingActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
             }
 
+            // Log all reports (debugging purpose)
             try {
                 DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
                 databaseAccess.open();
                 databaseAccess.logAllReports();
                 databaseAccess.close();
             } catch (Exception e) {
-                // Log the exception details
                 Log.d("DatabaseAccessError", "Error occurred while accessing the database: " + e.getMessage(), e);
             }
-            try {
-                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
-                databaseAccess.open();
-                String phoneNumberToDelete = "1234567890"; // Replace with the actual phone number
-                boolean isDeleted = databaseAccess.deleteReportByPhoneNumber(phoneNumberToDelete);
-                if (isDeleted) {
-                    Log.d("MainActivityX", "Report with phone number " + phoneNumberToDelete + " deleted successfully.");
-                } else {
-                    Log.d("MainActivityX", "No report found with phone number " + phoneNumberToDelete + ".");
-                }
-                databaseAccess.logAllReports();
-
-                databaseAccess.close();
-            } catch (Exception e) {
-                Log.d("DatabaseAccessError2", "Error occurred while accessing the database: " + e.getMessage(), e);
-            }
-
         });
 
-        // For enabling the report button when both text fields are filled in.
+        // Enable/disable the "Send Report" button based on text fields
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -115,43 +119,62 @@ public class ReportingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable s) {}
         };
         phonenumber.addTextChangedListener(afterTextChangedListener);
         message.addTextChangedListener(afterTextChangedListener);
     }
 
+    // Biometric authentication prompt
+    private BiometricPrompt getPrompt() {
+        Executor executor = ContextCompat.getMainExecutor(this);
+        BiometricPrompt.AuthenticationCallback callback = new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                notifyUser(errString.toString());
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                notifyUser("Authentication Succeeded!");
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                notifyUser("Authentication Failed");
+            }
+        };
+
+        return new BiometricPrompt(this, executor, callback);
+    }
+
+    // Show a toast message
+    private void notifyUser(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
     // Helper function to validate phone number
     private boolean isValidPhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isEmpty()) {
-            return false; // Phone number cannot be null or empty
+            return false;
         }
-
-        // Regex to validate international and local phone numbers
-        // ^\+?[1-9]\d{1,14}$:
-        // - ^\+?      : Optional "+" at the start
-        // - [1-9]     : Country codes do not start with 0
-        // - \d{1,14}  : National and international numbers up to 15 digits
         String regex = "^\\+?[1-9]\\d{1,14}$";
-
         return phoneNumber.matches(regex);
     }
-
 
     // Helper function to validate message content
     private boolean isValidMessage(String message) {
         if (message == null || message.isEmpty()) {
-            return false; // Message cannot be null or empty
-        }
-        if (message.length() > 255) { // Limit message length
             return false;
         }
-        return true;
+        return message.length() <= 255;
     }
 
     // Helper function to sanitize input
     private String sanitizeInput(String input) {
-        return input.replaceAll("[<>\"']", "").trim(); // Removes potentially harmful characters
+        return input.replaceAll("[<>\"']", "").trim();
     }
 }
