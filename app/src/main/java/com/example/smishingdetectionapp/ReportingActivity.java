@@ -82,6 +82,22 @@ public class ReportingActivity extends AppCompatActivity {
                 // Log the exception details
                 Log.d("DatabaseAccessError", "Error occurred while accessing the database: " + e.getMessage(), e);
             }
+            try {
+                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+                databaseAccess.open();
+                String phoneNumberToDelete = "1234567890"; // Replace with the actual phone number
+                boolean isDeleted = databaseAccess.deleteReportByPhoneNumber(phoneNumberToDelete);
+                if (isDeleted) {
+                    Log.d("MainActivityX", "Report with phone number " + phoneNumberToDelete + " deleted successfully.");
+                } else {
+                    Log.d("MainActivityX", "No report found with phone number " + phoneNumberToDelete + ".");
+                }
+                databaseAccess.logAllReports();
+
+                databaseAccess.close();
+            } catch (Exception e) {
+                Log.d("DatabaseAccessError2", "Error occurred while accessing the database: " + e.getMessage(), e);
+            }
 
         });
 

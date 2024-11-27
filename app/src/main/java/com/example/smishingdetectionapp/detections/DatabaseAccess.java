@@ -170,5 +170,25 @@ public class DatabaseAccess {
         }
     }
 
+    public boolean deleteReportByPhoneNumber(String phoneNumber) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+        // Define the WHERE clause and arguments
+        String whereClause = DatabaseOpenHelper.KEY_PHONENUMBER + "=?";
+        String[] whereArgs = new String[]{phoneNumber};
+
+        // Perform the deletion
+        int rowsDeleted = db.delete(DatabaseOpenHelper.TABLE_REPORTS, whereClause, whereArgs);
+
+        // Check if the deletion was successful
+        if (rowsDeleted > 0) {
+            Log.d("DatabaseAccess", "Deleted " + rowsDeleted + " report(s) for phone number: " + phoneNumber);
+            return true;
+        } else {
+            Log.d("DatabaseAccess", "No report found for phone number: " + phoneNumber);
+            return false;
+        }
+    }
+
+
 
 }
