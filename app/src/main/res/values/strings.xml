@@ -22,6 +22,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="logo_description">App Logo</string>
+    <string name="chat_assistant_btn">Chat Assistant</string>
+    <string name="chat_assistant_page">Chat Assistant</string>
 
     <!-- Error messages -->
     <string name="no_network_message">No available network. Please check your internet connection or try again later</string>

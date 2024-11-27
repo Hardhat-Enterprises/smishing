@@ -11,6 +11,7 @@ import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -73,6 +74,11 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(SettingsActivity.this, AboutMeActivity.class);
             startActivity(intent);
         });
+//        Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
+//        chatAssistantBtn.setOnClickListener(v -> {
+//            startActivity(new Intent(this, ChatAssistantActivity.class));
+//            finish();
+//        });
     }
 
     //Notification button to switch to notification page
