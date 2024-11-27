@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -36,6 +37,33 @@ public class ReportingActivity extends AppCompatActivity {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
         });
+
+        ImageButton menuButton = findViewById(R.id.report_menu);
+        menuButton.setOnClickListener(v -> {
+            try {
+                PopupMenu popup = new PopupMenu(ReportingActivity.this, menuButton);
+                popup.getMenuInflater().inflate(R.menu.report_menu, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(item -> {
+                    if (item.getItemId() == R.id.saved_reports) {
+                        startActivity(new Intent(ReportingActivity.this, YourReportsActivity.class));
+                        return true;
+                    }
+                    return false;
+                });
+
+                popup.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(ReportingActivity.this, "Error showing menu", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
+
 
         final EditText phonenumber = findViewById(R.id.PhoneNumber);
         final EditText message = findViewById(R.id.reportmessage);
