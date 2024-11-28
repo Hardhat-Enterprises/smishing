@@ -40,7 +40,6 @@ public class ReportingActivity extends AppCompatActivity {
 
         ImageButton menuButton = findViewById(R.id.report_menu);
         menuButton.setOnClickListener(v -> {
-            try {
                 PopupMenu popup = new PopupMenu(ReportingActivity.this, menuButton);
                 popup.getMenuInflater().inflate(R.menu.report_menu, popup.getMenu());
 
@@ -51,12 +50,7 @@ public class ReportingActivity extends AppCompatActivity {
                     }
                     return false;
                 });
-
                 popup.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(ReportingActivity.this, "Error showing menu", Toast.LENGTH_SHORT).show();
-            }
         });
 
 

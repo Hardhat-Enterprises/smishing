@@ -77,15 +77,23 @@ public class DatabaseAccess {
         return dateFormat.format(date);
     }
 
+
+
+
     //Report sending function with database
     public static boolean sendReport(int phonenumber, String message) {
-        SQLiteDatabase db = openHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseOpenHelper.KEY_PHONENUMBER, phonenumber);
-        contentValues.put(DatabaseOpenHelper.KEY_MESSAGE, message);
-        contentValues.put(DatabaseOpenHelper.KEY_DATE, getDateTime());
-        long result = db.insert(DatabaseOpenHelper.TABLE_REPORTS, null, contentValues);
-        return result != -1;
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DatabaseOpenHelper.KEY_PHONENUMBER, String.valueOf(phonenumber));
+            contentValues.put(DatabaseOpenHelper.KEY_MESSAGE, message);
+            contentValues.put(DatabaseOpenHelper.KEY_DATE, getDateTime());
+
+            long result = db.insert(DatabaseOpenHelper.TABLE_REPORTS, null, contentValues);
+            return result != -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public SimpleCursorAdapter populateDetectionList(){
@@ -128,6 +136,34 @@ public class DatabaseAccess {
                 columnsStr,
                 toViewIDs
         );
+    }
+
+    // Add this method to DatabaseAccess.java
+    // Add this method to DatabaseAccess.java
+    public ReportsAdapter populateReportsList() {
+        try {
+            String query = "SELECT * FROM Reports ORDER BY Date DESC";
+            Cursor cursor = db.rawQuery(query, null);
+
+            if (cursor.getCount() == 0) {
+                cursor.close();
+                return null;
+            }
+
+            return new ReportsAdapter(context, cursor);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Cursor getReports() {
+        try {
+            return db.rawQuery("SELECT * FROM Reports ORDER BY Date DESC", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

@@ -1,11 +1,17 @@
 package com.example.smishingdetectionapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.smishingdetectionapp.detections.DatabaseAccess;
+import com.example.smishingdetectionapp.detections.ReportsAdapter;
 import com.example.smishingdetectionapp.news.SelectListener;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class YourReportsActivity extends AppCompatActivity {
+
+    private RecyclerView reportsRecyclerView;
+    private DatabaseAccess databaseAccess;
+    private ReportsAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +32,16 @@ public class YourReportsActivity extends AppCompatActivity {
         backbtn.setOnClickListener(v -> {
             finish();
         });
+
+        // Initialize RecyclerView and database access
+        reportsRecyclerView = findViewById(R.id.lvSavedReportsList);
+        reportsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.open();
+
+        // Load reports
+        loadReports();
 
 
 //
@@ -65,4 +85,18 @@ public class YourReportsActivity extends AppCompatActivity {
 //        Button to access the Log of Reports upon Click
 
     }
+
+    private void loadReports() {
+        try {
+            Cursor cursor = databaseAccess.getReports();
+            if (cursor != null) {
+                adapter = new ReportsAdapter(this, cursor);
+                reportsRecyclerView.setAdapter(adapter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error loading reports", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
