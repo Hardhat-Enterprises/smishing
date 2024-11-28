@@ -62,4 +62,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/send_icon" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

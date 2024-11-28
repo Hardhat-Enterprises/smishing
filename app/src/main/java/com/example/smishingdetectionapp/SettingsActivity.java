@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.smishingdetectionapp.chat.ChatAssistantActivity;
 import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -74,11 +75,12 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(SettingsActivity.this, AboutMeActivity.class);
             startActivity(intent);
         });
-//        Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
-//        chatAssistantBtn.setOnClickListener(v -> {
-//            startActivity(new Intent(this, ChatAssistantActivity.class));
-//            finish();
-//        });
+        
+        Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
+        chatAssistantBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, ChatAssistantActivity.class);
+            startActivity(intent);
+        });
     }
 
     //Notification button to switch to notification page
