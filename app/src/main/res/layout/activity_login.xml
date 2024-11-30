@@ -133,6 +133,19 @@
             android:visibility="gone"
             tools:ignore="MissingConstraints" />
 
+        <CheckBox
+            android:id="@+id/remember_me_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="2dp"
+            android:text="Remember Me"
+            android:textColor="@color/navy_blue"
+            android:textSize="14sp"
+            android:checked="false"
+            app:layout_constraintTop_toTopOf="@id/forgotPasswordButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
 
 
