@@ -88,6 +88,36 @@ public class DatabaseAccess {
         return result != -1;
     }
 
+    public Cursor getAllDetections() {
+    return db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS + " ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC", null);
+}
+
+public Cursor getDetectionsForDate(String date) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS + 
+        " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{"%" + date + "%"}
+    );
+}
+
+public Cursor getAllReports() {
+    return db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + " ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC", null);
+}
+
+public Cursor getReportsForDate(String date) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + 
+        " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{"%" + date + "%"}
+    );
+}
+public Cursor getReportsForSpecificDate(String specificDate) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + 
+        " WHERE DATE(" + DatabaseOpenHelper.KEY_DATE + ") = DATE(?) ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{specificDate}
+    );
+}
     public SimpleCursorAdapter populateDetectionList(){
 
         String[] columns = {

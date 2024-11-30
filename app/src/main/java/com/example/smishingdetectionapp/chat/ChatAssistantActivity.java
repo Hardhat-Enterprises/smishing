@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.detections.DatabaseAccess;
 
 public class ChatAssistantActivity extends AppCompatActivity {
     private RecyclerView chatRecyclerView;
@@ -34,7 +35,7 @@ public class ChatAssistantActivity extends AppCompatActivity {
             initializeViews();
             setupRecyclerView();
             setupClickListeners();
-            ollamaClient = new OllamaClient();
+            
 
         } catch (Exception e) {
             Log.e("ChatAssistantActivity", "Error in onCreate: " + e.getMessage());
@@ -49,6 +50,9 @@ public class ChatAssistantActivity extends AppCompatActivity {
             messageInput = findViewById(R.id.messageInput);
             sendButton = findViewById(R.id.sendButton);
             progressBar = findViewById(R.id.progressBar);
+
+            DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        ollamaClient = new OllamaClient(databaseAccess);
 
             if (chatRecyclerView == null || messageInput == null || sendButton == null || progressBar == null) {
                 throw new IllegalStateException("Required views not found in layout");
