@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import java.util.concurrent.TimeUnit;
 
 public class OllamaClient {
-    private static final String BASE_URL = "https://17e5-112-134-224-5.ngrok-free.app";
+    private static final String BASE_URL = "https://bf92-192-248-2-10.ngrok-free.app";
     private final OkHttpClient client;
-
+    
     public interface ResponseCallback {
         void onResponse(String response);
     }
@@ -26,7 +26,12 @@ public class OllamaClient {
         new Thread(() -> {
             try {
                 JSONObject jsonBody = new JSONObject();
-                jsonBody.put("model", "llama2");
+                jsonBody.put("model", "blackalpha/cyberllm");
+                jsonBody.put("stream", false);
+                String systemPrompt = "You are a cybersecurity assistant specialized in detecting smishing (SMS phishing) attempts. " +
+                                    "Analyze the following message and provide guidance on whether it might be a smishing attempt. " +
+                                    "Consider factors like urgency, suspicious links, requests for personal information, and grammatical errors.";
+                jsonBody.put("system", systemPrompt);
                 jsonBody.put("prompt", message);
                 
                 RequestBody body = RequestBody.create(

@@ -1,9 +1,11 @@
 package com.example.smishingdetectionapp.chat;
 
 import android.os.Bundle;
-import android.util.Log; 
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,39 +21,43 @@ public class ChatAssistantActivity extends AppCompatActivity {
     private EditText messageInput;
     private ImageButton sendButton;
     private ChatAdapter chatAdapter;
+    private OllamaClient ollamaClient;
+    private ProgressBar progressBar;
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    try {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_chat_assistant);
-        
-        initializeViews();
-        setupRecyclerView();
-        setupClickListeners();
-        
-    } catch (Exception e) {
-        Log.e("ChatAssistantActivity", "Error in onCreate: " + e.getMessage());
-        Toast.makeText(this, "Error initializing chat", Toast.LENGTH_SHORT).show();
-        finish();
-    }
-}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        try {
+            super.onCreate(savedInstanceState);
+            EdgeToEdge.enable(this);
+            setContentView(R.layout.activity_chat_assistant);
 
-private void initializeViews() {
-    try {
-        chatRecyclerView = findViewById(R.id.chatRecyclerView);
-        messageInput = findViewById(R.id.messageInput);
-        sendButton = findViewById(R.id.sendButton);
-        
-        if (chatRecyclerView == null || messageInput == null || sendButton == null) {
-            throw new IllegalStateException("Required views not found in layout");
+            initializeViews();
+            setupRecyclerView();
+            setupClickListeners();
+            ollamaClient = new OllamaClient();
+
+        } catch (Exception e) {
+            Log.e("ChatAssistantActivity", "Error in onCreate: " + e.getMessage());
+            Toast.makeText(this, "Error initializing chat", Toast.LENGTH_SHORT).show();
+            finish();
         }
-    } catch (Exception e) {
-        Log.e("ChatAssistantActivity", "Error initializing views: " + e.getMessage());
-        throw e;
     }
-}
+
+    private void initializeViews() {
+        try {
+            chatRecyclerView = findViewById(R.id.chatRecyclerView);
+            messageInput = findViewById(R.id.messageInput);
+            sendButton = findViewById(R.id.sendButton);
+            progressBar = findViewById(R.id.progressBar);
+
+            if (chatRecyclerView == null || messageInput == null || sendButton == null || progressBar == null) {
+                throw new IllegalStateException("Required views not found in layout");
+            }
+        } catch (Exception e) {
+            Log.e("ChatAssistantActivity", "Error initializing views: " + e.getMessage());
+            throw e;
+        }
+    }
 
     private void setupRecyclerView() {
         chatAdapter = new ChatAdapter();
@@ -71,7 +77,19 @@ private void initializeViews() {
         if (!message.isEmpty()) {
             chatAdapter.addMessage(new ChatMessage(message, ChatMessage.USER_MESSAGE));
             messageInput.setText("");
-            // TODO: Implement chat bot response
+
+            progressBar.setVisibility(View.VISIBLE);
+            sendButton.setEnabled(false);
+
+            ollamaClient.getResponse(message, response -> {
+                runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
+                    sendButton.setEnabled(true);
+
+                    chatAdapter.addMessage(new ChatMessage(response, ChatMessage.BOT_MESSAGE));
+                    chatRecyclerView.smoothScrollToPosition(chatAdapter.getItemCount() - 1);
+                });
+            });
         }
     }
 }
