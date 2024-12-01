@@ -222,4 +222,12 @@
         </ul>
         ]]>
     </string>
+    <string name="confirm_delete_account_title">Hello there</string>
+    <string name="delete_account_warning_message">
+    You have selected delete account. Are you sure about this?
+    If you choose to delete your account, we will disable it for 30 days.
+    If you choose to reactivate your account, login within 30 days.
+    </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
