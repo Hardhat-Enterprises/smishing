@@ -1,41 +1,45 @@
 package com.example.smishingdetectionapp;
 
-
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class TermsAndConditionsActivity extends AppCompatActivity {
+
+    private Button backButton;
+    private ScrollView termsScrollView;
+    private TextView termsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_terms_and_conditions);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        // Initialize views
+        backButton = findViewById(R.id.accept_button);
+        termsScrollView = findViewById(R.id.terms_scroll_view);
+        termsTextView = findViewById(R.id.terms_text_view);
 
-        ImageButton backButton = findViewById(R.id.terms_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        // Initially disable the back button
+        backButton.setEnabled(false);
+
+        // Enable the back button when user scrolls to the bottom of the terms
+        termsScrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            // Check if the ScrollView is scrolled to the bottom
+            View contentView = termsScrollView.getChildAt(0);
+            if (contentView != null &&
+                    contentView.getBottom() <= (termsScrollView.getScrollY() + termsScrollView.getHeight())) {
+                backButton.setEnabled(true); // Enable the back button
+            } else {
+                backButton.setEnabled(false); // Keep it disabled otherwise
             }
         });
 
-        TextView termsTextView = findViewById(R.id.terms_text_view);
-        termsTextView.setText(Html.fromHtml(getString(R.string.terms_and_conditions_content), Html.FROM_HTML_MODE_COMPACT));
+        // Back button listener to finish the activity
+        backButton.setOnClickListener(v -> finish());
     }
 }
