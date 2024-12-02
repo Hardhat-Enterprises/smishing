@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -49,20 +50,22 @@ public class ReportingActivity extends AppCompatActivity {
         final EditText phonenumber = findViewById(R.id.PhoneNumber);
         final EditText message = findViewById(R.id.reportmessage);
         final Button sendReportButton = findViewById(R.id.reportButton);
-        final Button fingerVerifyButton = findViewById(R.id.fingerverify);
+        final Button BioVerifyButton = findViewById(R.id.biometricAuth);
 
         // Disable the "Send Report" button initially
         sendReportButton.setEnabled(false);
 
-        // Biometric authentication setup
-        fingerVerifyButton.setOnClickListener(view -> {
+        // Biometric authentication setup with support for multiple modalities
+        BioVerifyButton.setOnClickListener(view -> {
             BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                     .setTitle("Please Verify")
                     .setDescription("User Authentication is required to proceed")
-                    .setNegativeButtonText("Cancel")
+                    .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG |
+                            BiometricManager.Authenticators.DEVICE_CREDENTIAL)
                     .build();
             getPrompt().authenticate(promptInfo);
         });
+
 
         // Action for the "Send Report" button
         sendReportButton.setOnClickListener(v -> {

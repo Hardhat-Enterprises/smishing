@@ -109,10 +109,10 @@
         app:srcCompat="@drawable/back_button" />
 
     <Button
-        android:id="@+id/fingerverify"
+        android:id="@+id/biometricAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Verify with Fingerprint"
+        android:text="Verify With Biometrics"
         android:layout_marginTop="16dp"
         android:layout_gravity="center"
         tools:ignore="MissingConstraints" />

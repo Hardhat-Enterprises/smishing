@@ -95,6 +95,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.activity)
     implementation(files("libs/sqliteassethelper-2.0.1.jar"))
+    implementation(libs.biometric)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
