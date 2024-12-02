@@ -106,7 +106,7 @@
             android:layout_width="175dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/buttons_rounded"
             android:gravity="bottom|start"
             android:text="@string/help_btn"
@@ -126,6 +126,8 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/helpBtn"/>
+
+        <Button
             android:id="@+id/feedbackBtn"
             android:layout_width="175dp"
             android:layout_height="100dp"
@@ -142,15 +144,14 @@
             android:id="@+id/forumBtn"
             android:layout_width="175dp"
             android:layout_height="100dp"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/buttons_rounded"
             android:gravity="bottom|start"
             android:text="@string/forums"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/helpBtn" />
-
 
         <ImageView
             android:id="@+id/imageView5"
