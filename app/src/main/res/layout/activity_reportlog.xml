@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/news_recycler_view" />
+        app:layout_constraintTop_toBottomOf="@id/reportrecycler" />
 
     <ImageButton
         android:id="@+id/report_back"
@@ -73,7 +73,7 @@
         app:srcCompat="@drawable/back_button" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lvSavedReportsList"
+        android:id="@+id/reportrecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -81,16 +81,40 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchTextBox2" />
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progressBar"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="@id/news_recycler_view"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/news_recycler_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/news_recycler_view"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/news_recycler_view"-->
+<!--        android:visibility="gone" />-->
+
+    <EditText
+        android:id="@+id/searchTextBox2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:hint="Search Reports..."
+        android:inputType="text"
+        app:layout_constraintEnd_toStartOf="@+id/filterBtn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ReportText" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
+    <ImageView
+        android:id="@+id/filterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/news_recycler_view"
-        app:layout_constraintBottom_toBottomOf="@id/news_recycler_view"
-        app:layout_constraintStart_toStartOf="@id/news_recycler_view"
-        app:layout_constraintEnd_toEndOf="@id/news_recycler_view"
-        android:visibility="gone" />
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchTextBox2"
+        app:layout_constraintTop_toBottomOf="@+id/ReportText"
+        app:srcCompat="@drawable/filter_svg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

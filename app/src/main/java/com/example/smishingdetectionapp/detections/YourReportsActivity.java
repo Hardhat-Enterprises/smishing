@@ -1,28 +1,31 @@
-package com.example.smishingdetectionapp;
+package com.example.smishingdetectionapp.detections;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.smishingdetectionapp.detections.DatabaseAccess;
-import com.example.smishingdetectionapp.detections.ReportsAdapter;
-import com.example.smishingdetectionapp.news.SelectListener;
+
+import com.example.smishingdetectionapp.R;
+
 import androidx.appcompat.app.AppCompatActivity;
-
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class YourReportsActivity extends AppCompatActivity {
 
     private RecyclerView reportsRecyclerView;
     private DatabaseAccess databaseAccess;
     private ReportsAdapter adapter;
+
+//    public void searchReportDB(String search){
+//        String searchQuery = ("SELECT * FROM Detections WHERE Phone_Number LIKE '%" + search + "%' OR Message Like '%" + search + "%' OR Date Like '%" + search + "%'");
+//        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
+//        DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);.ReportsAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+//    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +37,7 @@ public class YourReportsActivity extends AppCompatActivity {
         });
 
         // Initialize RecyclerView and database access
-        reportsRecyclerView = findViewById(R.id.lvSavedReportsList);
+        reportsRecyclerView = findViewById(R.id.reportrecycler);
         reportsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         databaseAccess = DatabaseAccess.getInstance(getApplicationContext());

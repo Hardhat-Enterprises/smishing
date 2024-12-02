@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
+import com.example.smishingdetectionapp.detections.YourReportsActivity;
 
 public class ReportingActivity extends AppCompatActivity {
 
