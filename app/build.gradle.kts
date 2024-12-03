@@ -96,6 +96,7 @@ dependencies {
     implementation(libs.activity)
     implementation(files("libs/sqliteassethelper-2.0.1.jar"))
     implementation(libs.biometric)
+    implementation(libs.play.services.tasks)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -111,6 +112,7 @@ dependencies {
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))
+    implementation("com.google.android.gms:play-services-auth:20.0.0")
 
 }
 

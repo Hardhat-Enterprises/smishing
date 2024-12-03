@@ -117,4 +117,13 @@
         android:layout_gravity="center"
         tools:ignore="MissingConstraints" />
 
+    <Button
+        android:id="@+id/googleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="646dp"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
