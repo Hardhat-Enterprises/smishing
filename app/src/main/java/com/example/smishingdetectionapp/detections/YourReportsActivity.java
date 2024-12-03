@@ -2,6 +2,9 @@ package com.example.smishingdetectionapp.detections;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -18,12 +21,9 @@ public class YourReportsActivity extends AppCompatActivity {
     private DatabaseAccess databaseAccess;
     private ReportsAdapter adapter;
 
-//    public void searchReportDB(String search){
-//        String searchQuery = ("SELECT * FROM Detections WHERE Phone_Number LIKE '%" + search + "%' OR Message Like '%" + search + "%' OR Date Like '%" + search + "%'");
-//        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
-//        DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);.ReportsAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-//    }
+    private EditText searchBox;
+
+
 
 
     @Override
@@ -31,12 +31,10 @@ public class YourReportsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reportlog);
 
-        ImageButton backbtn = findViewById(R.id.report_back);
-        backbtn.setOnClickListener(v -> {
-            finish();
-        });
+
 
         // Initialize RecyclerView and database access
+        searchBox = findViewById(R.id.searchTextBox2);
         reportsRecyclerView = findViewById(R.id.reportrecycler);
         reportsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -45,6 +43,24 @@ public class YourReportsActivity extends AppCompatActivity {
 
         // Load reports
         loadReports();
+
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchReportDB(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        ImageButton backbtn = findViewById(R.id.report_back);
+        backbtn.setOnClickListener(v -> {
+            finish();
+        });
 
 
 //
@@ -87,6 +103,13 @@ public class YourReportsActivity extends AppCompatActivity {
 //    });
 //        Button to access the Log of Reports upon Click
 
+    }
+    private void searchReportDB(String search) {
+        String searchQuery = "SELECT * FROM Reports WHERE Phone_Number LIKE '%" + search +
+                "%' OR Message LIKE '%" + search +
+                "%' OR Date LIKE '%" + search + "%'";
+        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
+        adapter.updateCursor(cursor);
     }
 
     private void loadReports() {

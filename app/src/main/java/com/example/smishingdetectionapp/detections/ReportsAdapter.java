@@ -19,6 +19,14 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
         this.cursor = cursor;
     }
 
+    public void updateCursor(Cursor newCursor) {
+        if (cursor != null) {
+            cursor.close();
+        }
+        cursor = newCursor;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
