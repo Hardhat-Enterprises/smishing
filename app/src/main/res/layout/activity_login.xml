@@ -70,11 +70,24 @@
             android:autofillHints="password"
             app:layout_constraintTop_toBottomOf="@id/passwordLabel"
             app:layout_constraintStart_toStartOf="@id/passwordLabel"
-            app:layout_constraintEnd_toEndOf="@id/email"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/togglePasswordVisibility" />
+
+        <ImageButton
+            android:id="@+id/togglePasswordVisibility"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/toggle_password_visibility"
+            android:src="@drawable/ic_passwords_visibility"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/password" />
 
         <Button
             android:id="@+id/forgotPasswordButton"
-            android:layout_width="165dp"
+            android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:layout_marginStart="180dp"
             android:background="?android:attr/selectableItemBackground"
@@ -138,7 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="0dp"
             android:text="Remember Me"
             android:textColor="@color/navy_blue"
             android:textSize="14sp"
