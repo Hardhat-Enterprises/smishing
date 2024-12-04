@@ -47,6 +47,20 @@
         android:textColor="@color/navy_blue"/>
 
     <TextView
+        android:id="@+id/Report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/reportLog"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
+        android:textColor="@color/navy_blue"/>
+
+    <TextView
         android:id="@+id/errorTextView"
         android:layout_width="250dp"
         android:gravity="center_horizontal"
@@ -118,5 +132,22 @@
         app:layout_constraintStart_toEndOf="@+id/searchTextBox2"
         app:layout_constraintTop_toBottomOf="@+id/ReportText"
         app:srcCompat="@drawable/filter_svg" />
+
+    <TextView
+        android:id="@+id/fixedBottomText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reports : 0"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/button_border"
+        android:padding="10dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="200dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
