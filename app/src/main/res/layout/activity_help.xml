@@ -87,10 +87,10 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
                     android:layout_marginHorizontal="16dp"
-                    android:text="@string/what_is_the_app_for_desc"
                     android:textSize="16sp"
                     tools:ignore="RtlCompat" />
-
+<!--                    android:text="@string/what_is_the_app_for_desc"
+-->
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -124,10 +124,10 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
                     android:layout_marginHorizontal="16dp"
-                    android:text="@string/how_to_use_the_app_desc"
                     android:textSize="16sp"
                     tools:ignore="RtlCompat" />
-
+<!--                    android:text="@string/how_to_use_the_app_desc"
+ -->
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

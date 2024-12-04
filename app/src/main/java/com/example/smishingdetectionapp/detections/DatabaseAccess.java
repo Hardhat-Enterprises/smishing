@@ -5,13 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
+import android.view.View;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.forum.model.ForumTopic;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class DatabaseAccess {
@@ -30,6 +36,24 @@ public class DatabaseAccess {
         public static final String KEY_PHONENUMBER="Phone_Number";
         public static final String KEY_MESSAGE = "Message";
         public static final String KEY_DATE = "Date";
+        public static final String KEY_TYPE = "Type";
+
+        // Forum table columns and names
+        private static final String TABLE_FORUM_TOPICS = "ForumTopics";
+        private static final String KEY_FORUM_TOPIC_ID = "_id";
+        private static final String KEY_FORUM_TOPIC_TITLE = "Title";
+        private static final String KEY_FORUM_TOPIC_DESCRIPTION = "Description";
+        private static final String TABLE_FORUM_POSTS = "ForumPosts";
+        private static final String KEY_FORUM_POST_ID = "_id";
+        private static final String KEY_FORUM_POST_TITLE = "Title";
+        private static final String KEY_FORUM_POST_CONTENT = "Content";
+
+        // SQL Statement to Create the Table
+        private static final String TABLE_FORUM_TOPICS_CREATE =
+                "CREATE TABLE IF NOT EXISTS " + TABLE_FORUM_TOPICS + " (" +
+                        KEY_FORUM_TOPIC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        KEY_FORUM_TOPIC_TITLE + " TEXT NOT NULL, " +
+                        KEY_FORUM_TOPIC_DESCRIPTION + " TEXT NOT NULL);";
 
         public DatabaseOpenHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +62,6 @@ public class DatabaseAccess {
     }
 
     DatabaseAccess(Context context) {
-
         openHelper= new DatabaseOpenHelper(context);
         this.context = context;
     }
@@ -53,6 +76,7 @@ public class DatabaseAccess {
     public void open(){
         this.db=openHelper.getWritableDatabase();
         System.out.println("Database Opened!");
+        db.execSQL(DatabaseOpenHelper.TABLE_FORUM_TOPICS_CREATE);
     }
 
     public void close(){
@@ -67,6 +91,36 @@ public class DatabaseAccess {
         Cursor cursor = db.rawQuery("select * from Detections", null);
         System.out.println("Number of Records: "+cursor.getCount());
         return cursor.getCount();
+    }
+
+    public int SmishingCounter(){
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Detections WHERE Type = 'Smishing'", null);
+        int count = 0;
+        if (cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    public int HamCounter(){
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Detections WHERE Type = 'Ham'", null);
+        int count = 0;
+        if (cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    public int SpamCounter(){
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Detections WHERE Type = 'Spam'", null);
+        int count = 0;
+        if (cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
     }
 
     //Used to get current device time
@@ -88,47 +142,85 @@ public class DatabaseAccess {
         return result != -1;
     }
 
-    public SimpleCursorAdapter populateDetectionList(){
+    public Cursor populateList(){
+        SQLiteDatabase db = openHelper.getReadableDatabase();
 
-        String[] columns = {
-                DatabaseOpenHelper.KEY_ROWID,
-                DatabaseOpenHelper.KEY_PHONENUMBER,
-                DatabaseOpenHelper.KEY_MESSAGE,
-                DatabaseOpenHelper.KEY_DATE
-        };
+    public static boolean sendFeedback(String name, String feedback, float rating) {
+        // Here you would add your logic to send feedback to the database.
+        // This could involve inserting the feedback into a SQLite database,
+        // sending it to a remote server via an API call, etc.
 
-        Cursor cursor = db.query(
-                DatabaseOpenHelper.TABLE_DETECTIONS,
-                columns,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
+        // For now, we will simulate a successful insertion
+        // by always returning true.
 
-        String[] columnsStr = new String[]{
-                DatabaseOpenHelper.KEY_ROWID,
-                DatabaseOpenHelper.KEY_PHONENUMBER,
-                DatabaseOpenHelper.KEY_DATE,
-                DatabaseOpenHelper.KEY_MESSAGE
-        };
+        if (name.isEmpty() || feedback.isEmpty()) {
+            return false; // Fail if name or feedback is empty
+        }
 
-        int[] toViewIDs = new int[]{
-                R.id.item_id,
-                R.id.detectionPhoneText,
-                R.id.detectionDateText,
-                R.id.detectionMessageText
-        };
-
-        return new SimpleCursorAdapter(
-                context,
-                R.layout.detection_items,
-                cursor,
-                columnsStr,
-                toViewIDs
-        );
+        // Simulated success
+        return true;
     }
 
+    // Simulate submission of thoughts
+    public static boolean submitThoughts(String thoughts) {
+        // Add your database logic or API call here
+        return !thoughts.isEmpty(); // Simulating success
+    }
 
+    // Simulate submission of comments
+    public static boolean submitComment(String comment) {
+        // Add your database logic or API call here
+        return !comment.isEmpty(); // Simulating success
+    }
+
+    public static boolean submitForumTopic(String title, String description) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseOpenHelper.KEY_FORUM_TOPIC_TITLE, title);
+        contentValues.put(DatabaseOpenHelper.KEY_FORUM_TOPIC_DESCRIPTION, description);
+        long result = db.insert(DatabaseOpenHelper.TABLE_FORUM_TOPICS, null, contentValues);
+        return result != -1;
+    }
+
+    // Method to fetch a list of forum topics
+    public List<ForumTopic> getForumTopics() {
+        List<ForumTopic> forumTopics = new ArrayList<>();
+
+        // Open database for reading
+        SQLiteDatabase db = openHelper.getReadableDatabase();
+
+        // Define the columns to retrieve
+        String[] columns = {
+                DatabaseOpenHelper.KEY_FORUM_TOPIC_TITLE,
+                DatabaseOpenHelper.KEY_FORUM_TOPIC_DESCRIPTION
+        };
+
+        // Query the table
+        Cursor cursor = db.query(
+                DatabaseOpenHelper.TABLE_FORUM_TOPICS, // Table name
+                columns, // Columns to return
+                null,    // Selection (WHERE clause)
+                null,    // Selection arguments
+                null,    // Group by
+                null,    // Having
+                null     // Order by
+        );
+
+        // Iterate through the results and add to the list
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_FORUM_TOPIC_TITLE));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_FORUM_TOPIC_DESCRIPTION));
+                forumTopics.add(new ForumTopic(title, description));
+            } while (cursor.moveToNext());
+
+            // Close the cursor when done
+            cursor.close();
+        }
+
+        return forumTopics;
+        String query = "SELECT _id, Phone_Number, Message, Date, Type FROM Detections";
+
+        return db.rawQuery(query, null);
+    }
 }
