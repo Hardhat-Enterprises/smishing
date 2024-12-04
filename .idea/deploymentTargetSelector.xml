@@ -4,6 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
+<<<<<<< HEAD
         <DropdownSelection timestamp="2024-09-08T03:11:59.454212Z">
         <DropdownSelection timestamp="2024-09-03T07:50:33.696644800Z">
           <Target type="DEFAULT_BOOT">
@@ -18,6 +19,8 @@
           </Target>
         </DropdownSelection>
         <DialogSelection />
+=======
+>>>>>>> master
       </SelectionState>
     </selectionStates>
   </component>

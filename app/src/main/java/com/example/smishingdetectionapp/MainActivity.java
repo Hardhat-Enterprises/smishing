@@ -191,11 +191,17 @@ public class MainActivity extends AppCompatActivity {
         total_count.setText(""+databaseAccess.getCounter());
         //TODO: Add functionality for new detections.
 
+<<<<<<< HEAD
         //Pie Chart
         pieChart = findViewById(R.id.piechart);
         pcSmish = findViewById(R.id.smishCount);
         pcHam = findViewById(R.id.hamCount);
         pcSpam = findViewById(R.id.spamCount);
+=======
+        // Setting counter from the result
+        //TextView total_count = findViewById(R.id.total_counter);
+        //total_count.setText("" + databaseAccess.getCounter());
+>>>>>>> master
 
         pcSmish.setText(Integer.toString(databaseAccess.SmishingCounter()));
         pcHam.setText(Integer.toString(databaseAccess.HamCounter()));
