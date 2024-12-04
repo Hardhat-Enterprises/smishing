@@ -6,8 +6,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +45,28 @@ public class YourReportsActivity extends AppCompatActivity {
 
         // Load reports
         loadReports();
+
+        ImageView filterBtn = findViewById(R.id.filterBtn);
+        filterBtn.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(this, filterBtn);
+            popup.getMenuInflater().inflate(R.menu.reports_filter_menu, popup.getMenu());
+
+            popup.setOnMenuItemClickListener(item -> {
+                int itemId = item.getItemId();
+                if (itemId == R.id.filter_newest) {
+                    Cursor cursor = databaseAccess.getReportsNewestFirst();
+                    adapter.updateCursor(cursor);
+                    return true;
+                } else if (itemId == R.id.filter_oldest) {
+                    Cursor cursor = databaseAccess.getReportsOldestFirst();
+                    adapter.updateCursor(cursor);
+                    return true;
+                }
+                return false;
+            });
+
+            popup.show();
+        });
 
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
@@ -104,12 +128,32 @@ public class YourReportsActivity extends AppCompatActivity {
 //        Button to access the Log of Reports upon Click
 
     }
+
+
     private void searchReportDB(String search) {
-        String searchQuery = "SELECT * FROM Reports WHERE Phone_Number LIKE '%" + search +
-                "%' OR Message LIKE '%" + search +
-                "%' OR Date LIKE '%" + search + "%'";
-        Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
-        adapter.updateCursor(cursor);
+        try {
+            String searchQuery;
+            if (search.toLowerCase().startsWith("phone:")) {
+                // Extract the phone number part after "phone:"
+                String phoneNumber = search.substring(6).trim();
+                searchQuery = "SELECT * FROM Reports WHERE Phone_Number LIKE '%" + phoneNumber + "%'";
+            } else {
+                // Default search across all fields
+                searchQuery = "SELECT * FROM Reports WHERE Phone_Number LIKE '%" + search +
+                        "%' OR Message LIKE '%" + search +
+                        "%' OR Date LIKE '%" + search + "%'";
+            }
+
+            Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
+            if (cursor != null) {
+                adapter.updateCursor(cursor);
+            } else {
+                Toast.makeText(this, "No results found", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error searching reports", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadReports() {

@@ -165,6 +165,22 @@ public class DatabaseAccess {
             return null;
         }
     }
+    public Cursor getReportsNewestFirst() {
+        try {
+            return db.rawQuery("SELECT * FROM Reports ORDER BY Date DESC", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    public Cursor getReportsOldestFirst() {
+        try {
+            return db.rawQuery("SELECT * FROM Reports ORDER BY Date ASC", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.smishingdetectionapp.R;
+
 
 public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHolder> {
     private Context context;
@@ -47,6 +50,18 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
         holder.phoneTextView.setText(phoneNumber);
         holder.messageTextView.setText(message);
         holder.dateTextView.setText(date);
+
+        holder.itemView.setOnLongClickListener(v -> {
+            String reportText = String.format("Phone Number: %s\nMessage: %s\nDate: %s",
+                    phoneNumber, message, date);
+
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager)
+                    context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Report Details", reportText);
+            clipboard.setPrimaryClip(clip);
+
+            Toast.makeText(context, "Report copied to clipboard", Toast.LENGTH_SHORT).show();
+            return true;});
     }
 
     @Override
