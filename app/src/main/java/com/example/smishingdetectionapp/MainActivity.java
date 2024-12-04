@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
@@ -17,6 +18,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.DetectionsActivity;
+import com.example.smishingdetectionapp.ui.login.LoginActivity;
+
 
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,12 +27,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
+    private static final int SESSION_TIMEOUT_MS = 10000; // tested with a 10 second timer to see if works // SUCCESSFUL
+    private Handler sessionHandler;
+    private Runnable sessionTimeoutRunnable;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setupSessionTimeout();
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_news, R.id.nav_settings)
                 .build();
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 return true;
             } else if (id == R.id.nav_settings) {
+                resetSessionTimeout();
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
@@ -107,5 +116,39 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+    private void setupSessionTimeout() {
+        sessionHandler = new Handler();
+        sessionTimeoutRunnable = this::onSessionTimeout;
+
+        resetSessionTimeout();
+    }
+
+    private void resetSessionTimeout() {
+        sessionHandler.removeCallbacks(sessionTimeoutRunnable);
+        sessionHandler.postDelayed(sessionTimeoutRunnable, SESSION_TIMEOUT_MS);
+    }
+
+    private void onSessionTimeout() {
+        if (!isFinishing()) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        resetSessionTimeout();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (sessionHandler != null) {
+            sessionHandler.removeCallbacks(sessionTimeoutRunnable);
+        }
     }
 }
