@@ -221,6 +221,8 @@
             These terms and conditions shall be governed by and construed in accordance with the laws of Australia. Any disputes arising from or relating to these terms and conditions shall be subject to the exclusive jurisdiction of the courts in Australia.</li>
         </ul>
         ]]>
+
+        <!-- Feedbacks and forum strings -->
     </string>
     <string name="feedback">Feedback</string>
     <string name="rate_your_experience">Rate your experience</string>
@@ -248,6 +250,13 @@
     <string name="submitfeedback">Submit Feedback</string>
     <string name="community">Community</string>
 
+    <!-- community post -->
+    <string name="post_title_1">First Post</string>
+    <string name="post_content_1">This is the content of the first post.</string>
+    <string name="post_author_1">author1</string>
 
+    <string name="post_title_2">Second Post</string>
+    <string name="post_content_2">This is the content of the second post.</string>
+    <string name="post_author_2">Author2</string>
 
 </resources>

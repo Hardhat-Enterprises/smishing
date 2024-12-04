@@ -15,8 +15,6 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@null"
         android:contentDescription="@string/image_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
 
     <!-- Hardhat Logo -->
@@ -24,7 +22,7 @@
         android:id="@+id/hardhatLogo"
         android:layout_width="112dp"
         android:layout_height="106dp"
-        android:layout_below="@+id/forum_back_button"
+        android:layout_below="@id/forum_back_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:contentDescription="@string/logo_description"
@@ -43,29 +41,21 @@
         android:textSize="32sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/no_forums_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textSize="16sp"
-        android:text="@string/empty_forum"
-        android:layout_below="@id/communityForumHeader"
-        android:layout_above="@id/startNewPostButton" />
+    <!-- RecyclerView for posts -->
+
+    <!-- Input for thoughts -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:layout_below="@id/communityForumHeader"
+        android:layout_width="374dp"
+        android:layout_height="245dp"
         android:layout_above="@id/submitCommentButton"
-        android:paddingVertical="@dimen/nav_header_vertical_spacing"
-        tools:ignore="NotSibling" />
+        android:layout_below="@id/communityForumHeader"
+        android:layout_marginTop="66dp"
+        android:layout_marginBottom="65dp"
+        android:clipToPadding="false"
+        android:paddingVertical="@dimen/nav_header_vertical_spacing" />
 
-    <!-- Input for thoughts -->
     <EditText
         android:id="@+id/userThoughtsInput"
         android:layout_width="match_parent"
@@ -88,25 +78,27 @@
         android:textColor="@android:color/white" />
 
     <!-- Input for comments -->
+
+    <!-- Submit Comment Button -->
     <EditText
         android:id="@+id/commentInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/submitCommentButton"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="0dp"
         android:hint="@string/add_a_comment"
         android:padding="10dp" />
 
-    <!-- Submit Comment Button -->
     <Button
         android:id="@+id/submitCommentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/submit_comment"
+        android:layout_marginBottom="69dp"
         android:backgroundTint="@color/navy_blue"
+        android:text="@string/submit_comment"
         android:textColor="@android:color/white" />
 
     <Button

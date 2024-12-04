@@ -4,104 +4,101 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
-import com.example.smishingdetectionapp.detections.DatabaseAccess;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.smishingdetectionapp.ui.CommunityPost;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ForumActivity extends AppCompatActivity {
+
+    private List<CommunityPost> posts = new ArrayList<>();
+    private CommunityPostAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forums);
 
-        // Initialize the back button to go back to the previous screen
+        // Back button setup
         ImageButton report_back = findViewById(R.id.forum_back_button);
         report_back.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
         });
 
-        // Initializing input fields and submit buttons
-        final EditText userThoughtsInput = findViewById(R.id.userThoughtsInput);
-        final Button submitThoughtsButton = findViewById(R.id.submitThoughtsButton);
-        final EditText commentInput = findViewById(R.id.commentInput);
-        final Button submitCommentButton = findViewById(R.id.submitCommentButton);
+        // RecyclerView setup
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new CommunityPostAdapter(posts);
+        recyclerView.setAdapter(adapter);
 
-        // Disabling submit buttons initially
-        submitThoughtsButton.setEnabled(false);
-        submitCommentButton.setEnabled(false);
 
-        // TextWatcher to enable the submit thoughts button only when the input field is filled
-        userThoughtsInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        // Submit new post functionality
+        EditText userThoughtsInput = findViewById(R.id.userThoughtsInput);
+        Button submitThoughtsButton = findViewById(R.id.submitThoughtsButton);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Enable the submit button only if the user has entered text
-                submitThoughtsButton.setEnabled(!s.toString().trim().isEmpty());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        // TextWatcher to enable the submit comment button only when the comment field is filled
-        commentInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Enable the submit button only if the user has entered a comment
-                submitCommentButton.setEnabled(!s.toString().trim().isEmpty());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        // Submit thoughts button functionality
         submitThoughtsButton.setOnClickListener(v -> {
-            String userThoughts = userThoughtsInput.getText().toString().trim();
-            if (!userThoughts.isEmpty()) {
-                // Simulate thoughts submission
-                boolean isSubmitted = DatabaseAccess.submitThoughts(userThoughts);
-                if (isSubmitted) {
-                    userThoughtsInput.setText(null);
-                    Toast.makeText(ForumActivity.this, "Thoughts submitted successfully!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(ForumActivity.this, "Failed to submit thoughts. Please try again.", Toast.LENGTH_LONG).show();
-                }
+            String content = userThoughtsInput.getText().toString().trim();
+            if (!content.isEmpty()) {
+                posts.add(new CommunityPost("New Post", content, "You"));
+                adapter.notifyItemInserted(posts.size() - 1);
+                userThoughtsInput.setText("");
+                Toast.makeText(this, "Post added successfully!", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        // Submit comment button functionality
-        submitCommentButton.setOnClickListener(v -> {
-            String comment = commentInput.getText().toString().trim();
-            if (!comment.isEmpty()) {
-                // Simulate comment submission
-                boolean isSubmitted = DatabaseAccess.submitComment(comment);
-                if (isSubmitted) {
-                    commentInput.setText(null);
-                    Toast.makeText(ForumActivity.this, "Comment submitted successfully!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(ForumActivity.this, "Failed to submit comment. Please try again.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        // Start a new post button (If you have functionality to handle new posts)
-        Button startNewPostButton = findViewById(R.id.startNewPostButton);
-        startNewPostButton.setOnClickListener(v -> {
-            // Logic for starting a new post goes here (e.g., open a new activity or dialog)
-            Toast.makeText(ForumActivity.this, "Starting a new post...", Toast.LENGTH_SHORT).show();
         });
     }
-}
 
+    // Adapter for RecyclerView
+    private static class CommunityPostAdapter extends RecyclerView.Adapter<CommunityPostAdapter.CommunityPostViewHolder> {
+
+        private final List<CommunityPost> posts;
+
+        public CommunityPostAdapter(List<CommunityPost> posts) {
+            this.posts = posts;
+        }
+
+        @NonNull
+        @Override
+        public CommunityPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_2, parent, false);
+            return new CommunityPostViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull CommunityPostViewHolder holder, int position) {
+            CommunityPost post = posts.get(position);
+            holder.title.setText(post.getTitle());
+            holder.content.setText(post.getContent());
+        }
+
+        @Override
+        public int getItemCount() {
+            return posts.size();
+        }
+
+        static class CommunityPostViewHolder extends RecyclerView.ViewHolder {
+            TextView title;
+            TextView content;
+
+            public CommunityPostViewHolder(@NonNull View itemView) {
+                super(itemView);
+                title = itemView.findViewById(android.R.id.text1);
+                content = itemView.findViewById(android.R.id.text2);
+            }
+        }
+    }
+}
