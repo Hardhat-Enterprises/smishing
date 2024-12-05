@@ -55,6 +55,7 @@
         android:layout_margin="16dp"
         android:hint="@string/name_label"
         android:inputType="text"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/signupTitle" />
@@ -67,6 +68,7 @@
         android:layout_margin="16dp"
         android:hint="@string/phone_label"
         android:inputType="phone"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/full_name_input" />
@@ -78,6 +80,7 @@
         android:layout_margin="16dp"
         android:hint="@string/email_label"
         android:inputType="textEmailAddress"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pnInput" />
@@ -89,6 +92,7 @@
         android:layout_margin="16dp"
         android:hint="@string/pw_register_label"
         android:inputType="textPassword"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailInput" />
@@ -114,6 +118,7 @@
         android:layout_margin="16dp"
         android:hint="@string/pw2_register_label"
         android:inputType="textPassword"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password_note" />
@@ -123,28 +128,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pw2Input">
-
-        <CheckBox
-            android:id="@+id/terms_conditions_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp" />
 
         <TextView
             android:id="@+id/terms_conditions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I agree to the Terms and Conditions"
-            android:textColor="@android:color/holo_red_light"
-            android:textStyle="bold"
+            android:autoLink="none"
             android:linksClickable="true"
-            android:autoLink="none" />
+            android:text="@string/view_terms_and_conditions"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <Button
@@ -152,12 +153,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/button_background"
         android:enabled="false"
         android:text="@string/register_btn"
-        android:background="@drawable/buttons_rounded"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/terms_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

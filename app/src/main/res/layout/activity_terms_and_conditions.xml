@@ -9,8 +9,8 @@
     <!-- Terms and Conditions Content -->
     <ScrollView
         android:id="@+id/terms_scroll_view"
-        android:layout_width="356dp"
-        android:layout_height="524dp"
+        android:layout_width="352dp"
+        android:layout_height="612dp"
         android:layout_margin="16dp"
         android:overScrollMode="always"
         app:layout_constraintBottom_toTopOf="@id/accept_button"
@@ -22,51 +22,14 @@
             android:id="@+id/terms_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="4dp"
+            android:lineSpacingExtra="8dp"
             android:padding="16dp"
             android:scrollbars="vertical"
-            android:text="
-Terms and Conditions
-
-1. By using this app, you agree to comply with these terms.
-
-2. The app is provided on an 'as is' basis, with no guarantees of accuracy or availability.
-
-3. You are responsible for ensuring you use the services in accordance with applicable laws.
-
-4. Unauthorized reproduction, modification, or distribution of this app or its content is strictly prohibited.
-
-5. We reserve the right to modify or discontinue the app without notice.
-
-6. We respect your privacy and commit to protecting your data as per the privacy policy outlined herein.
-
-7. Your personal data will only be used for purposes that you have explicitly agreed to.
-
-8. Any disputes arising from the use of this app will be subject to the jurisdiction of [Your Location].
-
-PRIVACY POLICY
-
-1. We collect data to enhance your experience and improve our services.
-
-2. Your data will never be sold or shared with third parties without your consent, except as required by law.
-
-3. Cookies may be used to personalize content and ads.
-
-4. By continuing to use the app, you consent to our use of cookies.
-
-DISCLAIMER
-
-1. This app is provided as-is without any warranties of any kind.
-
-2. We do not guarantee uninterrupted or error-free use of the app.
-
-3. We are not liable for any damages resulting from the use of this app.
-
-4. Always use caution when interacting with unknown parties through the app.
-
-Please scroll to the bottom to continue."
+            android:text="@string/terms_and_conditions"
             android:textColor="@android:color/black"
+            android:textIsSelectable="false"
             android:textSize="16sp" />
+
     </ScrollView>
 
     <!-- Back Button -->
@@ -75,7 +38,7 @@ Please scroll to the bottom to continue."
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Back"
+        android:text="All good! I accept the terms and conditions"
         android:enabled="false"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"

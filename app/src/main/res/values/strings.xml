@@ -56,6 +56,37 @@
     <string name="delete_accountBtn">Delete account</string>
     <string name="sign_outBtn">Sign out</string>
 
+    <string name="terms_and_conditions">
+    &lt;b&gt;TERMS AND CONDITIONS&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
+
+    &lt;b&gt;1.&lt;/b&gt; By using this app, you agree to comply with these terms.&lt;br/&gt;
+    &lt;b&gt;2.&lt;/b&gt; The app is provided on an as is basis, with no guarantees of accuracy or availability.&lt;br/&gt;
+    &lt;b&gt;3.&lt;/b&gt; You are responsible for ensuring you use the services in accordance with applicable laws.&lt;br/&gt;
+    &lt;b&gt;4.&lt;/b&gt; Unauthorized reproduction, modification, or distribution of this app or its content is strictly prohibited.&lt;br/&gt;
+    &lt;b&gt;5.&lt;/b&gt; We reserve the right to modify or discontinue the app without notice.&lt;br/&gt;
+    &lt;b&gt;6.&lt;/b&gt; We respect your privacy and commit to protecting your data as per the privacy policy outlined herein.&lt;br/&gt;
+    &lt;b&gt;7.&lt;/b&gt; Your personal data will only be used for purposes that you have explicitly agreed to.&lt;br/&gt;
+    &lt;b&gt;8.&lt;/b&gt; Any disputes arising from the use of this app will be subject to the jurisdiction of [Your Location].&lt;br/&gt;&lt;br/&gt;
+
+    &lt;b&gt;PRIVACY POLICY&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
+
+    &lt;b&gt;1.&lt;/b&gt; We collect data to enhance your experience and improve our services.&lt;br/&gt;
+    &lt;b&gt;2.&lt;/b&gt; Your data will never be sold or shared with third parties without your consent, except as required by law.&lt;br/&gt;
+    &lt;b&gt;3.&lt;/b&gt; Cookies may be used to personalize content and ads.&lt;br/&gt;
+    &lt;b&gt;4.&lt;/b&gt; By continuing to use the app, you consent to our use of cookies.&lt;br/&gt;&lt;br/&gt;
+
+    &lt;b&gt;DISCLAIMER&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
+
+    &lt;b&gt;1.&lt;/b&gt; This app is provided as-is without any warranties of any kind.&lt;br/&gt;
+    &lt;b&gt;2.&lt;/b&gt; We do not guarantee uninterrupted or error-free use of the app.&lt;br/&gt;
+    &lt;b&gt;3.&lt;/b&gt; We are not liable for any damages resulting from the use of this app.&lt;br/&gt;
+    &lt;b&gt;4.&lt;/b&gt; Always use caution when interacting with unknown parties through the app.&lt;br/&gt;&lt;br/&gt;
+
+    Please scroll to the bottom to continue.
+</string>
+
+
+
     <!-- Password Change Window Strings -->
     <string name="change_password_page">Change Password</string>
     <string name="current_password">Current Password</string>
@@ -111,7 +142,7 @@
     <string name="pw_register_label">Password</string>
     <string name="pw2_register_label">Confirm Password</string>
     <string name="register_btn">Register</string>
-    <string name="terms_and_conditions">View Terms and Conditions</string>
+    <string name="view_terms_and_conditions">please click on this terms and conditions to complete the registration</string>
     <string name="agree_terms_and_conditions">I agree to the terms and conditions</string>
 
     <!-- Detection Page Strings -->
@@ -180,12 +211,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- Emoji-related strings -->
-    <string name="emoji_happy">😊</string>
-    <string name="emoji_sad">😔</string>
-    <string name="emoji_angry">😡</string>
-    <string name="emoji_surprised">😲</string>
-    <string name="emoji_love">❤️</string>
+
 
     <!-- Added strings -->
     <string name="terms_and_conditions_content">Your terms and conditions content here.</string>

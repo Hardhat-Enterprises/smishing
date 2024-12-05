@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -36,6 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterMain extends AppCompatActivity {
 
+    private static final int TERMS_REQUEST_CODE = 1001;  // Unique request code for terms acceptance
     private ActivitySignupBinding binding;
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
@@ -67,17 +66,12 @@ public class RegisterMain extends AppCompatActivity {
         TextView termsTextView = findViewById(R.id.terms_conditions);
         termsTextView.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterMain.this, TermsAndConditionsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, TERMS_REQUEST_CODE);
         });
 
-        // Set up checkbox and button logic
-        CheckBox termsCheckbox = findViewById(R.id.terms_conditions_checkbox);
+        // Set up register button
         Button registerButton = findViewById(R.id.registerBtn);
         registerButton.setEnabled(false);
-
-        termsCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            registerButton.setEnabled(isChecked);
-        });
 
         // Set up registration logic
         registerButton.setOnClickListener(v -> {
@@ -90,6 +84,20 @@ public class RegisterMain extends AppCompatActivity {
                 validateAndCheckEmail(fullName, phoneNumber, email, password);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check if we are handling the result from the Terms and Conditions activity
+        if (requestCode == TERMS_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Terms accepted, enable the register button
+                Button registerButton = findViewById(R.id.registerBtn);
+                registerButton.setEnabled(true);
+            }
+        }
     }
 
     private String generateVerificationCode() {
