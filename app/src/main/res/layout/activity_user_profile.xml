@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/design_default_color_background"
-    android:layout_gravity="start">
+    tools:context=".UserProfileActivity">
+
+    <ImageButton
+        android:id="@+id/report_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_button"
+        android:contentDescription="@string/back_button_desc"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_margin="16dp"
+        android:padding="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        app:layout_constraintTop_toBottomOf="@id/report_back"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,7 +38,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Company Logo -->
             <ImageView
                 android:id="@+id/company_logo"
                 android:layout_width="80dp"
@@ -32,7 +48,6 @@
                 android:contentDescription="@string/company_logo_desc"
                 android:scaleType="fitCenter" />
 
-            <!-- Profile Picture -->
             <ImageView
                 android:id="@+id/profile_picture"
                 android:layout_width="120dp"
@@ -45,8 +60,6 @@
                 android:src="@drawable/account_user_svg"
                 android:contentDescription="@string/profile_picture_desc" />
 
-
-            <!-- Username -->
             <TextView
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
@@ -59,168 +72,225 @@
                 android:textStyle="bold" />
 
             <!-- Email -->
-            <TextView
-                android:id="@+id/tv_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginBottom="16dp"
-                android:text="@string/email"
-                android:textColor="#757575"
-                android:textSize="14sp" />
 
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/azure" />
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/masked_data"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:visibility="visible"
+                    android:clickable="true"
+                    android:focusable="true" />
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_email"
+                    android:visibility="gone"
+                    android:background="@drawable/edit_text_background"
+                    android:textSize="16sp" />
 
-            <!-- Personal Details Section -->
-            <TextView
-                android:id="@+id/tv_personal_details_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:text="@string/personal_details"
-                android:textColor="@color/blue_grotto"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <!-- Personal Details Grid -->
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:columnCount="2"
-                android:rowCount="5">
-
-                <!-- Name -->
+                android:orientation="horizontal"
+                android:padding="8dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/name_label"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/username"
-                    android:textColor="#00838F"
-                    android:textSize="14sp" />
+                    android:layout_marginStart="10dp"
+                    android:text="@string/imalka_dilusha"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:visibility="visible" />
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_name"
+                    android:visibility="gone"
+                    android:background="@drawable/edit_text_background"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-                <!-- Phone -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/phone_label"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tv_phone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/phone"
-                    android:textColor="#00838F"
-                    android:textSize="14sp" />
+                    android:layout_marginStart="10dp"
+                    android:text="@string/masked_data"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:visibility="visible"
+                    android:clickable="true"
+                    android:focusable="true" />
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_phone"
+                    android:visibility="gone"
+                    android:background="@drawable/edit_text_background"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-                <!-- Address -->
+            <!-- Address -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/address_label"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tv_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/address"
-                    android:textColor="#00838F"
-                    android:textSize="14sp" />
+                    android:layout_marginStart="10dp"
+                    android:text="@string/masked_data"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:visibility="visible"
+                    android:clickable="true"
+                    android:focusable="true" />
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_address"
+                    android:visibility="gone"
+                    android:background="@drawable/edit_text_background"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-                <!-- Age -->
+            <!-- Age -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/age_label"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tv_age"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/age"
-                    android:textColor="#00838F"
-                    android:textSize="14sp" />
+                    android:layout_marginStart="10dp"
+                    android:text="@string/_23"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:visibility="visible" />
+                <EditText
+                    android:id="@+id/et_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_age"
+                    android:visibility="gone"
+                    android:background="@drawable/edit_text_background"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-                <!-- Occupation -->
+            <!-- Occupation -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/occupation_label"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tv_occupation"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="9"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/occupation"
-                    android:textColor="#00838F"
-                    android:textSize="14sp" />
-            </GridLayout>
+                    android:layout_marginStart="10dp"
+                    android:text="@string/software_engineer"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:visibility="visible" />
+                <EditText
+                    android:id="@+id/et_occupation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_occupation"
+                    android:visibility="gone"
+                    android:background="@drawable/edit_text_background"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-            <!-- Edit Button -->
             <Button
                 android:id="@+id/btn_edit_details"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:backgroundTint="@color/blue_grotto"
-                android:elevation="2dp"
                 android:text="@string/edit_button"
-                android:textColor="#212121"
+                android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/btn_save_details"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:visibility="gone"
+                android:backgroundTint="@color/blue_green"
+                android:text="@string/save_button"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_risk_profile"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/blue_green"
+                android:text="@string/view_risk_profile"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
         </LinearLayout>
     </ScrollView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/baby_blue"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
-        app:itemActiveIndicatorStyle="@android:color/transparent"
-        app:menu="@menu/activity_main_drawer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

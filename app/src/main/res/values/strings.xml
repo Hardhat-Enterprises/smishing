@@ -208,6 +208,61 @@
     <string name="personal_details">Personal Details</string>
     <string name="edit_button">Edit Your Personal Details</string>
     <string name="profile_picture_desc">User Profile Picture</string>
+    <string name="masked_data">**** ****</string>
+    <string name="view_sensitive_data">View Sensitive Data</string>
+    <string name="profile_page_title">Profile Page</string>
+    <string name="profile_button">Profile</string>
+
+    <!-- General Buttons -->
+    <string name="save_button">Save</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="profile_button_desc">Profile</string>
+
+
+    <!-- Edit Text Hints -->
+    <string name="hint_name">Enter your name</string>
+    <string name="hint_email">Enter your email</string>
+    <string name="hint_phone">Enter your phone number</string>
+    <string name="hint_address">Enter your address</string>
+    <string name="hint_age">Enter your age</string>
+    <string name="hint_occupation">Enter your occupation</string>
+
+    <!-- Toast Messages -->
+    <string name="save_successful">Details saved successfully!</string>
+    <string name="save_failed">Failed to save details. Please try again.</string>
+
+    <!-- Dialogs -->
+    <string name="confirm_changes_title">Confirm Changes</string>
+    <string name="confirm_changes_message">Are you sure you want to save these changes?</string>
+    <string name="edit_details">Edit Your Personal Details</string>
+    <string name="nationality_label">Nationality </string>
+
+
+    <!-- Labels -->
+
+    <!-- Placeholders -->
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_phone">Enter Phone Number</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_age">Enter Age</string>
+    <string name="enter_occupation">Enter Occupation</string>
+
+    <!-- Sample Data -->
+    <string name="secure_email">imalka@gmail.com</string>
+    <string name="secure_phone">123-456-7890</string>
+    <string name="secure_address">123, Melbourne, Australia</string>
+    <string name="software_engineer">Software Engineer</string>
+
+    <!-- Dialog Strings -->
+    <string name="enter_password_title">Enter Password</string>
+    <string name="enter_password_message">Please enter your password to access sensitive information.</string>
+    <string name="verify_password_message">verify</string>
+    <string name="password_hint">Enter Password</string>
+    <string name="password_verified">Password verified. Sensitive data revealed!</string>
+    <string name="edit_mode_enabled">Password verified. Edit mode enabled!</string>
+    <string name="password_incorrect">Incorrect password. Please try again.</string>
+
 
 
 
@@ -244,4 +299,17 @@
         </ul>
         ]]>
     </string>
+    <string name="back_button_desc" />
+    <string name="imalka_dilusha">Imalka Dilusha</string>
+    <string name="_23">23</string>
+    <string name="view_risk_profile">View Risk Profile</string>
+    <string name="flagged_section_label">Flagged Links and Senders</string>
+    <string name="tips_section_label">Educational Tips</string>
+    <string name="tip_1">• Avoid clicking links from unknown senders.</string>
+    <string name="tip_2">• Report suspicious messages to your provider.</string>
+    <string name="tip_3">• Do not share sensitive information via SMS.</string>
+    <string name="flagged_links">⚠️ 2 Suspicious Links Flagged</string>
+    <string name="flagged_senders">⚠️ 1 Suspicious Sender Detected</string>
+    <string name="risk_profile_label">Risk Profile</string>
+
 </resources>

@@ -1,0 +1,25 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background Circle -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#E0E0E0" /> <!-- Light gray background -->
+        </shape>
+    </item>
+
+    <!-- Progress Circle -->
+    <item>
+        <rotate
+            android:fromDegrees="-90"
+            android:toDegrees="270">
+            <shape android:shape="ring"
+                android:innerRadiusRatio="3"
+                android:thicknessRatio="15"
+                android:useLevel="true">
+                <gradient
+                    android:startColor="#4CAF50"
+                    android:endColor="#4CAF50"
+                    android:type="sweep" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>
