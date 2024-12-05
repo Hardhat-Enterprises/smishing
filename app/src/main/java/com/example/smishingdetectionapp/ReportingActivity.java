@@ -57,42 +57,36 @@ public class ReportingActivity extends AppCompatActivity {
         final EditText phonenumber = findViewById(R.id.PhoneNumber);
         final EditText message = findViewById(R.id.reportmessage);
         final Button sendReportButton = findViewById(R.id.reportButton);
-        final Button BioVerifyButton = findViewById(R.id.biometricAuth);
         final Button googleBtn = findViewById(R.id.googleButton);
 
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if(acct!=null){
-            navigateToSecondActivity();
-        }
+//        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+//        if(acct!=null){
+//            navigateToSecondActivity();
+//        }
 
+        gsc.signOut().addOnCompleteListener(task -> {
+            // Optionally, handle post-sign-out actions like logging
+            Toast.makeText(this, "Signed out to ensure fresh authentication", Toast.LENGTH_SHORT).show();
+        });
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
 
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(acct!=null){
+                    navigateToSecondActivity();
+                }
                 signIn();
             }
         });
 
-
-
         // Disable the "Send Report" button initially
         sendReportButton.setEnabled(false);
-
-        // Biometric authentication setup with support for multiple modalities
-        BioVerifyButton.setOnClickListener(view -> {
-            BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                    .setTitle("Please Verify")
-                    .setDescription("User Authentication is required to proceed")
-                    .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG |
-                            BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-                    .build();
-            getPrompt().authenticate(promptInfo);
-        });
-
 
         // Action for the "Send Report" button
         sendReportButton.setOnClickListener(v -> {
@@ -155,37 +149,6 @@ public class ReportingActivity extends AppCompatActivity {
         message.addTextChangedListener(afterTextChangedListener);
     }
 
-    // Biometric authentication prompt
-    private BiometricPrompt getPrompt() {
-        Executor executor = ContextCompat.getMainExecutor(this);
-        BiometricPrompt.AuthenticationCallback callback = new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-                notifyUser(errString.toString());
-            }
-
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                notifyUser("Authentication Succeeded!");
-            }
-
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-                notifyUser("Authentication Failed");
-            }
-        };
-
-        return new BiometricPrompt(this, executor, callback);
-    }
-
-    // Show a toast message
-    private void notifyUser(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
     // Helper function to validate phone number
     private boolean isValidPhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isEmpty()) {
@@ -213,20 +176,55 @@ public class ReportingActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1000){
+        if (requestCode == 1000) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            Log.d("GoogleAccountInfo", task.toString());
+
             try {
+                // If this succeeds, authentication was successful
                 task.getResult(ApiException.class);
+
+                // Navigate to the second activity
                 navigateToSecondActivity();
             } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                // Authentication failed, handle error
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
+
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 1000) {
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//
+//            try {
+//                // Retrieve the GoogleSignInAccount object
+//                GoogleSignInAccount account = task.getResult(ApiException.class);
+//
+//                // Extract user information
+//                String email = account.getEmail();
+//                String displayName = account.getDisplayName();
+//                String profilePicUrl = account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : "No profile picture";
+//
+//                // Log or display the user information
+//                Log.d("GoogleAccountInfo", "Email: " + email);
+//                Log.d("GoogleAccountInfo", "Name: " + displayName);
+//                Log.d("GoogleAccountInfo", "Profile Picture URL: " + profilePicUrl);
+//
+//                // Navigate to the second activity
+//                navigateToSecondActivity();
+//            } catch (ApiException e) {
+//                // Handle error during sign-in
+//                Log.e("GoogleSignInError", "Sign-in failed: " + e.getStatusCode());
+//                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
+
     void navigateToSecondActivity(){
         finish();
         Intent intent = new Intent(ReportingActivity.this,MainActivity.class);
