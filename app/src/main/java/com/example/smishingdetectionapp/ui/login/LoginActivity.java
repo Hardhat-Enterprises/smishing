@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.SharedActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
 
