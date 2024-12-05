@@ -116,7 +116,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
-        android:hint="Search Reports..."
+        android:hint="Search.. (Use field: for specific search)"
         android:inputType="text"
         app:layout_constraintEnd_toStartOf="@+id/filterBtn"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,7 +134,7 @@
         app:srcCompat="@drawable/filter_svg" />
 
     <TextView
-        android:id="@+id/fixedBottomText"
+        android:id="@+id/reportCountText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Reports : 0"
