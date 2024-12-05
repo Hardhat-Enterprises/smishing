@@ -24,7 +24,7 @@ public class DatabaseAccess {
 
         private static final String DATABASE_NAME="detectlist.db";
         private static final int DATABASE_VERSION=1;
-        private static final String TABLE_DETECTIONS = "Detections";
+        private static final String TABLE_DETECTIONS = "Det ctions";
         private static final String TABLE_REPORTS = "Reports";
         public static final String KEY_ROWID = "_id";
         public static final String KEY_PHONENUMBER="Phone_Number";
@@ -118,6 +118,7 @@ public Cursor getReportsForSpecificDate(String specificDate) {
         new String[]{specificDate}
     );
 }
+
     public SimpleCursorAdapter populateDetectionList(){
 
         String[] columns = {

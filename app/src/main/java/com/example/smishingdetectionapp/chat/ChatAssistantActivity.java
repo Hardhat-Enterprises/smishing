@@ -25,6 +25,7 @@ public class ChatAssistantActivity extends AppCompatActivity {
     private OllamaClient ollamaClient;
     private ProgressBar progressBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -64,7 +65,7 @@ public class ChatAssistantActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        chatAdapter = new ChatAdapter();
+        chatAdapter = new ChatAdapter(this);
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         chatRecyclerView.setAdapter(chatAdapter);
     }
@@ -75,6 +76,7 @@ public class ChatAssistantActivity extends AppCompatActivity {
 
         sendButton.setOnClickListener(v -> sendMessage());
     }
+
 
     private void sendMessage() {
         String message = messageInput.getText().toString().trim();
