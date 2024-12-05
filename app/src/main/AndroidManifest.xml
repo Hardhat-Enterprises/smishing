@@ -13,6 +13,8 @@
 
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -92,6 +94,10 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
-    </application>
+        <activity
+            android:name=".chat.ChatAssistantActivity"
+            android:exported="false"
+            android:label="@string/chat_assistant_page" />
+            </application>
 
 </manifest>
