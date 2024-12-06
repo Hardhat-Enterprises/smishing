@@ -26,13 +26,10 @@ public class YourReportsActivity extends AppCompatActivity {
     private EditText searchBox;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reportlog);
-
 
 
         // Initialize RecyclerView and database access
@@ -46,6 +43,7 @@ public class YourReportsActivity extends AppCompatActivity {
         // Load reports
         loadReports();
 
+        // Filtering Logic
         ImageView filterBtn = findViewById(R.id.filterBtn);
         filterBtn.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(this, filterBtn);
@@ -155,7 +153,6 @@ public class YourReportsActivity extends AppCompatActivity {
             Toast.makeText(this, "Error searching reports", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void loadReports() {
         try {
             Cursor cursor = databaseAccess.getReports();
@@ -168,5 +165,6 @@ public class YourReportsActivity extends AppCompatActivity {
             Toast.makeText(this, "Error loading reports", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 }

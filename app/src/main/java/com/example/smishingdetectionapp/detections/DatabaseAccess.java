@@ -83,6 +83,11 @@ public class DatabaseAccess {
     //Report sending function with database
     public static boolean sendReport(int phonenumber, String message) {
         try {
+
+            if (db != null && !db.isOpen()) {
+                db = openHelper.getWritableDatabase(); // Reopen the database
+            }
+
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseOpenHelper.KEY_PHONENUMBER, String.valueOf(phonenumber));
             contentValues.put(DatabaseOpenHelper.KEY_MESSAGE, message);
@@ -140,7 +145,7 @@ public class DatabaseAccess {
 
     // Add this method to DatabaseAccess.java
     // Add this method to DatabaseAccess.java
-    public ReportsAdapter populateReportsList() {
+    public ReportsAdapter populateReportsList() { // same function
         try {
             String query = "SELECT * FROM Reports ORDER BY Date DESC";
             Cursor cursor = db.rawQuery(query, null);
@@ -157,15 +162,45 @@ public class DatabaseAccess {
         }
     }
 
+    public boolean deleteReport(String phoneNumber, String message) {
+        try {
+            // Delete the record where Phone_Number and Message both match
+            int rowsDeleted = db.delete(
+                    DatabaseOpenHelper.TABLE_REPORTS,
+                    "Phone_Number = ? AND Message = ?", // WHERE clause
+                    new String[] { phoneNumber, message } // WHERE arguments
+            );
+            return rowsDeleted > 0; // Return true if at least one row was deleted
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Return false if an exception occurred
+        }
+    }
+
+
     public Cursor getReports() {
         try {
+            // Check if the database contains any rows
+            Cursor checkCursor = db.rawQuery("SELECT COUNT(*) FROM Reports", null);
+            if (checkCursor != null) {
+                checkCursor.moveToFirst(); // Move to the first row
+                int rowCount = checkCursor.getInt(0); // Get the count of rows
+                checkCursor.close(); // Close the cursor to avoid leaks
+
+                if (rowCount == 0) {
+                    // If there are no rows, return null
+                    return null;
+                }
+            }
+            // If rows exist, return the query cursor
             return db.rawQuery("SELECT * FROM Reports ORDER BY Date DESC", null);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-    public Cursor getReportsNewestFirst() {
+
+    public Cursor getReportsNewestFirst() { // same function
         try {
             return db.rawQuery("SELECT * FROM Reports ORDER BY Date DESC", null);
         } catch (Exception e) {
