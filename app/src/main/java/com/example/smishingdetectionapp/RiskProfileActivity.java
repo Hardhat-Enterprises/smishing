@@ -30,8 +30,8 @@ public class RiskProfileActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> finish()); // Close this activity and navigate back
 
         // Simulated data for testing
-        int flaggedLinks = 2; // Example value
-        int flaggedSenders = 4; // Example value
+        int flaggedLinks = 2;
+        int flaggedSenders = 4;
 
         // Log debug information
         Log.d("RiskProfileActivity", "Flagged Links: " + flaggedLinks + ", Flagged Senders: " + flaggedSenders);
@@ -42,8 +42,8 @@ public class RiskProfileActivity extends AppCompatActivity {
 
     private void updateRiskProfile(int flaggedLinks, int flaggedSenders) {
         // Calculate risk score
-        int riskScore = (flaggedLinks * 10) + (flaggedSenders * 15); // Example calculation
-        if (riskScore > 100) riskScore = 100; // Cap at 100
+        int riskScore = (flaggedLinks * 10) + (flaggedSenders * 15);
+        if (riskScore > 100) riskScore = 100;
 
         // Log debug information
         Log.d("RiskProfileActivity", "Calculated Risk Score: " + riskScore);

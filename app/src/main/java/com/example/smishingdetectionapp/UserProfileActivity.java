@@ -167,7 +167,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         // Set "Verify" button
         builder.setPositiveButton(getString(R.string.verify_password_message), (dialog, which) -> {
-            String enteredPassword = input.getText() != null ? input.getText().toString() : "";
+            String enteredPassword = input.getText() != null ? input.getText().toString() : "" ;
             if (enteredPassword.equals(PASSWORD)) {
                 isPasswordVerified = true;
                 revealAllSensitiveData();
@@ -181,7 +181,15 @@ public class UserProfileActivity extends AppCompatActivity {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         // Show the dialog
-        builder.show();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setOnShowListener(dialog -> {
+            // Set color for the "Verify" button
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.navy_blue));
+            // Set color for the "Cancel" button
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.navy_blue));
+        });
+        alertDialog.show();
+
     }
 
     private void promptForPasswordToEnableEditMode() {

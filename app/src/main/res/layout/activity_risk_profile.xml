@@ -20,6 +20,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/company_logo_top_right"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/hardhat_logo"
+        android:contentDescription="@string/company_logo_desc"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
     <TextView
         android:id="@+id/tv_risk_profile_label"
         android:layout_width="wrap_content"
@@ -73,7 +83,6 @@
                 android:textColor="@color/blue_grotto"
                 android:textStyle="bold" />
 
-            <!-- Flagged Links and Senders Section -->
             <TextView
                 android:id="@+id/tv_flagged_section_label"
                 android:layout_width="match_parent"
@@ -110,7 +119,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Educational Tips Section -->
             <TextView
                 android:id="@+id/tv_tips_section_label"
                 android:layout_width="match_parent"
@@ -150,8 +158,8 @@
                     android:text="• Do not share sensitive information via SMS."
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_risk_advice"
                 android:layout_width="match_parent"
@@ -161,10 +169,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/progress_risk_score"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:textColor="@color/black" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
