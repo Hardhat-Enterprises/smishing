@@ -190,6 +190,19 @@
     <string name="dummy_smishing_report">This SMS message contains some text that might indicate it is a scam! Please beware!</string>
     <string name="empty_sms">There are no SMS messages.</string>
 
+
+    <!-- Added Feedback Strings -->
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subtitle">We appreciate your feedback!</string>
+    <string name="emoji_angry">Angry Emoji</string>
+    <string name="emoji_sad">Sad Emoji</string>
+    <string name="emoji_neutral">Neutral Emoji</string>
+    <string name="emoji_happy">Happy Emoji</string>
+    <string name="emoji_excited">Excited Emoji</string>
+    <string name="feedback_hint">Write your feedback here...</string>
+    <string name="submit">Submit</string>
+    <string name="back_button_description">Go back to the previous screen</string>
+
     <!-- Terms and Conditions Content -->
     <string name="terms_and_conditions_content">
         <![CDATA[
