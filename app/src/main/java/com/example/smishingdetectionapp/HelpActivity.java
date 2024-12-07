@@ -76,7 +76,7 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Handle the click event here
-                Toast.makeText(HelpActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HelpActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(HelpActivity.this, ActivityFeedback.class));
             }
         });
