@@ -190,6 +190,12 @@
     <string name="dummy_smishing_report">This SMS message contains some text that might indicate it is a scam! Please beware!</string>
     <string name="empty_sms">There are no SMS messages.</string>
 
+    <string name="education_btn">Education</string>
+    <string name="about_us_btn">About Us</string>
+
+
+
+
     <!-- Terms and Conditions Content -->
     <string name="terms_and_conditions_content">
         <![CDATA[
@@ -222,4 +228,6 @@
         </ul>
         ]]>
     </string>
+    <string name="go_to_quizzes">Go to Quizzes</string>
+    <string name="learn_more_about_smishing">Learn More About Smishing</string>
 </resources>
