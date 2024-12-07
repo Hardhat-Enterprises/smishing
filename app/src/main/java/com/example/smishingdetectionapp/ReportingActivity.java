@@ -1,9 +1,5 @@
 package com.example.smishingdetectionapp;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,10 +14,6 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.biometric.BiometricManager;
-import androidx.biometric.BiometricPrompt;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -29,9 +21,6 @@ import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import java.util.concurrent.Executor;
 
 public class ReportingActivity extends AppCompatActivity {
-
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,33 +46,6 @@ public class ReportingActivity extends AppCompatActivity {
         final EditText phonenumber = findViewById(R.id.PhoneNumber);
         final EditText message = findViewById(R.id.reportmessage);
         final Button sendReportButton = findViewById(R.id.reportButton);
-        final Button googleBtn = findViewById(R.id.googleButton);
-
-
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(this,gso);
-
-//        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-//        if(acct!=null){
-//            navigateToSecondActivity();
-//        }
-
-        gsc.signOut().addOnCompleteListener(task -> {
-            // Optionally, handle post-sign-out actions like logging
-            Toast.makeText(this, "Signed out to ensure fresh authentication", Toast.LENGTH_SHORT).show();
-        });
-
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-
-        googleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(acct!=null){
-                    navigateToSecondActivity();
-                }
-                signIn();
-            }
-        });
 
         // Disable the "Send Report" button initially
         sendReportButton.setEnabled(false);
@@ -170,64 +132,5 @@ public class ReportingActivity extends AppCompatActivity {
     private String sanitizeInput(String input) {
         return input.replaceAll("[<>\"']", "").trim();
     }
-    void signIn(){
-        Intent signInIntent = gsc.getSignInIntent();
-        startActivityForResult(signInIntent,1000);
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-
-            try {
-                // If this succeeds, authentication was successful
-                task.getResult(ApiException.class);
-
-                // Navigate to the second activity
-                navigateToSecondActivity();
-            } catch (ApiException e) {
-                // Authentication failed, handle error
-                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1000) {
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//
-//            try {
-//                // Retrieve the GoogleSignInAccount object
-//                GoogleSignInAccount account = task.getResult(ApiException.class);
-//
-//                // Extract user information
-//                String email = account.getEmail();
-//                String displayName = account.getDisplayName();
-//                String profilePicUrl = account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : "No profile picture";
-//
-//                // Log or display the user information
-//                Log.d("GoogleAccountInfo", "Email: " + email);
-//                Log.d("GoogleAccountInfo", "Name: " + displayName);
-//                Log.d("GoogleAccountInfo", "Profile Picture URL: " + profilePicUrl);
-//
-//                // Navigate to the second activity
-//                navigateToSecondActivity();
-//            } catch (ApiException e) {
-//                // Handle error during sign-in
-//                Log.e("GoogleSignInError", "Sign-in failed: " + e.getStatusCode());
-//                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-
-    void navigateToSecondActivity(){
-        finish();
-        Intent intent = new Intent(ReportingActivity.this,MainActivity.class);
-        startActivity(intent);
-    }
 }
