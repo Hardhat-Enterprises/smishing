@@ -75,6 +75,7 @@ public class AccountActivity extends SharedActivity {
         /*ImageView imageView = findViewById(R.id.imageView4);
         imageView.setColorFilter(getColor(android.R.color.white));*/
 
+
     }
 
 }
