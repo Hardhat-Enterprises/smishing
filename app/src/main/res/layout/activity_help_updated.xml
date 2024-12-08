@@ -26,6 +26,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_button" />
 
+
             <ImageView
                 android:id="@+id/HardhatLogo"
                 android:layout_width="112dp"
@@ -246,6 +247,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="87dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

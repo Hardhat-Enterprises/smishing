@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.smishingdetectionapp.R;
@@ -78,7 +79,7 @@ public class DatabaseAccess {
     }
 
     //Report sending function with database
-    public static boolean sendReport(int phonenumber, String message) {
+    public static boolean sendReport(String phonenumber, String message) {
         SQLiteDatabase db = openHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_PHONENUMBER, phonenumber);
@@ -129,6 +130,65 @@ public class DatabaseAccess {
                 toViewIDs
         );
     }
+
+    public void logAllReports() {
+        final String TAG = "DatabaseReports"; // Define a unique tag for Logcat
+
+        String[] columns = {
+                DatabaseOpenHelper.KEY_PHONENUMBER,
+                DatabaseOpenHelper.KEY_MESSAGE,
+                DatabaseOpenHelper.KEY_DATE
+        };
+
+        Cursor cursor = db.query(
+                DatabaseOpenHelper.TABLE_REPORTS, // Table name
+                columns,                          // Columns to retrieve
+                null,                             // WHERE clause
+                null,                             // WHERE arguments
+                null,                             // GROUP BY clause
+                null,                             // HAVING clause
+                null                              // ORDER BY clause
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_PHONENUMBER));
+                String message = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_MESSAGE));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_DATE));
+
+                // Log the details of each report using Log.d
+                Log.d(TAG, "Phone Number: " + phoneNumber +
+                        ", Message: " + message +
+                        ", Date: " + date);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d(TAG, "No reports found in the table.");
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
+    public boolean deleteReportByPhoneNumber(String phoneNumber) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+        // Define the WHERE clause and arguments
+        String whereClause = DatabaseOpenHelper.KEY_PHONENUMBER + "=?";
+        String[] whereArgs = new String[]{phoneNumber};
+
+        // Perform the deletion
+        int rowsDeleted = db.delete(DatabaseOpenHelper.TABLE_REPORTS, whereClause, whereArgs);
+
+        // Check if the deletion was successful
+        if (rowsDeleted > 0) {
+            Log.d("DatabaseAccess", "Deleted " + rowsDeleted + " report(s) for phone number: " + phoneNumber);
+            return true;
+        } else {
+            Log.d("DatabaseAccess", "No report found for phone number: " + phoneNumber);
+            return false;
+        }
+    }
+
 
 
 }
