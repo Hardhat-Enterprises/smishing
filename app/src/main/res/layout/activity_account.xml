@@ -135,6 +135,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/buttonSessionTimeout"
+        android:layout_width="175dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/buttons_rounded"
+        android:gravity="bottom|start"
+        android:text="@string/session_timeoutBtn"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dark_modeBtn" />
+    
+    
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

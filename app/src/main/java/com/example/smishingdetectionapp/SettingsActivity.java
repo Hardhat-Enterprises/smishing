@@ -11,7 +11,7 @@ import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends SharedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

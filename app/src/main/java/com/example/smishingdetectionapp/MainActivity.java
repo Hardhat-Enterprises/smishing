@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
@@ -17,12 +18,15 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.DetectionsActivity;
+import com.example.smishingdetectionapp.ui.login.LoginActivity;
+
 
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SharedActivity {
     private AppBarConfiguration mAppBarConfiguration;
+
 
     @SuppressLint("SetTextI18n")
     @Override
