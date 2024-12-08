@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -16,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
+import com.example.smishingdetectionapp.detections.YourReportsActivity;
 
 public class ReportingActivity extends AppCompatActivity {
 
@@ -37,20 +39,45 @@ public class ReportingActivity extends AppCompatActivity {
             finish();
         });
 
+        ImageButton menuButton = findViewById(R.id.report_menu);
+        menuButton.setOnClickListener(v -> {
+                PopupMenu popup = new PopupMenu(ReportingActivity.this, menuButton);
+                popup.getMenuInflater().inflate(R.menu.report_menu, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(item -> {
+                    if (item.getItemId() == R.id.saved_reports) {
+                        startActivity(new Intent(ReportingActivity.this, YourReportsActivity.class));
+                        return true;
+                    }
+                    return false;
+                });
+                popup.show();
+        });
+
+
+
+
+
+
+
         final EditText phonenumber = findViewById(R.id.PhoneNumber);
         final EditText message = findViewById(R.id.reportmessage);
         final Button sendReportButton = findViewById(R.id.reportButton);
 
         //DATABASE REPORT FUNCTION
         sendReportButton.setOnClickListener(v -> {
-            boolean isInserted = DatabaseAccess.sendReport(Integer.parseInt(phonenumber.getText().toString()),
-                    message.getText().toString());
-            if (isInserted){
-                phonenumber.setText(null);
-                message.setText(null);
-                Toast.makeText(getApplicationContext(), "Report sent!", Toast.LENGTH_LONG).show();}
-            else
-                Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
+
+            String phoneNumberInput = phonenumber.getText().toString();
+            if(validatePhoneNumber(phoneNumberInput)) {
+                boolean isInserted = DatabaseAccess.sendReport(Integer.parseInt(phonenumber.getText().toString()),
+                        message.getText().toString());
+                if (isInserted) {
+                    phonenumber.setText(null);
+                    message.setText(null);
+                    Toast.makeText(getApplicationContext(), "Report sent!", Toast.LENGTH_LONG).show();
+                } else
+                    Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
+            }
         });
 
         //For enabling the report button when both text fields are filled in.
@@ -75,5 +102,16 @@ public class ReportingActivity extends AppCompatActivity {
         };
         phonenumber.addTextChangedListener(afterTextChangedListener);
         message.addTextChangedListener(afterTextChangedListener);
+    }
+    private boolean validatePhoneNumber(String phonenumber){
+        if(phonenumber.length() != 10){
+            Toast.makeText(getApplicationContext(),"Phone number must be 10 digits!",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!phonenumber.matches("\\d+")){
+            Toast.makeText(getApplicationContext(),"Phone number must contain digits only!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }
