@@ -52,6 +52,7 @@
     <string name="dark_modeBtn">Dark mode</string>
     <string name="delete_accountBtn">Delete account</string>
     <string name="sign_outBtn">Sign out</string>
+    <string name="session_timeoutBtn">Session Timeout</string>
 
     <!-- Password Change Window Strings -->
     <string name="change_password_page">Change Password</string>
