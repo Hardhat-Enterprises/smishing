@@ -11,9 +11,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import androidx.core.view.GestureDetectorCompat;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
@@ -27,6 +30,8 @@ import com.example.smishingdetectionapp.notifications.NotificationType;
 
 public class NotificationActivity extends AppCompatActivity {
 
+    private GestureDetectorCompat gestureDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +40,14 @@ public class NotificationActivity extends AppCompatActivity {
         // Enable edge-to-edge display to allow your layout to extend into the window insets
         EdgeToEdge.enable(this);
 
-        // create instances of each NotificationType for the switch
+        // Initialize GestureDetector
+        gestureDetector = new GestureDetectorCompat(this, new GestureListener());
+
+        // Set up the main view to listen for touch events
+        View mainView = findViewById(R.id.notification_main);
+        mainView.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+
+        // Create instances of each NotificationType for the switch
         NotificationType smishDetectionAlert = NotificationType.createSmishDetectionAlert(getApplicationContext());
         NotificationType spamDetectionAlert = NotificationType.createSpamDetectionAlert(getApplicationContext());
         NotificationType newsAlerts = NotificationType.createNewsAlert(getApplicationContext());
@@ -53,11 +65,7 @@ public class NotificationActivity extends AppCompatActivity {
         setupSwitch(findViewById(R.id.backup_reminder_switch), backupNotification);
         setupSwitch(findViewById(R.id.password_security_check_switch), passwordNotification);
 
-
-
         // Additional UI setup
-        // Initialize the main view container object from the layout
-        View mainView = findViewById(R.id.notification_main);
         // Check if the main view is not null to safely apply window insets
         if (mainView != null) {
             ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
@@ -100,29 +108,58 @@ public class NotificationActivity extends AppCompatActivity {
                 intent.setData(Uri.fromParts("package", getPackageName(), null));
             }
             startActivity(intent);
-
         });
-
     }
 
-    // method to setup switch with a notificationType object.
+    // Method to setup switch with a notificationType object.
     private void setupSwitch(Switch switchButton, NotificationType notificationType) {
-        // if the switch's value isnt null
-        if (switchButton != null){
-            // set switchButton value to the notificationType's isEnabled value
+        // If the switch's value isn't null
+        if (switchButton != null) {
+            // Set switchButton value to the notificationType's isEnabled value
             switchButton.setChecked(notificationType.getEnabled());
-            // when switch change listener is activated (user switch input)
-            // change switch's isChecked value and change the notificationType's isEnabled value
+            // When switch change listener is activated (user switch input)
+            // Change switch's isChecked value and change the notificationType's isEnabled value
             switchButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 notificationType.setEnabled(isChecked);
             });
-        }
-        else {
-            Log.e("NotificationActivity","Switch button is Null");
+        } else {
+            Log.e("NotificationActivity", "Switch button is Null");
         }
     }
+
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        private static final int SWIPE_THRESHOLD = 50;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+        
+        public boolean onFling(MotionEvent e1, MotionEvent e2) {
+            float diffY = e2.getY() - e1.getY();
+            VelocityTracker velocityTracker = VelocityTracker.obtain();
+            velocityTracker.addMovement(e1);
+            velocityTracker.addMovement(e2);
+            velocityTracker.computeCurrentVelocity(1000); // pixels per second
+
+            float velocityY = velocityTracker.getYVelocity();
+            
+            boolean result = false;
+
+            //test for swipe down gesture
+            if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffY > 0) {
+                    // Swipe down detected
+                    // Navigate back to SettingsActivity
+                    Intent intent = new Intent(NotificationActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+                    finish(); // Close the current activity
+                    result = true;
+                }
+            }
+            velocityTracker.recycle(); // Recycle the VelocityTracker
+            return result;
+        }
+    }
+    
+    public boolean onDown(MotionEvent e) {
+        return true; // Required to return true for fling to work
+    }
 }
-
-
-
-

@@ -35,6 +35,8 @@ public class AccountActivity extends AppCompatActivity {
             finish();
         });
 
+        
+
         //Opens the password change window
         Button password_changeBtn = findViewById(R.id.passwordBtn);
         password_changeBtn.setOnClickListener(v -> {

@@ -95,6 +95,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
 
+    
     <Button
         android:id="@+id/account_delete"
         android:layout_width="0dp"

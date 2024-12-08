@@ -4,6 +4,7 @@ import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +42,8 @@ public class SettingsActivity extends AppCompatActivity {
 
             return false;
         });
+
+        
 
         //Account button to switch to account page
         Button accountBtn = findViewById(R.id.accountBtn);
