@@ -14,8 +14,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SettingsActivity;
+import com.example.smishingdetectionapp.SharedActivity;
 
-public class AccountActivity extends AppCompatActivity {
+public class AccountActivity extends SharedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class AccountActivity extends AppCompatActivity {
         //EXAMPLE: Used to change the colour of the SVG icons.
         /*ImageView imageView = findViewById(R.id.imageView4);
         imageView.setColorFilter(getColor(android.R.color.white));*/
+
 
     }
 

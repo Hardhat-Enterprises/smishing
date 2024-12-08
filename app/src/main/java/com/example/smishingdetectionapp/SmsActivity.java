@@ -30,7 +30,7 @@ import com.example.smishingdetectionapp.sms.SMSExtractor;
 
 import java.util.ArrayList;
 
-public class SmsActivity extends AppCompatActivity implements SMSClickListener {
+public class SmsActivity extends SharedActivity implements SMSClickListener {
     private ArrayList<SMSMessage> smsMessageList = new ArrayList<>();
     private static final int READ_SMS_PERMISSION_CODE = 1;
 
