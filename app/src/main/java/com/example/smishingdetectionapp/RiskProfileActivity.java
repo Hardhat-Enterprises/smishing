@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RiskProfileActivity extends AppCompatActivity {
 
-    private PieChartView pieChartView;
+    private ProgressBarView progressBarView;
     private TextView tvRiskScoreValue, tvRiskAdvice, tvFlaggedLinks, tvFlaggedSenders;
 
     @Override
@@ -19,7 +19,7 @@ public class RiskProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_risk_profile);
 
         // Initialize Views
-        pieChartView = findViewById(R.id.pie_chart_view);
+        progressBarView = findViewById(R.id.progress_bar_view);
         tvRiskScoreValue = findViewById(R.id.tv_risk_score_value);
         tvRiskAdvice = findViewById(R.id.tv_risk_advice);
         tvFlaggedLinks = findViewById(R.id.tv_flagged_links);
@@ -31,7 +31,7 @@ public class RiskProfileActivity extends AppCompatActivity {
 
         // Simulated data for testing
         int flaggedLinks = 2; // Example value
-        int flaggedSenders = 4; // Example value
+        int flaggedSenders = 3; // Example value
 
         // Log debug information
         Log.d("RiskProfileActivity", "Flagged Links: " + flaggedLinks + ", Flagged Senders: " + flaggedSenders);
@@ -49,8 +49,8 @@ public class RiskProfileActivity extends AppCompatActivity {
         // Log debug information
         Log.d("RiskProfileActivity", "Calculated Risk Score: " + riskScore);
 
-        // Update PieChartView with animation
-        pieChartView.setProgressWithAnimation(riskScore);
+        // Update ProgressBarView with animation
+        progressBarView.setProgressWithAnimation(riskScore);
 
         // Update Risk Score TextView
         tvRiskScoreValue.setText(riskScore + " / 100");
@@ -61,7 +61,7 @@ public class RiskProfileActivity extends AppCompatActivity {
             tvRiskAdvice.setTextColor(getResources().getColor(R.color.red)); // High Risk: Red
         } else if (riskScore > 20) {
             tvRiskAdvice.setText("Medium Risk: Be cautious. Monitor flagged senders and links closely.");
-            tvRiskAdvice.setTextColor(getResources().getColor(R.color.yellow)); // Medium Risk: Yellow
+            tvRiskAdvice.setTextColor(getResources().getColor(R.color.dark_yellow)); // Medium Risk: Yellow
         } else {
             tvRiskAdvice.setText("Low Risk: Your account is secure. Continue following good practices.");
             tvRiskAdvice.setTextColor(getResources().getColor(R.color.green)); // Low Risk: Green
@@ -71,5 +71,4 @@ public class RiskProfileActivity extends AppCompatActivity {
         tvFlaggedLinks.setText("Flagged Links: " + flaggedLinks);
         tvFlaggedSenders.setText("Suspicious Senders: " + flaggedSenders);
     }
-
 }

@@ -17,7 +17,6 @@
         android:contentDescription="@string/back_button_desc"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_margin="16dp"
-        android:padding="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,14 +64,18 @@
             android:padding="16dp"
             android:elevation="6dp">
 
-            <!-- Pie Chart Section -->
-            <com.example.smishingdetectionapp.PieChartView
-                android:id="@+id/pie_chart_view"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:elevation="6dp" />
+            <!-- Loading Bar Section -->
+            <com.example.smishingdetectionapp.ProgressBarView
+                android:id="@+id/progress_bar_view"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_risk_score_value"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
 
             <TextView
                 android:id="@+id/tv_risk_score_value"
@@ -118,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
                     android:text="@string/_2_suspicious_links_flagged"
-                    android:textColor="@color/red"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="normal"
                     app:drawableLeftCompat="@drawable/ic_warning" />
@@ -129,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
                     android:text="@string/_1_suspicious_sender_detected"
-                    android:textColor="@color/red"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="normal"
                     app:drawableLeftCompat="@drawable/ic_warning" />
