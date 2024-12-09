@@ -8,6 +8,7 @@
     android:background="@color/design_default_color_background"
     tools:context=".RiskProfileActivity">
 
+    <!-- Back Button -->
     <ImageButton
         android:id="@+id/risk_profile_back"
         android:layout_width="wrap_content"
@@ -20,6 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Company Logo in Top-Right Corner -->
     <ImageView
         android:id="@+id/company_logo_top_right"
         android:layout_width="80dp"
@@ -30,6 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp" />
 
+    <!-- Risk Profile Label -->
     <TextView
         android:id="@+id/tv_risk_profile_label"
         android:layout_width="wrap_content"
@@ -38,11 +41,12 @@
         android:layout_marginStart="16dp"
         android:text="@string/risk_profile_label"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/risk_profile_back"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/risk_profile_scroll"
         android:layout_width="match_parent"
@@ -59,18 +63,16 @@
             android:orientation="vertical"
             android:background="@drawable/profile_card_background"
             android:padding="16dp"
-            android:elevation="4dp">
+            android:elevation="6dp">
 
-            <ProgressBar
-                android:id="@+id/progress_risk_score"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+            <!-- Pie Chart Section -->
+            <com.example.smishingdetectionapp.PieChartView
+                android:id="@+id/pie_chart_view"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:layout_gravity="center"
-                android:indeterminate="false"
-                android:progress="90"
-                android:layout_marginTop="16dp"
-                android:progressDrawable="@drawable/circular_progress" />
+                android:background="@color/white"
+                android:elevation="6dp" />
 
             <TextView
                 android:id="@+id/tv_risk_score_value"
@@ -78,11 +80,19 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:text="70 (Medium Risk)"
-                android:textSize="18sp"
+                android:text="@string/_70_medium_risk"
+                android:textSize="20sp"
                 android:textColor="@color/blue_grotto"
                 android:textStyle="bold" />
 
+            <!-- Divider Line -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/grey" />
+
+            <!-- Flagged Links and Senders Section -->
             <TextView
                 android:id="@+id/tv_flagged_section_label"
                 android:layout_width="match_parent"
@@ -106,19 +116,33 @@
                     android:id="@+id/tv_flagged_links"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="⚠️ 2 Suspicious Links Flagged"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:drawablePadding="8dp"
+                    android:text="@string/_2_suspicious_links_flagged"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    app:drawableLeftCompat="@drawable/ic_warning" />
 
                 <TextView
                     android:id="@+id/tv_flagged_senders"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="⚠️ 1 Suspicious Sender Detected"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:drawablePadding="8dp"
+                    android:text="@string/_1_suspicious_sender_detected"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    app:drawableLeftCompat="@drawable/ic_warning" />
             </LinearLayout>
 
+            <!-- Divider Line -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/grey" />
+
+            <!-- Educational Tips Section -->
             <TextView
                 android:id="@+id/tv_tips_section_label"
                 android:layout_width="match_parent"
@@ -141,31 +165,41 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Avoid clicking links from unknown senders."
+                    android:drawablePadding="8dp"
+                    android:text="@string/avoid_clicking_links_from_unknown_senders"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    app:drawableLeftCompat="@drawable/ic_tip" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Report suspicious messages to your provider."
+                    android:drawablePadding="8dp"
+                    android:text="@string/report_suspicious_messages_to_your_provider"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    app:drawableLeftCompat="@drawable/ic_tip" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Do not share sensitive information via SMS."
+                    android:drawablePadding="8dp"
+                    android:text="@string/do_not_share_sensitive_information_via_sms"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    app:drawableLeftCompat="@drawable/ic_tip" />
             </LinearLayout>
 
+            <!-- Risk Advice -->
             <TextView
                 android:id="@+id/tv_risk_advice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Your risk advice will appear here."
+                android:text="@string/your_risk_advice_will_appear_here"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="center"

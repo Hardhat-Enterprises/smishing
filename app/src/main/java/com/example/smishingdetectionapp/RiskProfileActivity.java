@@ -1,16 +1,16 @@
 package com.example.smishingdetectionapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RiskProfileActivity extends AppCompatActivity {
 
-    private ProgressBar progressRiskScore;
+    private PieChartView pieChartView;
     private TextView tvRiskScoreValue, tvRiskAdvice, tvFlaggedLinks, tvFlaggedSenders;
 
     @Override
@@ -19,7 +19,7 @@ public class RiskProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_risk_profile);
 
         // Initialize Views
-        progressRiskScore = findViewById(R.id.progress_risk_score);
+        pieChartView = findViewById(R.id.pie_chart_view);
         tvRiskScoreValue = findViewById(R.id.tv_risk_score_value);
         tvRiskAdvice = findViewById(R.id.tv_risk_advice);
         tvFlaggedLinks = findViewById(R.id.tv_flagged_links);
@@ -30,8 +30,8 @@ public class RiskProfileActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> finish()); // Close this activity and navigate back
 
         // Simulated data for testing
-        int flaggedLinks = 2;
-        int flaggedSenders = 4;
+        int flaggedLinks = 2; // Example value
+        int flaggedSenders = 4; // Example value
 
         // Log debug information
         Log.d("RiskProfileActivity", "Flagged Links: " + flaggedLinks + ", Flagged Senders: " + flaggedSenders);
@@ -40,32 +40,36 @@ public class RiskProfileActivity extends AppCompatActivity {
         updateRiskProfile(flaggedLinks, flaggedSenders);
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateRiskProfile(int flaggedLinks, int flaggedSenders) {
         // Calculate risk score
-        int riskScore = (flaggedLinks * 10) + (flaggedSenders * 15);
-        if (riskScore > 100) riskScore = 100;
+        int riskScore = (flaggedLinks * 10) + (flaggedSenders * 15); // Example calculation
+        if (riskScore > 100) riskScore = 100; // Cap at 100
 
         // Log debug information
         Log.d("RiskProfileActivity", "Calculated Risk Score: " + riskScore);
 
-        // Update ProgressBar and Risk Score TextView
-        progressRiskScore.setProgress(riskScore);
+        // Update PieChartView with animation
+        pieChartView.setProgressWithAnimation(riskScore);
+
+        // Update Risk Score TextView
         tvRiskScoreValue.setText(riskScore + " / 100");
 
-        // Provide advice based on risk level
-        if (riskScore >= 80) {
+        // Provide advice based on risk level and update color
+        if (riskScore >= 60) {
             tvRiskAdvice.setText("High Risk: Immediate action required! Avoid clicking links from unknown senders and report suspicious activity.");
-            tvRiskAdvice.setTextColor(getResources().getColor(R.color.red));
-        } else if (riskScore >= 50) {
+            tvRiskAdvice.setTextColor(getResources().getColor(R.color.red)); // High Risk: Red
+        } else if (riskScore > 20) {
             tvRiskAdvice.setText("Medium Risk: Be cautious. Monitor flagged senders and links closely.");
-            tvRiskAdvice.setTextColor(getResources().getColor(R.color.yellow));
+            tvRiskAdvice.setTextColor(getResources().getColor(R.color.yellow)); // Medium Risk: Yellow
         } else {
             tvRiskAdvice.setText("Low Risk: Your account is secure. Continue following good practices.");
-            tvRiskAdvice.setTextColor(getResources().getColor(R.color.green));
+            tvRiskAdvice.setTextColor(getResources().getColor(R.color.green)); // Low Risk: Green
         }
 
         // Update flagged links and senders
-        tvFlaggedLinks.setText("⚠️ Flagged Links: " + flaggedLinks);
-        tvFlaggedSenders.setText("⚠️ Suspicious Senders: " + flaggedSenders);
+        tvFlaggedLinks.setText("Flagged Links: " + flaggedLinks);
+        tvFlaggedSenders.setText("Suspicious Senders: " + flaggedSenders);
     }
+
 }

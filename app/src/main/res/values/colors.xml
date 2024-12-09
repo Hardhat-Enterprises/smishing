@@ -18,5 +18,16 @@
 
     <color name="yellow">#8B8000</color>
     <color name="green">#4CAF50</color>
+   <color name="progress_background">#E0E0E0</color>
+
+   <color name="progress_foreground">#4CAF50</color>
+   <color name="dark_red">#D32F2F</color>
+   <color name="dark_yellow">#FBC02D</color>
+   <color name="dark_green">#388E3C</color>
+    <color name="grey_light">#F5F5F5</color>
+    <color name="dark_blue_grotto">#003366</color>
+    <color name="dark_blue_green">#004d40</color>
+    <color name="ripple_color">#66FFFFFF</color>
+
 
 </resources>

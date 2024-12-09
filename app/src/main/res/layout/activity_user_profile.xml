@@ -8,6 +8,7 @@
     android:background="@color/design_default_color_background"
     tools:context=".UserProfileActivity">
 
+    <!-- Back Button -->
     <ImageButton
         android:id="@+id/report_back"
         android:layout_width="wrap_content"
@@ -20,7 +21,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Scroll View -->
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingTop="5dp"
@@ -38,6 +41,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Company Logo -->
             <ImageView
                 android:id="@+id/company_logo"
                 android:layout_width="80dp"
@@ -48,11 +52,12 @@
                 android:contentDescription="@string/company_logo_desc"
                 android:scaleType="fitCenter" />
 
+            <!-- Profile Picture -->
             <ImageView
                 android:id="@+id/profile_picture"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_gravity="start"
+                android:layout_gravity="center"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/circle_background"
                 android:padding="30dp"
@@ -60,28 +65,41 @@
                 android:src="@drawable/account_user_svg"
                 android:contentDescription="@string/profile_picture_desc" />
 
+            <!-- Username -->
             <TextView
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginBottom="4dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
                 android:text="@string/username"
                 android:textColor="@color/blue_grotto"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
+            <!-- Email -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_label"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tv_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:text="@string/masked_data"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="italic"
-                    android:visibility="visible"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    android:visibility="visible" />
                 <EditText
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
@@ -90,7 +108,9 @@
                     android:visibility="gone"
                     android:background="@drawable/edit_text_background"
                     android:textSize="16sp" />
+            </LinearLayout>
 
+            <!-- Name -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -123,6 +143,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <!-- Phone -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,9 +165,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="italic"
-                    android:visibility="visible"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    android:visibility="visible" />
                 <EditText
                     android:id="@+id/et_phone"
                     android:layout_width="match_parent"
@@ -157,6 +176,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <!-- Address -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -178,9 +198,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="italic"
-                    android:visibility="visible"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    android:visibility="visible" />
                 <EditText
                     android:id="@+id/et_address"
                     android:layout_width="match_parent"
@@ -191,6 +209,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <!-- Age -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -223,7 +242,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-
+            <!-- Occupation -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -256,37 +275,39 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <!-- Edit Details Button -->
             <Button
                 android:id="@+id/btn_edit_details"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="@color/blue_grotto"
+                android:backgroundTint="@color/navy_blue"
                 android:text="@string/edit_button"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
+            <!-- Save Details Button -->
             <Button
                 android:id="@+id/btn_save_details"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
                 android:visibility="gone"
-                android:backgroundTint="@color/blue_green"
+                android:backgroundTint="@color/blue_grotto"
                 android:text="@string/save_button"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
+            <!-- View Risk Profile Button -->
             <Button
                 android:id="@+id/btn_risk_profile"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/blue_green"
+                android:backgroundTint="@color/blue_grotto"
                 android:text="@string/view_risk_profile"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

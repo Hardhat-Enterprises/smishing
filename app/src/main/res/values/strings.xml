@@ -308,8 +308,16 @@
     <string name="tip_1">• Avoid clicking links from unknown senders.</string>
     <string name="tip_2">• Report suspicious messages to your provider.</string>
     <string name="tip_3">• Do not share sensitive information via SMS.</string>
-    <string name="flagged_links">⚠️ 2 Suspicious Links Flagged</string>
-    <string name="flagged_senders">⚠️ 1 Suspicious Sender Detected</string>
+    <string name="flagged_links">2 Suspicious Links Flagged</string>
+    <string name="flagged_senders">1 Suspicious Sender Detected</string>
     <string name="risk_profile_label">Risk Profile</string>
+    <string name="_70_medium_risk">70 (Medium Risk)</string>
+    <string name="_2_suspicious_links_flagged">2 Suspicious Links Flagged</string>
+    <string name="_1_suspicious_sender_detected">1 Suspicious Sender Detected</string>
+    <string name="avoid_clicking_links_from_unknown_senders">Avoid clicking links from unknown senders.</string>
+    <string name="report_suspicious_messages_to_your_provider">Report suspicious messages to your provider.</string>
+    <string name="do_not_share_sensitive_information_via_sms">Do not share sensitive information via SMS.</string>
+    <string name="your_risk_advice_will_appear_here">Your risk advice will appear here.</string>
+
 
 </resources>

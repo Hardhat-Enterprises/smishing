@@ -10,16 +10,17 @@
     <item>
         <rotate
             android:fromDegrees="-90"
-            android:toDegrees="270">
-            <shape android:shape="ring"
-                android:innerRadiusRatio="3"
-                android:thicknessRatio="15"
-                android:useLevel="true">
-                <gradient
-                    android:startColor="#4CAF50"
-                    android:endColor="#4CAF50"
-                    android:type="sweep" />
-            </shape>
-        </rotate>
-    </item>
-</layer-list>
+        android:pivotX="50%"
+        android:pivotY="50%">
+        <shape android:shape="ring"
+            android:innerRadiusRatio="3"
+            android:thicknessRatio="15"
+            android:useLevel="true">
+            <gradient
+                android:startColor="#4CAF50"
+                android:endColor="#4CAF50"
+                android:type="sweep" />
+        </shape>
+    </rotate>
+</item>
+    </layer-list>

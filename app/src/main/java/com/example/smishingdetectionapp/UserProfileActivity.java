@@ -3,6 +3,8 @@ package com.example.smishingdetectionapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,13 +24,21 @@ public class UserProfileActivity extends AppCompatActivity {
     private boolean isEditMode = false;
     private boolean isPasswordVerified = false;
 
+    private Animation fadeIn, fadeOut, slideIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        // Load animations
+        fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
+
         // Button to navigate to Risk Profile page
         Button riskProfileButton = findViewById(R.id.btn_risk_profile);
+        riskProfileButton.startAnimation(slideIn); // Apply slide-in animation
         riskProfileButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserProfileActivity.this, RiskProfileActivity.class);
             startActivity(intent);
@@ -106,22 +116,34 @@ public class UserProfileActivity extends AppCompatActivity {
             tvEmail.setText(etEmail.getText().toString().trim());
 
             // Hide EditText fields and show TextView fields
+            etName.startAnimation(fadeOut);
             etName.setVisibility(View.GONE);
+            etPhone.startAnimation(fadeOut);
             etPhone.setVisibility(View.GONE);
+            etAddress.startAnimation(fadeOut);
             etAddress.setVisibility(View.GONE);
+            etAge.startAnimation(fadeOut);
             etAge.setVisibility(View.GONE);
+            etOccupation.startAnimation(fadeOut);
             etOccupation.setVisibility(View.GONE);
+            etEmail.startAnimation(fadeOut);
             etEmail.setVisibility(View.GONE);
 
+            tvName.startAnimation(fadeIn);
             tvName.setVisibility(View.VISIBLE);
+            tvPhone.startAnimation(fadeIn);
             tvPhone.setVisibility(View.VISIBLE);
+            tvAddress.startAnimation(fadeIn);
             tvAddress.setVisibility(View.VISIBLE);
+            tvAge.startAnimation(fadeIn);
             tvAge.setVisibility(View.VISIBLE);
+            tvOccupation.startAnimation(fadeIn);
             tvOccupation.setVisibility(View.VISIBLE);
+            tvEmail.startAnimation(fadeIn);
             tvEmail.setVisibility(View.VISIBLE);
 
             // Update button text
-            ((TextView) findViewById(R.id.btn_edit_details)).setText(getString(R.string.edit_button));
+            ((Button) findViewById(R.id.btn_edit_details)).setText(getString(R.string.edit_button));
             isEditMode = false;
         } else {
             // Populate EditText fields with current data from TextView
@@ -133,41 +155,50 @@ public class UserProfileActivity extends AppCompatActivity {
             etEmail.setText(tvEmail.getText().toString().equals(getString(R.string.masked_data)) ? "" : tvEmail.getText().toString().trim());
 
             // Show EditText fields and hide TextView fields
+            etName.startAnimation(fadeIn);
             etName.setVisibility(View.VISIBLE);
+            etPhone.startAnimation(fadeIn);
             etPhone.setVisibility(View.VISIBLE);
+            etAddress.startAnimation(fadeIn);
             etAddress.setVisibility(View.VISIBLE);
+            etAge.startAnimation(fadeIn);
             etAge.setVisibility(View.VISIBLE);
+            etOccupation.startAnimation(fadeIn);
             etOccupation.setVisibility(View.VISIBLE);
+            etEmail.startAnimation(fadeIn);
             etEmail.setVisibility(View.VISIBLE);
 
+            tvName.startAnimation(fadeOut);
             tvName.setVisibility(View.GONE);
+            tvPhone.startAnimation(fadeOut);
             tvPhone.setVisibility(View.GONE);
+            tvAddress.startAnimation(fadeOut);
             tvAddress.setVisibility(View.GONE);
+            tvAge.startAnimation(fadeOut);
             tvAge.setVisibility(View.GONE);
+            tvOccupation.startAnimation(fadeOut);
             tvOccupation.setVisibility(View.GONE);
+            tvEmail.startAnimation(fadeOut);
             tvEmail.setVisibility(View.GONE);
 
             // Update button text
-            ((TextView) findViewById(R.id.btn_edit_details)).setText(getString(R.string.save_button));
+            ((Button) findViewById(R.id.btn_edit_details)).setText(getString(R.string.save_button));
             isEditMode = true;
         }
     }
 
     private void promptForPasswordToRevealSensitiveData() {
-        // Create a dialog for password input
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.enter_password_title));
         builder.setMessage(getString(R.string.enter_password_message));
 
-        // Add input field for password
         final TextInputEditText input = new TextInputEditText(this);
         input.setHint(getString(R.string.password_hint));
         input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
         builder.setView(input);
 
-        // Set "Verify" button
         builder.setPositiveButton(getString(R.string.verify_password_message), (dialog, which) -> {
-            String enteredPassword = input.getText() != null ? input.getText().toString() : "" ;
+            String enteredPassword = input.getText() != null ? input.getText().toString() : "";
             if (enteredPassword.equals(PASSWORD)) {
                 isPasswordVerified = true;
                 revealAllSensitiveData();
@@ -177,34 +208,21 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
-        // Set "Cancel" button
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-
-        // Show the dialog
         AlertDialog alertDialog = builder.create();
-        alertDialog.setOnShowListener(dialog -> {
-            // Set color for the "Verify" button
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.navy_blue));
-            // Set color for the "Cancel" button
-            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.navy_blue));
-        });
         alertDialog.show();
-
     }
 
     private void promptForPasswordToEnableEditMode() {
-        // Create a dialog for password input
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.enter_password_title));
         builder.setMessage(getString(R.string.verify_password_message));
 
-        // Add input field for password
         final TextInputEditText input = new TextInputEditText(this);
         input.setHint(getString(R.string.password_hint));
         input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
         builder.setView(input);
 
-        // Set "Verify" button
         builder.setPositiveButton("Verify", (dialog, which) -> {
             String enteredPassword = input.getText() != null ? input.getText().toString() : "";
             if (enteredPassword.equals(PASSWORD)) {
@@ -217,10 +235,7 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
-        // Set "Cancel" button
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-
-        // Show the dialog
         builder.show();
     }
 
