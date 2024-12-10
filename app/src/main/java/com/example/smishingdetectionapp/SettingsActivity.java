@@ -1,8 +1,8 @@
 package com.example.smishingdetectionapp;
 
-import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,27 +44,31 @@ public class SettingsActivity extends AppCompatActivity {
         Button accountBtn = findViewById(R.id.accountBtn);
         accountBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, AccountActivity.class));
-            finish();
+            //finish();
         });
         //Filtering button to switch to Smishing rules page
         Button filteringBtn = findViewById(R.id.filteringBtn);
         filteringBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, SmishingRulesActivity.class));
-            finish();
+            //finish();
         });
         //Report button to switch to reporting page
         Button reportBtn = findViewById(R.id.reportBtn);
         reportBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, ReportingActivity.class));
-            finish();
+            //finish();
         });
         //Notification button to switch to notification page
-
+        Button notificationsButton = findViewById(R.id.notificationsBtn);
+        notificationsButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, NotificationActivity.class));
+            //finish();
+        });
         //Help button to switch to Help page
         Button helpBtn = findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, HelpActivity.class));
-            finish();
+            //finish();
         });
         Button aboutMeButton = findViewById(R.id.aboutMeBtn);
         aboutMeButton.setOnClickListener(v -> {
@@ -94,6 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     //Notification button to switch to notification page
+    @SuppressWarnings("unused")
     public void openNotificationsActivity(View view) {
         Intent intent = new Intent(this, NotificationActivity.class);
         startActivity(intent);
