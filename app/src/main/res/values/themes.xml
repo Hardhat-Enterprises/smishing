@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-   <style name="Theme.SmishingDetectionApp.NoActionBar">
+    <style name="Theme.SmishingDetectionApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -26,20 +26,31 @@
     <style name="Theme.Smishing" parent="Theme.MaterialComponents.Light" />
     <!-- Base application theme. -->
     <style name="Base.Theme.SmishingDetectionApp" parent="Theme.Material3.DayNight.NoActionBar">
-         <!-- Customize your light theme here. -->
+        <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/baby_blue</item>
     </style>
 
     <style name="AlertDialogCustom" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <!-- This is the Dialog Theme -->
         <item name="android:textColor">@color/navy_blue</item>
-        <item name="colorAccent">@color/navy_blue</item> <!-- Color for the dialog buttons and other accents -->
+        <item name="colorAccent">@color/navy_blue
+        </item> <!-- Color for the dialog buttons and other accents -->
         <item name="android:buttonBarPositiveButtonStyle">@style/AlertDialogButtonStyle</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/AlertDialogButtonStyle</item>
     </style>
 
     <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/black</item> <!-- Set to your desired button text color -->
+        <item name="android:textColor">@color/black
+        </item> <!-- Set to your desired button text color -->
     </style>
 
+    <style name="ButtonStyle">
+        <item name="android:backgroundTint">@color/baby_blue</item>
+        <item name="android:textColor">#000000</item>
+        <item name="drawableTint">@color/black</item>
+        <item name="cornerRadius">10dp</item>
+    </style>
+    <style name="heading">
+        <item name="android:textColor">@color/navy_blue</item>
+    </style>
 </resources>
