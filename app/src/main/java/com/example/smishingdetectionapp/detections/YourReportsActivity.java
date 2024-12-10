@@ -26,7 +26,7 @@ public class YourReportsActivity extends AppCompatActivity {
     private ReportsAdapter adapter;
 
     private EditText searchBox;
-    private TextView reportCountTextView;
+    private static TextView reportCountTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class YourReportsActivity extends AppCompatActivity {
 
         // Load reports and update count
         loadReports();
-        updateReportCount();
+
 
         // Filtering Logic
         // Filter button setup
@@ -67,7 +67,7 @@ public class YourReportsActivity extends AppCompatActivity {
                     return false;
                 }
                 adapter.updateCursor(cursor);
-                updateReportCount(); // Update count after filtering
+                updateReportCount(cursor); // Update count after filtering
                 return true;
             });
 
@@ -148,7 +148,7 @@ public class YourReportsActivity extends AppCompatActivity {
             Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
             if (cursor != null) {
                 adapter.updateCursor(cursor);
-                updateReportCount(); // Update count after search
+                updateReportCount(cursor); // Update count after search
             } else {
                 Toast.makeText(this, "No results found", Toast.LENGTH_SHORT).show();
             }
@@ -163,6 +163,7 @@ public class YourReportsActivity extends AppCompatActivity {
             if (cursor != null) {
                 adapter = new ReportsAdapter(this, cursor);
                 reportsRecyclerView.setAdapter(adapter);
+                updateReportCount(cursor);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,8 +171,11 @@ public class YourReportsActivity extends AppCompatActivity {
         }
     }
 
-    private void updateReportCount() {
-        int count = databaseAccess.getReportCount();
+    public static void updateReportCount(Cursor cursor) {
+        int count = 0;
+        if (cursor != null) {
+            count = cursor.getCount(); // Get count from the filtered search query
+        }
         reportCountTextView.setText("Reports: " + count);
     }
 

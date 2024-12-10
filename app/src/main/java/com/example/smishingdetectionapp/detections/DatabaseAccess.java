@@ -218,15 +218,7 @@ public class DatabaseAccess {
         }
     }
 
-    public int getReportCount() {
-        int count = 0;
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM Reports", null);
-        if (cursor.moveToFirst()) {
-            count = cursor.getInt(0);
-        }
-        cursor.close();
-        return count;
-    }
+
 
 
 }

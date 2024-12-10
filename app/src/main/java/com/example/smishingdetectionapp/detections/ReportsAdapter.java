@@ -11,11 +11,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.smishingdetectionapp.R;
 
-
 public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHolder> {
-    private Context context;
+    private final Context context;
     private Cursor cursor;
 
     public ReportsAdapter(Context context, Cursor cursor) {
@@ -24,7 +24,8 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
     }
 
     public void updateCursor(Cursor newCursor) {
-        if (cursor != null) {
+        // Safely close the old cursor and update to the new one
+        if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
         cursor = newCursor;
@@ -52,6 +53,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
         holder.messageTextView.setText(message);
         holder.dateTextView.setText(date);
 
+        // Long-click listener to copy report details to clipboard
         holder.itemView.setOnLongClickListener(v -> {
             String reportText = String.format("Phone Number: %s\nMessage: %s\nDate: %s",
                     phoneNumber, message, date);
@@ -62,34 +64,33 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
             clipboard.setPrimaryClip(clip);
 
             Toast.makeText(context, "Report copied to clipboard", Toast.LENGTH_SHORT).show();
-            return true;});
+            return true;
+        });
 
+        // Delete button functionality
         holder.deleteButton.setOnClickListener(v -> {
             DatabaseAccess databaseAccess = DatabaseAccess.getInstance(context);
             databaseAccess.open();
-            boolean isDeleted = databaseAccess.deleteReport(phoneNumber, message); // Use Phone_Number for deletion
-
+            boolean isDeleted = databaseAccess.deleteReport(phoneNumber, message);
 
             if (isDeleted) {
                 Toast.makeText(context, "Report deleted successfully", Toast.LENGTH_SHORT).show();
 
-                if (databaseAccess.getReports() == null) // database is empty (completely wiped)
-                {
+                // Get updated data and refresh RecyclerView
+                Cursor newCursor = databaseAccess.getReports();
+                updateCursor(newCursor);
+                YourReportsActivity.updateReportCount(cursor);
+
+
+                if (newCursor == null || newCursor.getCount() == 0) {
                     Toast.makeText(context, "No reports remaining on the system", Toast.LENGTH_SHORT).show();
-                    swapCursor(null);
                 }
-
-                // Refresh the cursor and update the RecyclerView
-                cursor = databaseAccess.getReports(); // Get updated data
-                swapCursor(cursor); // Notify the adapter of the new cursor
-
             } else {
                 Toast.makeText(context, "Failed to delete report", Toast.LENGTH_SHORT).show();
             }
 
-            databaseAccess.close();
+            //databaseAccess.close();
         });
-
     }
 
     @Override
@@ -97,7 +98,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
         return cursor != null ? cursor.getCount() : 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         Button deleteButton;
         TextView phoneTextView;
         TextView messageTextView;
@@ -113,7 +114,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
     }
 
     public void swapCursor(Cursor newCursor) {
-        if (cursor != null) {
+        if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
         cursor = newCursor;
