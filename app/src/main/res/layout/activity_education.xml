@@ -77,9 +77,9 @@
                 android:id="@+id/QuteQuize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wanna Test Your Knowledge about Smishing ?"
+                android:text="Think you can spot a scam? Try a quiz!"
                 android:textColor="#2c3e50"
-                android:textSize="18sp"
+                android:textSize="21dp"
                 android:textStyle="bold" />
 
 
@@ -88,11 +88,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/buttons_rounded"
                 android:padding="12dp"
                 android:text="Start the Quiz!"
-                android:background="@drawable/buttons_rounded"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tutorialText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Here? Tap for a quick guide!"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:padding="12dp"/>
+
+            <Button
+                android:id="@+id/tutorialBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttons_rounded"
+                android:padding="12dp"
+                android:text="Get Started!"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                />
+
         </LinearLayout>
     </ScrollView>
 
