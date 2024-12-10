@@ -24,7 +24,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private boolean isEditMode = false;
     private boolean isPasswordVerified = false;
 
-    private Animation fadeIn, fadeOut, slideIn;
+    private Animation fadeIn;
+    private Animation fadeOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class UserProfileActivity extends AppCompatActivity {
         // Load animations
         fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-        slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
+        Animation slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
 
         // Button to navigate to Risk Profile page
         Button riskProfileButton = findViewById(R.id.btn_risk_profile);
