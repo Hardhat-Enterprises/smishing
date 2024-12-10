@@ -97,9 +97,7 @@ public class ProgressBarView extends View {
         }
     }
 
-    /**
-     * Sets the progress value (0-100) with animation.
-     */
+
     public void setProgressWithAnimation(float targetProgress) {
         this.progress = targetProgress;
 
