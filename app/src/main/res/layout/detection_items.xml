@@ -54,6 +54,17 @@
             android:textStyle="bold"
             android:textSize="18sp"/>
 
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_gravity="end"
+            android:text="Delete"
+            android:backgroundTint="@color/red"
+            android:textColor="@android:color/white" />
+
+
         <TextView
             android:id="@+id/detectionMessageText"
             android:layout_width="match_parent"

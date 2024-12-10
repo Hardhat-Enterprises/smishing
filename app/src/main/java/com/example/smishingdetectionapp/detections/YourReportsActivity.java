@@ -20,6 +20,7 @@ import com.example.smishingdetectionapp.R;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class YourReportsActivity extends AppCompatActivity {
+
     private RecyclerView reportsRecyclerView;
     private DatabaseAccess databaseAccess;
     private ReportsAdapter adapter;
@@ -33,6 +34,8 @@ public class YourReportsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reportlog);
 
         // Initialize Views
+
+        // Initialize RecyclerView and database access
         searchBox = findViewById(R.id.searchTextBox2);
         reportsRecyclerView = findViewById(R.id.reportrecycler);
         reportCountTextView = findViewById(R.id.reportCountText);
@@ -46,6 +49,7 @@ public class YourReportsActivity extends AppCompatActivity {
         loadReports();
         updateReportCount();
 
+        // Filtering Logic
         // Filter button setup
         ImageView filterBtn = findViewById(R.id.filterBtn);
         filterBtn.setOnClickListener(v -> {
@@ -120,9 +124,8 @@ public class YourReportsActivity extends AppCompatActivity {
     private void searchReportDB(String search) {
         try {
             String searchQuery;
-
-
             if (search.toLowerCase().startsWith("phone:")) {
+                // Extract the phone number part after "phone:"
                 String phoneNumber = search.substring(6).trim();
                 searchQuery = "SELECT * FROM Reports WHERE Phone_Number LIKE '%" + phoneNumber + "%'";
             }
@@ -154,10 +157,6 @@ public class YourReportsActivity extends AppCompatActivity {
             Toast.makeText(this, "Error searching reports", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-
     private void loadReports() {
         try {
             Cursor cursor = databaseAccess.getReports();
@@ -175,4 +174,5 @@ public class YourReportsActivity extends AppCompatActivity {
         int count = databaseAccess.getReportCount();
         reportCountTextView.setText("Reports: " + count);
     }
+
 }

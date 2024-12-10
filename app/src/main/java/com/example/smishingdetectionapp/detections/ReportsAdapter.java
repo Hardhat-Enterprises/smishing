@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +63,33 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
 
             Toast.makeText(context, "Report copied to clipboard", Toast.LENGTH_SHORT).show();
             return true;});
+
+        holder.deleteButton.setOnClickListener(v -> {
+            DatabaseAccess databaseAccess = DatabaseAccess.getInstance(context);
+            databaseAccess.open();
+            boolean isDeleted = databaseAccess.deleteReport(phoneNumber, message); // Use Phone_Number for deletion
+
+
+            if (isDeleted) {
+                Toast.makeText(context, "Report deleted successfully", Toast.LENGTH_SHORT).show();
+
+                if (databaseAccess.getReports() == null) // database is empty (completely wiped)
+                {
+                    Toast.makeText(context, "No reports remaining on the system", Toast.LENGTH_SHORT).show();
+                    swapCursor(null);
+                }
+
+                // Refresh the cursor and update the RecyclerView
+                cursor = databaseAccess.getReports(); // Get updated data
+                swapCursor(cursor); // Notify the adapter of the new cursor
+
+            } else {
+                Toast.makeText(context, "Failed to delete report", Toast.LENGTH_SHORT).show();
+            }
+
+            databaseAccess.close();
+        });
+
     }
 
     @Override
@@ -70,6 +98,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        Button deleteButton;
         TextView phoneTextView;
         TextView messageTextView;
         TextView dateTextView;
@@ -79,6 +108,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
             phoneTextView = itemView.findViewById(R.id.detectionPhoneText);
             messageTextView = itemView.findViewById(R.id.detectionMessageText);
             dateTextView = itemView.findViewById(R.id.detectionDateText);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
 
