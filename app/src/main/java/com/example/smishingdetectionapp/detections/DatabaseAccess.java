@@ -77,28 +77,15 @@ public class DatabaseAccess {
         return dateFormat.format(date);
     }
 
-
-
-
     //Report sending function with database
-    public static boolean sendReport(int phonenumber, String message) {
-        try {
-
-            if (db != null && !db.isOpen()) {
-                db = openHelper.getWritableDatabase(); // Reopen the database
-            }
-
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(DatabaseOpenHelper.KEY_PHONENUMBER, String.valueOf(phonenumber));
-            contentValues.put(DatabaseOpenHelper.KEY_MESSAGE, message);
-            contentValues.put(DatabaseOpenHelper.KEY_DATE, getDateTime());
-
-            long result = db.insert(DatabaseOpenHelper.TABLE_REPORTS, null, contentValues);
-            return result != -1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public static boolean sendReport(String phonenumber, String message) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseOpenHelper.KEY_PHONENUMBER, phonenumber);
+        contentValues.put(DatabaseOpenHelper.KEY_MESSAGE, message);
+        contentValues.put(DatabaseOpenHelper.KEY_DATE, getDateTime());
+        long result = db.insert(DatabaseOpenHelper.TABLE_REPORTS, null, contentValues);
+        return result != -1;
     }
 
     public SimpleCursorAdapter populateDetectionList(){
