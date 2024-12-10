@@ -250,12 +250,10 @@
     <string name="community">Community</string>
 
     <!-- community post -->
-    <string name="post_title_1">First Post</string>
-    <string name="post_content_1">This is the content of the first post.</string>
-    <string name="post_author_1">author1</string>
-
-    <string name="post_title_2">Second Post</string>
-    <string name="post_content_2">This is the content of the second post.</string>
-    <string name="post_author_2">Author2</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="community_comments">Comments</string>
+    <string name="add_community_comment">Add a comment...</string>
+    <string name="submit_community_comment">Submit Comment</string>
 
 </resources>
