@@ -52,9 +52,9 @@ public class ProgressBarView extends View {
         rectF.set(0, 0, width, height);
 
         // Number of dashes
-        int dashCount = 30; // Number of dashes
+        int dashCount = 20; // Number of dashes
         float dashWidth = width / dashCount;
-        float gapWidth = dashWidth * 0.3f;
+        float gapWidth = dashWidth * 0.2f;
 
         // Total progress width based on animated progress
         float progressWidth = (animatedProgress / 100) * width;
