@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class OllamaClient {
     // Base URL for the Ollama API endpoint
-    private static final String BASE_URL = "https://618f-112-134-231-34.ngrok-free.app";
+    private static final String BASE_URL = "https://dbc6-2402-d000-8118-2a0f-5545-54ad-6a3b-8e0a.ngrok-free.app";
     // HTTP client configured with extended timeouts for API calls
     private final OkHttpClient client;
     // Database access instance for querying local storage
@@ -153,7 +153,7 @@ public class OllamaClient {
             try {
                 // Configure API request with model and system prompt
                 JSONObject jsonBody = new JSONObject();
-                jsonBody.put("model", "gemma2:2b");
+                jsonBody.put("model", "russelryan/cyberllm");
                 jsonBody.put("stream", false);
                 String systemPrompt = "You are a smishing and cybersecurity assistant, helping users understand and resolve various cyber-related issues. \" +\n" +
                         "                      \"Engage with customers to identify smishing attempts and offer advice on securing their digital safety, including protecting personal information and recognizing online threats.";
