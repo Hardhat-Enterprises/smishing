@@ -56,4 +56,7 @@
     <style name="heading">
         <item name="android:textColor">@color/blue_grotto</item>
     </style>
+    <style name="backButton">
+        <item name="drawableTint">@color/blue_grotto</item>
+    </style>
 </resources>

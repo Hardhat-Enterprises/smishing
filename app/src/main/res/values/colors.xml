@@ -15,6 +15,7 @@
  <color name="azure">#F0FFFF</color>
  <color name="red">#FFFF0000</color>
  <color name="Dark_Grey">#FF1A1A1A</color>
+
+ <color name="button">@color/black</color>
  <color name="cream">#F5EDD6</color>
- <color name="button">#FFFF0000</color>
 </resources>

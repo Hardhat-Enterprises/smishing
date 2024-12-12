@@ -139,7 +139,7 @@
                     android:drawableTop="@drawable/privacy_policy"
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
-                    android:text="@string/about_btn"
+                    android:text="@string/Dummy"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -188,7 +188,7 @@
                     android:drawableTop="@drawable/privacy_policy"
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
-                    android:text="@string/about_btn"
+                    android:text="@string/Dummy"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -202,7 +202,7 @@
                     android:drawableTop="@drawable/privacy_policy"
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
-                    android:text="@string/about_btn"
+                    android:text="@string/Dummy"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -239,7 +239,7 @@
                     android:drawableTop="@drawable/privacy_policy"
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
-                    android:text="@string/about_btn"
+                    android:text="@string/Dummy"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -253,7 +253,7 @@
                     android:drawableTop="@drawable/privacy_policy"
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
-                    android:text="@string/about_btn"
+                    android:text="@string/Dummy"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
