@@ -37,11 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
                 overridePendingTransition(0,0);
                 finish();
                 return true;
-            } else if (id == R.id.nav_settings) {
-                return true;
-            }
-
-            return false;
+            } else return id == R.id.nav_settings;
         });
 
         //Account button to switch to account page
@@ -50,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, AccountActivity.class));
             finish();
         });
-        //Filtering button to switch to smishing rules page
+        //Filtering button to switch to Smishing rules page
         Button filteringBtn = findViewById(R.id.filteringBtn);
         filteringBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, SmishingRulesActivity.class));
@@ -75,12 +71,26 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(SettingsActivity.this, AboutMeActivity.class);
             startActivity(intent);
         });
-        
+
         Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
         chatAssistantBtn.setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, ChatAssistantActivity.class);
             startActivity(intent);
         });
+
+        //Feedback Button to switch to Feedback page
+        Button feedbackBtn = findViewById(R.id.feedbackBtn);
+        feedbackBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, FeedbackActivity.class));
+            finish();
+        });
+        //Forum Button to switch to Forum page
+        Button forumBtn = findViewById(R.id.forumBtn);
+        forumBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, ForumActivity.class));
+            finish();
+        });
+
     }
 
     //Notification button to switch to notification page

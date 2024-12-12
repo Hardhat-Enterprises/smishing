@@ -40,13 +40,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/menu_settings"
+            android:textColor="@color/navy_blue"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
-            android:textColor="@color/navy_blue"/>
+            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
 
         <Button
             android:id="@+id/accountBtn"
@@ -106,7 +106,7 @@
             android:layout_width="175dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/buttons_rounded"
             android:gravity="bottom|start"
             android:text="@string/help_btn"
@@ -126,6 +126,32 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/helpBtn"/>
+
+        <Button
+            android:id="@+id/feedbackBtn"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttons_rounded"
+            android:gravity="bottom|start"
+            android:text="@string/feedback"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportBtn" />
+
+        <Button
+            android:id="@+id/forumBtn"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/buttons_rounded"
+            android:gravity="bottom|start"
+            android:text="@string/forums"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helpBtn" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -190,6 +216,37 @@
             app:layout_constraintEnd_toEndOf="@+id/notificationsBtn"
             app:layout_constraintTop_toTopOf="@+id/notificationsBtn"
             app:srcCompat="@drawable/notification_svg1" />
+
+<!--        <Button-->
+<!--            android:id="@+id/YourReportBtn"-->
+<!--            android:layout_width="175dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginStart="28dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:background="@drawable/buttons_rounded"-->
+<!--            android:text="Your Reports"-->
+<!--            android:textSize="20sp"-->
+<!--            android:gravity="bottom"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/helpBtn"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/reportBtn" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView11"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="4dp"-->
+<!--            android:layout_marginEnd="4dp"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/YourReportBtn"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/YourReportBtn"-->
+<!--            app:srcCompat="@drawable/outline_archive_24" />-->
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/aboutMeBtn"
+            app:layout_constraintTop_toTopOf="@+id/aboutMeBtn"
+            app:srcCompat="@drawable/outline_arrow_outward_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
