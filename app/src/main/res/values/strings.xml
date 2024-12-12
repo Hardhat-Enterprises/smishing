@@ -17,6 +17,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="toggle_password_visibility">Toggle password visibility</string>
     <string name="action_login_in">Login</string>
     <string name="action_sign_in">Sign In</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -57,6 +58,7 @@
     <string name="dark_modeBtn">Dark mode</string>
     <string name="delete_accountBtn">Delete account</string>
     <string name="sign_outBtn">Sign out</string>
+    <string name="session_timeoutBtn">Session Timeout</string>
 
     <string name="terms_and_conditions">
     &lt;b&gt;TERMS AND CONDITIONS&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;

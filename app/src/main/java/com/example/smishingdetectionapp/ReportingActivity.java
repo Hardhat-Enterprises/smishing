@@ -23,7 +23,7 @@ import java.util.concurrent.Executor;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.YourReportsActivity;
 
-public class ReportingActivity extends AppCompatActivity {
+public class ReportingActivity extends SharedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
