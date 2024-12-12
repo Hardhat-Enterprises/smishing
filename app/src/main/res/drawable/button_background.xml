@@ -12,9 +12,15 @@
             <corners android:radius="8dp" />
         </shape>
     </item>
-    <item>
+    <item android:state_enabled="false">
         <shape>
             <solid android:color="#B0BEC5" /> <!-- Disabled button color -->
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#1976D2" /> <!-- Default button color -->
             <corners android:radius="8dp" />
         </shape>
     </item>
