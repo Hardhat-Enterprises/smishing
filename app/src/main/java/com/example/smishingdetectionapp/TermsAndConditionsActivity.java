@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TermsAndConditionsActivity extends AppCompatActivity {
+public class TermsAndConditionsActivity extends SharedActivity {
 
     private Button backButton;
     private ScrollView termsScrollView;

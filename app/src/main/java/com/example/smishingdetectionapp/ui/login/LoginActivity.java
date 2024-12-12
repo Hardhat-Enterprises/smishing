@@ -20,16 +20,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.SharedActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
 
@@ -55,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -80,6 +84,25 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.loginButton;
         final ProgressBar loadingProgressBar = binding.progressbar;
+        final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
+
+        togglePasswordVisibility.setOnClickListener(new View.OnClickListener() {
+            private boolean isPasswordVisible = false;
+
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    passwordEditText.setInputType(
+                            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
+                } else {
+                    passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
+                }
+                passwordEditText.setSelection(passwordEditText.getText().length());
+                isPasswordVisible = !isPasswordVisible;
+            }
+        });
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -112,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
-                //Complete and destroy login activity once successful
                 finish();
             }
         });
