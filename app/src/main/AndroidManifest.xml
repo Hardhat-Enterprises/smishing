@@ -13,6 +13,8 @@
 
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -57,7 +59,9 @@
             android:exported="true" />
         <activity
             android:name=".ui.account.AccountActivity"
-            android:exported="false" />
+            android:exported="true" />
+        <activity
+            android:name=".ui.account.PopupDEL" />
         <activity
             android:name=".detections.DetectionsActivity"
             android:exported="true">
@@ -76,13 +80,14 @@
         <activity
             android:name=".SignupActivity"
             android:exported="false" />
+
         <activity android:name=".EducationActivity" />
         <activity android:name=".AboutUsActivity" />
         <activity android:name=".QuizResultActivity" />
         <activity android:name=".QuizesActivity"/>
-
-
-
+        <!-- Your Reports Activity-->
+        <activity android:name=".detections.YourReportsActivity" android:exported="false"/>
+      
         <activity
             android:name=".SettingsActivity"
             android:exported="false" /> <!-- Set LoginActivity as the launcher activity -->
@@ -99,6 +104,16 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
+        <activity
+            android:name=".FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".chat.ChatAssistantActivity"
+            android:exported="false"
+            android:label="@string/chat_assistant_page" />
     </application>
 
 </manifest>

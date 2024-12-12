@@ -16,7 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class HelpActivity extends AppCompatActivity {
+public class HelpActivity extends SharedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
