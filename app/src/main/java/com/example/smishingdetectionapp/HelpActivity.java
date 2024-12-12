@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -76,10 +77,24 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Handle the click event here
-                Toast.makeText(HelpActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HelpActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(HelpActivity.this, ActivityFeedback.class));
             }
         });
+
+        //FAQ
+//        RelativeLayout rv5 = findViewById(R.id.iv_faq);
+        ImageView faqButton = findViewById(R.id.iv_faq);
+        faqButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, FAQActivity.class);
+            startActivity(intent);
+        });
+
+//        Button faqButton = findViewById(R.id.iv_faq);
+//        faqButton.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, FAQActivity.class);
+//            startActivity(intent);
+//        });
 
 
 
