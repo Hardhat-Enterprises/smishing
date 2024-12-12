@@ -227,4 +227,12 @@
     <string name="message_body">Message Body</string>
     <string name="dummy_smishing_report">This is a dummy smishing report</string>
     <string name="click_to_read_more">Click to read more</string>
+
+    <string name="reportLog"> My Reports </string>
+    <string name="number">Number</string>
+    <string name="spammsg">Message</string>
+    <string name="reportDate">Date</string>
+    <string name="savedReportsMenu">Saved Reports</string>
+
+
 </resources>
