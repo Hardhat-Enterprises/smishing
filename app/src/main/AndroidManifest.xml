@@ -78,6 +78,8 @@
         <activity
             android:name=".SignupActivity"
             android:exported="false" />
+        <!-- Your Reports Activity-->
+        <activity android:name=".detections.YourReportsActivity" android:exported="false"/>
         <activity
             android:name=".SettingsActivity"
             android:exported="false" /> <!-- Set LoginActivity as the launcher activity -->
@@ -94,7 +96,12 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
-
+        <activity
+            android:name=".FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForumActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
