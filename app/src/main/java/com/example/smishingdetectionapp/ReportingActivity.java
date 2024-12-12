@@ -3,6 +3,8 @@ package com.example.smishingdetectionapp;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +16,15 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
+import java.util.concurrent.Executor;
+
+import com.example.smishingdetectionapp.detections.DatabaseAccess;
+import com.example.smishingdetectionapp.detections.YourReportsActivity;
 import java.util.concurrent.Executor;
 
 public class ReportingActivity extends AppCompatActivity {
@@ -40,6 +47,21 @@ public class ReportingActivity extends AppCompatActivity {
         report_back.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
+        });
+
+        ImageButton menuButton = findViewById(R.id.report_menu);
+        menuButton.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(ReportingActivity.this, menuButton);
+            popup.getMenuInflater().inflate(R.menu.report_menu, popup.getMenu());
+
+            popup.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.saved_reports) {
+                    startActivity(new Intent(ReportingActivity.this, YourReportsActivity.class));
+                    return true;
+                }
+                return false;
+            });
+            popup.show();
         });
 
         // Initialize UI elements
@@ -81,15 +103,6 @@ public class ReportingActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
             }
 
-            // Log all reports (debugging purpose)
-            try {
-                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
-                databaseAccess.open();
-                databaseAccess.logAllReports();
-                databaseAccess.close();
-            } catch (Exception e) {
-                Log.d("DatabaseAccessError", "Error occurred while accessing the database: " + e.getMessage(), e);
-            }
         });
 
         // Enable/disable the "Send Report" button based on text fields

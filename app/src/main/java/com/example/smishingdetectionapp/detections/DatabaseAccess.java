@@ -21,6 +21,34 @@ public class DatabaseAccess {
     private static DatabaseAccess instance;
     Context context;
 
+    public static boolean sendFeedback(String name, String feedback, float rating) {
+        // Here you would add your logic to send feedback to the database.
+        // This could involve inserting the feedback into a SQLite database,
+        // sending it to a remote server via an API call, etc.
+
+        // For now, we will simulate a successful insertion
+        // by always returning true.
+
+        if (name.isEmpty() || feedback.isEmpty()) {
+            return false; // Fail if name or feedback is empty
+        }
+
+        // Simulated success
+        return true;
+    }
+
+    // Simulate submission of thoughts
+    public static boolean submitThoughts(String thoughts) {
+        // Add your database logic or API call here
+        return !thoughts.isEmpty(); // Simulating success
+    }
+
+    // Simulate submission of comments
+    public static boolean submitComment(String comment) {
+        // Add your database logic or API call here
+        return !comment.isEmpty(); // Simulating success
+    }
+
     public static class DatabaseOpenHelper extends SQLiteAssetHelper {
 
         private static final String DATABASE_NAME="detectlist.db";
@@ -89,6 +117,37 @@ public class DatabaseAccess {
         return result != -1;
     }
 
+    public Cursor getAllDetections() {
+    return db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS + " ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC", null);
+}
+
+public Cursor getDetectionsForDate(String date) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS +
+        " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{"%" + date + "%"}
+    );
+}
+
+public Cursor getAllReports() {
+    return db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + " ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC", null);
+}
+
+public Cursor getReportsForDate(String date) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS +
+        " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{"%" + date + "%"}
+    );
+}
+public Cursor getReportsForSpecificDate(String specificDate) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS +
+        " WHERE DATE(" + DatabaseOpenHelper.KEY_DATE + ") = DATE(?) ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{specificDate}
+    );
+}
+
     public SimpleCursorAdapter populateDetectionList(){
 
         String[] columns = {
@@ -129,6 +188,81 @@ public class DatabaseAccess {
                 columnsStr,
                 toViewIDs
         );
+    }
+
+    // Add this method to DatabaseAccess.java
+    // Add this method to DatabaseAccess.java
+    public ReportsAdapter populateReportsList() { // same function
+        try {
+            String query = "SELECT * FROM Reports ORDER BY Date DESC";
+            Cursor cursor = db.rawQuery(query, null);
+
+            if (cursor.getCount() == 0) {
+                cursor.close();
+                return null;
+            }
+
+            return new ReportsAdapter(context, cursor);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean deleteReport(String phoneNumber, String message) {
+        try {
+            // Delete the record where Phone_Number and Message both match
+            int rowsDeleted = db.delete(
+                    DatabaseOpenHelper.TABLE_REPORTS,
+                    "Phone_Number = ? AND Message = ?", // WHERE clause
+                    new String[] { phoneNumber, message } // WHERE arguments
+            );
+            return rowsDeleted > 0; // Return true if at least one row was deleted
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Return false if an exception occurred
+        }
+    }
+
+
+    public Cursor getReports() {
+        try {
+            // Check if the database contains any rows
+            Cursor checkCursor = db.rawQuery("SELECT COUNT(*) FROM Reports", null);
+            if (checkCursor != null) {
+                checkCursor.moveToFirst(); // Move to the first row
+                int rowCount = checkCursor.getInt(0); // Get the count of rows
+                checkCursor.close(); // Close the cursor to avoid leaks
+
+                if (rowCount == 0) {
+                    // If there are no rows, return null
+                    return null;
+                }
+            }
+            // If rows exist, return the query cursor
+            return db.rawQuery("SELECT * FROM Reports ORDER BY Date DESC", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Cursor getReportsNewestFirst() { // same function
+        try {
+            return db.rawQuery("SELECT * FROM Reports ORDER BY Date DESC", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Cursor getReportsOldestFirst() {
+        try {
+            return db.rawQuery("SELECT * FROM Reports ORDER BY Date ASC", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void logAllReports() {
@@ -188,6 +322,7 @@ public class DatabaseAccess {
             return false;
         }
     }
+
 
 
 

@@ -13,10 +13,13 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
+import com.example.smishingdetectionapp.chat.ChatAssistantActivity;
+import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.concurrent.Executor;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
         nav.setSelectedItemId(R.id.nav_settings);
 
         nav.setOnItemSelectedListener(menuItem -> {
+
             int id = menuItem.getItemId();
             if (id == R.id.nav_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -56,6 +60,11 @@ public class SettingsActivity extends AppCompatActivity {
         accountBtn.setOnClickListener(v -> triggerBiometricAuthenticationWithTimeout());
 
         // Filtering button to switch to smishing rules page
+        accountBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, AccountActivity.class));
+            finish();
+        });
+        //Filtering button to switch to Smishing rules page
         Button filteringBtn = findViewById(R.id.filteringBtn);
         filteringBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, SmishingRulesActivity.class));
@@ -68,6 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(new Intent(this, ReportingActivity.class));
             finish();
         });
+        //Notification button to switch to notification page
 
         // Help button to switch to Help page
         Button helpBtn = findViewById(R.id.helpBtn);
@@ -82,8 +92,26 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(SettingsActivity.this, AboutMeActivity.class);
             startActivity(intent);
         });
-    }
 
+        Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
+        chatAssistantBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, ChatAssistantActivity.class);
+            startActivity(intent);
+        });
+
+        //Feedback Button to switch to Feedback page
+        Button feedbackBtn = findViewById(R.id.feedbackBtn);
+        feedbackBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, FeedbackActivity.class));
+            finish();
+        });
+        //Forum Button to switch to Forum page
+        Button forumBtn = findViewById(R.id.forumBtn);
+        forumBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, ForumActivity.class));
+            finish();
+        });
+    }
     // Trigger biometric authentication with timeout
     private void triggerBiometricAuthenticationWithTimeout() {
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
@@ -166,3 +194,4 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
