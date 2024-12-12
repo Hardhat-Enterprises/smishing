@@ -193,6 +193,7 @@
 
     <!-- Added Feedback Strings -->
     <string name="feedback_title">Feedback</string>
+    <string name="faq_title">FAQ</string>
     <string name="feedback_subtitle">We appreciate your feedback!</string>
     <string name="emoji_angry">Angry Emoji</string>
     <string name="emoji_sad">Sad Emoji</string>
@@ -201,7 +202,7 @@
     <string name="emoji_excited">Excited Emoji</string>
     <string name="feedback_hint">Write your feedback here...</string>
     <string name="submit">Submit</string>
-    <string name="back_button_description">Go back to the previous screen</string>
+    <string name="back_button_description">Go back</string>
 
     <!-- Terms and Conditions Content -->
     <string name="terms_and_conditions_content">

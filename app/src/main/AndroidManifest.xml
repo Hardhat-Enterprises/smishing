@@ -37,6 +37,8 @@
         <activity
             android:name=".HelpActivity"
             android:exported="false" />
+        <activity android:name=".FAQActivity"
+            android:exported="false" />
         <activity
             android:name=".ActivityFeedback"
             android:exported="true" />
