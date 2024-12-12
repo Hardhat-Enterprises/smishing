@@ -20,6 +20,34 @@ public class DatabaseAccess {
     private static DatabaseAccess instance;
     Context context;
 
+    public static boolean sendFeedback(String name, String feedback, float rating) {
+        // Here you would add your logic to send feedback to the database.
+        // This could involve inserting the feedback into a SQLite database,
+        // sending it to a remote server via an API call, etc.
+
+        // For now, we will simulate a successful insertion
+        // by always returning true.
+
+        if (name.isEmpty() || feedback.isEmpty()) {
+            return false; // Fail if name or feedback is empty
+        }
+
+        // Simulated success
+        return true;
+    }
+
+    // Simulate submission of thoughts
+    public static boolean submitThoughts(String thoughts) {
+        // Add your database logic or API call here
+        return !thoughts.isEmpty(); // Simulating success
+    }
+
+    // Simulate submission of comments
+    public static boolean submitComment(String comment) {
+        // Add your database logic or API call here
+        return !comment.isEmpty(); // Simulating success
+    }
+
     public static class DatabaseOpenHelper extends SQLiteAssetHelper {
 
         private static final String DATABASE_NAME="detectlist.db";
