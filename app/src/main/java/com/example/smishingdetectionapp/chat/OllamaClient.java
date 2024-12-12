@@ -14,16 +14,21 @@ import org.json.JSONObject;
 import java.util.concurrent.TimeUnit;
 
 public class OllamaClient {
+    // Base URL for the Ollama API endpoint
     private static final String BASE_URL = "https://618f-112-134-231-34.ngrok-free.app";
+    // HTTP client configured with extended timeouts for API calls
     private final OkHttpClient client;
+    // Database access instance for querying local storage
     private final DatabaseAccess databaseAccess;
-    
+    // Callback interface for handling asynchronous responses
     public interface ResponseCallback {
         void onResponse(String response);
     }
 
+    // Constructor for the OllamaClient class
     public OllamaClient(DatabaseAccess databaseAccess) {
         this.databaseAccess = databaseAccess;
+        // Configure the OkHttpClient with extended timeouts
         client = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
@@ -31,7 +36,8 @@ public class OllamaClient {
                 .build();
     }
 
-        private String handleDatabaseQuery(String message) {
+    // Method to handle database queries for reports and detections
+    private String handleDatabaseQuery(String message) {
         message = message.toLowerCase();
         if (message.contains("reports") || message.contains("detections")) {
             databaseAccess.open();
@@ -133,14 +139,19 @@ public class OllamaClient {
     }
 }
 
+// Main method to get responses from either database or Ollama API
+
     public void getResponse(String message, ResponseCallback callback) {
         new Thread(() -> {
+            // First try to handle as a database query
             String dbResponse = handleDatabaseQuery(message);
             if (dbResponse != null) {
                 callback.onResponse(dbResponse);
                 return;
             }
+            // If not a database query, forward to Ollama API
             try {
+                // Configure API request with model and system prompt
                 JSONObject jsonBody = new JSONObject();
                 jsonBody.put("model", "gemma2:2b");
                 jsonBody.put("stream", false);
