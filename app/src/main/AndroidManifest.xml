@@ -13,6 +13,8 @@
 
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -102,6 +104,10 @@
         <activity
             android:name=".ForumActivity"
             android:exported="false" />
+        <activity
+            android:name=".chat.ChatAssistantActivity"
+            android:exported="false"
+            android:label="@string/chat_assistant_page" />
     </application>
 
 </manifest>

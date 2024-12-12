@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.smishingdetectionapp.chat.ChatAssistantActivity;
+import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -65,6 +69,12 @@ public class SettingsActivity extends AppCompatActivity {
         Button aboutMeButton = findViewById(R.id.aboutMeBtn);
         aboutMeButton.setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, AboutMeActivity.class);
+            startActivity(intent);
+        });
+
+        Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
+        chatAssistantBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, ChatAssistantActivity.class);
             startActivity(intent);
         });
 
