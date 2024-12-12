@@ -40,13 +40,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/menu_settings"
+            android:textColor="@color/navy_blue"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
-            android:textColor="@color/navy_blue"/>
+            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
 
         <Button
             android:id="@+id/accountBtn"
@@ -106,7 +106,7 @@
             android:layout_width="175dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/buttons_rounded"
             android:gravity="bottom|start"
             android:text="@string/help_btn"
@@ -127,6 +127,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/helpBtn"/>
 
+        <Button
+            android:id="@+id/feedbackBtn"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttons_rounded"
+            android:gravity="bottom|start"
+            android:text="@string/feedback"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportBtn" />
+
+        <Button
+            android:id="@+id/forumBtn"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/buttons_rounded"
+            android:gravity="bottom|start"
+            android:text="@string/forums"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helpBtn" />
+
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="wrap_content"
@@ -146,6 +172,20 @@
             app:layout_constraintEnd_toEndOf="@+id/reportBtn"
             app:layout_constraintTop_toTopOf="@+id/reportBtn"
             app:srcCompat="@drawable/report_svg" />
+
+
+        <Button
+            android:id="@+id/chatAssistantBtn"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/buttons_rounded"
+            android:gravity="bottom|start"
+            android:text="@string/chat_assistant_btn"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportBtn" />
 
         <ImageView
             android:id="@+id/imageView7"

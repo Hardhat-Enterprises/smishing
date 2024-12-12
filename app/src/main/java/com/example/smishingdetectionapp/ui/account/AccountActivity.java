@@ -14,7 +14,7 @@ import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SettingsActivity;
 import com.example.smishingdetectionapp.UserProfileActivity;
 
-public class AccountActivity extends AppCompatActivity {
+public class AccountActivity extends SharedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

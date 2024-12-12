@@ -18,6 +18,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="toggle_password_visibility">Toggle password visibility</string>
     <string name="action_login_in">Login</string>
     <string name="action_sign_in">Sign In</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -27,6 +28,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="logo_description">App Logo</string>
+    <string name="chat_assistant_btn">Chat Assistant</string>
+    <string name="chat_assistant_page">Chat Assistant</string>
 
     <!-- Error messages -->
     <string name="no_network_message">No available network. Please check your internet connection or try again later</string>
@@ -56,6 +59,7 @@
     <string name="dark_modeBtn">Dark mode</string>
     <string name="delete_accountBtn">Delete account</string>
     <string name="sign_outBtn">Sign out</string>
+    <string name="session_timeoutBtn">Session Timeout</string>
 
     <string name="terms_and_conditions">
     &lt;b&gt;TERMS AND CONDITIONS&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
@@ -168,6 +172,7 @@
     <string name="detection_notification_header">Detection Notifications</string>
     <string name="push_notification_header">Push Notifications</string>
     <string name="system_maintenance_header">System Maintenance Notifications</string>
+
 
     <!-- NotificationHelper Strings -->
     <string name="detection_channel_name">Detection Alerts</string>
@@ -373,5 +378,44 @@
 <string name="do_not_share_sensitive_information_via_sms">Do not share sensitive information via SMS.</string>
 <string name="your_risk_advice_will_appear_here">Your risk advice will appear here
 
+    <string name="feedback">Feedback</string>
+    <string name="rate_your_experience">Rate your experience</string>
+    <string name="enter_feedback">Enter feedback</string>
+    <string name="enter_email">Enter email</string>
+    <string name="name">Name</string>
+    <string name="image_description">image_description</string>
+    <string name="submit_feedback">Submit_feedback</string>
+    <string name="forums">Forums</string>
+    <string name="community_forum">Community Forum</string>
+    <string name="create_forum_topic">Create Forum Topic</string>
+    <string name="back_button">Back</string>
+    <string name="search_bar">Search Bar</string>
+    <string name="forum_1">Forum 1</string>
+    <string name="forum_title">Forum Title</string>
+    <string name="forum_description">Forum Description</string>
+    <string name="share_your_thoughts">Share your thoughts...</string>
+    <string name="submit">Submit</string>
+    <string name="comments">Comments</string>
+    <string name="add_a_comment">Add a comment...</string>
+    <string name="submit_comment">Submit Comment</string>
+    <string name="empty_forum">There are no forums.\nStart a new one today!</string>
+    <string name="start_a_new_post">Start a new post</string>
+    <string name="submitfeedback">Submit Feedback</string>
+    <string name="community">Community</string>
 
+    <!-- community post -->
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="community_comments">Comments</string>
+    <string name="add_community_comment">Add a comment...</string>
+    <string name="submit_community_comment">Submit Comment</string>
+
+    <string name="confirm_delete_account_title">Hello there</string>
+    <string name="delete_account_warning_message">
+    You have selected delete account. Are you sure about this?
+    If you choose to delete your account, we will disable it for 30 days.
+    If you choose to reactivate your account, login within 30 days.
+    </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

@@ -135,8 +135,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Profile Button -->
-    <ImageButton
+<ImageButton
         android:id="@+id/profileBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -148,6 +147,20 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Session Timeout Button from master -->
+    <Button
+        android:id="@+id/buttonSessionTimeout"
+        android:layout_width="175dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/buttons_rounded"
+        android:gravity="bottom|start"
+        android:text="@string/session_timeoutBtn"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dark_modeBtn" />
 
 
 

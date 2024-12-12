@@ -20,11 +20,39 @@ public class DatabaseAccess {
     private static DatabaseAccess instance;
     Context context;
 
+    public static boolean sendFeedback(String name, String feedback, float rating) {
+        // Here you would add your logic to send feedback to the database.
+        // This could involve inserting the feedback into a SQLite database,
+        // sending it to a remote server via an API call, etc.
+
+        // For now, we will simulate a successful insertion
+        // by always returning true.
+
+        if (name.isEmpty() || feedback.isEmpty()) {
+            return false; // Fail if name or feedback is empty
+        }
+
+        // Simulated success
+        return true;
+    }
+
+    // Simulate submission of thoughts
+    public static boolean submitThoughts(String thoughts) {
+        // Add your database logic or API call here
+        return !thoughts.isEmpty(); // Simulating success
+    }
+
+    // Simulate submission of comments
+    public static boolean submitComment(String comment) {
+        // Add your database logic or API call here
+        return !comment.isEmpty(); // Simulating success
+    }
+
     public static class DatabaseOpenHelper extends SQLiteAssetHelper {
 
         private static final String DATABASE_NAME="detectlist.db";
         private static final int DATABASE_VERSION=1;
-        private static final String TABLE_DETECTIONS = "Detections";
+        private static final String TABLE_DETECTIONS = "Det ctions";
         private static final String TABLE_REPORTS = "Reports";
         public static final String KEY_ROWID = "_id";
         public static final String KEY_PHONENUMBER="Phone_Number";
@@ -87,6 +115,37 @@ public class DatabaseAccess {
         long result = db.insert(DatabaseOpenHelper.TABLE_REPORTS, null, contentValues);
         return result != -1;
     }
+
+    public Cursor getAllDetections() {
+    return db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS + " ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC", null);
+}
+
+public Cursor getDetectionsForDate(String date) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS + 
+        " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{"%" + date + "%"}
+    );
+}
+
+public Cursor getAllReports() {
+    return db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + " ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC", null);
+}
+
+public Cursor getReportsForDate(String date) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + 
+        " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{"%" + date + "%"}
+    );
+}
+public Cursor getReportsForSpecificDate(String specificDate) {
+    return db.rawQuery(
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + 
+        " WHERE DATE(" + DatabaseOpenHelper.KEY_DATE + ") = DATE(?) ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
+        new String[]{specificDate}
+    );
+}
 
     public SimpleCursorAdapter populateDetectionList(){
 
