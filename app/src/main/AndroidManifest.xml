@@ -57,7 +57,9 @@
             android:exported="true" />
         <activity
             android:name=".ui.account.AccountActivity"
-            android:exported="false" />
+            android:exported="true" />
+        <activity
+            android:name=".ui.account.PopupDEL" />
         <activity
             android:name=".detections.DetectionsActivity"
             android:exported="true">
