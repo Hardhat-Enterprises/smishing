@@ -59,11 +59,6 @@ public class SettingsActivity extends AppCompatActivity {
         Button accountBtn = findViewById(R.id.accountBtn);
         accountBtn.setOnClickListener(v -> triggerBiometricAuthenticationWithTimeout());
 
-        // Filtering button to switch to smishing rules page
-        accountBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, AccountActivity.class));
-            finish();
-        });
         //Filtering button to switch to Smishing rules page
         Button filteringBtn = findViewById(R.id.filteringBtn);
         filteringBtn.setOnClickListener(v -> {
