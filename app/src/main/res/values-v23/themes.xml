@@ -21,4 +21,7 @@
         <item name="drawableTint">@color/black</item>
         <item name="cornerRadius">10dp</item>
     </style>
+    <style name="backButton">
+        <item name="drawableTint">@color/black</item>
+    </style>
 </resources>
