@@ -154,7 +154,7 @@
     <string name="new_icon">info</string>
     <string name="time_icon">info</string>
 
-    <!--Notification Page Strings-->
+    <!-- Notification Page Strings -->
     <string name="notification_header">Notifications</string>
     <string name="news_notification_title">News Updates</string>
     <string name="smishing_detection_notification_title">Smishing Detections</string>
@@ -167,7 +167,6 @@
     <string name="detection_notification_header">Detection Notifications</string>
     <string name="push_notification_header">Push Notifications</string>
     <string name="system_maintenance_header">System Maintenance Notifications</string>
-
 
     <!-- NotificationHelper Strings -->
     <string name="detection_channel_name">Detection Alerts</string>
@@ -192,18 +191,18 @@
     <string name="what_is_the_app_for">What is the app for?</string>
     <string name="how_to_use_the_app">how_to_use_the_app?</string>
 
-    <!-- Settings Activity Title EXAMPLE-->
+    <!-- Settings Activity Title EXAMPLE -->
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles EXAMPLE-->
+    <!-- Preference Titles EXAMPLE -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences EXAMPLE-->
+    <!-- Messages Preferences EXAMPLE -->
     <string name="signature_title">Your signature</string>
     <string name="reply_title">Default reply action</string>
 
-    <!-- Sync Preferences EXAMPLE-->
+    <!-- Sync Preferences EXAMPLE -->
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
@@ -211,6 +210,8 @@
     <string name="title_activity_signup">SignupActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 
     <!-- Added strings -->
     <string name="terms_and_conditions_content">Your terms and conditions content here.</string>
@@ -227,7 +228,6 @@
     <string name="dummy_smishing_report">This is a dummy smishing report</string>
     <string name="click_to_read_more">Click to read more</string>
 
-    <!-- Report Log -->
     <string name="reportLog"> My Reports </string>
     <string name="number">Number</string>
     <string name="spammsg">Message</string>
