@@ -95,6 +95,10 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
+
+        <activity android:name=".TutorialPage1" />
+        <activity android:name=".TutorialPage2" />
     </application>
+
 
 </manifest>
