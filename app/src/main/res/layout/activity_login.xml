@@ -20,11 +20,11 @@
 
         <TextView
             android:id="@+id/loginTitle"
+            style="@style/heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/action_login_in"
-            android:textColor="@color/navy_blue"
             android:textSize="42sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/logo"
@@ -74,25 +74,24 @@
 
         <Button
             android:id="@+id/forgotPasswordButton"
+            style="@style/heading"
             android:layout_width="165dp"
             android:layout_height="44dp"
             android:layout_marginStart="180dp"
             android:background="?android:attr/selectableItemBackground"
             android:text="@string/forgot_password"
-            android:textColor="@color/navy_blue"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/password"
             app:layout_constraintTop_toBottomOf="@id/password" />
 
         <Button
             android:id="@+id/loginButton"
+            style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:backgroundTint="@color/baby_blue"
             android:text="@string/action_login_in"
             android:textColor="@color/navy_blue"
-            android:background="@drawable/buttons_rounded"
             app:layout_constraintEnd_toEndOf="@id/password"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/password"
@@ -111,13 +110,12 @@
 
         <Button
             android:id="@+id/registerButton"
+            style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
-            android:backgroundTint="@color/baby_blue"
             android:text="@string/action_sign_up"
             android:textColor="@color/navy_blue"
-            android:background="@drawable/buttons_rounded"
             app:layout_constraintEnd_toEndOf="@id/loginButton"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/loginButton"

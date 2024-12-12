@@ -53,4 +53,7 @@
     <style name="heading">
         <item name="android:textColor">@color/navy_blue</item>
     </style>
+    <style name="backButton">
+        <item name="drawableTint">@color/black</item>
+    </style>
 </resources>

@@ -16,5 +16,5 @@
  <color name="red">#FFFF0000</color>
  <color name="Dark_Grey">#FF1A1A1A</color>
 
- <color name="button">#FFFF0000</color>
+ <color name="button">@color/black</color>
 </resources>
