@@ -28,7 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
-public class NewsActivity extends AppCompatActivity implements SelectListener{
+public class NewsActivity extends SharedActivity implements SelectListener{
     RecyclerView recyclerView;
     NewsAdapter adapter;
     NewsRequestManager manager;

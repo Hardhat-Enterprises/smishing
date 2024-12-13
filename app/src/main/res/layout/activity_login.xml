@@ -78,11 +78,24 @@
             android:autofillHints="password"
             app:layout_constraintTop_toBottomOf="@id/passwordLabel"
             app:layout_constraintStart_toStartOf="@id/passwordLabel"
-            app:layout_constraintEnd_toEndOf="@id/email" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/togglePasswordVisibility" />
+
+        <ImageButton
+            android:id="@+id/togglePasswordVisibility"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/toggle_password_visibility"
+            android:src="@drawable/ic_passwords_visibility"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/password" />
 
         <Button
             android:id="@+id/forgotPasswordButton"
-            android:layout_width="165dp"
+            android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:layout_marginStart="180dp"
             android:background="?android:attr/selectableItemBackground"
@@ -131,6 +144,7 @@
             app:layout_constraintStart_toStartOf="@id/loginButton"
             app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
+
         <ProgressBar
             android:id="@+id/progressbar"
             style="?android:attr/progressBarStyle"
@@ -139,5 +153,21 @@
             android:layout_centerInParent="true"
             android:visibility="gone"
             tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/remember_me_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="0dp"
+            android:text="Remember Me"
+            android:textColor="@color/navy_blue"
+            android:textSize="14sp"
+            android:checked="false"
+            app:layout_constraintTop_toTopOf="@id/forgotPasswordButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

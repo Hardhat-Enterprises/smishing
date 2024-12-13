@@ -3,8 +3,18 @@ package com.example.smishingdetectionapp.ui.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -20,6 +30,7 @@ import com.example.smishingdetectionapp.DataBase.DBresult;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.SharedActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -82,6 +93,25 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressBar loadingProgressBar = binding.progressbar;
         final SignInButton googleBtn = binding.googleBtn;
         final Button registerButton = binding.registerButton;
+        final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
+
+        togglePasswordVisibility.setOnClickListener(new View.OnClickListener() {
+            private boolean isPasswordVisible = false;
+
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    passwordEditText.setInputType(
+                            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
+                } else {
+                    passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
+                }
+                passwordEditText.setSelection(passwordEditText.getText().length());
+                isPasswordVisible = !isPasswordVisible;
+            }
+        });
 
         // Google Sign-In setup
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -116,18 +146,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Observe LoginResult
-        loginViewModel.getLoginResult().observe(this, loginResult -> {
-            if (loginResult == null) return;
-            loadingProgressBar.setVisibility(View.GONE);
-            if (loginResult.getError() != null) {
-                showLoginFailed(loginResult.getError());
+        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
+            @Override
+            public void onChanged(@Nullable LoginResult loginResult) {
+                if (loginResult == null) {
+                    return;
+                }
+                loadingProgressBar.setVisibility(View.GONE);
+                if (loginResult.getError() != null) {
+                    showLoginFailed(loginResult.getError());
+                }
+                if (loginResult.getSuccess() != null) {
+                    updateUiWithUser(loginResult.getSuccess());
+                }
+                setResult(Activity.RESULT_OK);
+
+                finish();
             }
-            if (loginResult.getSuccess() != null) {
-                updateUiWithUser(loginResult.getSuccess());
-            }
-            setResult(Activity.RESULT_OK);
-            finish();
         });
 
         // Handle login button click

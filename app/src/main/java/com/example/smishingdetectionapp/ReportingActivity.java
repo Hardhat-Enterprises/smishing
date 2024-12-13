@@ -27,7 +27,7 @@ import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.YourReportsActivity;
 import java.util.concurrent.Executor;
 
-public class ReportingActivity extends AppCompatActivity {
+public class ReportingActivity extends SharedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
