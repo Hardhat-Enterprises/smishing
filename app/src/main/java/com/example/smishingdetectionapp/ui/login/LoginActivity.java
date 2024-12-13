@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.email;
+        final EditText usernameEditText = binding.emailField;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.loginButton;
         final ProgressBar loadingProgressBar = binding.progressbar;
@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleLoginDialog() {
-        final EditText usernameEditText = binding.email;
+        final EditText usernameEditText = binding.emailField;
         final EditText passwordEditText = binding.password;
 
         HashMap<String, String> map = new HashMap<>();
