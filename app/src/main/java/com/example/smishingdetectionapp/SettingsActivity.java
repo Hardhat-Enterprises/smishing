@@ -89,6 +89,14 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
+
+        Button aboutUsBtn = findViewById(R.id.aboutUsBtn);
+        aboutUsBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, AboutUsActivity.class);
+            startActivity(intent);
+        });
+
         Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
         chatAssistantBtn.setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, ChatAssistantActivity.class);
