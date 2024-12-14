@@ -44,6 +44,9 @@
             android:name=".HelpActivity"
             android:exported="false" />
         <activity
+            android:name=".ActivityFeedback"
+            android:exported="true" />
+        <activity
             android:name=".AboutMeActivity"
             android:exported="false" />
         <activity
@@ -63,9 +66,21 @@
             android:exported="true" />
         <activity
             android:name=".ui.account.AccountActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.account.PopupDEL" />
+
+    <!-- Existing activities -->
+    <activity
+        android:name=".AccountActivity"
+        android:exported="false" />
+    <activity
+        android:name=".RiskProfileActivity"
+        android:exported="false" />
+
+    <!-- New activity from master -->
+    <activity
+        android:name=".ui.account.PopupDEL"
+        android:exported="true" />
+
+
         <activity
             android:name=".detections.DetectionsActivity"
             android:exported="true">
@@ -75,6 +90,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".NewsActivity"
             android:exported="false" />
@@ -94,7 +110,12 @@
       
         <activity
             android:name=".SettingsActivity"
-            android:exported="false" /> <!-- Set LoginActivity as the launcher activity -->
+            android:exported="false" />
+
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
@@ -108,16 +129,18 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
-        <activity
-            android:name=".FeedbackActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ForumActivity"
-            android:exported="false" />
-        <activity
-            android:name=".chat.ChatAssistantActivity"
-            android:exported="false"
-            android:label="@string/chat_assistant_page" />
+    <activity
+        android:name=".FeedbackActivity"
+        android:exported="false" />
+    <activity
+        android:name=".ForumActivity"
+        android:exported="false" />
+    <activity
+        android:name=".chat.ChatAssistantActivity"
+        android:exported="false"
+        android:label="@string/chat_assistant_page" />
+
+
     </application>
 
 </manifest>
