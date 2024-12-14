@@ -2,17 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Features -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
-
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -25,80 +28,77 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
         tools:targetApi="31">
-        <activity
-            android:name=".TermsAndConditionsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SmsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SMSMessageDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HelpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityFeedback"
-            android:exported="true" />
-        <activity
-            android:name=".AboutMeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NotificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DebugActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SmishingRulesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.Register.RegisterMain"
-            android:exported="true" />
-        <activity
-            android:name=".ui.Register.EmailVerify"
-            android:exported="true" />
-        <activity
-            android:name=".ui.account.AccountActivity"
-            android:exported="false" />
-        <activity
-            android:name=".detections.DetectionsActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".NewsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ReportingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false" /> <!-- Set LoginActivity as the launcher activity -->
+        <!-- Activities -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- MainActivity is not the launcher anymore -->
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
 
-        <activity android:name=".TutorialPage1" />
-        <activity android:name=".TutorialPage2" />
+        <!-- Help & Support -->
+        <activity android:name=".HelpActivity" android:exported="false" />
+        <activity android:name=".FAQActivity" android:exported="false" />
+        <activity android:name=".ActivityFeedback" android:exported="true" />
+        <activity android:name=".ForumActivity" android:exported="false" />
+        <activity
+            android:name=".chat.ChatAssistantActivity"
+            android:exported="false"
+            android:label="@string/chat_assistant_page" />
+
+        <!-- Settings and Account -->
+        <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity android:name=".ui.account.AccountActivity" android:exported="false" />
+        <activity android:name=".ui.account.PopupDEL" android:exported="true" />
+        <activity android:name=".UserProfileActivity" android:exported="false" />
+
+        <!-- Reporting -->
+        <activity android:name=".ReportingActivity" android:exported="false" />
+        <activity android:name=".detections.YourReportsActivity" android:exported="false" />
+
+        <!-- Educational -->
+        <activity android:name=".EducationActivity" android:exported="false" />
+        <activity android:name=".AboutUsActivity" android:exported="false" />
+        <activity android:name=".QuizResultActivity" android:exported="false" />
+        <activity android:name=".QuizesActivity" android:exported="false" />
+
+        <!-- Risk and Debug -->
+        <activity android:name=".RiskProfileActivity" android:exported="false" />
+        <activity android:name=".DebugActivity" android:exported="false" />
+
+        <!-- Terms and Rules -->
+        <activity android:name=".TermsAndConditionsActivity" android:exported="false" />
+        <activity android:name=".SmishingRulesActivity" android:exported="false" />
+
+        <!-- Detections -->
+        <activity
+            android:name=".detections.DetectionsActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Registration -->
+        <activity android:name=".ui.Register.RegisterMain" android:exported="true" />
+        <activity android:name=".ui.Register.EmailVerify" android:exported="true" />
+
+        <!-- SMS and Details -->
+        <activity android:name=".SmsActivity" android:exported="false" />
+        <activity android:name=".SMSMessageDetailActivity" android:exported="false" />
+
+        <!-- Tutorials -->
+        <activity android:name=".TutorialPage1" android:exported="false" />
+        <activity android:name=".TutorialPage2" android:exported="false" />
+
     </application>
-
-
 </manifest>

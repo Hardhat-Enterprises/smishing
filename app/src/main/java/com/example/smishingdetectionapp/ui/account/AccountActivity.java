@@ -1,79 +1,194 @@
-package com.example.smishingdetectionapp.ui.account;
+package com.example.smishingdetectionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
 
-import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.SettingsActivity;
+import com.example.smishingdetectionapp.news.NewsActivity;
+import com.example.smishingdetectionapp.ui.account.AccountActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class AccountActivity extends AppCompatActivity {
+import java.util.concurrent.Executor;
+
+public class SettingsActivity extends AppCompatActivity {
+
+    private BiometricPrompt biometricPrompt;
+    private boolean isAuthenticated = false;
+    private static final int TIMEOUT_MILLIS = 30000; // 30 seconds timeout
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_account);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        setContentView(R.layout.activity_settings);
+
+        // Bottom Navigation setup
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        nav.setSelectedItemId(R.id.nav_settings);
+
+        nav.setOnItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (id == R.id.nav_home) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (id == R.id.nav_settings) {
+                return true;
+            }
+            return false;
         });
 
-        //Back button to go back to settings page
-        ImageButton account_back = findViewById(R.id.account_back);
-        account_back.setOnClickListener(v -> {
-            startActivity(new Intent(this, SettingsActivity.class));
+        // Account button with biometric authentication
+        Button accountBtn = findViewById(R.id.accountBtn);
+        accountBtn.setOnClickListener(v -> triggerBiometricAuthenticationWithTimeout());
+
+        // Filtering button to switch to Smishing rules page
+        Button filteringBtn = findViewById(R.id.filteringBtn);
+        filteringBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, SmishingRulesActivity.class));
             finish();
         });
 
-        //Opens the password change window
-        Button password_changeBtn = findViewById(R.id.passwordBtn);
-        password_changeBtn.setOnClickListener(v -> {
-            PopupPW bottomSheet = new PopupPW();
-            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        // Report button to switch to Reporting page
+        Button reportBtn = findViewById(R.id.reportBtn);
+        reportBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, ReportingActivity.class));
+            finish();
         });
 
-        //Opens the email change window
-        Button email_changeBtn = findViewById(R.id.emailBtn);
-        email_changeBtn.setOnClickListener(v -> {
-            PopupEmail bottomSheet = new PopupEmail();
-            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        // Notification button to switch to Notification page
+        Button notificationsButton = findViewById(R.id.notificationsBtn);
+        notificationsButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, NotificationActivity.class));
+            finish();
         });
 
-        //Opens the sign out window
-        Button sign_outBtn = findViewById(R.id.buttonSignOut);
-        sign_outBtn.setOnClickListener(v -> {
-            PopupSO bottomSheet = new PopupSO();
-            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        // Help button to switch to Help page
+        Button helpBtn = findViewById(R.id.helpBtn);
+        helpBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, HelpActivity.class));
+            finish();
         });
 
-        //Opens the delete account window
-        Button delete_accBtn = findViewById(R.id.account_delete);
-        delete_accBtn.setOnClickListener(v -> {
-            PopupDEL bottomSheet = new PopupDEL();
-            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        // About Me button to switch to AboutMeActivity
+        Button aboutMeButton = findViewById(R.id.aboutMeBtn);
+        aboutMeButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, AboutMeActivity.class));
         });
 
-        //Opens the phone number change window
-        Button change_phone_numberBtn = findViewById(R.id.phoneBtn);
-        change_phone_numberBtn.setOnClickListener(v -> {
-            PopupPN bottomSheet = new PopupPN();
-            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        // About Us button to switch to AboutUsActivity
+        Button aboutUsBtn = findViewById(R.id.aboutUsBtn);
+        aboutUsBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, AboutUsActivity.class));
         });
 
-        //EXAMPLE: Used to change the colour of the SVG icons.
-        /*ImageView imageView = findViewById(R.id.imageView4);
-        imageView.setColorFilter(getColor(android.R.color.white));*/
+        // Chat Assistant button to switch to ChatAssistantActivity
+        Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
+        chatAssistantBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, ChatAssistantActivity.class));
+        });
 
+        // Feedback button to switch to FeedbackActivity
+        Button feedbackBtn = findViewById(R.id.feedbackBtn);
+        feedbackBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, FeedbackActivity.class));
+            finish();
+        });
+
+        // Forum button to switch to ForumActivity
+        Button forumBtn = findViewById(R.id.forumBtn);
+        forumBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, ForumActivity.class));
+            finish();
+        });
     }
 
+    // Trigger biometric authentication with timeout
+    private void triggerBiometricAuthenticationWithTimeout() {
+        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Authentication Required")
+                .setDescription("Please authenticate to access your account settings")
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG |
+                        BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+                .build();
+
+        // Start the authentication process
+        biometricPrompt = getPrompt();
+        biometricPrompt.authenticate(promptInfo);
+
+        // Start the timeout timer
+        startTimeoutTimer();
+    }
+
+    // BiometricPrompt setup
+    private BiometricPrompt getPrompt() {
+        Executor executor = ContextCompat.getMainExecutor(this);
+        BiometricPrompt.AuthenticationCallback callback = new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                notifyUser("Authentication Error: " + errString);
+                redirectToSettingsActivity();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                notifyUser("Authentication Succeeded!");
+                isAuthenticated = true; // Mark as authenticated
+                openAccountActivity(); // Proceed to AccountActivity
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                notifyUser("Authentication Failed");
+            }
+        };
+
+        return new BiometricPrompt(this, executor, callback);
+    }
+
+    // Start a timeout timer for authentication
+    private void startTimeoutTimer() {
+        new Handler().postDelayed(() -> {
+            if (!isAuthenticated) { // If authentication hasn't occurred within the timeout
+                notifyUser("Authentication timed out. Redirecting to Settings...");
+                biometricPrompt.cancelAuthentication(); // Cancel the ongoing authentication
+                redirectToSettingsActivity(); // Redirect to SettingsActivity on timeout
+            }
+        }, TIMEOUT_MILLIS);
+    }
+
+    // Redirect to SettingsActivity
+    private void redirectToSettingsActivity() {
+        Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+        startActivity(intent);
+        finish(); // Ensure the current activity is closed
+    }
+
+    // Open AccountActivity
+    private void openAccountActivity() {
+        Intent intent = new Intent(SettingsActivity.this, AccountActivity.class);
+        startActivity(intent);
+        finish(); // Close SettingsActivity if AccountActivity is opened
+    }
+
+    // Show a toast message
+    private void notifyUser(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }
+
