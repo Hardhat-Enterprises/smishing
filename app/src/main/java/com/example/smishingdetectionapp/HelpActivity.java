@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ public class HelpActivity extends SharedActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_help_updated);
+
+        // Handle system window insets for immersive UI
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -44,7 +47,6 @@ public class HelpActivity extends SharedActivity {
         // Contact Us
         RelativeLayout rv2 = findViewById(R.id.rv_2);
         rv2.setOnClickListener(v -> {
-            // Handle the click event here
             Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
             phoneIntent.setData(Uri.parse("tel:+1234567890")); // Replace with your phone number
             startActivity(phoneIntent);
@@ -53,7 +55,6 @@ public class HelpActivity extends SharedActivity {
         // Mail Us
         RelativeLayout rv1 = findViewById(R.id.rv_1);
         rv1.setOnClickListener(v -> {
-            // Handle the click event here
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:support@example.com")); // Replace with your email
             startActivity(emailIntent);
@@ -62,17 +63,23 @@ public class HelpActivity extends SharedActivity {
         // FAQ
         RelativeLayout rv3 = findViewById(R.id.rv_3);
         rv3.setOnClickListener(v -> {
-            // Handle the click event here
-            Toast.makeText(HelpActivity.this, "Faq", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, FAQActivity.class); // Navigate to FAQActivity
+            startActivity(intent);
         });
 
         // Feedback
         RelativeLayout rv4 = findViewById(R.id.rv_4);
-rv4.setOnClickListener(v -> {
-    // Handle the click event here
-    Toast.makeText(HelpActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
-    startActivity(new Intent(HelpActivity.this, ActivityFeedback.class));
-});
+        rv4.setOnClickListener(v -> {
+            Intent feedbackIntent = new Intent(this, ActivityFeedback.class);
+            startActivity(feedbackIntent);
+        });
+
+        // FAQ Button
+        ImageView faqButton = findViewById(R.id.iv_faq);
+        faqButton.setOnClickListener(v -> {
+            Intent faqIntent = new Intent(this, FAQActivity.class);
+            startActivity(faqIntent);
+        });
     }
 
     // OnTouch method to handle swipe gestures

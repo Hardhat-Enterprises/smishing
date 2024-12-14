@@ -28,8 +28,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">Login failed</string>
     <string name="logo_description">App Logo</string>
-    <string name="chat_assistant_btn">Chat Assistant</string>
-    <string name="chat_assistant_page">Chat Assistant</string>
 
     <!-- Error Messages -->
     <string name="no_network_message">No available network. Please check your internet connection or try again later</string>
@@ -43,16 +41,15 @@
     <string name="account_page">Account</string>
     <string name="report_page">Report Smishing</string>
     <string name="filtering_page">Smishing Rules</string>
-    <string name="debug">Debug</string>
     <string name="help_page">Help</string>
     <string name="sms_page">SMS Messages</string>
 
-    <!-- Main Dashboard Strings -->
+    <!-- Dashboard Strings -->
     <string name="detectionsBtn">Detections</string>
     <string name="new_detectionsTxt">New detections</string>
     <string name="total_detectionsTxt">Total detections</string>
 
-    <!-- Account Settings Page Buttons -->
+    <!-- Account Settings -->
     <string name="password_changeBtn">Password</string>
     <string name="phone_changeBtn">Phone</string>
     <string name="email_changeBtn">Email</string>
@@ -76,46 +73,41 @@
         ]]>
     </string>
 
-    <!-- Password Change Window Strings -->
+    <!-- Password Change -->
     <string name="change_password_page">Change Password</string>
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm Password</string>
 
-    <!-- Email Change Window Strings -->
+    <!-- Email Change -->
     <string name="change_email_page">Change Email</string>
     <string name="new_email">New Email</string>
     <string name="confirm_new_email">Confirm Email</string>
 
-    <!-- Report Page Strings -->
+    <!-- Report -->
     <string name="phone_number">Phone Number</string>
     <string name="report_message_prompt">Smishing message</string>
     <string name="action_report">Send report</string>
 
-    <!-- Settings Page Buttons -->
+    <!-- Settings -->
     <string name="account_btn">Account</string>
     <string name="notifications_btn">Notifications</string>
     <string name="filtering_btn">Filtering</string>
     <string name="report_btn">Report</string>
     <string name="help_btn">Help</string>
     <string name="about_btn">Privacy Policy</string>
-    <string name="home_button_desc">Home</string>
 
-    <!-- Feedback Section -->
+    <!-- Feedback -->
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subtitle">We appreciate your feedback!</string>
     <string name="feedback_hint">Write your feedback here...</string>
     <string name="submit">Submit</string>
 
-    <!-- Notification Page Strings -->
+    <!-- Notifications -->
     <string name="notification_header">Notifications</string>
     <string name="news_notification_title">News Updates</string>
     <string name="smishing_detection_notification_title">Smishing Detections</string>
     <string name="spam_detection_notification_title">Spam Detections</string>
-    <string name="password_security_check">Password Security Checks</string>
-    <string name="backup_reminder">Backup Reminders</string>
-    <string name="update_notifications">Update Notifications</string>
-    <string name="incident_reports">Incident Reports</string>
 
     <!-- Smishing Detection -->
     <string name="dummy_smishing_report">This SMS message contains some text that might indicate it is a scam! Please beware!</string>
@@ -125,4 +117,12 @@
     <string name="spammsg">Message</string>
     <string name="reportDate">Date</string>
     <string name="savedReportsMenu">Saved Reports</string>
+
+    <!-- Added Feedback Strings -->
+    <string name="emoji_angry">Angry Emoji</string>
+    <string name="emoji_sad">Sad Emoji</string>
+    <string name="emoji_neutral">Neutral Emoji</string>
+    <string name="emoji_happy">Happy Emoji</string>
+    <string name="emoji_excited">Excited Emoji</string>
 </resources>
+

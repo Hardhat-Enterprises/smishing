@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- <color name="purple_700">#FF3700B3</color>
- <color name="teal_200">#FF03DAC5</color>
- <color name="teal_700">#FF018786</color>
- <color name="black">#FF000000</color>
- <color name="white">#FFFFFFFF</color>
+    <!-- Default Colors -->
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 
-<resources>
     <!-- New Colors -->
     <color name="navy_blue">#FF05445E</color>
     <color name="blue_grotto">#FF189AB4</color>
@@ -15,11 +15,12 @@
     <color name="grey">#949494</color>
     <color name="azure">#F0FFFF</color>
     <color name="red">#FFFF0000</color>
-    <color name="Dark_Grey">#FF1A1A1A</color>
+    <color name="dark_grey">#FF1A1A1A</color>
     <color name="button">@color/black</color>
     <color name="cream">#F5EDD6</color>
+    <color name="light_gray">#F5F5F5</color>
 
-    <!-- Imalka Colors -->
+    <!-- Additional Custom Colors -->
     <color name="yellow">#8B8000</color>
     <color name="green">#4CAF50</color>
     <color name="progress_background">#E0E0E0</color>
