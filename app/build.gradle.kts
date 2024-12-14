@@ -95,6 +95,8 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.activity)
     implementation(files("libs/sqliteassethelper-2.0.1.jar"))
+    implementation(libs.biometric)
+    implementation(libs.play.services.tasks)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -110,6 +112,11 @@ dependencies {
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))
+    implementation("io.noties.markwon:core:4.6.2")
+    implementation("io.noties.markwon:html:4.6.2")
+    implementation("io.noties.markwon:image:4.6.2")
+    implementation("com.google.android.gms:play-services-auth:20.0.0")
+
 
 }
 
