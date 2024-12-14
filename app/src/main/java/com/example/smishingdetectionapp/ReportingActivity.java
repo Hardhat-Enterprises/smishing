@@ -2,19 +2,22 @@ package com.example.smishingdetectionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.Toast;
-import android.text.Editable;
-import android.text.TextWatcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.YourReportsActivity;
 
@@ -58,7 +61,7 @@ public class ReportingActivity extends AppCompatActivity {
         });
 
         // Initialize UI elements
-        final EditText phonenumber = findViewById(R.id.PhoneNumber);
+        final EditText phoneNumber = findViewById(R.id.PhoneNumber);
         final EditText message = findViewById(R.id.reportmessage);
         final Button sendReportButton = findViewById(R.id.reportButton);
 
@@ -67,32 +70,42 @@ public class ReportingActivity extends AppCompatActivity {
 
         // Action for the "Send Report" button
         sendReportButton.setOnClickListener(v -> {
-            String rawPhoneNumber = phonenumber.getText().toString();
-            String rawMessage = message.getText().toString();
+            try {
+                // Retrieve and sanitize user input
+                String rawPhoneNumber = phoneNumber.getText().toString();
+                String rawMessage = message.getText().toString();
 
-            // Validate inputs
-            if (!isValidPhoneNumber(rawPhoneNumber)) {
-                Toast.makeText(getApplicationContext(), "Invalid phone number!", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if (!isValidMessage(rawMessage)) {
-                Toast.makeText(getApplicationContext(), "Invalid message content!", Toast.LENGTH_LONG).show();
-                return;
-            }
+                // Validate inputs
+                if (!isValidPhoneNumber(rawPhoneNumber)) {
+                    Toast.makeText(getApplicationContext(), "Invalid phone number!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (!isValidMessage(rawMessage)) {
+                    Toast.makeText(getApplicationContext(), "Invalid message content!", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-            String sanitizedPhoneNumber = sanitizeInput(rawPhoneNumber);
-            String sanitizedMessage = sanitizeInput(rawMessage);
+                String sanitizedPhoneNumber = sanitizeInput(rawPhoneNumber);
+                String sanitizedMessage = sanitizeInput(rawMessage);
 
-            // Insert into the database
-            boolean isInserted = DatabaseAccess.sendReport(sanitizedPhoneNumber, sanitizedMessage);
+                // Insert into the database
+                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+                databaseAccess.open();
 
-            // Handle result
-            if (isInserted) {
-                phonenumber.setText(null);
-                message.setText(null);
-                Toast.makeText(getApplicationContext(), "Report sent!", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
+                boolean isInserted = databaseAccess.sendReport(Integer.parseInt(sanitizedPhoneNumber), sanitizedMessage);
+                databaseAccess.close();
+
+                // Handle result
+                if (isInserted) {
+                    phoneNumber.setText(null);
+                    message.setText(null);
+                    Toast.makeText(getApplicationContext(), "Report sent!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Log.e("ReportingActivity", "Error sending report: " + e.getMessage(), e);
+                Toast.makeText(this, "An error occurred while sending the report!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -103,7 +116,7 @@ public class ReportingActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String userPhone = phonenumber.getText().toString();
+                String userPhone = phoneNumber.getText().toString();
                 String userMessage = message.getText().toString();
                 sendReportButton.setEnabled(!userPhone.isEmpty() && !userMessage.isEmpty());
             }
@@ -111,7 +124,7 @@ public class ReportingActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         };
-        phonenumber.addTextChangedListener(afterTextChangedListener);
+        phoneNumber.addTextChangedListener(afterTextChangedListener);
         message.addTextChangedListener(afterTextChangedListener);
 
         // Set OnTouchListener to detect swipe gestures
@@ -128,8 +141,7 @@ public class ReportingActivity extends AppCompatActivity {
                     if (Math.abs(deltaY) > SWIPE_THRESHOLD) {
                         if (deltaY > 0) {
                             // Swipe down detected
-                            Intent intent = new Intent(ReportingActivity.this, SettingsActivity.class);
-                            startActivity(intent);
+                            startActivity(new Intent(ReportingActivity.this, SettingsActivity.class));
                             finish(); // Close the current activity
                         }
                     }
@@ -150,10 +162,7 @@ public class ReportingActivity extends AppCompatActivity {
 
     // Helper function to validate message content
     private boolean isValidMessage(String message) {
-        if (message == null || message.isEmpty()) {
-            return false;
-        }
-        return message.length() <= 255;
+        return message != null && !message.isEmpty() && message.length() <= 255;
     }
 
     // Helper function to sanitize input

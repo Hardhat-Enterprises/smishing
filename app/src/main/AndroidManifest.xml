@@ -100,5 +100,21 @@
         <activity android:name=".TutorialPage1" android:exported="false" />
         <activity android:name=".TutorialPage2" android:exported="false" />
 
+        <!-- Password Management -->
+        <activity android:name=".ForgotPasswordActivity" android:exported="true" />
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="manika2003.github.io"
+                    android:path="/Domain/" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
+

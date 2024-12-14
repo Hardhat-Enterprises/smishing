@@ -3,12 +3,19 @@
   <component name="DeviceTable">
     <option name="columnSorters">
       <list>
+        <!-- Manika's column preference: Name -->
         <ColumnSorterState>
-          <option name="column" value="Type" />
+          <option name="column" value="Name" />
+          <option name="order" value="ASCENDING" />
+        </ColumnSorterState>
+
+        <!-- Shared column preferences -->
+        <ColumnSorterState>
+          <option name="column" value="API" />
           <option name="order" value="ASCENDING" />
         </ColumnSorterState>
         <ColumnSorterState>
-          <option name="column" value="API" />
+          <option name="column" value="Type" />
           <option name="order" value="ASCENDING" />
         </ColumnSorterState>
       </list>
