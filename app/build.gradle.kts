@@ -30,7 +30,7 @@ android {
         // Custom configuration fields
         buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
         buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http://10.0.2.16:3000\"") // Replace with your actual base URL
+        buildConfigField("String", "SERVERIP", "\"http://10.0.2.16:3000\"")
 
         vectorDrawables {
             useSupportLibrary = true
@@ -81,9 +81,9 @@ dependencies {
     // SQLite Helper Library
     implementation("com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1")
 
-    // Email and Activation Libraries (Handle Duplicate Dependencies)
+    // Email and Activation Libraries
     implementation("com.sun.mail:android-mail:1.6.7") {
-        exclude(group = "javax.activation", module = "activation") // Exclude javax.activation from android-mail
+        exclude(group = "javax.activation", module = "activation")
     }
 
     // Networking Libraries
@@ -91,7 +91,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.retrofit2:converter-simplexml:2.11.0") {
-        exclude(group = "javax.activation") // Exclude javax.activation to avoid duplication
+        exclude(group = "javax.activation")
     }
 
     // Android Libraries
@@ -112,6 +112,22 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.activity)
+    implementation(libs.biometric)
+    implementation(libs.play.services.tasks)
+
+    // Additional Dependencies
+    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additional.jar"))
+    implementation(files("libs/mail.jar"))
+
+    // Markwon Libraries
+    implementation("io.noties.markwon:core:4.6.2")
+    implementation("io.noties.markwon:html:4.6.2")
+    implementation("io.noties.markwon:image:4.6.2")
+
+    // Google Play Services Auth
+    implementation("com.google.android.gms:play-services-auth:20.0.0")
 
     // Testing Libraries
     testImplementation(libs.junit)
@@ -122,3 +138,4 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 }
+

@@ -1,232 +1,142 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentLeft="false"
-    android:layout_alignParentEnd="false"
     tools:context=".SettingsActivity">
 
+    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- App Logo -->
+            <ImageView
+                android:id="@+id/HardhatLogo"
+                android:layout_width="112dp"
+                android:layout_height="106dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/hardhat_logo" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/SettingsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="@string/menu_settings"
+                android:textColor="@color/navy_blue"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <!-- Grid Layout for Buttons -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="4"
+                android:layout_marginTop="16dp">
+
+                <!-- Account Button -->
+                <Button
+                    android:id="@+id/accountBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    android:drawableTop="@drawable/account_user_svg"
+                    android:gravity="center_horizontal|bottom"
+                    android:paddingTop="24dp"
+                    android:text="@string/account_btn"
+                    android:textSize="18sp" />
+
+                <!-- Notifications Button -->
+                <Button
+                    android:id="@+id/notificationsBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    android:drawableTop="@drawable/notification_svg1"
+                    android:gravity="center_horizontal|bottom"
+                    android:paddingTop="24dp"
+                    android:text="@string/notifications_btn"
+                    android:textSize="18sp" />
+
+                <!-- Filtering Button -->
+                <Button
+                    android:id="@+id/filteringBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    android:drawableTop="@drawable/filter_svg"
+                    android:gravity="center_horizontal|bottom"
+                    android:paddingTop="24dp"
+                    android:text="@string/filtering_btn"
+                    android:textSize="18sp" />
+
+                <!-- Report Button -->
+                <Button
+                    android:id="@+id/reportBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    android:drawableTop="@drawable/report_svg"
+                    android:gravity="center_horizontal|bottom"
+                    android:paddingTop="24dp"
+                    android:text="@string/report_btn"
+                    android:textSize="18sp" />
+
+                <!-- Help Button -->
+                <Button
+                    android:id="@+id/helpBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    android:drawableTop="@drawable/help_svg"
+                    android:gravity="center_horizontal|bottom"
+                    android:paddingTop="24dp"
+                    android:text="@string/help_btn"
+                    android:textSize="18sp" />
+
+                <!-- About Button -->
+                <Button
+                    android:id="@+id/aboutMeBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    android:drawableTop="@drawable/privacy_policy"
+                    android:gravity="center_horizontal|bottom"
+                    android:paddingTop="24dp"
+                    android:text="@string/about_btn"
+                    android:textSize="18sp" />
+
+            </GridLayout>
         </LinearLayout>
     </ScrollView>
 
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:itemBackground="@color/baby_blue"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/windowBackground"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/activity_main_drawer" />
-
-
-    <ImageView
-        android:id="@+id/HardhatLogo"
-        android:layout_width="112dp"
-        android:layout_height="106dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hardhat_logo" />
-
-    <TextView
-        android:id="@+id/SettingsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/menu_settings"
-        android:textColor="@color/navy_blue"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
-
-    <Button
-        android:id="@+id/accountBtn"
-        android:layout_width="142dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="200dp"
-        android:background="@drawable/buttons_rounded"
-        android:gravity="bottom|start"
-        android:text="@string/account_btn"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/filteringBtn"
-        android:layout_width="142dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/buttons_rounded"
-        android:gravity="bottom|start"
-        android:text="@string/filtering_btn"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountBtn" />
-
-    <Button
-        android:id="@+id/notificationsBtn"
-        android:layout_width="170dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/buttons_rounded"
-        android:gravity="bottom|start"
-        android:onClick="openNotificationsActivity"
-        android:text="@string/notifications_btn"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/scroll_view"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/reportBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/buttons_rounded"
-        android:gravity="center"
-        android:text="@string/report_btn"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="@id/notificationsBtn"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/helpBtn"
-        android:layout_width="142dp"
-        android:layout_height="67dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/buttons_rounded"
-        android:gravity="bottom|start"
-        android:text="@string/help_btn"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filteringBtn" />
-
-    <Button
-        android:id="@+id/aboutMeBtn"
-        android:layout_width="129dp"
-        android:layout_height="81dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/buttons_rounded"
-        android:gravity="bottom|start"
-        android:text="@string/about_btn"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helpBtn" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/accountBtn"
-        app:layout_constraintTop_toTopOf="@+id/accountBtn"
-        app:srcCompat="@drawable/account_user_svg" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="44dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/reportBtn"
-        app:layout_constraintTop_toTopOf="@+id/reportBtn"
-        app:srcCompat="@drawable/report_svg" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/filteringBtn"
-        app:layout_constraintTop_toTopOf="@+id/filteringBtn"
-        app:srcCompat="@drawable/filter_svg" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/notificationsBtn"
-        app:layout_constraintTop_toTopOf="@+id/notificationsBtn"
-        app:srcCompat="@drawable/notification_svg1" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:menu="@menu/activity_main_drawer"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
