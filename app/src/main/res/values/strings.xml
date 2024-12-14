@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Existing Strings -->
+    <!-- General Strings -->
     <string name="back">Back</string>
     <string name="back_button_description">Back</string>
     <string name="continue_button">Continue</string>
@@ -98,6 +99,7 @@
     <string name="report_btn">Report</string>
     <string name="help_btn">Help</string>
     <string name="about_btn">Privacy Policy</string>
+    <string name="home_button_desc">Home</string>
 
     <!-- Feedback Section -->
     <string name="feedback_title">Feedback</string>

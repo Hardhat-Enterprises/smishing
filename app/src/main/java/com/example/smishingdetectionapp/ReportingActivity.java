@@ -1,38 +1,31 @@
 package com.example.smishingdetectionapp;
 
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.widget.PopupMenu;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
-import java.util.concurrent.Executor;
-
-import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.YourReportsActivity;
-import java.util.concurrent.Executor;
 
-public class ReportingActivity extends SharedActivity {
+public class ReportingActivity extends AppCompatActivity {
+
+    private float initialY;
+    private static final int SWIPE_THRESHOLD = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_reporting);
 
         // Handle system insets
@@ -49,11 +42,11 @@ public class ReportingActivity extends SharedActivity {
             finish();
         });
 
+        // Menu button to open PopupMenu
         ImageButton menuButton = findViewById(R.id.report_menu);
         menuButton.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(ReportingActivity.this, menuButton);
             popup.getMenuInflater().inflate(R.menu.report_menu, popup.getMenu());
-
             popup.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.saved_reports) {
                     startActivity(new Intent(ReportingActivity.this, YourReportsActivity.class));
@@ -82,7 +75,6 @@ public class ReportingActivity extends SharedActivity {
                 Toast.makeText(getApplicationContext(), "Invalid phone number!", Toast.LENGTH_LONG).show();
                 return;
             }
-
             if (!isValidMessage(rawMessage)) {
                 Toast.makeText(getApplicationContext(), "Invalid message content!", Toast.LENGTH_LONG).show();
                 return;
@@ -102,7 +94,6 @@ public class ReportingActivity extends SharedActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "Report could not be sent!", Toast.LENGTH_LONG).show();
             }
-
         });
 
         // Enable/disable the "Send Report" button based on text fields
@@ -122,6 +113,30 @@ public class ReportingActivity extends SharedActivity {
         };
         phonenumber.addTextChangedListener(afterTextChangedListener);
         message.addTextChangedListener(afterTextChangedListener);
+
+        // Set OnTouchListener to detect swipe gestures
+        findViewById(R.id.main).setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    initialY = event.getY();
+                    return true;
+
+                case MotionEvent.ACTION_UP:
+                    float finalY = event.getY();
+                    float deltaY = finalY - initialY;
+
+                    if (Math.abs(deltaY) > SWIPE_THRESHOLD) {
+                        if (deltaY > 0) {
+                            // Swipe down detected
+                            Intent intent = new Intent(ReportingActivity.this, SettingsActivity.class);
+                            startActivity(intent);
+                            finish(); // Close the current activity
+                        }
+                    }
+                    return true;
+            }
+            return false;
+        });
     }
 
     // Helper function to validate phone number
@@ -145,5 +160,4 @@ public class ReportingActivity extends SharedActivity {
     private String sanitizeInput(String input) {
         return input.replaceAll("[<>\"']", "").trim();
     }
-
 }
