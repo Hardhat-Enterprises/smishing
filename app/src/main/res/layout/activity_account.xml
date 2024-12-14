@@ -78,7 +78,9 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
-        style="@style/heading"/>
+<TextView
+    android:style="@style/heading"
+    android:textColor="@color/navy_blue" />
 
     <ImageButton
         android:id="@+id/account_back"
@@ -115,7 +117,7 @@
         app:layout_constraintBottom_toTopOf="@+id/account_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/navy_blue"/>
+        android:background="@color/navy_blue" />
 
     <Button
         android:id="@+id/buttonSignOut"
@@ -131,6 +133,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+<ImageButton
+        android:id="@+id/profileBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/circle_background"
+        app:srcCompat="@drawable/account_user_svg"
+        android:contentDescription="@string/profile_button_desc"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Session Timeout Button from master -->
     <Button
         android:id="@+id/buttonSessionTimeout"
         android:layout_width="175dp"
@@ -143,8 +159,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dark_modeBtn" />
-    
-    
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

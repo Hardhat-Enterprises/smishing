@@ -5,47 +5,47 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
-    <LinearLayout
+    <!-- Scrollable Layout for Buttons -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:fillViewport="true"
+        android:layout_above="@id/bottom_navigation"
         tools:context=".SettingsActivity">
 
-        <ImageView
-            android:id="@+id/HardhatLogo"
-            android:layout_width="match_parent"
-            android:layout_height="106dp"
-            android:layout_marginTop="20dp"
-            android:contentDescription="@string/app_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/hardhat_logo" />
-
-        <TextView
-            android:id="@+id/SettingsText"
-            style="@style/heading"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/menu_settings"
-            android:textAlignment="center"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
+            android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            app:layout_constraintTop_toBottomOf="@+id/SettingsText">
+            <!-- App Logo -->
+            <ImageView
+                android:id="@+id/HardhatLogo"
+                android:layout_width="match_parent"
+                android:layout_height="106dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hardhat_logo" />
 
+            <!-- Heading -->
+            <TextView
+                android:id="@+id/SettingsText"
+                style="@style/heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/menu_settings"
+                android:textAlignment="center"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <!-- Buttons in a Grid -->
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:theme="@style/Theme.SmishingDetectionApp">
+                android:layout_marginTop="16dp">
 
                 <Button
                     android:id="@+id/accountBtn"
@@ -57,9 +57,7 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/account_btn"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/notificationsBtn"
@@ -71,9 +69,7 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/notifications_btn"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/filteringBtn"
@@ -85,9 +81,7 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/filtering_btn"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/reportBtn"
@@ -99,9 +93,7 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/report_btn"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/helpBtn"
@@ -113,9 +105,7 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/help_btn"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/aboutMeBtn"
@@ -127,9 +117,7 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/about_btn"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/feedbackBtn"
@@ -141,9 +129,7 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/feedback"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/forumBtn"
@@ -155,9 +141,7 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/forums"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/chatAssistantBtn"
@@ -169,39 +153,13 @@
                     android:gravity="center_horizontal|bottom"
                     android:paddingTop="24dp"
                     android:text="@string/chat_assistant_btn"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="20sp" />
 
-                <Button
-                    style="@style/ButtonStyle"
-                    android:layout_width="175dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="16dp"
-                    android:drawableTop="@drawable/privacy_policy"
-                    android:gravity="center_horizontal|bottom"
-                    android:paddingTop="24dp"
-                    android:text="@string/Dummy"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    style="@style/ButtonStyle"
-                    android:layout_width="175dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="16dp"
-                    android:drawableTop="@drawable/privacy_policy"
-                    android:gravity="center_horizontal|bottom"
-                    android:paddingTop="24dp"
-                    android:text="@string/Dummy"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </GridLayout>
-        </ScrollView>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -214,4 +172,6 @@
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
         app:menu="@menu/activity_main_drawer" />
+
 </RelativeLayout>
+

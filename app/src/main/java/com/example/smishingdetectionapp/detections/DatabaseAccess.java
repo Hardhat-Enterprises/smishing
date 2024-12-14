@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.smishingdetectionapp.R;
@@ -52,7 +53,7 @@ public class DatabaseAccess {
 
         private static final String DATABASE_NAME="detectlist.db";
         private static final int DATABASE_VERSION=1;
-        private static final String TABLE_DETECTIONS = "Det ctions";
+        private static final String TABLE_DETECTIONS = "Detections";
         private static final String TABLE_REPORTS = "Reports";
         public static final String KEY_ROWID = "_id";
         public static final String KEY_PHONENUMBER="Phone_Number";
@@ -122,7 +123,7 @@ public class DatabaseAccess {
 
 public Cursor getDetectionsForDate(String date) {
     return db.rawQuery(
-        "SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS + 
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS +
         " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
         new String[]{"%" + date + "%"}
     );
@@ -134,14 +135,14 @@ public Cursor getAllReports() {
 
 public Cursor getReportsForDate(String date) {
     return db.rawQuery(
-        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + 
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS +
         " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
         new String[]{"%" + date + "%"}
     );
 }
 public Cursor getReportsForSpecificDate(String specificDate) {
     return db.rawQuery(
-        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + 
+        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS +
         " WHERE DATE(" + DatabaseOpenHelper.KEY_DATE + ") = DATE(?) ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
         new String[]{specificDate}
     );
@@ -261,6 +262,64 @@ public Cursor getReportsForSpecificDate(String specificDate) {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void logAllReports() {
+        final String TAG = "DatabaseReports"; // Define a unique tag for Logcat
+
+        String[] columns = {
+                DatabaseOpenHelper.KEY_PHONENUMBER,
+                DatabaseOpenHelper.KEY_MESSAGE,
+                DatabaseOpenHelper.KEY_DATE
+        };
+
+        Cursor cursor = db.query(
+                DatabaseOpenHelper.TABLE_REPORTS, // Table name
+                columns,                          // Columns to retrieve
+                null,                             // WHERE clause
+                null,                             // WHERE arguments
+                null,                             // GROUP BY clause
+                null,                             // HAVING clause
+                null                              // ORDER BY clause
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_PHONENUMBER));
+                String message = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_MESSAGE));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseOpenHelper.KEY_DATE));
+
+                // Log the details of each report using Log.d
+                Log.d(TAG, "Phone Number: " + phoneNumber +
+                        ", Message: " + message +
+                        ", Date: " + date);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d(TAG, "No reports found in the table.");
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
+    public boolean deleteReportByPhoneNumber(String phoneNumber) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+        // Define the WHERE clause and arguments
+        String whereClause = DatabaseOpenHelper.KEY_PHONENUMBER + "=?";
+        String[] whereArgs = new String[]{phoneNumber};
+
+        // Perform the deletion
+        int rowsDeleted = db.delete(DatabaseOpenHelper.TABLE_REPORTS, whereClause, whereArgs);
+
+        // Check if the deletion was successful
+        if (rowsDeleted > 0) {
+            Log.d("DatabaseAccess", "Deleted " + rowsDeleted + " report(s) for phone number: " + phoneNumber);
+            return true;
+        } else {
+            Log.d("DatabaseAccess", "No report found for phone number: " + phoneNumber);
+            return false;
         }
     }
 

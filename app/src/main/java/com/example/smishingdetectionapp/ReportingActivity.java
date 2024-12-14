@@ -1,5 +1,8 @@
 package com.example.smishingdetectionapp;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -22,6 +25,7 @@ import java.util.concurrent.Executor;
 
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.YourReportsActivity;
+import java.util.concurrent.Executor;
 
 public class ReportingActivity extends SharedActivity {
 
