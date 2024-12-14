@@ -25,7 +25,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.smishingdetectionapp.notifications.NotificationType;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationActivity extends SharedActivity {
 
     private float initialY; // Only using initialY for swipe detection
     private static final int SWIPE_THRESHOLD = 50; // Adjusted threshold

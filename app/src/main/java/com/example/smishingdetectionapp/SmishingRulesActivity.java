@@ -12,7 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class SmishingRulesActivity extends AppCompatActivity {
+public class SmishingRulesActivity extends SharedActivity {
 
     private float initialY; // Variable to track the initial Y position for swipe detection
     private static final int SWIPE_THRESHOLD = 50; // Threshold for swipe detection

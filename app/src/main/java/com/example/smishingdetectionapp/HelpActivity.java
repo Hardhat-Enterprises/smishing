@@ -15,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class HelpActivity extends AppCompatActivity {
+public class HelpActivity extends SharedActivity {
 
     private float initialY; // Variable to track the initial Y position for swipe detection
     private static final int SWIPE_THRESHOLD = 50; // Threshold for swipe detection
@@ -68,10 +68,11 @@ public class HelpActivity extends AppCompatActivity {
 
         // Feedback
         RelativeLayout rv4 = findViewById(R.id.rv_4);
-        rv4.setOnClickListener(v -> {
-            // Handle the click event here
-            Toast.makeText(HelpActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
-        });
+rv4.setOnClickListener(v -> {
+    // Handle the click event here
+    Toast.makeText(HelpActivity.this, "Feedback", Toast.LENGTH_SHORT).show();
+    startActivity(new Intent(HelpActivity.this, ActivityFeedback.class));
+});
     }
 
     // OnTouch method to handle swipe gestures

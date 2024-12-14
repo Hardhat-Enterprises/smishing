@@ -29,6 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_button" />
 
+
             <ImageView
                 android:id="@+id/HardhatLogo"
                 android:layout_width="112dp"
@@ -42,11 +43,11 @@
 
             <TextView
                 android:id="@+id/ReportText"
+                style="@style/heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/help_page"
-                android:textColor="@color/navy_blue"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -184,7 +185,7 @@
                     android:layout_centerInParent="true"
                     android:background="@drawable/circle_background"
                     android:padding="10dp"
-                    android:src="@drawable/feedback_icon" />
+                    android:src="@drawable/feedback_icon"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -248,7 +249,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+                app:layout_constraintGuide_percent="0.50121653" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="87dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
