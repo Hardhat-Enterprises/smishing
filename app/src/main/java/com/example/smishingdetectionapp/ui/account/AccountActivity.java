@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,10 +60,8 @@ public class AccountActivity extends SharedActivity {
         // Opens the delete account confirmation popup
         Button delete_accBtn = findViewById(R.id.account_delete);
         delete_accBtn.setOnClickListener(v -> {
-                Toast.makeText(this, "THIS IS A TEST!!!!!!!!!!!!!!", Toast.LENGTH_SHORT).show();
-//                confirmDeletePopup confirmDeletePopup = new confirmDeletePopup(AccountActivity.this);
-//                confirmDeletePopup.show();
-
+            confirmDeletePopup confirmDeletePopup = new confirmDeletePopup(AccountActivity.this);
+            confirmDeletePopup.show();
         });
 
         // Opens the phone number change window
