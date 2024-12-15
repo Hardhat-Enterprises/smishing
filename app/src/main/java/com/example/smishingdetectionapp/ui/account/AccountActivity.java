@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,6 +22,7 @@ public class AccountActivity extends SharedActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_account);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -70,6 +70,16 @@ public class AccountActivity extends SharedActivity {
             PopupPN bottomSheet = new PopupPN();
             bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
         });
-    }
 
+        //Button to open session timeout settings
+        Button buttonSessionTimeout = findViewById(R.id.buttonSessionTimeout);
+        buttonSessionTimeout.setOnClickListener(v -> {
+            //Start the SessionTimeoutSettingsActivity
+            Intent intent = new Intent(AccountActivity.this, PopupST.class);
+            startActivity(intent);
+        });
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+    }
 }
