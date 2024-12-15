@@ -133,6 +133,11 @@
     <string name="help_btn">Help</string>
     <string name="about_btn">Privacy Policy</string>
 
+    <!-- Session Timeout Popup -->
+    <string name="session_timeout_switch">Session Timeout Settings</string>
+    <string name="popup_session_timeout_back">Session Timeout Settings</string>
+
+
     <!-- Filtering Rules Strings -->
     <string name="keywords_label">Keywords</string>
     <string name="pn_label">Phone numbers</string>
