@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Existing strings -->
+    <!-- General Strings -->
     <string name="back">Back</string>
     <string name="back_button_description">Back</string>
     <string name="continue_button">Continue</string>
@@ -10,9 +11,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Home</string>
 
+    <!-- Login Page -->
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -22,15 +23,13 @@
     <string name="action_sign_in">Sign In</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_sign_up">Register</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">Welcome!</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login_failed">Login failed</string>
     <string name="logo_description">App Logo</string>
-    <string name="chat_assistant_btn">Chat Assistant</string>
-    <string name="chat_assistant_page">Chat Assistant</string>
 
-    <!-- Error messages -->
+    <!-- Error Messages -->
     <string name="no_network_message">No available network. Please check your internet connection or try again later</string>
 
     <!-- Page Titles -->
@@ -42,16 +41,15 @@
     <string name="account_page">Account</string>
     <string name="report_page">Report Smishing</string>
     <string name="filtering_page">Smishing Rules</string>
-    <string name="debug">Debug</string>
     <string name="help_page">Help</string>
     <string name="sms_page">SMS Messages</string>
 
-    <!-- Main Dashboard Strings -->
+    <!-- Dashboard Strings -->
     <string name="detectionsBtn">Detections</string>
     <string name="new_detectionsTxt">New detections</string>
     <string name="total_detectionsTxt">Total detections</string>
 
-    <!-- Account Settings Page Buttons -->
+    <!-- Account Settings -->
     <string name="password_changeBtn">Password</string>
     <string name="phone_changeBtn">Phone</string>
     <string name="email_changeBtn">Email</string>
@@ -60,72 +58,38 @@
     <string name="sign_outBtn">Sign out</string>
     <string name="session_timeoutBtn">Session Timeout</string>
 
+    <!-- Terms and Conditions -->
     <string name="terms_and_conditions">
-    &lt;b&gt;TERMS AND CONDITIONS&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
+        <![CDATA[
+        <h2>Terms and Conditions</h2>
+        <ul>
+            <li><strong>Privacy Policy</strong><br>
+            We collect and process your SMS messages solely for the purpose of scanning and detecting potential spam and smishing attempts. Your SMS data will be stored securely on your device and will not be shared with any third parties without your explicit consent.</li>
+            <li><strong>User Consent and Control</strong><br>
+            By using this app, you grant us permission to access and scan your SMS messages for the purpose of detecting potential spam and smishing attempts. You can revoke this permission or delete your data at any time by uninstalling the app or clearing its data from your device's settings.</li>
+            <li><strong>Data Security</strong><br>
+            We implement reasonable and appropriate security measures to protect your SMS data from unauthorized access, alteration, disclosure, or destruction.</li>
+        </ul>
+        ]]>
+    </string>
 
-    &lt;b&gt;1.&lt;/b&gt; By using this app, you agree to comply with these terms.&lt;br/&gt;
-    &lt;b&gt;2.&lt;/b&gt; The app is provided on an as is basis, with no guarantees of accuracy or availability.&lt;br/&gt;
-    &lt;b&gt;3.&lt;/b&gt; You are responsible for ensuring you use the services in accordance with applicable laws.&lt;br/&gt;
-    &lt;b&gt;4.&lt;/b&gt; Unauthorized reproduction, modification, or distribution of this app or its content is strictly prohibited.&lt;br/&gt;
-    &lt;b&gt;5.&lt;/b&gt; We reserve the right to modify or discontinue the app without notice.&lt;br/&gt;
-    &lt;b&gt;6.&lt;/b&gt; We respect your privacy and commit to protecting your data as per the privacy policy outlined herein.&lt;br/&gt;
-    &lt;b&gt;7.&lt;/b&gt; Your personal data will only be used for purposes that you have explicitly agreed to.&lt;br/&gt;
-    &lt;b&gt;8.&lt;/b&gt; Any disputes arising from the use of this app will be subject to the jurisdiction of [Your Location].&lt;br/&gt;&lt;br/&gt;
-
-    &lt;b&gt;PRIVACY POLICY&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
-
-    &lt;b&gt;1.&lt;/b&gt; We collect data to enhance your experience and improve our services.&lt;br/&gt;
-    &lt;b&gt;2.&lt;/b&gt; Your data will never be sold or shared with third parties without your consent, except as required by law.&lt;br/&gt;
-    &lt;b&gt;3.&lt;/b&gt; Cookies may be used to personalize content and ads.&lt;br/&gt;
-    &lt;b&gt;4.&lt;/b&gt; By continuing to use the app, you consent to our use of cookies.&lt;br/&gt;&lt;br/&gt;
-
-    &lt;b&gt;DISCLAIMER&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
-
-    &lt;b&gt;1.&lt;/b&gt; This app is provided as-is without any warranties of any kind.&lt;br/&gt;
-    &lt;b&gt;2.&lt;/b&gt; We do not guarantee uninterrupted or error-free use of the app.&lt;br/&gt;
-    &lt;b&gt;3.&lt;/b&gt; We are not liable for any damages resulting from the use of this app.&lt;br/&gt;
-    &lt;b&gt;4.&lt;/b&gt; Always use caution when interacting with unknown parties through the app.&lt;br/&gt;&lt;br/&gt;
-
-    Please scroll to the bottom to continue.
-</string>
-
-
-
-    <!-- Password Change Window Strings -->
+    <!-- Password Change -->
     <string name="change_password_page">Change Password</string>
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm Password</string>
 
-    <!-- Email Change Window Strings -->
+    <!-- Email Change -->
     <string name="change_email_page">Change Email</string>
     <string name="new_email">New Email</string>
     <string name="confirm_new_email">Confirm Email</string>
 
-    <!-- Sign Out Window Strings -->
-    <string name="sign_out_page">Sign Out</string>
-    <string name="confirmSOTxt">Do you want to sign out?</string>
-    <string name="cancelSOBtn">Cancel</string>
-
-    <!-- Delete Account Window Strings -->
-    <string name="delete_acc_page">Delete Account</string>
-    <string name="confirmDelTxt">Are you sure?</string>
-    <string name="confirmPNBtn">Change Phone Number</string>
-    <string name="confirmPN">Enter your phone number:</string>
-
-    <!-- Change Phone Number Window Strings -->
-    <string name="phone_number_page">Change Phone Number</string>
-    <string name="confirm_PNTxt">New number must be associated with this phone.</string>
-    <string name="cancelDelBtn">Cancel</string>
-    <string name="confirmDelBtn">Yes</string>
-    <string name="confirmPW">Enter your password:</string>
-
-    <!-- Report Page Strings -->
+    <!-- Report -->
     <string name="phone_number">Phone Number</string>
     <string name="report_message_prompt">Smishing message</string>
     <string name="action_report">Send report</string>
 
-    <!-- Settings Page Buttons -->
+    <!-- Settings -->
     <string name="account_btn">Account</string>
     <string name="notifications_btn">Notifications</string>
     <string name="filtering_btn">Filtering</string>
@@ -136,7 +100,6 @@
     <!-- Session Timeout Popup -->
     <string name="session_timeout_switch">Session Timeout Settings</string>
     <string name="popup_session_timeout_back">Session Timeout Settings</string>
-
 
     <!-- Filtering Rules Strings -->
     <string name="keywords_label">Keywords</string>
@@ -163,125 +126,35 @@
     <string name="new_icon">info</string>
     <string name="time_icon">info</string>
 
-    <!-- Notification Page Strings -->
+    <!-- Feedback -->
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subtitle">We appreciate your feedback!</string>
+    <string name="feedback_hint">Write your feedback here...</string>
+    <string name="submit">Submit</string>
+
+    <!-- Notifications -->
     <string name="notification_header">Notifications</string>
     <string name="news_notification_title">News Updates</string>
     <string name="smishing_detection_notification_title">Smishing Detections</string>
     <string name="spam_detection_notification_title">Spam Detections</string>
-    <string name="password_security_check">Password Security Checks</string>
-    <string name="backup_reminder">Backup Reminders</string>
-    <string name="update_notifications">Update Notifications</string>
-    <string name="incident_reports">Incident Reports</string>
-    <string name="open_notification_settings">Device Notification Settings</string>
-    <string name="detection_notification_header">Detection Notifications</string>
-    <string name="push_notification_header">Push Notifications</string>
-    <string name="system_maintenance_header">System Maintenance Notifications</string>
 
-
-    <!-- NotificationHelper Strings -->
-    <string name="detection_channel_name">Detection Alerts</string>
-    <string name="detection_channel_id">detections_channel</string>
-    <string name="detection_channel_desc">Detection Notifications Channel</string>
-
-    <string name="push_channel_name">Push Notifications</string>
-    <string name="push_channel_id">push_channel</string>
-    <string name="push_channel_desc">Push Notifications Channel</string>
-
-    <string name="system_channel_name">System Notifications</string>
-    <string name="system_channel_id">system_channel</string>
-    <string name="system_channel_desc">system Notifications Channel</string>
-
-    <string name="smish_pref_key">smish_notif_pref</string>
-    <string name="spam_pref_key">spam_notif_pref</string>
-    <string name="news_pref_key">news_notif_pref</string>
-    <string name="incident_pref_key">incident_notif_pref</string>
-    <string name="update_pref_key">update_notif_pref</string>
-    <string name="backup_pref_key">backup_notif_pref</string>
-    <string name="password_pref_key">password_notif_pref</string>
-    <string name="what_is_the_app_for">What is the app for?</string>
-    <string name="how_to_use_the_app">how_to_use_the_app?</string>
-
-    <!-- Settings Activity Title EXAMPLE -->
-    <string name="title_activity_settings">SettingsActivity</string>
-
-    <!-- Preference Titles EXAMPLE -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences EXAMPLE -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences EXAMPLE -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="title_activity_signup">SignupActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
-
-    <!-- Added strings -->
-    <string name="terms_and_conditions_content">Your terms and conditions content here.</string>
-    <string name="helpful">Helpful</string>
-    <string name="not_helpful">Not Helpful</string>
-
-    <!-- Missing strings -->
-    <string name="phone_label">Phone Number</string>
-    <string name="refresh">Refresh</string>
+    <!-- Smishing Detection -->
+    <string name="dummy_smishing_report">This SMS message contains some text that might indicate it is a scam! Please beware!</string>
     <string name="empty_sms">No SMS messages found</string>
-    <string name="message_details">Message Details</string>
-    <string name="message_sender">Sender</string>
-    <string name="message_body">Message Body</string>
-    <string name="dummy_smishing_report">This is a dummy smishing report</string>
-    <string name="click_to_read_more">Click to read more</string>
-
-    <string name="reportLog"> My Reports </string>
+    <string name="reportLog">My Reports</string>
     <string name="number">Number</string>
     <string name="spammsg">Message</string>
     <string name="reportDate">Date</string>
     <string name="savedReportsMenu">Saved Reports</string>
 
-    <string name="feedback">Feedback</string>
-    <string name="rate_your_experience">Rate your experience</string>
-    <string name="enter_feedback">Enter feedback</string>
-    <string name="enter_email">Enter email</string>
-    <string name="name">Name</string>
-    <string name="image_description">image_description</string>
-    <string name="submit_feedback">Submit_feedback</string>
-    <string name="forums">Forums</string>
-    <string name="community_forum">Community Forum</string>
-    <string name="create_forum_topic">Create Forum Topic</string>
-    <string name="back_button">Back</string>
-    <string name="search_bar">Search Bar</string>
-    <string name="forum_1">Forum 1</string>
-    <string name="forum_title">Forum Title</string>
-    <string name="forum_description">Forum Description</string>
-    <string name="share_your_thoughts">Share your thoughts...</string>
-    <string name="submit">Submit</string>
-    <string name="comments">Comments</string>
-    <string name="add_a_comment">Add a comment...</string>
-    <string name="submit_comment">Submit Comment</string>
-    <string name="empty_forum">There are no forums.\nStart a new one today!</string>
-    <string name="start_a_new_post">Start a new post</string>
-    <string name="submitfeedback">Submit Feedback</string>
-    <string name="community">Community</string>
+    <!-- Added Feedback Strings -->
+    <string name="emoji_angry">Angry Emoji</string>
+    <string name="emoji_sad">Sad Emoji</string>
+    <string name="emoji_neutral">Neutral Emoji</string>
+    <string name="emoji_happy">Happy Emoji</string>
+    <string name="emoji_excited">Excited Emoji</string>
 
-    <!-- community post -->
-    <string name="title">Title</string>
-    <string name="content">Content</string>
-    <string name="community_comments">Comments</string>
-    <string name="add_community_comment">Add a comment...</string>
-    <string name="submit_community_comment">Submit Comment</string>
-
-    <string name="confirm_delete_account_title">Hello there</string>
-    <string name="delete_account_warning_message">
-    You have selected delete account. Are you sure about this?
-    If you choose to delete your account, we will disable it for 30 days.
-    If you choose to reactivate your account, login within 30 days.
-    </string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <!-- Chat Assistant -->
+    <string name="chat_assistant_btn">Chat Assistant</string>
+    <string name="chat_assistant_page">Chat Assistant</string>
 </resources>

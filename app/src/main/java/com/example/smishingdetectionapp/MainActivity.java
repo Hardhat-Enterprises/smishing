@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
-import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
@@ -15,33 +14,27 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.DetectionsActivity;
-import com.example.smishingdetectionapp.ui.login.LoginActivity;
-
-
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
+import com.example.smishingdetectionapp.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends SharedActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_news, R.id.nav_settings)
-                .build();
-
+        // Notification permission check
         if (!areNotificationsEnabled()) {
             showNotificationPermissionDialog();
         }
 
+        // Set up bottom navigation
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setSelectedItemId(R.id.nav_home);
         nav.setOnItemSelectedListener(menuItem -> {
@@ -62,36 +55,36 @@ public class MainActivity extends SharedActivity {
             return false;
         });
 
-        Button debug_btn = findViewById(R.id.debug_btn);
-        debug_btn.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, DebugActivity.class)));
+        // Button for navigating to DebugActivity
+        Button debugBtn = findViewById(R.id.debug_btn);
+        debugBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DebugActivity.class)));
 
-        Button detections_btn = findViewById(R.id.detections_btn);
-        detections_btn.setOnClickListener(v -> {
+        // Button for navigating to DetectionsActivity
+        Button detectionsBtn = findViewById(R.id.detections_btn);
+        detectionsBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, DetectionsActivity.class));
             finish();
         });
 
-        // Database connection
+        // Button for navigating to EducationActivity
+        Button learnMoreButton = findViewById(R.id.learn_more_btn);
+        learnMoreButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, EducationActivity.class);
+            startActivity(intent);
+        });
+
+        // Access and display database details
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
-        //setting counter from result
-        TextView total_count;
-        total_count = findViewById(R.id.total_counter);
-        total_count.setText(""+databaseAccess.getCounter());
-        //closing the connection
-        //databaseAccess.close();
-        //TODO: Add functionality for new detections.
+        TextView totalCount = findViewById(R.id.total_counter);
 
-        // Setting counter from the result
-        //TextView total_count = findViewById(R.id.total_counter);
-        //total_count.setText("" + databaseAccess.getCounter());
-
-        // Closing the connection
+        // Example of setting a value from the database
+        int count = databaseAccess.getTotalCount(); // Assuming this method exists in your DatabaseAccess class
+        totalCount.setText("Total Count: " + count);
         databaseAccess.close();
-
     }
 
+    // Notification check and permission dialog
     private boolean areNotificationsEnabled() {
         return NotificationManagerCompat.from(this).areNotificationsEnabled();
     }

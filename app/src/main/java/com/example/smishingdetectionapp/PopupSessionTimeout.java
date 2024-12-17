@@ -17,9 +17,9 @@ public class PopupSessionTimeout extends DialogFragment {
 
     private static final int POPUP_TIMEOUT_MS = 30000; // 30 seconds timer for the popup timeout
     private Handler popupHandler;
-    private Runnable popupTimeoutRunnable;
     private SessionTimeoutListener listener;
 
+    // Interface to handle user response
     public interface SessionTimeoutListener {
         void onContinueSession();
     }
@@ -40,6 +40,7 @@ public class PopupSessionTimeout extends DialogFragment {
             dismiss();
         });
 
+        // Logout button setup
         Button logoutButton = v.findViewById(R.id.logoutBtn);
         logoutButton.setOnClickListener(v2 -> {
             logout();
@@ -53,6 +54,7 @@ public class PopupSessionTimeout extends DialogFragment {
     }
 
     private void onPopupTimeout() {
+        // If statement to logout automatically if the popup times out
         if (getActivity() != null && !getActivity().isFinishing()) {
             logout();
         }
