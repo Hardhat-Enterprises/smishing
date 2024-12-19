@@ -4,10 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.SimpleCursorAdapter;
+import android.util.Log;
 
-import com.example.smishingdetectionapp.R;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.text.SimpleDateFormat;
@@ -15,256 +13,165 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DatabaseAccess {
-    private static SQLiteOpenHelper openHelper;
-    static SQLiteDatabase db;
+    private static SQLiteAssetHelper openHelper;
+    private static SQLiteDatabase db;
     private static DatabaseAccess instance;
-    Context context;
 
-    public static boolean sendFeedback(String name, String feedback, float rating) {
-        // Here you would add your logic to send feedback to the database.
-        // This could involve inserting the feedback into a SQLite database,
-        // sending it to a remote server via an API call, etc.
+    // Database constants
+    public static final String TABLE_REPORTS = "Reports";
+    public static final String TABLE_USERS = "Users";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_VERIFICATION_CODE = "verification_code";
+    public static final String KEY_ROWID = "_id";
+    public static final String KEY_PHONENUMBER = "phone_number";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_DATE = "date";
 
-        // For now, we will simulate a successful insertion
-        // by always returning true.
-
-        if (name.isEmpty() || feedback.isEmpty()) {
-            return false; // Fail if name or feedback is empty
-        }
-
-        // Simulated success
-        return true;
+    // Private constructor for singleton
+    private DatabaseAccess(Context context) {
+        openHelper = new DatabaseOpenHelper(context);
     }
 
-    // Simulate submission of thoughts
-    public static boolean submitThoughts(String thoughts) {
-        // Add your database logic or API call here
-        return !thoughts.isEmpty(); // Simulating success
-    }
-
-    // Simulate submission of comments
-    public static boolean submitComment(String comment) {
-        // Add your database logic or API call here
-        return !comment.isEmpty(); // Simulating success
-    }
-
-    public static class DatabaseOpenHelper extends SQLiteAssetHelper {
-
-        private static final String DATABASE_NAME="detectlist.db";
-        private static final int DATABASE_VERSION=1;
-        private static final String TABLE_DETECTIONS = "Det ctions";
-        private static final String TABLE_REPORTS = "Reports";
-        public static final String KEY_ROWID = "_id";
-        public static final String KEY_PHONENUMBER="Phone_Number";
-        public static final String KEY_MESSAGE = "Message";
-        public static final String KEY_DATE = "Date";
-
-        public DatabaseOpenHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
-        }
-    }
-
-    DatabaseAccess(Context context) {
-
-        openHelper= new DatabaseOpenHelper(context);
-        this.context = context;
-    }
-
-    public static DatabaseAccess getInstance(Context context){
-        if(instance==null){
-            instance=new DatabaseAccess(context);
+    public static DatabaseAccess getInstance(Context context) {
+        if (instance == null) {
+            instance = new DatabaseAccess(context);
         }
         return instance;
     }
 
-    public void open(){
-        this.db=openHelper.getWritableDatabase();
-        System.out.println("Database Opened!");
-    }
-
-    public void close(){
-        if(db!=null){
-            this.db.close();
-            System.out.println("Database Closed!");
+    // Open the database
+    public void open() {
+        if (db == null || !db.isOpen()) {
+            db = openHelper.getWritableDatabase();
+            Log.d("DatabaseAccess", "Database Opened!");
         }
     }
 
-    //Total detections counter
-    public int getCounter() {
-        Cursor cursor = db.rawQuery("select * from Detections", null);
-        System.out.println("Number of Records: "+cursor.getCount());
-        return cursor.getCount();
+    // Close the database
+    public void close() {
+        if (db != null && db.isOpen()) {
+            db.close();
+            Log.d("DatabaseAccess", "Database Closed!");
+        }
     }
 
-    //Used to get current device time
-    private static String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "dd-MM-yyyy HH:mm", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
+    // Insert a new report into the database
+    public boolean sendReport(String phoneNumber, String message) {
+        if (db == null || !db.isOpen()) {
+            Log.e("DatabaseAccess", "Database is not initialized or is closed.");
+            return false;
+        }
 
-    //Report sending function with database
-    public static boolean sendReport(String phonenumber, String message) {
-        SQLiteDatabase db = openHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseOpenHelper.KEY_PHONENUMBER, phonenumber);
-        contentValues.put(DatabaseOpenHelper.KEY_MESSAGE, message);
-        contentValues.put(DatabaseOpenHelper.KEY_DATE, getDateTime());
-        long result = db.insert(DatabaseOpenHelper.TABLE_REPORTS, null, contentValues);
-        return result != -1;
-    }
-
-    public Cursor getAllDetections() {
-    return db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS + " ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC", null);
-}
-
-public Cursor getDetectionsForDate(String date) {
-    return db.rawQuery(
-        "SELECT * FROM " + DatabaseOpenHelper.TABLE_DETECTIONS + 
-        " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
-        new String[]{"%" + date + "%"}
-    );
-}
-
-public Cursor getAllReports() {
-    return db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + " ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC", null);
-}
-
-public Cursor getReportsForDate(String date) {
-    return db.rawQuery(
-        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + 
-        " WHERE " + DatabaseOpenHelper.KEY_DATE + " LIKE ? ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
-        new String[]{"%" + date + "%"}
-    );
-}
-public Cursor getReportsForSpecificDate(String specificDate) {
-    return db.rawQuery(
-        "SELECT * FROM " + DatabaseOpenHelper.TABLE_REPORTS + 
-        " WHERE DATE(" + DatabaseOpenHelper.KEY_DATE + ") = DATE(?) ORDER BY " + DatabaseOpenHelper.KEY_DATE + " DESC",
-        new String[]{specificDate}
-    );
-}
-
-    public SimpleCursorAdapter populateDetectionList(){
-
-        String[] columns = {
-                DatabaseOpenHelper.KEY_ROWID,
-                DatabaseOpenHelper.KEY_PHONENUMBER,
-                DatabaseOpenHelper.KEY_MESSAGE,
-                DatabaseOpenHelper.KEY_DATE
-        };
-
-        Cursor cursor = db.query(
-                DatabaseOpenHelper.TABLE_DETECTIONS,
-                columns,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-        String[] columnsStr = new String[]{
-                DatabaseOpenHelper.KEY_ROWID,
-                DatabaseOpenHelper.KEY_PHONENUMBER,
-                DatabaseOpenHelper.KEY_DATE,
-                DatabaseOpenHelper.KEY_MESSAGE
-        };
-
-        int[] toViewIDs = new int[]{
-                R.id.item_id,
-                R.id.detectionPhoneText,
-                R.id.detectionDateText,
-                R.id.detectionMessageText
-        };
-
-        return new SimpleCursorAdapter(
-                context,
-                R.layout.detection_items,
-                cursor,
-                columnsStr,
-                toViewIDs
-        );
-    }
-
-    // Add this method to DatabaseAccess.java
-    // Add this method to DatabaseAccess.java
-    public ReportsAdapter populateReportsList() { // same function
         try {
-            String query = "SELECT * FROM Reports ORDER BY Date DESC";
-            Cursor cursor = db.rawQuery(query, null);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(KEY_PHONENUMBER, phoneNumber);
+            contentValues.put(KEY_MESSAGE, message);
+            contentValues.put(KEY_DATE, getDateTime());
 
-            if (cursor.getCount() == 0) {
-                cursor.close();
-                return null;
+            long result = db.insert(TABLE_REPORTS, null, contentValues);
+
+            if (result != -1) {
+                Log.d("DatabaseAccess", "Report inserted successfully! Phone Number: " + phoneNumber + ", Message: " + message);
+                return true;
+            } else {
+                Log.e("DatabaseAccess", "Failed to insert the report.");
+                return false;
             }
-
-            return new ReportsAdapter(context, cursor);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("DatabaseAccess", "Error in sendReport: " + e.getMessage(), e);
+            return false;
+        }
+    }
+
+    // Fetch all reports
+    public Cursor getAllReports() {
+        if (db == null || !db.isOpen()) {
+            Log.e("DatabaseAccess", "Database is not initialized or is closed.");
             return null;
         }
+
+        return db.rawQuery("SELECT * FROM " + TABLE_REPORTS + " ORDER BY " + KEY_DATE + " DESC", null);
     }
 
+    // Delete a specific report by phone number and message
     public boolean deleteReport(String phoneNumber, String message) {
         try {
-            // Delete the record where Phone_Number and Message both match
-            int rowsDeleted = db.delete(
-                    DatabaseOpenHelper.TABLE_REPORTS,
-                    "Phone_Number = ? AND Message = ?", // WHERE clause
-                    new String[] { phoneNumber, message } // WHERE arguments
-            );
-            return rowsDeleted > 0; // Return true if at least one row was deleted
+            int rowsDeleted = db.delete(TABLE_REPORTS, KEY_PHONENUMBER + "=? AND " + KEY_MESSAGE + "=?", new String[]{phoneNumber, message});
+            return rowsDeleted > 0;
         } catch (Exception e) {
-            e.printStackTrace();
-            return false; // Return false if an exception occurred
+            Log.e("DatabaseAccess", "Error in deleteReport: " + e.getMessage(), e);
+            return false;
         }
     }
 
+    // Helper function to fetch current date and time
+    private static String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
+        return dateFormat.format(new Date());
+    }
 
-    public Cursor getReports() {
+    // Save verification code for a user
+    public boolean saveVerificationCode(String email, String code) {
         try {
-            // Check if the database contains any rows
-            Cursor checkCursor = db.rawQuery("SELECT COUNT(*) FROM Reports", null);
-            if (checkCursor != null) {
-                checkCursor.moveToFirst(); // Move to the first row
-                int rowCount = checkCursor.getInt(0); // Get the count of rows
-                checkCursor.close(); // Close the cursor to avoid leaks
+            ContentValues values = new ContentValues();
+            values.put(KEY_EMAIL, email);
+            values.put(KEY_VERIFICATION_CODE, code);
 
-                if (rowCount == 0) {
-                    // If there are no rows, return null
-                    return null;
-                }
+            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + KEY_EMAIL + " = ?", new String[]{email});
+            if (cursor != null && cursor.moveToFirst()) {
+                int rowsUpdated = db.update(TABLE_USERS, values, KEY_EMAIL + " = ?", new String[]{email});
+                cursor.close();
+                return rowsUpdated > 0;
+            } else {
+                values.put(KEY_PASSWORD, "");
+                long result = db.insert(TABLE_USERS, null, values);
+                return result != -1;
             }
-            // If rows exist, return the query cursor
-            return db.rawQuery("SELECT * FROM Reports ORDER BY Date DESC", null);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            Log.e("DatabaseAccess", "Error in saveVerificationCode: " + e.getMessage(), e);
+            return false;
         }
     }
 
-    public Cursor getReportsNewestFirst() { // same function
+    // Check if verification code matches
+    public boolean checkVerificationCode(String email, String enteredCode) {
         try {
-            return db.rawQuery("SELECT * FROM Reports ORDER BY Date DESC", null);
+            String query = "SELECT " + KEY_VERIFICATION_CODE + " FROM " + TABLE_USERS + " WHERE " + KEY_EMAIL + " = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{email});
+            if (cursor != null && cursor.moveToFirst()) {
+                String dbCode = cursor.getString(cursor.getColumnIndexOrThrow(KEY_VERIFICATION_CODE));
+                cursor.close();
+                return dbCode.trim().equalsIgnoreCase(enteredCode.trim());
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            Log.e("DatabaseAccess", "Error in checkVerificationCode: " + e.getMessage(), e);
         }
+        return false;
     }
 
-    public Cursor getReportsOldestFirst() {
+    // Update user password
+    public boolean updatePassword(String email, String newPassword) {
         try {
-            return db.rawQuery("SELECT * FROM Reports ORDER BY Date ASC", null);
+            ContentValues values = new ContentValues();
+            values.put(KEY_PASSWORD, newPassword);
+            int rowsUpdated = db.update(TABLE_USERS, values, KEY_EMAIL + " = ?", new String[]{email});
+            return rowsUpdated > 0;
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            Log.e("DatabaseAccess", "Error in updatePassword: " + e.getMessage(), e);
+            return false;
         }
     }
 
+    // DatabaseOpenHelper class
+    public static class DatabaseOpenHelper extends SQLiteAssetHelper {
+        private static final String DATABASE_NAME = "detectlist.db";
+        private static final int DATABASE_VERSION = 3;
 
-
-
+        public DatabaseOpenHelper(Context context) {
+            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            Log.d("DatabasePath", "Database path: " + context.getDatabasePath(DATABASE_NAME));
+        }
+    }
 }
+

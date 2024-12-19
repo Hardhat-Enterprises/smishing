@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Other Activities -->
+        <!-- Activities -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -48,25 +48,58 @@
         <activity android:name=".FAQActivity" android:exported="false" />
         <activity android:name=".ActivityFeedback" android:exported="true" />
         <activity android:name=".ForumActivity" android:exported="false" />
+
+        <!-- Help & Support -->
         <activity android:name=".SettingsActivity" android:exported="false" />
         <activity android:name=".ui.account.AccountActivity" android:exported="true" />
         <activity android:name=".ui.account.PopupDEL" android:exported="true" />
         <activity android:name=".UserProfileActivity" android:exported="false" />
-        <activity android:name=".detections.DetectionsActivity" android:exported="true">
+
+        <!-- Reporting -->
+        <activity android:name=".ReportingActivity" android:exported="false" />
+        <activity android:name=".detections.YourReportsActivity" android:exported="false" />
+
+        <!-- Educational -->
+        <activity android:name=".EducationActivity" android:exported="false" />
+        <activity android:name=".AboutUsActivity" android:exported="false" />
+        <activity android:name=".QuizResultActivity" android:exported="false" />
+        <activity android:name=".QuizesActivity" android:exported="false" />
+
+        <!-- Risk and Debug -->
+        <activity android:name=".RiskProfileActivity" android:exported="false" />
+        <activity android:name=".DebugActivity" android:exported="false" />
+
+        <!-- Terms and Rules -->
+        <activity android:name=".TermsAndConditionsActivity" android:exported="false" />
+        <activity android:name=".SmishingRulesActivity" android:exported="false" />
+
+        <!-- Detections -->
+        <activity
+            android:name=".detections.DetectionsActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReportingActivity" android:exported="false" />
-        <activity android:name=".detections.YourReportsActivity" android:exported="false" />
-        <activity android:name=".EducationActivity" android:exported="false" />
-        <activity android:name=".AboutUsActivity" android:exported="false" />
-        <activity android:name=".QuizResultActivity" android:exported="false" />
-        <activity android:name=".QuizesActivity" android:exported="false" />
-        <activity android:name=".RiskProfileActivity" android:exported="false" />
+
+        <!-- Registration -->
+        <activity android:name=".ui.Register.RegisterMain" android:exported="true" />
+        <activity android:name=".ui.Register.EmailVerify" android:exported="true" />
+
+        <!-- SMS and Details -->
+        <activity android:name=".SmsActivity" android:exported="false" />
+        <activity android:name=".SMSMessageDetailActivity" android:exported="false" />
+
+        <!-- Tutorials -->
+        <activity android:name=".TutorialPage1" android:exported="false" />
+        <activity android:name=".TutorialPage2" android:exported="false" />
+
+        <!-- Password Management -->
         <activity android:name=".ForgotPasswordActivity" android:exported="true" />
-        <activity android:name=".ResetPasswordActivity" android:exported="true">
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -77,6 +110,6 @@
                     android:path="/Domain/" />
             </intent-filter>
         </activity>
-        <activity android:name=".chat.ChatAssistantActivity" android:exported="false" />
     </application>
 </manifest>
+

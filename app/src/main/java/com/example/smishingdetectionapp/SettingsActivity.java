@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import com.example.smishingdetectionapp.news.NewsActivity;
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.biometric.BiometricPrompt;
 import androidx.biometric.BiometricManager;
+
 import java.util.concurrent.Executor;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -189,3 +193,4 @@ public class SettingsActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
+

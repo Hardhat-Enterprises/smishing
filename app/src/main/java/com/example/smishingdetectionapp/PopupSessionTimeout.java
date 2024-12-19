@@ -17,6 +17,7 @@ public class PopupSessionTimeout extends DialogFragment {
 
     private static final int POPUP_TIMEOUT_MS = 30000; // 30 seconds timer for the popup timeout
     private Handler popupHandler;
+    private Runnable popupTimeoutRunnable;
     private SessionTimeoutListener listener;
 
     // Interface to handle user response
@@ -47,16 +48,19 @@ public class PopupSessionTimeout extends DialogFragment {
             dismiss();
         });
 
+        // Setup popup timeout
         popupHandler = new Handler();
-        popupHandler.postDelayed(this::onPopupTimeout, POPUP_TIMEOUT_MS);
+        popupTimeoutRunnable = this::onPopupTimeout;
+        popupHandler.postDelayed(popupTimeoutRunnable, POPUP_TIMEOUT_MS);
 
         return v;
     }
 
     private void onPopupTimeout() {
-        // If statement to logout automatically if the popup times out
+        // Automatically log out if the popup times out
         if (getActivity() != null && !getActivity().isFinishing()) {
             logout();
+            dismiss();
         }
     }
 

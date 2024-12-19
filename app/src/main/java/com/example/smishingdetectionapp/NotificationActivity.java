@@ -1,11 +1,8 @@
 package com.example.smishingdetectionapp;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.Switch;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -38,7 +34,21 @@ public class NotificationActivity extends SharedActivity {
         // Enable edge-to-edge display to allow your layout to extend into the window insets
         EdgeToEdge.enable(this);
 
-        // Create instances of each NotificationType for the switch
+        // Set up the main view to listen for touch events
+        View mainView = findViewById(R.id.notification_main);
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
+                // Apply padding for system bars
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                // Consume the system window insets
+                return insets.consumeSystemWindowInsets();
+            });
+        } else {
+            Log.e("NotificationActivity", "mainView is null");
+        }
+
+        // Create instances of each NotificationType for the switches
         NotificationType smishDetectionAlert = NotificationType.createSmishDetectionAlert(getApplicationContext());
         NotificationType spamDetectionAlert = NotificationType.createSpamDetectionAlert(getApplicationContext());
         NotificationType newsAlerts = NotificationType.createNewsAlert(getApplicationContext());
@@ -55,20 +65,6 @@ public class NotificationActivity extends SharedActivity {
         setupSwitch(findViewById(R.id.update_notification_switch), updateNotification);
         setupSwitch(findViewById(R.id.backup_reminder_switch), backupNotification);
         setupSwitch(findViewById(R.id.password_security_check_switch), passwordNotification);
-
-        // Additional UI setup for main view and system insets
-        View mainView = findViewById(R.id.notification_main);
-        if (mainView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
-                // Apply padding for system bars
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                // Consume the system window insets
-                return insets.consumeSystemWindowInsets();
-            });
-        } else {
-            Log.e("NotificationActivity", "mainView is null");
-        }
 
         // Setup for the back button
         ImageButton notification_back = findViewById(R.id.notification_back);
@@ -121,7 +117,7 @@ public class NotificationActivity extends SharedActivity {
 
                 if (Math.abs(deltaY) > SWIPE_THRESHOLD) {
                     if (deltaY > 0) {
-                        // Swipe down detected, go back to SettingsActivity
+                        // Swipe down detected
                         Intent intent = new Intent(NotificationActivity.this, SettingsActivity.class);
                         startActivity(intent);
                         finish(); // Close the current activity

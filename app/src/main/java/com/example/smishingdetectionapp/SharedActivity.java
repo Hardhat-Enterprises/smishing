@@ -1,10 +1,11 @@
 package com.example.smishingdetectionapp;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.smishingdetectionapp.ui.login.LoginActivity;
 
 public abstract class SharedActivity extends AppCompatActivity {
@@ -17,16 +18,10 @@ public abstract class SharedActivity extends AppCompatActivity {
     private Runnable sessionTimeoutRunnable;
     private Runnable popupTimeoutRunnable;
 
-    private SharedPreferences sharedPreferences;
-    private static final String PREF_NAME = "sessionTimeoutPrefs";
-    private static final String SWITCH_STATE_KEY = "sessionTimeoutSwitchState";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupSessionTimeout();
-
-        sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         resetSessionTimeout();
     }
 
@@ -39,25 +34,9 @@ public abstract class SharedActivity extends AppCompatActivity {
     }
 
     private void resetSessionTimeout() {
-        boolean isSessionTimeoutEnabled = sharedPreferences.getBoolean(SWITCH_STATE_KEY, false); // Default state of session timeout is false
-
-        if (isSessionTimeoutEnabled) {
-            startSessionTimeout();
-        } else {
-            stopSessionTimeout();
-        }
-    }
-
-    private void startSessionTimeout() {
         if (sessionHandler != null) {
             sessionHandler.removeCallbacks(sessionTimeoutRunnable);
             sessionHandler.postDelayed(sessionTimeoutRunnable, SESSION_TIMEOUT_MS);
-        }
-    }
-
-    private void stopSessionTimeout() {
-        if (sessionHandler != null) {
-            sessionHandler.removeCallbacks(sessionTimeoutRunnable);
         }
     }
 
@@ -68,7 +47,7 @@ public abstract class SharedActivity extends AppCompatActivity {
     }
 
     protected boolean shouldShowSessionTimeoutPopup() {
-        return true; // Makes it the default to always show the session timeout popup
+        return true; // Default behavior: always show the session timeout popup
     }
 
     private void showSessionTimeoutPopup() {
@@ -77,9 +56,11 @@ public abstract class SharedActivity extends AppCompatActivity {
             popup.setSessionTimeoutListener(this::resetSessionTimeout);
             popup.show(getSupportFragmentManager(), "SessionTimeoutPopup");
 
-            // New timer for the popup timeout (30 seconds)
-            popupHandler.removeCallbacks(popupTimeoutRunnable);
-            popupHandler.postDelayed(popupTimeoutRunnable, POPUP_TIMEOUT_MS);
+            // Timer for the popup timeout
+            if (popupHandler != null) {
+                popupHandler.removeCallbacks(popupTimeoutRunnable);
+                popupHandler.postDelayed(popupTimeoutRunnable, POPUP_TIMEOUT_MS);
+            }
         }
     }
 
