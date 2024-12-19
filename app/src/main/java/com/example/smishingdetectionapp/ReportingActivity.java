@@ -21,7 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.YourReportsActivity;
 
-public class ReportingActivity extends AppCompatActivity {
+public class ReportingActivity extends SharedActivity {
 
     private float initialY;
     private static final int SWIPE_THRESHOLD = 50;

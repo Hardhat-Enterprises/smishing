@@ -1,23 +1,25 @@
-package com.example.smishingdetectionapp;
+package com.example.smishingdetectionapp.ui.account;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.biometric.BiometricPrompt;
 
+import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.SettingsActivity;
+import com.example.smishingdetectionapp.SharedActivity;
 import com.example.smishingdetectionapp.news.NewsActivity;
-import com.example.smishingdetectionapp.ui.account.AccountActivity;
+import com.example.smishingdetectionapp.ui.account.PopupST;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.concurrent.Executor;
 
-public class SettingsActivity extends AppCompatActivity {
+public class AccountActivity extends SharedActivity {
 
     private BiometricPrompt biometricPrompt;
     private boolean isAuthenticated = false;
@@ -26,7 +28,18 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_account);
+
+        // Setup session timeout settings button
+        Button buttonSessionTimeout = findViewById(R.id.buttonSessionTimeout);
+        buttonSessionTimeout.setOnClickListener(v -> {
+            Intent intent = new Intent(AccountActivity.this, PopupST.class);
+            startActivity(intent);
+        });
+
+        // Account button with biometric authentication
+        Button accountBtn = findViewById(R.id.accountBtn);
+        accountBtn.setOnClickListener(v -> triggerBiometricAuthenticationWithTimeout());
 
         // Bottom Navigation setup
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
@@ -48,70 +61,6 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             }
             return false;
-        });
-
-        // Account button with biometric authentication
-        Button accountBtn = findViewById(R.id.accountBtn);
-        accountBtn.setOnClickListener(v -> triggerBiometricAuthenticationWithTimeout());
-
-        // Filtering button to switch to Smishing rules page
-        Button filteringBtn = findViewById(R.id.filteringBtn);
-        filteringBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, SmishingRulesActivity.class));
-            finish();
-        });
-
-        // Report button to switch to Reporting page
-        Button reportBtn = findViewById(R.id.reportBtn);
-        reportBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, ReportingActivity.class));
-            finish();
-        });
-
-        // Notification button to switch to Notification page
-        Button notificationsButton = findViewById(R.id.notificationsBtn);
-        notificationsButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, NotificationActivity.class));
-            finish();
-        });
-
-        // Help button to switch to Help page
-        Button helpBtn = findViewById(R.id.helpBtn);
-        helpBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, HelpActivity.class));
-            finish();
-        });
-
-        // About Me button to switch to AboutMeActivity
-        Button aboutMeButton = findViewById(R.id.aboutMeBtn);
-        aboutMeButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, AboutMeActivity.class));
-        });
-
-        // About Us button to switch to AboutUsActivity
-        Button aboutUsBtn = findViewById(R.id.aboutUsBtn);
-        aboutUsBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, AboutUsActivity.class));
-        });
-
-        // Chat Assistant button to switch to ChatAssistantActivity
-        Button chatAssistantBtn = findViewById(R.id.chatAssistantBtn);
-        chatAssistantBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, ChatAssistantActivity.class));
-        });
-
-        // Feedback button to switch to FeedbackActivity
-        Button feedbackBtn = findViewById(R.id.feedbackBtn);
-        feedbackBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, FeedbackActivity.class));
-            finish();
-        });
-
-        // Forum button to switch to ForumActivity
-        Button forumBtn = findViewById(R.id.forumBtn);
-        forumBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, ForumActivity.class));
-            finish();
         });
     }
 
@@ -174,16 +123,16 @@ public class SettingsActivity extends AppCompatActivity {
 
     // Redirect to SettingsActivity
     private void redirectToSettingsActivity() {
-        Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+        Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
         startActivity(intent);
         finish(); // Ensure the current activity is closed
     }
 
     // Open AccountActivity
     private void openAccountActivity() {
-        Intent intent = new Intent(SettingsActivity.this, AccountActivity.class);
+        Intent intent = new Intent(AccountActivity.this, AccountActivity.class);
         startActivity(intent);
-        finish(); // Close SettingsActivity if AccountActivity is opened
+        finish(); // Close current activity
     }
 
     // Show a toast message

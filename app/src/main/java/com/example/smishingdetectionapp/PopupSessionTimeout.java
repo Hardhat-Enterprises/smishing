@@ -44,24 +44,23 @@ public class PopupSessionTimeout extends DialogFragment {
         // Logout button setup
         Button logoutButton = v.findViewById(R.id.logoutBtn);
         logoutButton.setOnClickListener(v2 -> {
-
-            Intent intent = new Intent(getContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            logout();
             dismiss();
         });
 
-
+        // Setup popup timeout
         popupHandler = new Handler();
-        popupHandler.postDelayed(this::onPopupTimeout, POPUP_TIMEOUT_MS);
+        popupTimeoutRunnable = this::onPopupTimeout;
+        popupHandler.postDelayed(popupTimeoutRunnable, POPUP_TIMEOUT_MS);
 
         return v;
     }
 
     private void onPopupTimeout() {
-        // If statement to logout automatically if the popup times out
+        // Automatically log out if the popup times out
         if (getActivity() != null && !getActivity().isFinishing()) {
             logout();
+            dismiss();
         }
     }
 

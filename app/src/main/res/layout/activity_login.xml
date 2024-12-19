@@ -32,7 +32,6 @@
     <!-- Login Title -->
     <TextView
         android:id="@+id/loginTitle"
-        style="@style/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/action_login_in"
@@ -58,7 +57,6 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:autofillHints="emailAddress"
-        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/emailLabel"
         app:layout_constraintTop_toBottomOf="@id/emailLabel" />
@@ -99,7 +97,6 @@
     <!-- Forgot Password Button -->
     <Button
         android:id="@+id/forgotPasswordButton"
-        style="@style/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
@@ -112,7 +109,6 @@
     <!-- Login Button -->
     <Button
         android:id="@+id/loginButton"
-        style="@style/ButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -136,7 +132,6 @@
     <!-- Register Button -->
     <Button
         android:id="@+id/registerButton"
-        style="@style/ButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"

@@ -29,7 +29,7 @@
         android:theme="@style/Theme.SmishingDetectionApp"
         tools:targetApi="31">
 
-        <!-- Activities -->
+        <!-- Main Activity -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
@@ -39,24 +39,19 @@
             </intent-filter>
         </activity>
 
+        <!-- Activities -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SmishingDetectionApp.NoActionBar" />
-
-        <!-- Help & Support -->
         <activity android:name=".HelpActivity" android:exported="false" />
         <activity android:name=".FAQActivity" android:exported="false" />
         <activity android:name=".ActivityFeedback" android:exported="true" />
         <activity android:name=".ForumActivity" android:exported="false" />
-        <activity
-            android:name=".chat.ChatAssistantActivity"
-            android:exported="false"
-            android:label="@string/chat_assistant_page" />
 
-        <!-- Settings and Account -->
+        <!-- Help & Support -->
         <activity android:name=".SettingsActivity" android:exported="false" />
-        <activity android:name=".ui.account.AccountActivity" android:exported="false" />
+        <activity android:name=".ui.account.AccountActivity" android:exported="true" />
         <activity android:name=".ui.account.PopupDEL" android:exported="true" />
         <activity android:name=".UserProfileActivity" android:exported="false" />
 
