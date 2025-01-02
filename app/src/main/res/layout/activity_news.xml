@@ -34,6 +34,7 @@
 
     <TextView
         android:id="@+id/NewsText"
+        style="@style/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -43,8 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
-        android:textColor="@color/navy_blue"/>
+        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"/>
 
     <TextView
         android:id="@+id/errorTextView"
@@ -63,6 +63,7 @@
 
     <Button
         android:id="@+id/refreshButton"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/refresh"

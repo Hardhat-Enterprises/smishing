@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".NotificationActivity">
-
-<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/notification_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clickable="true" 
+    tools:context=".NotificationActivity">
+
 
     <!--hardhat logo-->
     <ImageView
@@ -37,9 +35,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button" />
 
+
+
     <!--Page heading-->
     <TextView
         android:id="@+id/notificationsHeader"
+        style="@style/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
@@ -49,8 +50,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
-        android:textColor="@color/navy_blue"/>
+        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"/>
+
 
     <!--Switch buttons with titles-->
 
@@ -240,6 +241,7 @@
 
     <Button
         android:id="@+id/open_notification_settings_button"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/open_notification_settings"
@@ -252,7 +254,6 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-</RelativeLayout>
+   
+    
