@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" /> <!-- White background -->
+    <corners android:radius="16dp" /> <!-- Rounded corners -->
+    <shadow android:elevation="4dp" /> <!-- Shadow for card effect -->
+</shape>

@@ -1,24 +1,20 @@
 package com.example.smishingdetectionapp;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,6 +22,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.smishingdetectionapp.notifications.NotificationType;
 
 public class NotificationActivity extends SharedActivity {
+
+    private float initialY; // Used for swipe detection
+    private static final int SWIPE_THRESHOLD = 50; // Adjusted threshold for swipe detection
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,21 @@ public class NotificationActivity extends SharedActivity {
         // Enable edge-to-edge display to allow your layout to extend into the window insets
         EdgeToEdge.enable(this);
 
-        // create instances of each NotificationType for the switch
+        // Set up the main view to listen for touch events
+        View mainView = findViewById(R.id.notification_main);
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
+                // Apply padding for system bars
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                // Consume the system window insets
+                return insets.consumeSystemWindowInsets();
+            });
+        } else {
+            Log.e("NotificationActivity", "mainView is null");
+        }
+
+        // Create instances of each NotificationType for the switches
         NotificationType smishDetectionAlert = NotificationType.createSmishDetectionAlert(getApplicationContext());
         NotificationType spamDetectionAlert = NotificationType.createSpamDetectionAlert(getApplicationContext());
         NotificationType newsAlerts = NotificationType.createNewsAlert(getApplicationContext());
@@ -53,38 +66,14 @@ public class NotificationActivity extends SharedActivity {
         setupSwitch(findViewById(R.id.backup_reminder_switch), backupNotification);
         setupSwitch(findViewById(R.id.password_security_check_switch), passwordNotification);
 
-
-
-        // Additional UI setup
-        // Initialize the main view container object from the layout
-        View mainView = findViewById(R.id.notification_main);
-        // Check if the main view is not null to safely apply window insets
-        if (mainView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
-                // Retrieve insets for system bars and apply them as padding to the main view
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                // Consume the system window insets so they are not applied elsewhere
-                return insets.consumeSystemWindowInsets();
-            });
-        } else {
-            // Log an error if the main view is not found
-            Log.e("NotificationActivity", "mainView is null");
-        }
-
         // Setup for the back button
         ImageButton notification_back = findViewById(R.id.notification_back);
-        // Check if the back button is initialized properly
         if (notification_back != null) {
-            // Set an onClick listener to handle the back button's behavior
             notification_back.setOnClickListener(v -> {
-                // Start SettingsActivity when back button is pressed
                 startActivity(new Intent(this, SettingsActivity.class));
-                // Close the current activity
-                finish();
+                finish(); // Close the current activity
             });
         } else {
-            // Log an error if the back button is null
             Log.e("NotificationActivity", "Back button is null");
         }
 
@@ -100,29 +89,42 @@ public class NotificationActivity extends SharedActivity {
                 intent.setData(Uri.fromParts("package", getPackageName(), null));
             }
             startActivity(intent);
-
         });
-
     }
 
-    // method to setup switch with a notificationType object.
+    // Method to setup switch with a NotificationType object
     private void setupSwitch(Switch switchButton, NotificationType notificationType) {
-        // if the switch's value isnt null
-        if (switchButton != null){
-            // set switchButton value to the notificationType's isEnabled value
+        if (switchButton != null) {
             switchButton.setChecked(notificationType.getEnabled());
-            // when switch change listener is activated (user switch input)
-            // change switch's isChecked value and change the notificationType's isEnabled value
             switchButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 notificationType.setEnabled(isChecked);
             });
-        }
-        else {
-            Log.e("NotificationActivity","Switch button is Null");
+        } else {
+            Log.e("NotificationActivity", "Switch button is null");
         }
     }
+
+    // OnTouch method to handle swipe gestures
+    private boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                initialY = event.getY();
+                return true;
+
+            case MotionEvent.ACTION_UP:
+                float finalY = event.getY();
+                float deltaY = finalY - initialY;
+
+                if (Math.abs(deltaY) > SWIPE_THRESHOLD) {
+                    if (deltaY > 0) {
+                        // Swipe down detected
+                        Intent intent = new Intent(NotificationActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        finish(); // Close the current activity
+                    }
+                }
+                return true;
+        }
+        return false;
+    }
 }
-
-
-
-
