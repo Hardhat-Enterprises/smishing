@@ -1,11 +1,8 @@
 package com.example.smishingdetectionapp.ui.Register;
 
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,7 +15,6 @@ import com.example.smishingdetectionapp.DataBase.SignupResponse;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.databinding.ActivityEmailVerifyBinding;
-import com.example.smishingdetectionapp.databinding.ActivitySignupBinding;
 import com.example.smishingdetectionapp.ui.login.LoginActivity;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,14 +28,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EmailVerify extends AppCompatActivity {
 
-    private String email;
-    private String fullName;
-    private String phoneNumber;
-    private String password;
-    private String verificationCode;
+    private String email, fullName, phoneNumber, password, verificationCode;
     private EditText verificationCodeInput;
     private Button verifyButton;
-
     private ActivityEmailVerifyBinding binding;
 
     private Retrofit retrofit;
@@ -53,7 +44,6 @@ public class EmailVerify extends AppCompatActivity {
         binding = ActivityEmailVerifyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initialize Retrofit
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -61,13 +51,12 @@ public class EmailVerify extends AppCompatActivity {
 
         retrofitinterface = retrofit.create(Retrofitinterface.class);
 
-        ImageButton imageButton = findViewById(R.id.signup_back);
-        imageButton.setOnClickListener(v -> {
+        ImageButton backButton = findViewById(R.id.signup_back);
+        backButton.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
 
-        // Get the data passed from the RegisterMain activity
         Intent intent = getIntent();
         fullName = intent.getStringExtra("fullName");
         phoneNumber = intent.getStringExtra("phoneNumber");
@@ -75,28 +64,22 @@ public class EmailVerify extends AppCompatActivity {
         password = intent.getStringExtra("password");
         verificationCode = intent.getStringExtra("code");
 
-
-
         verificationCodeInput = findViewById(R.id.verifytext);
         verifyButton = findViewById(R.id.confirmBtn);
 
-        verifyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String enteredCode = verificationCodeInput.getText().toString();
+        verifyButton.setOnClickListener(v -> {
+            String enteredCode = verificationCodeInput.getText().toString().trim();
 
+            if (TextUtils.isEmpty(enteredCode)) {
+                Snackbar.make(binding.getRoot(), "Please enter the verification code.", Snackbar.LENGTH_LONG).show();
+                return;
+            }
 
-
-                // Check if the entered code matches the one sent via email
-                if (enteredCode.equals(verificationCode)) {
-                    Snackbar.make(binding.getRoot(), "Email verified successfully.", Snackbar.LENGTH_LONG).show();
-
-
-                    // Proceed with the signup process after successful verification
-                    completeSignup();
-                } else {
-                    Snackbar.make(binding.getRoot(), "Invalid verification code. Please try again.", Snackbar.LENGTH_LONG).show();
-                }
+            if (enteredCode.equals(verificationCode)) {
+                Snackbar.make(binding.getRoot(), "Email verified successfully.", Snackbar.LENGTH_LONG).show();
+                completeSignup();
+            } else {
+                Snackbar.make(binding.getRoot(), "Invalid verification code. Please try again.", Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -116,7 +99,7 @@ public class EmailVerify extends AppCompatActivity {
                     Snackbar.make(binding.getRoot(), "Registration successful.", Snackbar.LENGTH_LONG).show();
                     Intent intent = new Intent(EmailVerify.this, MainActivity.class);
                     startActivity(intent);
-
+                    finish();
                 } else if (response.code() == 409) {
                     Snackbar.make(binding.getRoot(), "Email already exists.", Snackbar.LENGTH_LONG).show();
                 } else {
@@ -126,7 +109,7 @@ public class EmailVerify extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SignupResponse> call, Throwable t) {
-                Snackbar.make(binding.getRoot(), t.getMessage(), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(binding.getRoot(), "Network error: " + t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
