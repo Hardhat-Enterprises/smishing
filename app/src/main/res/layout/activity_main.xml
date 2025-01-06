@@ -27,17 +27,12 @@
 
         <Button
             android:id="@+id/detections_btn"
-            style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-<Button
-    android:layout_marginBottom="124dp"
-    android:text="@string/detectionsBtn"
-    android:textSize="20sp"
-    android:background="@drawable/buttons_rounded" />
-
+            android:layout_marginBottom="124dp"
+            android:background="@drawable/buttons_rounded"
             android:drawableLeft="@drawable/bell_svg"
             android:paddingStart="105dp"
             android:paddingEnd="125dp"
@@ -62,7 +57,6 @@
 
         <TextView
             android:id="@+id/DashboardText"
-            style="@style/heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -72,7 +66,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"/>
+            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
+            android:textColor="@color/navy_blue"/>
 
         <TextView
             android:id="@+id/new_detections"

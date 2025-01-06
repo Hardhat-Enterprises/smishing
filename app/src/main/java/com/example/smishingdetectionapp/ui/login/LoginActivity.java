@@ -3,13 +3,19 @@ package com.example.smishingdetectionapp.ui.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -24,12 +30,14 @@ import com.example.smishingdetectionapp.DataBase.DBresult;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
+import com.example.smishingdetectionapp.SharedActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
@@ -50,8 +58,8 @@ public class LoginActivity extends AppCompatActivity {
     private Retrofitinterface retrofitinterface;
     private String BASE_URL = BuildConfig.SERVERIP;
 
-    private GoogleSignInOptions gso;
-    private GoogleSignInClient gsc;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +87,14 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         // View bindings
-        final EditText usernameEditText = binding.emailField;
+        final EditText usernameEditText = binding.email;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.loginButton;
         final ProgressBar loadingProgressBar = binding.progressbar;
+        final SignInButton googleBtn = binding.googleBtn;
         final Button registerButton = binding.registerButton;
         final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
 
-        // Toggle password visibility
         togglePasswordVisibility.setOnClickListener(new View.OnClickListener() {
             private boolean isPasswordVisible = false;
 
@@ -95,10 +103,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (isPasswordVisible) {
                     passwordEditText.setInputType(
                             InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    togglePasswordVisibility.setImageResource(R.drawable.ic_password_visibility_off);
+                    togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
                 } else {
                     passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-                    togglePasswordVisibility.setImageResource(R.drawable.ic_password_visibility);
+                    togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
                 }
                 passwordEditText.setSelection(passwordEditText.getText().length());
                 isPasswordVisible = !isPasswordVisible;
@@ -111,8 +119,20 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         gsc = GoogleSignIn.getClient(this, gso);
 
-        // Google Sign-In button click
-        binding.googleBtn.setOnClickListener(v -> signInWithGoogle());
+        // Sign out of Google account to allow fresh authentication
+        gsc.signOut().addOnCompleteListener(task -> {
+            Toast.makeText(this, "Signed out. Ready for fresh authentication.", Toast.LENGTH_SHORT).show();
+        });
+
+        // Handle Google Sign-In button click
+        googleBtn.setOnClickListener(v -> {
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+            if (acct != null) {
+                signOutGoogle(() -> signInGoogle());
+            } else {
+                signInGoogle();
+            }
+        });
 
         // Observe LoginFormState
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
@@ -129,7 +149,9 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
             public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) return;
+                if (loginResult == null) {
+                    return;
+                }
                 loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
@@ -138,28 +160,38 @@ public class LoginActivity extends AppCompatActivity {
                     updateUiWithUser(loginResult.getSuccess());
                 }
                 setResult(Activity.RESULT_OK);
+
                 finish();
             }
         });
 
-        // Login button click
-        loginButton.setOnClickListener(v -> handleLogin());
+        // Handle login button click
+        loginButton.setOnClickListener(v -> handleLoginDialog());
 
-        // Register button click
+        // Handle register button click
         registerButton.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterMain.class));
             finish();
         });
     }
 
-    // Handle Google Sign-In
-    private void signInWithGoogle() {
+    // Google Sign-In
+    void signInGoogle() {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent, 1000);
     }
 
+    // Google Sign-Out
+    void signOutGoogle(Runnable onSignOutComplete) {
+        gsc.signOut().addOnCompleteListener(task -> {
+            Toast.makeText(this, "Signed out of Google account.", Toast.LENGTH_SHORT).show();
+            onSignOutComplete.run();
+        });
+    }
+
+    // Handle the result of the Google Sign-In
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -167,38 +199,40 @@ public class LoginActivity extends AppCompatActivity {
                 task.getResult(ApiException.class);
                 navigateToMainActivity();
             } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(), "Google Sign-In failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void handleLogin() {
-        String email = binding.emailField.getText().toString();
-        String password = binding.password.getText().toString();
+    private void handleLoginDialog() {
+        final EditText usernameEditText = binding.email;
+        final EditText passwordEditText = binding.password;
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("email", email);
-        map.put("password", password);
+        map.put("email", usernameEditText.getText().toString());
+        map.put("password", passwordEditText.getText().toString());
 
-        retrofitinterface.executeLogin(map).enqueue(new Callback<DBresult>() {
+        Call<DBresult> call = retrofitinterface.executeLogin(map);
+        call.enqueue(new Callback<DBresult>() {
             @Override
             public void onResponse(Call<DBresult> call, Response<DBresult> response) {
                 if (response.code() == 200) {
                     navigateToMainActivity();
-                } else {
+                } else if (response.code() == 404) {
                     Toast.makeText(LoginActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<DBresult> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onFailure(Call<DBresult> call, Throwable throwable) {
+                Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
+                navigateToMainActivity();
             }
         });
     }
 
     private boolean isUserLoggedIn() {
-        // Placeholder for actual login state check
+        // Placeholder for checking login state
         return false;
     }
 
@@ -217,4 +251,3 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 }
-

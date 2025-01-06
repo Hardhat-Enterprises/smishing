@@ -8,11 +8,8 @@
     tools:context=".HelpActivity">
 
     <ScrollView
-        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -20,12 +17,11 @@
 
             <ImageButton
                 android:id="@+id/report_back"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@null"
-                android:contentDescription="@string/back_button_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_button" />
@@ -44,11 +40,11 @@
 
             <TextView
                 android:id="@+id/ReportText"
-                style="@style/heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/help_page"
+                android:textColor="@color/navy_blue"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +182,7 @@
                     android:layout_centerInParent="true"
                     android:background="@drawable/circle_background"
                     android:padding="10dp"
-                    android:src="@drawable/feedback_icon"/>
+                    android:src="@drawable/feedback_icon" />
 
                 <TextView
                     android:layout_width="match_parent"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,20 +7,81 @@
     android:layout_height="match_parent"
     tools:context=".SmishingRulesActivity">
 
-    <!-- Back Button -->
-    <ImageButton
-        android:id="@+id/filtering_back"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+    <EditText
+        android:id="@+id/keywordsFilterList"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/keywordLabel" />
+
+    <Button
+        android:id="@+id/setKeywordButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="@null"
-        app:srcCompat="@drawable/back_button"
-        android:contentDescription="@string/back_button_description"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/buttons_rounded"
+        android:text="@string/set_keyword_btn"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/keywordsFilterList" />
+
+    <TextView
+        android:id="@+id/keywordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="200dp"
+        android:text="@string/keywords_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Logo -->
+    <EditText
+        android:id="@+id/pnFilterList"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="Smishing Message"
+        android:gravity="top|start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pnFilterLabel"
+        android:inputType="phone"/>
+
+    <Button
+        android:id="@+id/setpnButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/buttons_rounded"
+        android:text="@string/set_pn_btn"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pnFilterList" />
+
+    <TextView
+        android:id="@+id/pnFilterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/pn_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setKeywordButton" />
+
     <ImageView
         android:id="@+id/HardhatLogo"
         android:layout_width="112dp"
@@ -31,10 +91,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hardhat_logo"
-        android:contentDescription="@string/logo_description" />
+        app:srcCompat="@drawable/hardhat_logo" />
 
-    <!-- Page Title -->
     <TextView
         android:id="@+id/FilteringText"
         android:layout_width="wrap_content"
@@ -43,108 +101,20 @@
         android:text="@string/filtering_page"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="@color/navy_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
+        android:textColor="@color/navy_blue"/>
 
-    <!-- Scrollable Content -->
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    <ImageButton
+        android:id="@+id/filtering_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/FilteringText"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@null"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!-- Keyword Filter Label -->
-            <TextView
-                android:id="@+id/keywordLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/keywords_label"
-                android:textColor="@color/navy_blue"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Keyword Filter Input -->
-            <EditText
-                android:id="@+id/keywordsFilterList"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="top|start"
-                android:hint="@string/keywords_label"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/keywordLabel" />
-
-            <!-- Keyword Set Button -->
-            <Button
-                android:id="@+id/setKeywordButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/set_keyword_btn"
-                android:textSize="20sp"
-                android:background="@drawable/buttons_rounded"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/keywordsFilterList" />
-
-            <!-- Phone Number Filter Label -->
-            <TextView
-                android:id="@+id/pnFilterLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/pn_label"
-                android:textColor="@color/navy_blue"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setKeywordButton" />
-
-            <!-- Phone Number Filter Input -->
-            <EditText
-                android:id="@+id/pnFilterList"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="top|start"
-                android:hint="@string/pn_label"
-                android:inputType="phone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pnFilterLabel" />
-
-            <!-- Phone Number Set Button -->
-            <Button
-                android:id="@+id/setpnButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="12dp"
-                android:text="@string/set_pn_btn"
-                android:textSize="20sp"
-                android:background="@drawable/buttons_rounded"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pnFilterList" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

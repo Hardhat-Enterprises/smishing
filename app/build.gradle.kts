@@ -11,12 +11,12 @@ android {
 
     buildFeatures {
         buildConfig = true
-        viewBinding = true
-        compose = true
     }
+
 
     defaultConfig {
         ndk {
+            // On Apple silicon, you can omit x86_64.
             abiFilters += listOf("arm64-v8a", "x86_64")
         }
         applicationId = "com.example.smishingdetectionapp"
@@ -26,49 +26,48 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        // Custom configuration fields
         buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
         buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http://10.0.2.16:3000\"")
-
+        buildConfigField("String", "SERVERIP", "\"http:192.168.?.?:3000\"")
         vectorDrawables {
             useSupportLibrary = true
         }
-    }
+
+
+
+
+
+   }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-
+//    ndk {
+//        abiFilters("armeabi-v7a", "x86")
+//    }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+
+
+    }
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
-
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
-
     packaging {
         resources {
-            excludes += listOf(
-                "META-INF/NOTICE.md",
-                "META-INF/LICENSE.md",
-                "META-INF/DEPENDENCIES",
-                "META-INF/LICENSE",
-                "META-INF/NOTICE"
-            )
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 
@@ -78,23 +77,6 @@ android {
 }
 
 dependencies {
-    // SQLite Helper Library
-    implementation("com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1")
-
-    // Email and Activation Libraries
-    implementation("com.sun.mail:android-mail:1.6.7") {
-        exclude(group = "javax.activation", module = "activation")
-    }
-
-    // Networking Libraries
-    implementation("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.squareup.retrofit2:converter-simplexml:2.11.0") {
-        exclude(group = "javax.activation")
-    }
-
-    // Android Libraries
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -112,24 +94,9 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.activity)
+    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
     implementation(libs.biometric)
     implementation(libs.play.services.tasks)
-
-    // Additional Dependencies
-    implementation(files("libs/sqliteassethelper-2.0.1.jar"))
-    implementation(files("libs/activation.jar"))
-    implementation(files("libs/additional.jar"))
-    implementation(files("libs/mail.jar"))
-
-    // Markwon Libraries
-    implementation("io.noties.markwon:core:4.6.2")
-    implementation("io.noties.markwon:html:4.6.2")
-    implementation("io.noties.markwon:image:4.6.2")
-
-    // Google Play Services Auth
-    implementation("com.google.android.gms:play-services-auth:20.0.0")
-
-    // Testing Libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -137,5 +104,18 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
+    implementation ("com.google.android.material:material:1.2.0-alpha02")
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/mail.jar"))
+    implementation("io.noties.markwon:core:4.6.2")
+    implementation("io.noties.markwon:html:4.6.2")
+    implementation("io.noties.markwon:image:4.6.2")
+    implementation("com.google.android.gms:play-services-auth:20.0.0")
+
 }
 
