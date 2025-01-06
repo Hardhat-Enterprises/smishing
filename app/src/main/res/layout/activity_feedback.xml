@@ -2,144 +2,110 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:padding="@dimen/activity_horizontal_margin">
 
     <!-- Back Button -->
     <ImageButton
-        android:id="@+id/report_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:id="@+id/feedback_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@null"
-        android:src="@drawable/back_button"
-        android:contentDescription="@string/back_button_description" />
+        android:contentDescription="@string/image_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_button" />
 
-    <!-- Company Logo -->
+    <!-- Hardhat Logo -->
     <ImageView
-        android:id="@+id/HardhatLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/hardhatLogo"
+        android:layout_width="112dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/hardhat_logo" />
+        android:contentDescription="@string/logo_description"
+        app:srcCompat="@drawable/hardhat_logo" />
 
     <!-- Feedback Header -->
     <TextView
         android:id="@+id/feedbackHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/HardhatLogo"
+        android:paddingBottom="@dimen/nav_header_vertical_spacing"
+        android:layout_below="@id/hardhatLogo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
         android:text="@string/feedback"
-        android:textSize="24sp"
+        android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="@color/navy_blue" />
+        android:textColor="@color/navy_blue"/>
+
+    <!-- Feedback Form Below -->
+
+    <!-- Name Input -->
+    <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/feedbackHeader"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:padding="10dp"/>
+
 
     <!-- Feedback Input -->
     <EditText
         android:id="@+id/feedbackInput"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/feedbackHeader"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/edittext_background"
-        android:hint="@string/feedback_hint"
-        android:gravity="top|start"
-        android:padding="10dp" />
-
-    <!-- Emoji Feedback -->
-    <LinearLayout
-        android:id="@+id/emojiContainer"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/feedbackInput"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/emojiAngry"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_emoji_angry"
-            android:contentDescription="@string/emoji_angry" />
-
-        <ImageView
-            android:id="@+id/emojiSad"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_emoji_sad"
-            android:contentDescription="@string/emoji_sad" />
-
-        <ImageView
-            android:id="@+id/emojiNeutral"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_emoji_neutral"
-            android:contentDescription="@string/emoji_neutral" />
-
-        <ImageView
-            android:id="@+id/emojiHappy"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_emoji_happy"
-            android:contentDescription="@string/emoji_happy" />
-
-        <ImageView
-            android:id="@+id/emojiExcited"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_emoji_excited"
-            android:contentDescription="@string/emoji_excited" />
-    </LinearLayout>
+        android:layout_below="@+id/nameInput"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:hint="@string/enter_feedback"
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:gravity="top"
+        android:padding="10dp"/>
 
     <!-- Rating Bar -->
     <TextView
         android:id="@+id/ratingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/emojiContainer"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
         android:text="@string/rate_your_experience"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/navy_blue" />
+        android:textColor="@color/navy_blue"
+        android:layout_below="@+id/feedbackInput"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing" />
 
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ratingLabel"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
         android:layout_centerHorizontal="true"
         android:numStars="5"
         android:stepSize="1.0"
-        android:rating="0" />
+        android:rating="0"/>
 
     <!-- Submit Button -->
     <Button
-        android:id="@+id/btnSubmit"
+        android:id="@+id/submitFeedbackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/submitfeedback"
+        android:textSize="18sp"
         android:layout_below="@+id/ratingBar"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/buttons_rounded"
-        android:text="@string/submit"
+        android:backgroundTint="@color/navy_blue"
         android:textColor="@android:color/white"
         android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp" />
+        android:paddingVertical="10dp"/>
 
 </RelativeLayout>
