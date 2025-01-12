@@ -43,6 +43,11 @@ public class AccountActivity extends SharedActivity {
             bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
         });
 
+        Button pin_changeBtn = findViewById(R.id.pinBtn);
+        pin_changeBtn.setOnClickListener(v -> {
+            PopupPIN bottomSheet = new PopupPIN();
+            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        });
         // Opens the email change window
         Button email_changeBtn = findViewById(R.id.emailBtn);
         email_changeBtn.setOnClickListener(v -> {

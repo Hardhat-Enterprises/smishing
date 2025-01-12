@@ -323,7 +323,63 @@ public Cursor getReportsForSpecificDate(String specificDate) {
         }
     }
 
+    public boolean validateLogin(String email, String password) {
+        String query = "SELECT * FROM Login WHERE email = ? AND password = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email, password});
+        boolean isValid = cursor.getCount() > 0;
+        cursor.close();
+        return isValid;
+    }
+    public boolean validatePin(String pin) {
+        try {
+            String query = "SELECT * FROM Login WHERE pin = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{pin});
 
+            boolean isValid = cursor.getCount() > 0; // Check if any row exists
+            cursor.close(); // Close the cursor to prevent memory leaks
 
+            return isValid; // Return true if the PIN is valid, otherwise false
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Return false in case of any error
+        }
+    }
 
+    public boolean insertLogin(String name, String email, String phoneNumber, String password, String pin) {
+        try {
+            System.out.println("Hereee ::");
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("Name", name);
+            contentValues.put("Email", email);
+            contentValues.put("PhoneNumber", phoneNumber); // Ensure this is a valid integer string
+            contentValues.put("Password", password);
+            contentValues.put("Pin", pin); // Ensure this is a valid integer string
+            System.out.println("Hereee :");
+            long result = db.insert("Login", null, contentValues);
+            System.out.println("Hereee :"+ result);
+            return result != -1; // Return true if insert was successful
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Return false if an exception occurred
+        }
+    }
+    public boolean createPIN(String newPIN) {
+        try {
+            String query = "SELECT * FROM Login";
+            Cursor cursor = db.rawQuery(query, null);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("Pin", newPIN); // Ensure "Pin" matches your column name in the Login table
+            if (cursor != null && cursor.moveToFirst()) {
+                int rowsUpdated = db.update("Login", contentValues, null, null);
+                cursor.close();
+                return rowsUpdated > 0; // Return true if at least one row was updated
+            } else {
+                long result = db.insert("Login", null, contentValues);
+                return result != -1; // Return true if the insert was successful
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Return false if an error occurs
+        }
+    }
 }
