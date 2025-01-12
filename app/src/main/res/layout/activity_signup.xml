@@ -60,7 +60,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/signupTitle" />
 
-    <!-- Phone Number Input -->
     <EditText
         android:id="@+id/pnInput"
         android:layout_width="0dp"
@@ -86,6 +85,18 @@
         app:layout_constraintTop_toBottomOf="@id/pnInput" />
 
     <EditText
+        android:id="@+id/pinInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="@string/Pin_label"
+        android:inputType="numberPassword"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emailInput" />
+
+    <EditText
         android:id="@+id/pwInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -95,7 +106,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailInput" />
+        app:layout_constraintTop_toBottomOf="@id/pinInput" />
 
     <!-- Password Note -->
     <TextView
@@ -123,6 +134,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password_note" />
 
+    <!-- Terms Container -->
     <LinearLayout
         android:id="@+id/terms_container"
         android:layout_width="0dp"
@@ -136,16 +148,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pw2Input">
 
-        <TextView
-            android:id="@+id/terms_conditions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="none"
-            android:linksClickable="true"
-            android:text="@string/view_terms_and_conditions"
-            android:textColor="@color/red"
-            android:textStyle="bold"
-            android:textSize="16sp" />
     </LinearLayout>
 
     <Button
@@ -162,5 +164,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/terms_container" />
+
+    <TextView
+        android:id="@+id/terms_conditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="none"
+        android:linksClickable="true"
+        android:text="Click here to accept the terms and complete registration."
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/terms_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

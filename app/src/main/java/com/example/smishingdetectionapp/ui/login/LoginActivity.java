@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SharedActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
+import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -60,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+	private boolean isPinLogin = false;  // Flag for PIN login
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,54 @@ public class LoginActivity extends AppCompatActivity {
         final SignInButton googleBtn = binding.googleBtn;
         final Button registerButton = binding.registerButton;
         final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
+		
+		// Toggle functionality for PIN and Password login
+        togglePinLogin.setOnClickListener(v -> {
+            if (isPinLogin) {
+                // Switch to password login
+                passwordEditText.setHint("Password");
+                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                loginButton.setText("Login");
+                togglePinLogin.setText("Login with PIN");
+                isPinLogin = false;
+            } else {
+                // Switch to PIN login
+                passwordEditText.setHint("Enter 6-digit PIN");
+                passwordEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                loginButton.setText("Login with PIN");
+                togglePinLogin.setText("Login with Password");
+                isPinLogin = true;
+            }
+        });
+
+        // Handle login button click
+        loginButton.setOnClickListener(v -> {
+            String input = passwordEditText.getText().toString();
+            if (isPinLogin) {
+                // Handle PIN login
+                if (input.length() != 6) {
+                    passwordEditText.setError("PIN must be 6 digits");
+                    return;
+                }
+                loginWithPin(input);
+            } else {
+                // Handle password login
+                String email = usernameEditText.getText().toString();
+                if (email.isEmpty() || input.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Email and Password must not be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                loginWithPassword(email, input);
+            }
+        });
+
+        // Handle register button click
+        registerButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, RegisterMain.class));
+            finish();
+        });
+    }
+
 
         togglePasswordVisibility.setOnClickListener(new View.OnClickListener() {
             private boolean isPasswordVisible = false;
@@ -202,6 +253,42 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+	
+	    private void loginWithPin(String pin) {
+        // Open the database
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+
+        // Validate the PIN
+        boolean isValid = databaseAccess.validatePin(pin);
+
+        if (isValid) {
+            // PIN is valid
+            Toast.makeText(LoginActivity.this, "PIN verified successfully", Toast.LENGTH_SHORT).show();
+            navigateToMainActivity();
+        } else {
+            // Invalid PIN
+            Toast.makeText(LoginActivity.this, "Invalid PIN. Please try again.", Toast.LENGTH_LONG).show();
+        }
+
+        // Close the database
+        databaseAccess.close();
+    }
+	
+	private void loginWithPassword(String email, String password) {
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+
+        boolean isValid = databaseAccess.validateLogin(email, password);
+
+        if (isValid) {
+            navigateToMainActivity();
+        } else {
+            Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_LONG).show();
+        }
+
+        databaseAccess.close();
     }
 
     private void handleLoginDialog() {

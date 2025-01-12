@@ -60,6 +60,7 @@
     <string name="delete_accountBtn">Delete account</string>
     <string name="sign_outBtn">Sign out</string>
     <string name="session_timeoutBtn">Session Timeout</string>
+    <string name="pin_changeBtn">Pin</string>
 
     <string name="terms_and_conditions">
     &lt;b&gt;TERMS AND CONDITIONS&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
@@ -142,12 +143,14 @@
 
     <!-- Register Page Strings -->
     <string name="name_label">Full Name</string>
+    <string name="pin_label">Pin</string>
     <string name="email_label">Email</string>
+    <string name="Pin_label">Pin</string>
     <string name="pn_register_label">Phone Number</string>
     <string name="pw_register_label">Password</string>
     <string name="pw2_register_label">Confirm Password</string>
     <string name="register_btn">Register</string>
-    <string name="view_terms_and_conditions">please click on this terms and conditions to complete the registration</string>
+    <string name="view_terms_and_conditions">Click here to accept the terms and complete registration.</string>
     <string name="agree_terms_and_conditions">I agree to the terms and conditions</string>
 
     <!-- Detection Page Strings -->
