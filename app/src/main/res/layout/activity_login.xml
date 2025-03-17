@@ -78,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="@id/email"/>
 
         <!-- Toggle Login Type (Password / PIN) -->
-        <TextView
+        <Button
             android:id="@+id/togglePinLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +87,6 @@
             android:layout_marginStart="32dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/password" />
-
 
         <!-- Forgot Password Button -->
         <TextView
@@ -165,4 +164,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Toggle Password Visibility Icon -->
+        <ImageButton
+            android:id="@+id/togglePasswordVisibility"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_passwords_visibility"
+            android:contentDescription="Toggle passwords visibility"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintEnd_toEndOf="@id/password"
+            app:layout_constraintTop_toTopOf="@id/password" />
 </androidx.constraintlayout.widget.ConstraintLayout>

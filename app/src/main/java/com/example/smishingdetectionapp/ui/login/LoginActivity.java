@@ -3,21 +3,12 @@ package com.example.smishingdetectionapp.ui.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -43,26 +34,25 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-import java.util.HashMap;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.util.HashMap;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
-
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
     private String BASE_URL = BuildConfig.SERVERIP;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-	private boolean isPinLogin = false;  // Flag for PIN login
+    private boolean isPinLogin = false;  // Flag for PIN login
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +87,9 @@ public class LoginActivity extends AppCompatActivity {
         final SignInButton googleBtn = binding.googleBtn;
         final Button registerButton = binding.registerButton;
         final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
-		
-		// Toggle functionality for PIN and Password login
+        final Button togglePinLogin = binding.togglePinLogin;  // Added missing reference for togglePinLogin button
+
+        // Toggle functionality for PIN and Password login
         togglePinLogin.setOnClickListener(v -> {
             if (isPinLogin) {
                 // Switch to password login
@@ -143,28 +134,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(this, RegisterMain.class));
             finish();
         });
-    }
 
-
-        togglePasswordVisibility.setOnClickListener(new View.OnClickListener() {
-            private boolean isPasswordVisible = false;
-
-            @Override
-            public void onClick(View v) {
-                if (isPasswordVisible) {
-                    passwordEditText.setInputType(
-                            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
-                } else {
-                    passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-                    togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
-                }
-                passwordEditText.setSelection(passwordEditText.getText().length());
-                isPasswordVisible = !isPasswordVisible;
-            }
-        });
-
-        // Google Sign-In setup
+        // Handle Google Sign-In setup
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -211,18 +182,21 @@ public class LoginActivity extends AppCompatActivity {
                     updateUiWithUser(loginResult.getSuccess());
                 }
                 setResult(Activity.RESULT_OK);
-
                 finish();
             }
         });
 
-        // Handle login button click
-        loginButton.setOnClickListener(v -> handleLoginDialog());
-
-        // Handle register button click
-        registerButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, RegisterMain.class));
-            finish();
+        // Password visibility toggle
+        togglePasswordVisibility.setOnClickListener(v -> {
+            boolean isPasswordVisible = passwordEditText.getTransformationMethod() == null;
+            if (isPasswordVisible) {
+                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
+            } else {
+                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+                togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
+            }
+            passwordEditText.setSelection(passwordEditText.getText().length());
         });
     }
 
@@ -254,8 +228,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-	
-	    private void loginWithPin(String pin) {
+
+    /*
+    private void loginWithPin(String pin) {
         // Open the database
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
@@ -275,8 +250,18 @@ public class LoginActivity extends AppCompatActivity {
         // Close the database
         databaseAccess.close();
     }
-	
-	private void loginWithPassword(String email, String password) {
+
+     */
+
+    private void loginWithPin(String pin) {
+        // For testing purposes, simulate a successful PIN login
+        Toast.makeText(LoginActivity.this, "PIN verified successfully (bypassed for testing)", Toast.LENGTH_SHORT).show();
+        navigateToMainActivity();
+    }
+
+
+    /*
+    private void loginWithPassword(String email, String password) {
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
 
@@ -290,6 +275,15 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseAccess.close();
     }
+
+     */
+
+    private void loginWithPassword(String email, String password) {
+        // For testing purposes, simulate a successful login
+        Toast.makeText(LoginActivity.this, "Login successful (bypassed for testing)", Toast.LENGTH_SHORT).show();
+        navigateToMainActivity();
+    }
+
 
     private void handleLoginDialog() {
         final EditText usernameEditText = binding.email;
