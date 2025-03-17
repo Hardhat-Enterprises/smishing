@@ -159,6 +159,7 @@ public class RegisterMain extends AppCompatActivity {
         return true;
     }
 
+    /*
     private void validateAndCheckEmail(final String fullName, final String phoneNumber, final String email, final String password) {
         HashMap<String, String> map = new HashMap<>();
         map.put("email", email);
@@ -191,6 +192,25 @@ public class RegisterMain extends AppCompatActivity {
             }
         });
     }
+     */
+    // Bypassing verification for testing purposes
+    private void validateAndCheckEmail(final String fullName, final String phoneNumber, final String email, final String password) {
+        // Instead of calling the server, simulate a successful email check
+        String verificationCode = generateVerificationCode();
+
+        // Simulate sending the verification code via email
+        sendVerificationEmail(email, verificationCode);
+
+        // Skip the network call and directly navigate to the email verification screen
+        Intent intent = new Intent(RegisterMain.this, EmailVerify.class);
+        intent.putExtra("fullName", fullName);
+        intent.putExtra("phoneNumber", phoneNumber);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+        intent.putExtra("code", verificationCode);
+        startActivity(intent);
+    }
+
 
     private boolean isValidEmailAddress(String email) {
         try {
