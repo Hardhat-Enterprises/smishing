@@ -40,7 +40,7 @@ public class MainActivity extends SharedActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //  Check internet connection (Offline Mode trigger)
+        //  Check internet connection (Offline Mode trigger)(Mahir)
         if (!NetworkUtils.isConnected(this)) {
             Toast.makeText(this, "You are offline", Toast.LENGTH_LONG).show();
         }
