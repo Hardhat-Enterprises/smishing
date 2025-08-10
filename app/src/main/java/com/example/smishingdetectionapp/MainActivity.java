@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.smishingdetectionapp.utils.NetworkUtils;
+
 
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
@@ -49,6 +51,10 @@ public class MainActivity extends SharedActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //  Check internet connection (Offline Mode trigger)(Mahir)
+        if (!NetworkUtils.isConnected(this)) {
+            Toast.makeText(this, "You are offline", Toast.LENGTH_LONG).show();
+        }
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_report, R.id.nav_news, R.id.nav_settings)
