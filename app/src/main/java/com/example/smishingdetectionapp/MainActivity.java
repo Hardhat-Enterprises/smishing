@@ -1,49 +1,34 @@
 package com.example.smishingdetectionapp;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
-import com.example.smishingdetectionapp.Connectivity.ConnectivityMonitor;
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.DetectionsActivity;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.example.smishingdetectionapp.riskmeter.RiskScannerTCActivity;
-import com.example.smishingdetectionapp.utils.NetworkUtils;
+import com.example.smishingdetectionapp.ui.BaseOfflineActivity;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends SharedActivity {
+public class MainActivity extends BaseOfflineActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private boolean isBackPressed = false;
-
-    // Offline banner view
-    private TextView offlineBanner;
-
-    // For live connectivity updates (to drive the banner instantly)
-    private ConnectivityManager connectivityManager;
-    private ConnectivityManager.NetworkCallback networkCallback;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -52,25 +37,8 @@ public class MainActivity extends SharedActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Optional heads-up at launch (Mahir)
-        if (!NetworkUtils.isConnected(this)) {
-            Toast.makeText(this, "You are offline", Toast.LENGTH_LONG).show();
-        }
-
-        // 1) Initialize the global connectivity monitor (Mahir)
-        ConnectivityMonitor.init(getApplicationContext());
-
-        // 2) Observe connectivity changes (global LiveData) (Mahir)
-        ConnectivityMonitor.getIsConnected().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean connected) {
-                if (connected != null && connected) {
-                    Toast.makeText(MainActivity.this, "✅ Back Online", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "⚠️ Offline Mode Enabled", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        // Wire the reusable offline banner from BaseOfflineActivity
+        super.setupOfflineUI();
 
         // App bar config for NavigationUI
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -80,13 +48,6 @@ public class MainActivity extends SharedActivity {
         if (!areNotificationsEnabled()) {
             showNotificationPermissionDialog();
         }
-
-        // ===== Offline banner wiring (Pahul) =====
-        offlineBanner = findViewById(R.id.offline_banner);
-        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Initialize banner to current state
-        checkOfflineMode();
-        // ========================================
 
         // Bottom navigation
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
@@ -232,60 +193,6 @@ public class MainActivity extends SharedActivity {
         }
     }
 
-    // Register live network callbacks so the banner updates instantly (Pahul)
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && connectivityManager != null) {
-            networkCallback = new ConnectivityManager.NetworkCallback() {
-                @Override public void onAvailable(Network network) {
-                    runOnUiThread(() -> checkOfflineMode());
-                }
-                @Override public void onLost(Network network) {
-                    runOnUiThread(() -> checkOfflineMode());
-                }
-            };
-            try {
-                connectivityManager.registerDefaultNetworkCallback(networkCallback);
-            } catch (Exception ignored) { /* safe-guard */ }
-        } else {
-            // For older APIs, reflect current state when coming to foreground
-            checkOfflineMode();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && connectivityManager != null && networkCallback != null) {
-            try {
-                connectivityManager.unregisterNetworkCallback(networkCallback);
-            } catch (Exception ignored) { /* already unregistered or not set */ }
-        }
-    }
-
-    /** Show/hide the offline banner based on current connectivity (Pahul) */
-    private void checkOfflineMode() {
-        if (!isOnline()) {
-            if (offlineBanner != null) {
-                offlineBanner.setVisibility(View.VISIBLE);
-                offlineBanner.setText("⚠ You are currently offline. Some features may be limited.");
-            }
-        } else {
-            if (offlineBanner != null) offlineBanner.setVisibility(View.GONE);
-        }
-    }
-
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            @SuppressWarnings("deprecation")
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            return netInfo != null && netInfo.isConnected();
-        }
-        return false;
-    }
-
     // Press back twice to exit
     @Override
     public void onBackPressed() {
@@ -318,4 +225,18 @@ public class MainActivity extends SharedActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
+    /* Optional: react to offline/online specifically for this screen
+    @Override
+    protected void onWentOffline() {
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        if (nav != null) nav.getMenu().findItem(R.id.nav_news).setEnabled(false);
+    }
+
+    @Override
+    protected void onBackOnline() {
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        if (nav != null) nav.getMenu().findItem(R.id.nav_news).setEnabled(true);
+    }
+    */
 }
