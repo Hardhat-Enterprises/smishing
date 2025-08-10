@@ -8,6 +8,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Offline Banner -->
+    <TextView
+        android:id="@+id/offline_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/holo_red_dark"
+        android:text="⚠ You are offline — some features may be limited."
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="10dp"
+        android:visibility="gone" />
+
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -27,6 +41,7 @@
 
     <!-- Scrollable Main Content -->
     <ScrollView
+        android:layout_below="@id/offline_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation"
