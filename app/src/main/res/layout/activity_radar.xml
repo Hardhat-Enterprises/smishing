@@ -5,11 +5,19 @@
     android:layout_height="match_parent"
     android:background="#F4F9FF">
 
+    <!-- One single direct child for the ScrollView -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
+
+        <!--  Offline Banner(Pahul) -->
+        <include
+            android:id="@+id/offline_banner"
+            layout="@layout/view_offline_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <!-- 🔙 Back Button -->
         <ImageButton

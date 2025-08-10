@@ -31,11 +31,13 @@ import com.example.smishingdetectionapp.news.OnFetchDataListener;
 import com.example.smishingdetectionapp.news.SavedNewsActivity;
 import com.example.smishingdetectionapp.news.SelectListener;
 import com.example.smishingdetectionapp.notifications.NotificationType;
+import com.example.smishingdetectionapp.ui.BaseOfflineActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
-public class NewsActivity extends SharedActivity implements SelectListener {
+public class NewsActivity extends BaseOfflineActivity implements SelectListener {
+
     RecyclerView recyclerView;
     NewsAdapter adapter; // moved to class scope to reuse
     NewsRequestManager manager;
