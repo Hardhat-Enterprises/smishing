@@ -14,25 +14,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.smishingdetectionapp.utils.NetworkUtils;
-
 
 import androidx.core.app.NotificationManagerCompat;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
+import com.example.smishingdetectionapp.Connectivity.ConnectivityMonitor;
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.DetectionsActivity;
-import com.example.smishingdetectionapp.RadarActivity;
-import com.example.smishingdetectionapp.riskmeter.RiskScannerTCActivity;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.smishingdetectionapp.riskmeter.RiskScannerTCActivity;
+import com.example.smishingdetectionapp.utils.NetworkUtils;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends SharedActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -41,7 +41,7 @@ public class MainActivity extends SharedActivity {
     // Offline banner view
     private TextView offlineBanner;
 
-    // For live connectivity updates
+    // For live connectivity updates (to drive the banner instantly)
     private ConnectivityManager connectivityManager;
     private ConnectivityManager.NetworkCallback networkCallback;
 
@@ -51,26 +51,44 @@ public class MainActivity extends SharedActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //  Check internet connection (Offline Mode trigger)(Mahir)
+
+        // Optional heads-up at launch (Mahir)
         if (!NetworkUtils.isConnected(this)) {
             Toast.makeText(this, "You are offline", Toast.LENGTH_LONG).show();
         }
 
+        // 1) Initialize the global connectivity monitor (Mahir)
+        ConnectivityMonitor.init(getApplicationContext());
+
+        // 2) Observe connectivity changes (global LiveData) (Mahir)
+        ConnectivityMonitor.getIsConnected().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean connected) {
+                if (connected != null && connected) {
+                    Toast.makeText(MainActivity.this, "✅ Back Online", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "⚠️ Offline Mode Enabled", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // App bar config for NavigationUI
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_report, R.id.nav_news, R.id.nav_settings)
-                .build();
+                R.id.nav_home, R.id.nav_report, R.id.nav_news, R.id.nav_settings
+        ).build();
 
         if (!areNotificationsEnabled()) {
             showNotificationPermissionDialog();
         }
 
-        // ===== Offline banner wiring (Pahul's part) =====
+        // ===== Offline banner wiring (Pahul) =====
         offlineBanner = findViewById(R.id.offline_banner);
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // initial state on launch
+        // Initialize banner to current state
         checkOfflineMode();
-        // ================================================
+        // ========================================
 
+        // Bottom navigation
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setSelectedItemId(R.id.nav_home);
         nav.setOnItemSelectedListener(menuItem -> {
@@ -93,6 +111,7 @@ public class MainActivity extends SharedActivity {
             return false;
         });
 
+        // Buttons
         Button debug_btn = findViewById(R.id.debug_btn);
         debug_btn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DebugActivity.class)));
 
@@ -103,10 +122,8 @@ public class MainActivity extends SharedActivity {
         });
 
         Button learnMoreButton = findViewById(R.id.fragment_container);
-        learnMoreButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, EducationActivity.class);
-            startActivity(intent);
-        });
+        learnMoreButton.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, EducationActivity.class)));
 
         Button scanner_btn = findViewById(R.id.scanner_btn);
         scanner_btn.setOnClickListener(v -> {
@@ -115,9 +132,10 @@ public class MainActivity extends SharedActivity {
         });
 
         Button radarBtn = findViewById(R.id.radar_btn);
-        radarBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, RadarActivity.class)));
+        radarBtn.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, RadarActivity.class)));
 
-        // Database connection
+        // Database connection (for totals)
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
 
@@ -125,11 +143,11 @@ public class MainActivity extends SharedActivity {
         TextView total_count = findViewById(R.id.total_counter);
 
         infoText.setText("Welcome to Smishing Detection! Your real-time tool to deter and detect smishing attacks.\nYour app is ready to smish.");
-        total_count.setText("" + databaseAccess.getCounter());
+        total_count.setText(String.valueOf(databaseAccess.getCounter()));
 
         databaseAccess.close();
 
-        // TapTarget guide
+        // Onboarding guide
         boolean showGuideNow = getIntent().getBooleanExtra("showGuide", false);
         if (showGuideNow) {
             findViewById(R.id.debug_btn).post(() -> {
@@ -202,7 +220,7 @@ public class MainActivity extends SharedActivity {
                             }
 
                             @Override
-                            public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {}
+                            public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) { }
 
                             @Override
                             public void onSequenceCanceled(TapTarget lastTarget) {
@@ -214,20 +232,24 @@ public class MainActivity extends SharedActivity {
         }
     }
 
-    // Register live network callbacks so the banner updates instantly
+    // Register live network callbacks so the banner updates instantly (Pahul)
     @Override
     protected void onStart() {
         super.onStart();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && connectivityManager != null) {
             networkCallback = new ConnectivityManager.NetworkCallback() {
-                @Override public void onAvailable(Network network) { runOnUiThread(() -> checkOfflineMode()); }
-                @Override public void onLost(Network network) { runOnUiThread(() -> checkOfflineMode()); }
+                @Override public void onAvailable(Network network) {
+                    runOnUiThread(() -> checkOfflineMode());
+                }
+                @Override public void onLost(Network network) {
+                    runOnUiThread(() -> checkOfflineMode());
+                }
             };
             try {
                 connectivityManager.registerDefaultNetworkCallback(networkCallback);
-            } catch (Exception ignored) { /* fail-safe */ }
+            } catch (Exception ignored) { /* safe-guard */ }
         } else {
-            // For older APIs, we at least reflect current state when coming to foreground
+            // For older APIs, reflect current state when coming to foreground
             checkOfflineMode();
         }
     }
@@ -238,21 +260,17 @@ public class MainActivity extends SharedActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && connectivityManager != null && networkCallback != null) {
             try {
                 connectivityManager.unregisterNetworkCallback(networkCallback);
-            } catch (Exception ignored) { /* already unregistered */ }
+            } catch (Exception ignored) { /* already unregistered or not set */ }
         }
     }
 
-    /**
-     * Check if device is offline and display the Offline Banner dynamically.
-     */
+    /** Show/hide the offline banner based on current connectivity (Pahul) */
     private void checkOfflineMode() {
         if (!isOnline()) {
             if (offlineBanner != null) {
                 offlineBanner.setVisibility(View.VISIBLE);
                 offlineBanner.setText("⚠ You are currently offline. Some features may be limited.");
             }
-            // optional: toast only once if you prefer; leaving as-is per your original method
-            Toast.makeText(this, "Offline Mode Enabled", Toast.LENGTH_SHORT).show();
         } else {
             if (offlineBanner != null) offlineBanner.setVisibility(View.GONE);
         }
@@ -261,6 +279,7 @@ public class MainActivity extends SharedActivity {
     private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
+            @SuppressWarnings("deprecation")
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             return netInfo != null && netInfo.isConnected();
         }
