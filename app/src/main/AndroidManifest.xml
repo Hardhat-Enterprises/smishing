@@ -121,6 +121,8 @@
         <!-- Radar -->
         <activity android:name=".RadarActivity" android:exported="true" />
 
+
+
         <!-- File Provider -->
         <provider
             android:name="androidx.core.content.FileProvider"

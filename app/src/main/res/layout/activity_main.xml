@@ -7,7 +7,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <!-- Offline Banner -->
+    <TextView
+        android:id="@+id/offline_Banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:text="⚠ You are currently offline"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:layout_alignParentTop="true"/>
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -215,33 +227,84 @@
                     android:contentDescription="@string/baseline_access_time_24_alt"/>
             </FrameLayout>
 
-            <!-- Main Action Buttons -->
-            <Button
-                android:id="@+id/detections_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/detectionsBtn"
-                android:textSize="18sp"
-                android:layout_margin="16dp"
-                android:background="@drawable/buttons_rounded"
-                app:layout_constraintTop_toBottomOf="@id/total_detections_container"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <Button
-                android:id="@+id/scanner_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Risk Scanner"
-                android:textSize="18sp"
+            <!-- View Detections Frame -->
+            <FrameLayout
+                android:id="@+id/view_detections_container"
+                android:layout_width="181dp"
+                android:layout_height="101dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/total_detections_container"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/view_detections_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/counter_buttons" />
+
+                <!-- Center icon -->
+                <ImageView
+                    android:id="@+id/view_detections_icon"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_view"
+                    android:contentDescription="@string/icon_view_alt" />
+
+                <!-- Bottom label -->
+                <TextView
+                    android:id="@+id/view_detections_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_detections"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:layout_gravity="bottom"/>
+            </FrameLayout>
+
+            <!-- Risk Scanner Frame -->
+            <FrameLayout
+                android:id="@+id/risk_scanner_container"
+                android:layout_width="180dp"
+                android:layout_height="101dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/buttons_rounded"
-                app:layout_constraintTop_toBottomOf="@id/detections_btn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/total_detections_container"
+                app:layout_constraintEnd_toEndOf="parent">
 
+                <TextView
+                    android:id="@+id/risk_scanner_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/counter_buttons" />
+
+                <!-- Center icon -->
+                <ImageView
+                    android:id="@+id/risk_scanner_icon"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_scan"
+                    android:contentDescription="@string/icon_scan_alt" />
+
+                <!-- Bottom label -->
+                <TextView
+                    android:id="@+id/risk_scanner_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/risk_scanner"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:layout_gravity="bottom"/>
+            </FrameLayout>
+
+
+            <!-- Main Action Buttons -->
             <Button
                 android:id="@+id/fragment_container"
                 android:layout_width="0dp"
@@ -252,7 +315,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/buttons_rounded"
-                app:layout_constraintTop_toBottomOf="@id/scanner_btn"
+                app:layout_constraintTop_toBottomOf="@id/risk_scanner_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

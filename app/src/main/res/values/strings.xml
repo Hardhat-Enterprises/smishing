@@ -53,6 +53,8 @@
     <string name="detectionsBtn">View Detections</string>
     <string name="new_detectionsTxt">New detections</string>
     <string name="total_detectionsTxt">Total detections</string>
+    <string name="view_detections">View Detections</string>
+    <string name="risk_scanner">Risk Scanner</string>
 
     <!-- Account Settings Page Buttons -->
     <string name="password_changeBtn">Change Password</string>
@@ -370,6 +372,8 @@
     <string name="send_icon_alt">White tringle pointing to the right with a thinner triangle shape removed from the center</string>
     <string name="side_nav_bar_alt">Solid teal square</string>
     <string name="user_message_background_alt">Solid dark blue square</string>
+    <string name="icon_view_alt">View detections icon</string>
+    <string name="icon_scan_alt">Risk scanner icon</string>
 
     <!-- Miscellaneous -->
     <string name="buttons_rounded_alt">Rounded corner background used for buttons</string>
@@ -383,6 +387,10 @@
     <string name="Forums_and_Report">Forums &amp; Report</string>
     <string name="word_count_format">Words: %1$d / %2$d</string>
     <string name="feedback_success">Feedback submitted successfully!</string>
+    <string name="invite_friend">Invite a Friend</string>
+    <string name="share_to_story">Share to story</string>
+
+
     <!-- Contact Us Strings -->
     <string name="contact_us">Contact Us</string>
     <string name="app_logo">App Logo</string>

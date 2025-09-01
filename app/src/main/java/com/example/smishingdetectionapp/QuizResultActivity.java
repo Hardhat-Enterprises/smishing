@@ -89,9 +89,20 @@ public class QuizResultActivity extends AppCompatActivity {
         Button homeButton = findViewById(R.id.backToHomeButton);
         homeButton.setOnClickListener(v -> finish());
 
-        // Share button
         shareButton = findViewById(R.id.shareButton);
-        shareButton.setOnClickListener(v -> captureAndShareScreenshot());
+        shareButton.setOnClickListener(v -> {
+            new android.app.AlertDialog.Builder(QuizResultActivity.this)
+                    .setTitle("Share Result")
+                    .setMessage("How would you like to share your quiz result?")
+                    .setPositiveButton("Text", (dialog, which) -> {
+                        shareTextResult(score, totalQuestions);
+                    })
+                    .setNegativeButton("Screenshot", (dialog, which) -> {
+                        captureAndShareScreenshot();
+                    })
+                    .show();
+        });
+
     }
 
     private void addQuestionReview(LinearLayout layout, int index, String question, String[] choices, int userAnswer, int correctAnswer, int timeTaken) {
@@ -177,4 +188,19 @@ public class QuizResultActivity extends AppCompatActivity {
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(shareIntent, "Share Quiz Result"));
     }
+
+    private void shareTextResult(int score, int totalQuestions) {
+        String message = "I just scored " + score + "/" + totalQuestions +
+                " in a Smishing Awareness Quiz! 🚨📱\n" +
+                "Think you can beat me?\nDownload the app and test yourself now!";
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, "Share your quiz result");
+        startActivity(shareIntent);
+    }
+
 }
