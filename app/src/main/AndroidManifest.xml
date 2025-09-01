@@ -161,6 +161,19 @@
         <activity
             android:name=".RadarActivity"
             android:exported="true" /> <!-- File Provider -->
+
+        <activity android:name=".Community.CommunityReportActivity" android:label="Community – Report" />
+
+        <!-- Feedback -->
+        <activity android:name=".FeedbackActivity" android:exported="false" />
+        <activity android:name=".FeedbackHistoryActivity" android:exported="false"/>
+
+        <!-- Radar -->
+        <activity android:name=".RadarActivity" android:exported="true" />
+
+
+
+        <!-- File Provider -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.smishingdetectionapp.fileprovider"

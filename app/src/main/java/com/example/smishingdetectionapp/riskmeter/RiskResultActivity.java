@@ -17,6 +17,13 @@ import android.text.style.AlignmentSpan;
 import android.text.style.StyleSpan;
 import android.text.Layout;
 import android.graphics.Typeface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
+import android.os.Environment;
+import androidx.core.content.FileProvider;
+import java.io.File;
+import java.io.FileOutputStream;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -112,6 +119,44 @@ public class RiskResultActivity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
+        Button shareRiskButton = findViewById(R.id.shareRiskButton);
+        shareRiskButton.setOnClickListener(v -> {
+            // Prefer the logic’s canonical score, fall back to parsing the TextView.
+            int score = RiskScannerLogic.getCalculatedScore();
+            if (score <= 0) {
+                // Fallback: parse "71%" from percentageText
+                try {
+                    String pct = percentageText.getText().toString().replace("%", "").trim();
+                    score = Integer.parseInt(pct);
+                } catch (Exception ignored) {
+                    score = -1;
+                }
+            }
+
+            String appName = getString(R.string.app_name);
+            String msg;
+            if (score >= 0) {
+                msg = "My smishing risk score is " + score + "%. Try it yourself!";
+            } else {
+                // Extra-safe fallback if score unavailable
+                msg = "Check your smishing risk score with " + appName + "! Try it yourself!";
+            }
+
+            // include a link (Play Store style link using your package name)
+            String link = "https://play.google.com/store/apps/details?id=" + getPackageName();
+            String payload = msg + "\n" + link;
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, appName + " – Smishing Risk");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, payload);
+
+            startActivity(Intent.createChooser(shareIntent, "Share via"));
+        });
+        ImageButton btnShareStory = findViewById(R.id.btnShareStory);
+        btnShareStory.setOnClickListener(v -> shareStoryFlow());
+
+
     }
 
     // this is the animation for the progress bar to make the percentage and fill move
@@ -193,4 +238,98 @@ public class RiskResultActivity extends AppCompatActivity {
         closeBtn.setOnClickListener(v -> bottomSheetDialog.dismiss());
         bottomSheetDialog.show();
     }
+    private void shareStoryFlow() {
+        Bitmap bmp = captureViewBitmap(findViewById(android.R.id.content));
+        if (bmp == null) return;
+
+        File img = saveTempPng(bmp, "risk_result_story.png");
+        if (img == null) return;
+
+        Uri uri = FileProvider.getUriForFile(
+                this,
+                getPackageName() + ".fileprovider",
+                img
+        );
+
+        if (!shareToInstagramStories(uri)) {
+            if (!shareToFacebookStories(uri)) {
+                shareGenericImage(uri, "Here’s my smishing risk score from Smishing Detection!");
+            }
+        }
+    }
+
+    private Bitmap captureViewBitmap(View view) {
+        try {
+            Bitmap bitmap = Bitmap.createBitmap(
+                    view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private File saveTempPng(Bitmap bmp, String name) {
+        try {
+            File dir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share");
+            if (!dir.exists()) dir.mkdirs();
+            File f = new File(dir, name);
+            try (FileOutputStream out = new FileOutputStream(f)) {
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
+            }
+            return f;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private boolean shareToInstagramStories(Uri imageUri) {
+        try {
+            Intent intent = new Intent("com.instagram.share.ADD_TO_STORY");
+            intent.setDataAndType(imageUri, "image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra("content_url",
+                    "https://play.google.com/store/apps/details?id=" + getPackageName());
+
+            if (getPackageManager().resolveActivity(intent, 0) != null) {
+                grantUriPermission("com.instagram.android", imageUri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
+                return true;
+            }
+        } catch (Exception ignored) {}
+        return false;
+    }
+
+    private boolean shareToFacebookStories(Uri imageUri) {
+        try {
+            Intent intent = new Intent("com.facebook.stories.ADD_TO_STORY");
+            intent.setType("image/*");
+            intent.putExtra("com.facebook.platform.extra.APPLICATION_ID", getPackageName());
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra("background_asset_uri", imageUri);
+
+            if (getPackageManager().resolveActivity(intent, 0) != null) {
+                grantUriPermission("com.facebook.katana", imageUri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
+                return true;
+            }
+        } catch (Exception ignored) {}
+        return false;
+    }
+
+    private void shareGenericImage(Uri imageUri, String message) {
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("image/*");
+        send.putExtra(Intent.EXTRA_STREAM, imageUri);
+        send.putExtra(Intent.EXTRA_TEXT, message + "\n" +
+                "https://play.google.com/store/apps/details?id=" + getPackageName());
+        send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(send, "Share your risk score"));
+    }
+
 }

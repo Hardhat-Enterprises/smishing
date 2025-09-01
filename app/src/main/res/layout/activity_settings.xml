@@ -533,8 +533,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aboutUsBtn" />
 
-
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/inviteFriendsBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawablePadding="8dp"
+                android:focusable="true"
+                android:gravity="start|center_vertical"
+                android:padding="12dp"
+                android:text="Invite a friend"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contactUsBtn" />
+            
+            
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonSignOut"
@@ -547,7 +563,9 @@
                 android:text="@string/sign_outBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/contactUsBtn" />
+                app:layout_constraintTop_toBottomOf="@+id/inviteFriendsBtn" />
+
+
 
 
 
@@ -673,14 +691,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="4dp"
-                android:contentDescription="Contact Us Icon"
+                android:contentDescription="@string/outline_arrow_outward_24_alt"
                 app:layout_constraintEnd_toEndOf="@+id/contactUsBtn"
                 app:layout_constraintTop_toTopOf="@+id/contactUsBtn"
                 app:srcCompat="@drawable/outline_arrow_outward_24" />
+
+            <ImageView
+                android:id="@+id/imageViewInviteFriends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@string/outline_arrow_outward_24_alt"
+                app:layout_constraintEnd_toEndOf="@+id/inviteFriendsBtn"
+                app:layout_constraintTop_toTopOf="@+id/inviteFriendsBtn"
+                app:srcCompat="@drawable/outline_arrow_outward_24" />
+
 
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </RelativeLayout>
-

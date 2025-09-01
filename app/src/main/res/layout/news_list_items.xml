@@ -88,6 +88,18 @@
             android:lineSpacingExtra="2dp"
             android:maxLines="3"
             android:ellipsize="end" />
-      
+        <!-- Share Button -->
+        <Button
+            android:id="@+id/shareNewsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="Share"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/navy_blue" />
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
