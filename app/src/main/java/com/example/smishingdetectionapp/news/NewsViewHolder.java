@@ -1,6 +1,7 @@
 package com.example.smishingdetectionapp.news;
 
 import android.view.View;
+import android.widget.Button;           // <-- added
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
     TextView text_title, text_description, text_pubDate;
     CardView cardView;
     ImageButton bookmarkButton;
+    public Button shareNewsButton;     // <-- added
 
     public NewsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -22,6 +24,8 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         text_description = itemView.findViewById(R.id.text_description);
         text_pubDate = itemView.findViewById(R.id.text_pubDate);
         cardView = itemView.findViewById(R.id.card_view);
-        bookmarkButton = itemView.findViewById(R.id.bookmarkButton); //
+        bookmarkButton = itemView.findViewById(R.id.bookmarkButton);
+        shareNewsButton = itemView.findViewById(R.id.shareNewsButton); // <-- added
     }
 }
+
