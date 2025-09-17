@@ -11,9 +11,6 @@
         android:layout_height="match_parent"
         android:padding="24dp">
 
-        <!-- Centering Helper -->
-
-
         <!-- Group container -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/contentGroup"
@@ -30,7 +27,7 @@
                 android:layout_width="@dimen/image_size_large"
                 android:layout_height="@dimen/image_size_large"
                 android:layout_marginBottom="24dp"
-                android:contentDescription="Logo"
+                android:contentDescription="@string/logo_description"
                 android:scaleType="fitCenter"
                 android:src="@drawable/new_logo"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +39,7 @@
                 android:id="@+id/createAccountTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create Your Account"
+                android:text="@string/create_account_title"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_marginTop="24dp"
@@ -55,7 +52,7 @@
                 android:id="@+id/subTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Join in on the Journey to Better Cybersecurity"
+                android:text="@string/onboarding_subtitle"
                 android:textSize="14sp"
                 android:gravity="center"
                 android:layout_marginTop="24dp"
@@ -70,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/buttons_rounded"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 android:textAllCaps="false"
                 app:layout_constraintTop_toBottomOf="@id/subTitle"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,26 +80,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/button_clear_rounded"
-                android:text="Log In"
+                android:text="@string/log_in"
                 android:textAllCaps="false"
                 app:layout_constraintTop_toBottomOf="@id/signUpButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Terms -->
-
-<!--    <TextView->
-<!-        android:id="@+id/termsConditionsText"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="5dp"-->
-<!--        android:text="Click here for Terms and Conditions"-->
-<!--        android:textSize="12sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/loginButton" />-->
-            
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

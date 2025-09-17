@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
         android:background="@android:color/transparent"
-        android:text="Skip"
+        android:text="@string/skip_button"
         android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,7 @@
         android:layout_margin="@dimen/margin_xlarge"
         android:background="@drawable/buttons_rounded"
         android:backgroundTint="@color/baby_blue"
-        android:text="Next"
+        android:text="@string/next_button"
         android:textColor="@color/navy_blue"
         android:elevation="@dimen/elevation_high"
         android:translationZ="@dimen/translation_z"

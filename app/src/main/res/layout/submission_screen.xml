@@ -11,7 +11,7 @@
         android:id="@+id/thankYouText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thank you for your request !"
+        android:text="@string/thank_you_request"
         android:textColor="#26354D"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -21,7 +21,7 @@
         android:id="@+id/confirmationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="We have received your message. We will get back to you shortly !"
+        android:text="@string/confirmation_message"
         android:textColor="#26354D"
         android:textSize="16sp"
         android:gravity="center"
@@ -31,7 +31,7 @@
         android:id="@+id/exitToSettingsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Exit to Settings"
+        android:text="@string/exit_to_settings"
         android:backgroundTint="@color/baby_blue"
         android:textColor="@android:color/black"
         android:layout_marginBottom="16dp" />
@@ -40,7 +40,7 @@
         android:id="@+id/submitAnotherBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit Another Response"
+        android:text="@string/submit_another_response"
         android:backgroundTint="@color/baby_blue"
         android:textColor="@android:color/black" />
 
