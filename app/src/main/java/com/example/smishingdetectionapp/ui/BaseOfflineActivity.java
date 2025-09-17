@@ -20,13 +20,18 @@ public abstract class BaseOfflineActivity extends AppCompatActivity {
     private TextView bannerText;
     private Button retryBtn;
 
-    /** Hooks for children (optional) */
+    // Track last known state shown on this Activity
+    private Boolean lastOnlineShown = null;
+
+    // We ignore the very first emission from LiveData to avoid a “Back online” toast at login
+    private boolean hasObservedOnce = false;
+
+    /** Optional hooks for children */
     protected void onWentOffline() {}
     protected void onBackOnline() {}
     protected void onRetryClicked() {
-        // Force a UI reflect using the latest value; real screens can kick API retries here
         Boolean v = ConnectivityMonitor.getIsConnected().getValue();
-        reflectConnectivity(Boolean.TRUE.equals(v));
+        reflectBanner(Boolean.TRUE.equals(v)); // no snackbar on manual retry
     }
 
     @Override
@@ -53,10 +58,7 @@ public abstract class BaseOfflineActivity extends AppCompatActivity {
         setupOfflineUIAndObserver();
     }
 
-    /**
-     * Backward-compat shim: some activities may still call super.setupOfflineUI().
-     * Keep this method so those calls compile; it simply delegates to the real wiring.
-     */
+    /** Back-compat shim for older calls */
     protected final void setupOfflineUI() {
         setupOfflineUIAndObserver();
     }
@@ -70,29 +72,56 @@ public abstract class BaseOfflineActivity extends AppCompatActivity {
             retryBtn.setOnClickListener(v -> onRetryClicked());
         }
 
-        // Initial reflect (value may be null on first launch)
-        Boolean v = ConnectivityMonitor.getIsConnected().getValue();
-        reflectConnectivity(Boolean.TRUE.equals(v));
+        // Initial reflect: set banner correctly but DO NOT show any snackbar
+        Boolean initial = ConnectivityMonitor.getIsConnected().getValue();
+        boolean online = Boolean.TRUE.equals(initial);
+        reflectBanner(online);
+        lastOnlineShown = online;
 
         // Observe live changes tied to Activity lifecycle
-        ConnectivityMonitor.getIsConnected().observe(this, connected ->
-                reflectConnectivity(Boolean.TRUE.equals(connected)));
+        ConnectivityMonitor.getIsConnected().observe(this, connected -> {
+            boolean isOnline = Boolean.TRUE.equals(connected);
+
+            // Ignore the very first LiveData emission (often repeats the initial state)
+            if (!hasObservedOnce) {
+                hasObservedOnce = true;
+                lastOnlineShown = isOnline;
+                reflectBanner(isOnline); // keep banner correct, no snackbar
+                return;
+            }
+
+            // Update banner first (always)
+            reflectBanner(isOnline);
+
+            // Only show snackbar on a real transition from OFFLINE -> ONLINE
+            if (lastOnlineShown != null && !lastOnlineShown && isOnline) {
+                onBackOnline();
+                // Show “Back online” once for this transition
+                if (bannerRoot != null) {
+                    Snackbar.make(bannerRoot, "Back online", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            // Remember last state
+            lastOnlineShown = isOnline;
+
+            // Note: we intentionally do NOT show a snackbar going ONLINE -> OFFLINE
+            // The banner itself is a strong enough signal and avoids noise.
+        });
     }
 
-    protected void reflectConnectivity(boolean isOnline) {
-        if (bannerRoot == null) return; // layout doesn’t include a banner; no-op
+    /** Just keeps the banner visibility/text correct (never shows snackbars) */
+    private void reflectBanner(boolean isOnline) {
+        if (bannerRoot == null) return;
 
         if (isOnline) {
             bannerRoot.setVisibility(View.GONE);
-            onBackOnline();
-            Snackbar.make(bannerRoot, "Back online", Snackbar.LENGTH_SHORT).show();
         } else {
             bannerRoot.setVisibility(View.VISIBLE);
             if (bannerText != null) {
                 bannerText.setText("You’re offline. Some features are limited.");
             }
-            onWentOffline();
-            Snackbar.make(bannerRoot, "Offline mode", Snackbar.LENGTH_SHORT).show();
+            onWentOffline(); // give child Activities a hook if they want to dim buttons, etc.
         }
     }
 }
