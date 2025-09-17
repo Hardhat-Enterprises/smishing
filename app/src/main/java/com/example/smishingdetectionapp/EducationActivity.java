@@ -9,6 +9,11 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.bumptech.glide.Glide;
+import android.widget.ImageView;
+import android.widget.ImageButton;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.smishingdetectionapp.ui.CaseStudiesActivity;
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
@@ -21,6 +26,13 @@ public class EducationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_education);
+
+        // ===== Lazy load images with Glide =====
+        ImageButton backBtn = findViewById(R.id.education_back);
+        ImageView logoImage = findViewById(R.id.logoImage);
+
+        Glide.with(this).load(R.drawable.back_button).into(backBtn);
+        Glide.with(this).load(R.drawable.new_logo).into(logoImage);
 
         // Bottom navigation setup
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
