@@ -24,10 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hardhat.smishing.news.NewsScreen
 import com.hardhat.smishing.settings.SettingsScreen
+import com.hardhat.smishing.navigation.AppNav
 
 
 // Simple root state and two tabs
-private enum class Root { Startup, Main }
+private enum class Root { Startup, Nav }
 private enum class Tab(val title: String) { News("News"), Settings("Settings") }
 
 class MainActivity : ComponentActivity() {
@@ -43,8 +44,8 @@ fun App() {
         var root by rememberSaveable { mutableStateOf(Root.Startup) }
         Surface(Modifier.fillMaxSize()) {
             when (root) {
-                Root.Startup -> StartupScreen(onContinue = { root = Root.Main })
-                Root.Main -> MainTabs()
+                Root.Startup -> StartupScreen(onContinue = { root = Root.Nav })
+                Root.Nav -> AppNav()
             }
         }
     }
