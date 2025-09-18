@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="badge_green">#2E7D32</color>
+    <color name="badge_orange">#F57C00</color>
+    <color name="badge_red">#C62828</color>
+</resources>

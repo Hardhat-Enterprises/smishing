@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Teal-ish brand accent from your old UI -->
+    <color name="brand_primary">#3BB7C0</color>
+    <color name="brand_tint">#CFEFF0</color>
+</resources>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.smishingdetectionapp">
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,24 +15,12 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <!-- Ignored on API 29+; capped at 28 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
 
-    <!-- Legacy write permission (only up to Android 9 / API 28) -->
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
-
-    <!-- Optional Features -->
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-
-    <!-- Declare camera as optional to avoid Play Store filtering -->
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera.front"
-        android:required="false" />
+    <!-- Device features -->
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -42,12 +32,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
         android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
-
-        <!-- Chat History Activity -->
-        <activity
-            android:name=".chat.ChatHistoryActivity"
-            android:exported="false" />
 
         <!-- Launcher -->
         <activity
@@ -131,7 +117,9 @@
         <activity android:name=".Community.CommunityOpenPost" />
         <activity android:name=".Community.CommunityNewPost" />
         <activity android:name=".Community.CommunityPostActivity" />
-        <activity android:name=".Community.CommunityReportActivity" android:label="Community – Report" />
+        <activity
+            android:name=".Community.CommunityReportActivity"
+            android:label="Community - Report" />
 
         <!-- Feedback -->
         <activity android:name=".FeedbackActivity" android:exported="false" />
@@ -140,55 +128,38 @@
         <!-- Radar -->
         <activity android:name=".RadarActivity" android:exported="true" />
 
-        <!-- File Provider (for Export Chat History) -->
-
-
         <!-- File Provider -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="com.example.smishingdetectionapp.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity
-            android:name=".ui.SupportFeedbackActivity"
-            android:exported="false"
-            android:label="@string/support_feedback_title" />
-        <activity android:name=".ui.SupportFeedbackDetailsActivity"
-            android:exported="false"
-            android:label="@string/support_feedback_details_title" />
 
         <!-- Widgets -->
         <receiver android:name=".ui.SmishingWidgetSmall" android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_small_info" />
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_small_info" />
         </receiver>
 
         <receiver android:name=".ui.SmishingWidgetMedium" android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_medium_info" />
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_medium_info" />
         </receiver>
 
         <receiver android:name=".ui.SmishingWidgetLarge" android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_large_info" />
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_large_info" />
         </receiver>
 
     </application>
-
 </manifest>
