@@ -88,8 +88,12 @@ public class ChatAssistantActivity extends AppCompatActivity {
                 PopupMenu popup = new PopupMenu(ChatAssistantActivity.this, v);
                 popup.getMenuInflater().inflate(R.menu.chat_assistant_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(item -> {
-                    if (item.getItemId() == R.id.action_view_history) {
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.action_view_history) {
                         startActivity(new Intent(ChatAssistantActivity.this, ChatHistoryActivity.class));
+                        return true;
+                    } else if (itemId == R.id.action_feedback) {
+                        openSupportFeedback();
                         return true;
                     }
                     return false;
@@ -292,5 +296,12 @@ public class ChatAssistantActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             }
         } catch (Exception ignored) { }
+    }
+
+    // ---------- Support Feedback ----------
+    private void openSupportFeedback() {
+        Intent intent = new Intent(this,
+                com.example.smishingdetectionapp.ui.SupportFeedbackActivity.class);
+        startActivity(intent);
     }
 }

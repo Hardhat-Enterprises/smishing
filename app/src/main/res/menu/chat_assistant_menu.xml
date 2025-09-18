@@ -6,4 +6,10 @@
         android:title="@string/history"
         app:showAsAction="never" />
 
+    <!-- Support Feedback -->
+    <item
+        android:id="@+id/action_feedback"
+        android:title="@string/support_feedback_title"
+        app:showAsAction="never" />
+
 </menu>
