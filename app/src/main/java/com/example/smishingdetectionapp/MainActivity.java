@@ -11,6 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.os.Bundle;
+import android.widget.ImageView;
+import androidx.appcompat.app.AppCompatActivity;
+import com.bumptech.glide.Glide;
+
 import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -41,6 +46,39 @@ public class MainActivity extends SharedActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Lazy load images with Glide
+        ImageView hardhatLogo = findViewById(R.id.HardhatLogo);
+        ImageView infoIcon = findViewById(R.id.imageView3);
+        ImageView newDetectionsIcon = findViewById(R.id.imageView4);
+        ImageView totalDetectionsIcon = findViewById(R.id.imageView2);
+        ImageView viewDetectionsIcon = findViewById(R.id.view_detections_icon);
+        ImageView riskScannerIcon = findViewById(R.id.risk_scanner_icon);
+
+        Glide.with(this)
+                .load(R.drawable.new_logo) // same resource as srcCompat
+                .into(hardhatLogo);
+
+        Glide.with(this)
+                .load(R.drawable.icon_information)
+                .into(infoIcon);
+
+        Glide.with(this)
+                .load(R.drawable.new_5_svg)
+                .into(newDetectionsIcon);
+
+        Glide.with(this)
+                .load(R.drawable.baseline_access_time_24)
+                .into(totalDetectionsIcon);
+
+        Glide.with(this)
+                .load(R.drawable.ic_view)
+                .into(viewDetectionsIcon);
+
+        Glide.with(this)
+                .load(R.drawable.ic_scan)
+                .into(riskScannerIcon);
+
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_report, R.id.nav_news, R.id.nav_settings
