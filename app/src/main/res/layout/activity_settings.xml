@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -23,7 +22,6 @@
         android:theme="@style/Theme.SmishingDetectionApp"
         app:menu="@menu/activity_main_drawer" />
 
-
     <ScrollView
         android:id="@+id/settingsScroll"
         android:layout_width="match_parent"
@@ -32,11 +30,9 @@
         android:layout_above="@id/bottom_navigation"
         android:fillViewport="true">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <!-- Top Logo -->
             <ImageView
@@ -50,7 +46,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/new_logo"
                 android:contentDescription="@string/hardhat_logo_alt" />
-
 
             <!-- Settings Title -->
             <TextView
@@ -67,7 +62,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-
             <!-- Divider -->
             <View
                 android:id="@+id/divider1"
@@ -80,7 +74,6 @@
                 app:layout_constraintTop_toBottomOf="@id/SettingsText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
-
 
             <!-- Account Section Header -->
             <TextView
@@ -96,7 +89,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-
             <!-- Account Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/accountBtn"
@@ -109,7 +101,6 @@
                 app:layout_constraintTop_toBottomOf="@id/accountSettingsHeader"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
-
 
             <!-- Password Button -->
             <com.google.android.material.button.MaterialButton
@@ -176,16 +167,15 @@
 
             <!-- Filter icon -->
             <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:contentDescription="@string/filter_svg_alt"
-            app:srcCompat="@drawable/filter_svg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/filtering_text"
-            app:layout_constraintBottom_toBottomOf="@id/filtering_text" />
-
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="28dp"
+                android:contentDescription="@string/filter_svg_alt"
+                app:srcCompat="@drawable/filter_svg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/filtering_text"
+                app:layout_constraintBottom_toBottomOf="@id/filtering_text" />
 
             <!-- Sort By label -->
             <TextView
@@ -234,8 +224,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sortOptionsGroup" />
 
-
-
             <TextView
                 android:id="@+id/accessibility_text"
                 android:layout_width="wrap_content"
@@ -274,7 +262,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/accessibility_text"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-
             <Switch
                 android:id="@+id/always_underline_links"
                 android:layout_width="0dp"
@@ -303,6 +290,46 @@
                 app:layout_constraintTop_toBottomOf="@+id/always_underline_links"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
+            <!-- Divider before Backup Codes -->
+            <View
+                android:id="@+id/divider_backup_codes"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/navy_blue"
+                app:layout_constraintTop_toBottomOf="@id/bold_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Generate Backup Codes Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/generateBackupCodesBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginTop="16dp"
+                android:padding="12dp"
+                android:text="Generate Backup Codes"
+                app:layout_constraintTop_toBottomOf="@id/divider_backup_codes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Divider after Backup Codes -->
+            <View
+                android:id="@+id/divider_after_backup_codes"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/navy_blue"
+                app:layout_constraintTop_toBottomOf="@id/generateBackupCodesBtn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <LinearLayout
                 android:id="@+id/fontSizeControls"
                 android:layout_width="0dp"
@@ -311,7 +338,7 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginEnd="28dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/bold_text"
+                app:layout_constraintTop_toBottomOf="@+id/divider_after_backup_codes"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
@@ -373,7 +400,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/divider5"
+                android:id="@+id/divider10"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="28dp"
@@ -394,7 +421,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider5" />
+                app:layout_constraintTop_toBottomOf="@id/divider10"/>
 
 
             <com.google.android.material.button.MaterialButton
@@ -414,7 +441,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Community_and_Report" />
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/reportBtn"
                 android:layout_width="0dp"
@@ -432,7 +458,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/communityBtn" />
 
-
             <View
                 android:id="@+id/divider6"
                 android:layout_width="0dp"
@@ -443,8 +468,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/reportBtn" />
-
-
 
             <TextView
                 android:id="@+id/MoreInfoandSupport"
@@ -458,7 +481,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider6" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/helpBtn"
@@ -477,7 +499,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/MoreInfoandSupport" />
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/chatAssistantBtn"
                 android:layout_width="0dp"
@@ -494,7 +515,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/helpBtn" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/aboutMeBtn"
@@ -513,7 +533,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chatAssistantBtn" />
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/feedbackBtn"
                 android:layout_width="0dp"
@@ -530,7 +549,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/aboutMeBtn" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/aboutUsBtn"
@@ -582,8 +600,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/contactUsBtn" />
-            
-            
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonSignOut"
@@ -598,11 +614,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inviteFriendsBtn" />
 
-
-
-
-
-
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="wrap_content"
@@ -613,7 +624,6 @@
                 app:layout_constraintTop_toTopOf="@+id/accountBtn"
                 android:contentDescription="@string/account_user_svg_alt"
                 app:srcCompat="@drawable/account_user_svg" />
-
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -626,8 +636,6 @@
                 app:layout_constraintTop_toTopOf="@+id/reportBtn"
                 app:srcCompat="@drawable/report_svg" />
 
-
-
             <ImageView
                 android:id="@+id/imageView8"
                 android:layout_width="wrap_content"
@@ -637,7 +645,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/helpBtn"
                 app:layout_constraintTop_toTopOf="@+id/helpBtn"
                 app:srcCompat="@drawable/help_svg" />
-
 
             <ImageView
                 android:id="@+id/imageView10"
@@ -683,7 +690,6 @@
                 app:layout_constraintTop_toTopOf="@+id/aboutUsBtn"
                 app:srcCompat="@drawable/outline_arrow_outward_24" />
 
-
             <ImageView
                 android:id="@+id/imageView14"
                 android:layout_width="wrap_content"
@@ -694,7 +700,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/feedbackBtn"
                 app:layout_constraintTop_toTopOf="@+id/feedbackBtn"
                 app:srcCompat="@drawable/outline_arrow_outward_24" />
-
 
             <ImageView
                 android:id="@+id/imageView15"
@@ -728,9 +733,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/inviteFriendsBtn"
                 app:layout_constraintTop_toTopOf="@+id/inviteFriendsBtn"
                 app:srcCompat="@drawable/outline_arrow_outward_24" />
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
