@@ -14,17 +14,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.net.NetworkCapabilities;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.widget.SearchView;
 
-import com.example.smishingdetectionapp.news.Models.RSSFeedModel;
+import com.example.smishingdetectionapp.news.models.NewsArticle;
 import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.news.NewsRequestManager;
 import com.example.smishingdetectionapp.news.OnFetchDataListener;
 import com.example.smishingdetectionapp.news.SelectListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
@@ -35,6 +38,13 @@ public class NewsActivity extends SharedActivity implements SelectListener{
     ProgressBar progressBar;
     TextView errorMessage;
     Button refreshButton;
+    SwipeRefreshLayout swipeRefreshLayout;
+    SearchView searchView;
+    ChipGroup categoryChipGroup;
+    
+    // State variables for filtering
+    private String currentCategory = null;
+    private String currentSearchQuery = null;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,9 +52,22 @@ public class NewsActivity extends SharedActivity implements SelectListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
+        // Initialize UI components
         errorMessage = findViewById(R.id.errorTextView);
         recyclerView = findViewById(R.id.news_recycler_view);
         refreshButton = findViewById(R.id.refreshButton);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        searchView = findViewById(R.id.newsSearchView);
+        categoryChipGroup = findViewById(R.id.categoryChipGroup);
+
+        // Setup search functionality
+        setupSearchView();
+        
+        // Setup category filtering
+        setupCategoryFiltering();
+        
+        // Setup swipe-to-refresh
+        setupSwipeRefresh();
 
         // Navigation at the bottom of the page designed by Damian
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
@@ -73,41 +96,149 @@ public class NewsActivity extends SharedActivity implements SelectListener{
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-        // Initialize NewsRequestManager and fetch RSS feed data
+        // Initialize NewsRequestManager and fetch news data using REST API
         manager = new NewsRequestManager(this);
-        manager.fetchRSSFeed(new OnFetchDataListener<RSSFeedModel.Feed>() {
-            @Override
-            public void onFetchData(List<RSSFeedModel.Article> list, String message) {
-                showNews(list);
-                progressBar.setVisibility(View.GONE); // Hide ProgressBar after fetching data
-            }
-
-            @Override
-            public void onError(String message) {
-                errorMessage.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE); // Hide ProgressBar on error
-            }
-
-            // Method to display the fetched news articles in the RecyclerView
-            private void showNews(List<RSSFeedModel.Article> list) {
-                recyclerView = findViewById(R.id.news_recycler_view);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new GridLayoutManager(NewsActivity.this, 1));
-                adapter = new NewsAdapter(list, NewsActivity.this); // Corrected this reference
-                recyclerView.setAdapter(adapter);
-            }
-        });
+        loadFilteredData();
 
         // Set up the refresh button click listener
         refreshButton.setOnClickListener(v -> {
             if (isNetworkConnected()) {
                 // Toast.makeText(this, "Connected to Wi-Fi or Mobile Data", Toast.LENGTH_SHORT).show();
-                loadData();
+                loadFilteredData();
             } else {
                 Toast.makeText(this, "You Have Lost Network Connection", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    /**
+     * Sets up search functionality
+     */
+    private void setupSearchView() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                currentSearchQuery = query.trim().isEmpty() ? null : query.trim();
+                loadFilteredData();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Optional: implement real-time search if desired
+                return false;
+            }
+        });
+        
+        // Clear search when close button is pressed
+        searchView.setOnCloseListener(() -> {
+            currentSearchQuery = null;
+            loadFilteredData();
+            return false;
+        });
+    }
+
+    /**
+     * Sets up category filtering with chips
+     */
+    private void setupCategoryFiltering() {
+        categoryChipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            if (checkedIds.isEmpty()) {
+                currentCategory = null;
+            } else {
+                int checkedId = checkedIds.get(0);
+                Chip selectedChip = findViewById(checkedId);
+                if (selectedChip != null) {
+                    String chipText = selectedChip.getText().toString();
+                    currentCategory = chipText.equals("All") ? null : mapChipTextToCategory(chipText);
+                }
+            }
+            loadFilteredData();
+        });
+    }
+
+    /**
+     * Maps UI chip text to backend category values
+     */
+    private String mapChipTextToCategory(String chipText) {
+        switch (chipText) {
+            case "Cybersecurity": return "cybersecurity";
+            case "Data Breach": return "data-breach";
+            case "Malware": return "malware";
+            case "Phishing": return "phishing";
+            default: return null;
+        }
+    }
+
+    /**
+     * Sets up pull-to-refresh functionality
+     */
+    private void setupSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            if (isNetworkConnected()) {
+                loadFilteredData();
+            } else {
+                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(this, "No network connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        // Set refresh colors
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+    }
+
+    /**
+     * Loads news data with current filters applied
+     */
+    private void loadFilteredData() {
+        progressBar.setVisibility(View.VISIBLE);
+        errorMessage.setVisibility(View.GONE);
+        
+        manager = new NewsRequestManager(this);
+        
+        Log.d("NewsActivity", String.format("Loading with filters - Category: %s, Search: %s", 
+                currentCategory, currentSearchQuery));
+        
+        // Use the advanced filtering method
+        manager.fetchNewsAdvanced(
+                currentCategory,
+                currentSearchQuery,
+                null, // tags
+                20,   // limit
+                1,    // page
+                new OnFetchDataListener() {
+                    @Override
+                    public void onFetchData(List<NewsArticle> articles, String message) {
+                        showNews(articles);
+                        progressBar.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        Log.e("NewsActivity", "Error fetching filtered news: " + message);
+                        errorMessage.setText("Failed to load news: " + message);
+                        errorMessage.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    private void showNews(List<NewsArticle> articles) {
+                        adapter = new NewsAdapter(articles, NewsActivity.this);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(NewsActivity.this));
+                        recyclerView.setAdapter(adapter);
+                        
+                        Log.d("NewsActivity", String.format("Successfully loaded %d articles with filters", articles.size()));
+                    }
+                }
+        );
     }
 
     // This is for the refresh button
@@ -132,43 +263,40 @@ public class NewsActivity extends SharedActivity implements SelectListener{
 
 
     private void loadData() {
-        progressBar.setVisibility(View.VISIBLE);
-        manager = new NewsRequestManager(this);
-        manager.fetchRSSFeed(new OnFetchDataListener<RSSFeedModel.Feed>() {
-            @Override
-            public void onFetchData(List<RSSFeedModel.Article> list, String message) {
-                showNews(list);
-                progressBar.setVisibility(View.GONE); // Hide ProgressBar after fetching data
-            }
-
-            @Override
-            public void onError(String message) {
-                errorMessage.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE); // Hide ProgressBar on error
-            }
-
-            private void showNews(List<RSSFeedModel.Article> list) {
-                adapter = new NewsAdapter(list, NewsActivity.this);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new GridLayoutManager(NewsActivity.this, 1));
-                recyclerView.setAdapter(adapter);
-            }
-        });
+        loadFilteredData();
     }
 
-    // Handle news article click events. Opens the article link in a browser.
+    // Handle news article click events. Opens the article in NewsDetailActivity.
     @Override
-    public void OnNewsClicked(RSSFeedModel.Article article) {
-        if (article != null && article.link != null && !article.link.isEmpty()) {
+    public void OnNewsClicked(NewsArticle article) {
+        if (article != null) {
             try {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.link));
-                startActivity(browserIntent);
+                Log.d("NewsActivity", "Article clicked: " + article.title);
+                Log.d("NewsActivity", "Content available: " + (article.content != null ? "Yes (" + article.content.length() + " chars)" : "No"));
+                
+                Intent detailIntent = new Intent(this, com.example.smishingdetectionapp.news.NewsDetailActivity.class);
+                
+                // Pass article data to detail activity
+                detailIntent.putExtra("title", article.title);
+                detailIntent.putExtra("content", article.content);
+                detailIntent.putExtra("author", article.author);
+                detailIntent.putExtra("date", article.getFormattedDate());
+                detailIntent.putExtra("imageUrl", article.urlToImage);
+                
+                // Pass source information
+                if (article.source != null && article.source.name != null) {
+                    detailIntent.putExtra("source", article.source.name);
+                }
+                
+                Log.d("NewsActivity", "Starting NewsDetailActivity with intent extras");
+                startActivity(detailIntent);
             } catch (Exception e) {
-                Log.e("NewsActivity", "Error opening URL", e);
-                Toast.makeText(this, "Unable to open link", Toast.LENGTH_SHORT).show();
+                Log.e("NewsActivity", "Error opening article detail", e);
+                Toast.makeText(this, "Unable to open article", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "No URL available", Toast.LENGTH_SHORT).show();
+            Log.w("NewsActivity", "Article is null, cannot open detail");
+            Toast.makeText(this, "Article not available", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -118,6 +118,13 @@
             android:name=".chat.ChatAssistantActivity"
             android:exported="false"
             android:label="@string/chat_assistant_page" />
+        <activity
+            android:name=".NewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".news.NewsDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".NewsActivity" />
     </application>
 
 </manifest>
