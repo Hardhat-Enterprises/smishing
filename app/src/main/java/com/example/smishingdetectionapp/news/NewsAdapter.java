@@ -6,17 +6,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.news.Models.RSSFeedModel;
+import com.example.smishingdetectionapp.news.models.NewsArticle;
 
 import java.util.List;
 
+/**
+ * RecyclerView adapter for displaying news articles from REST API
+ * Updated to work with NewsArticle model instead of RSS model
+ */
 public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder>{
-    private final List<RSSFeedModel.Article> articles;
+    private final List<NewsArticle> articles;
     private final SelectListener listener;
-    private String formattedDescription;
 
     // Constructor to initialize the adapter with articles and a click listener.
-    public NewsAdapter(List<RSSFeedModel.Article> articles, SelectListener listener) {
+    public NewsAdapter(List<NewsArticle> articles, SelectListener listener) {
         this.articles = articles;
         this.listener = listener;
     }
@@ -33,35 +36,39 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         // Get the article for the current position
-        RSSFeedModel.Article article = articles.get(position);
+        NewsArticle article = articles.get(position);
 
         // Bind the article data to the ViewHolder's views
-        holder.text_title.setText(article.title);
-        holder.text_description.setText(article.description);
-        // LOG BELOW GIVES THE DESC STRING AS PLAIN
-        Log.d("DebugTag1", "Value " + article.description);
-
-
-        formattedDescription = (article.description);
-        // Formats description data to remove HTML tags if they are present. This is specifically setup to format SCAMWATCHs' RSS feed.
-        formattedDescription = formattedDescription.replaceAll("\\<.*?\\>", "");
-        // Removes whitespace and leftover tags
-        formattedDescription = formattedDescription.substring(84, formattedDescription.length() - 14);
-        holder.text_description.setText(formattedDescription);
-
-        Log.d("DebugTag2", "Value " + holder.text_description);
-
-
+        holder.text_title.setText(article.title != null ? article.title : "No Title");
+        
+        // Use the cleaned description from our model
+        String cleanDescription = article.getCleanDescription();
+        holder.text_description.setText(cleanDescription);
+        
+        // Set the formatted date
         holder.text_pubDate.setText(article.getFormattedDate());
 
         // Set a click listener on the card view to handle item clicks
         holder.cardView.setOnClickListener(v -> listener.OnNewsClicked(article));
+        
+        // Log for debugging
+        Log.d("NewsAdapter", String.format("Binding article: %s", article.title));
     }
 
-
-    // Returns the total number of items in the data set held by the adapter, MAX 9.
+    // Returns the total number of items in the data set - NO MORE 9 ARTICLE LIMIT!
+    @Override
     public int getItemCount() {
-        return Math.min(articles.size(), 9);
+        return articles != null ? articles.size() : 0;
+    }
+    
+    /**
+     * Updates the articles list and refreshes the adapter
+     * @param newArticles New list of articles
+     */
+    public void updateArticles(List<NewsArticle> newArticles) {
+        this.articles.clear();
+        this.articles.addAll(newArticles);
+        notifyDataSetChanged();
     }
 }
 

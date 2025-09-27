@@ -104,10 +104,12 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-simplexml:2.11.0") // Keep for backwards compatibility
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation ("com.google.android.material:material:1.2.0-alpha02")
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
@@ -116,6 +118,7 @@ dependencies {
     implementation("io.noties.markwon:html:4.6.2")
     implementation("io.noties.markwon:image:4.6.2")
     implementation("com.google.android.gms:play-services-auth:20.0.0")
+    implementation("com.squareup.picasso:picasso:2.8")
 
 }
 
