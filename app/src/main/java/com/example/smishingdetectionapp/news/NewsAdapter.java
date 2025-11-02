@@ -67,6 +67,20 @@ public class NewsAdapter extends ListAdapter<RSSFeedModel.Article, NewsViewHolde
         h.text_description.setText(desc);
         h.text_pubDate.setText(a.getFormattedDate());
 
+        /* --- Share button logic --- */
+        h.shareNewsButton.setOnClickListener(v -> {
+            try {
+                String shareText = a.title + "\n" + a.link;
+                android.content.Intent shareIntent = new android.content.Intent(android.content.Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this news");
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareText);
+                v.getContext().startActivity(android.content.Intent.createChooser(shareIntent, "Share via"));
+            } catch (Exception e) {
+                Toast.makeText(v.getContext(), "Unable to share article", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         /* Bookmark icon */
         boolean bookmarked = bookmarkManager.isBookmarked(a.link);
         a.setBookmarked(bookmarked);
@@ -89,4 +103,5 @@ public class NewsAdapter extends ListAdapter<RSSFeedModel.Article, NewsViewHolde
 
         h.cardView.setOnClickListener(v -> listener.OnNewsClicked(a));
     }
+
 }

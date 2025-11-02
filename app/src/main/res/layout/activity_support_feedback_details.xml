@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/smish_surface"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp">
+
+            <!-- Back button (48dp target) -->
+            <ImageButton
+                android:id="@+id/btnBackDetails"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/click_ripple_icon"
+                android:contentDescription="@string/cd_back"
+                android:scaleType="centerInside"
+                android:padding="12dp"
+                app:srcCompat="@drawable/back_button"
+                app:tint="@color/smish_blue_dark" />
+
+            <!-- Header text -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/experience_problems"
+                android:textColor="@color/smish_text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Problem checkboxes -->
+        <CheckBox
+            android:id="@+id/cbSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/problem_solution_not_helpful"
+            android:textColor="@color/smish_text_primary" />
+
+        <CheckBox
+            android:id="@+id/cbRobotic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/problem_robotic_replies"
+            android:textColor="@color/smish_text_primary" />
+
+        <CheckBox
+            android:id="@+id/cbSlow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/problem_slow_response"
+            android:textColor="@color/smish_text_primary" />
+
+        <CheckBox
+            android:id="@+id/cbWrongWords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/problem_wrong_words"
+            android:textColor="@color/smish_text_primary" />
+
+        <CheckBox
+            android:id="@+id/cbRepetitive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/problem_repetitive"
+            android:textColor="@color/smish_text_primary" />
+
+        <CheckBox
+            android:id="@+id/cbUnfriendly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/problem_unfriendly"
+            android:textColor="@color/smish_text_primary" />
+
+        <!-- Feedback details -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="8dp"
+            android:text="@string/feedback_more"
+            android:textColor="@color/smish_text_primary"
+            android:textSize="16sp" />
+
+        <!-- FrameLayout to prevent overlap -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editFeedbackDetails"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="?attr/editTextBackground"
+                android:padding="10dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLength="280"
+                android:hint="@string/feedback_hint"
+                android:textColor="@color/smish_text_primary"
+                android:textColorHint="@color/smish_text_hint"
+                android:autofillHints="text" />
+
+            <TextView
+                android:id="@+id/tvCounterDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="6dp"
+                android:text="@string/feedback_counter"
+                android:textSize="12sp"
+                android:textColor="@color/smish_text_secondary" />
+        </FrameLayout>
+
+        <!-- Spacer -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <!-- Submit button -->
+        <Button
+            android:id="@+id/btnSubmitDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/feedback_submit"
+            android:textColor="@color/smish_text_on_primary"
+            android:backgroundTint="@color/smish_blue_dark" />
+    </LinearLayout>
+</ScrollView>

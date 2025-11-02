@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 
 import androidx.core.graphics.Insets;
@@ -14,12 +13,20 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
+import com.example.smishingdetectionapp.ui.FaqActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 
 
 public class HelpActivity extends SharedActivity {
+    // key used by FaqActivity to auto-expand the matching item
+    public static final String EXTRA_FAQ_KEY = "faq_key";
 
+    private void openFaq(String key) {
+        Intent i = new Intent(this, FaqActivity.class);
+        if (key != null) i.putExtra(EXTRA_FAQ_KEY, key);
+        startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,15 +114,9 @@ public class HelpActivity extends SharedActivity {
         });
 
 
-        // FAQ Cards Click Listeners
-        MaterialCardView cardFAQ2 = findViewById(R.id.cardFAQ2);
-        if (cardFAQ2 != null) {
-            cardFAQ2.setOnClickListener(v -> {
-                Intent intent = new Intent(HelpActivity.this, FaqActivity.class);
-                intent.putExtra("faq_topic", "adjust_settings");
-                startActivity(intent);
-            });
-        }
+        // ---------- FAQ entry (single id across layouts) ----------
+        MaterialCardView cardFAQ = findViewById(R.id.cardFAQ);   // <-- ensure your layout uses this id
+        if (cardFAQ != null) cardFAQ.setOnClickListener(v -> openFaq(null));
 
 
         // Contact Options Click Listeners

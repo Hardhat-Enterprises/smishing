@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:gravity="start"
+    android:baselineAligned="false">
+
+    <!-- Bot Profile Icon with Circular Background -->
+    <FrameLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circle_bot_bg"
+        android:layout_marginEnd="8dp"
+        android:layout_gravity="top"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/botProfileIcon"
+            android:layout_width="38dp"
+            android:layout_height="39dp"
+            android:src="@drawable/new_logo"
+            app:tint="@null"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/bot_profile_icon"/>
+    </FrameLayout>
+
+    <!-- Message + Timestamp container -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Bot Message Bubble -->
+        <TextView
+            android:id="@+id/botMessageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="280dp"
+            android:padding="12dp"
+            android:textSize="15sp"
+            android:textColor="@color/smish_text_primary"
+            android:background="@drawable/bubble_bot"
+            android:lineSpacingExtra="2dp"
+            tools:text="Hello! I’m here to help you with smishing messages." />
+
+        <!-- Timestamp -->
+        <TextView
+            android:id="@+id/botTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_gravity="start"
+            android:textSize="10sp"
+            android:textColor="@color/smish_text_secondary"
+            tools:text="14:32" />
+    </LinearLayout>
+</LinearLayout>

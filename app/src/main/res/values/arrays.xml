@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Reply Preference -->
+
+    <!-- Example items -->
+    <string-array name="example_items">
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+    </string-array>
+
+    <!-- Fix for root_preferences_backup.xml -->
     <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
+        <item>Reply Immediately</item>
+        <item>Reply in 5 Minutes</item>
+        <item>Reply Later</item>
     </string-array>
 
     <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
+        <item>immediate</item>
+        <item>5min</item>
+        <item>later</item>
     </string-array>
+
 </resources>

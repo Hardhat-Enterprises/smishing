@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:gravity="end">
 
+    <!-- User Message Bubble -->
     <TextView
         android:id="@+id/messageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="280dp"
         android:padding="12dp"
-        android:textSize="16sp" />
+        android:textSize="15sp"
+        android:textColor="@color/smish_text_on_primary"
+        android:background="@drawable/bubble_user"
+        android:lineSpacingExtra="2dp"
+        tools:text="Hey, I just got a suspicious SMS. Can you check it?" />
 
-</FrameLayout>
+    <!-- Timestamp -->
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="end"
+        android:textSize="10sp"
+        android:textColor="@color/smish_text_secondary"
+        tools:text="14:32" />
+
+</LinearLayout>

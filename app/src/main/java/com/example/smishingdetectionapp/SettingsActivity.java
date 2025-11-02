@@ -28,11 +28,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
 import java.util.concurrent.Executor;
+
 import android.widget.ScrollView;
 import android.graphics.Typeface;
 import android.view.ViewGroup;
 
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import android.widget.Switch;
 import com.example.smishingdetectionapp.ui.ContactUsActivity;
@@ -284,6 +285,20 @@ public class SettingsActivity extends AppCompatActivity {
             prefs.edit().putBoolean("cold_start", true).apply();
             prefs.edit().remove("scroll_pos").apply();
         }
+        MaterialButton inviteFriendsBtn = findViewById(R.id.inviteFriendsBtn);
+        inviteFriendsBtn.setOnClickListener(v -> {
+            String playLink = "https://play.google.com/store/apps/details?id=" + getPackageName();
+            String msg = "Stay safe from smishing! Try the Smishing Detection app:\n" + playLink;
+
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.putExtra(Intent.EXTRA_SUBJECT, "Join me on Smishing Detection");
+            share.putExtra(Intent.EXTRA_TEXT, msg);
+
+            startActivity(Intent.createChooser(share, "Invite a Friend"));
+        });
+
+
 
 
     }

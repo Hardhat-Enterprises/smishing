@@ -2,73 +2,171 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chat_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/smish_white">
 
-    <ImageButton
-        android:id="@+id/chat_back"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_button" />
-
-    <TextView
-        android:id="@+id/chatTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/chat_assistant_page"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/navy_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/messageInput"
-        app:layout_constraintTop_toBottomOf="@+id/chatTitle" />
-
-    <EditText
-        android:id="@+id/messageInput"
+    <!-- ================= Header ================= -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:hint="Type your message..."
-        android:padding="12dp"
-        android:background="@drawable/message_input_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sendButton"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:minHeight="72dp"
+        android:background="@color/smish_blue_dark"
+        android:elevation="6dp"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <ImageButton
-        android:id="@+id/sendButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/send_button_background"
-        app:layout_constraintBottom_toBottomOf="@+id/messageInput"
+        <!-- Back button -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/click_ripple_icon"
+            android:contentDescription="@string/cd_back"
+            android:scaleType="center"
+            app:srcCompat="@drawable/back_button"
+            app:tint="@color/smish_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Circular Logo -->
+        <FrameLayout
+            android:id="@+id/logoContainer"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/circle_bot_bg"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="38dp"
+                android:layout_height="39dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/cd_logo"
+                android:scaleType="centerInside"
+                android:src="@drawable/new_logo"
+                app:tint="@null" />
+        </FrameLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/smishing_assistant"
+            android:textColor="@color/smish_text_on_primary"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/logoContainer"
+            app:layout_constraintTop_toTopOf="@id/logoContainer"
+            app:layout_constraintBottom_toBottomOf="@id/logoContainer"
+            app:layout_constraintEnd_toStartOf="@id/menuButton"/>
+
+        <!-- Menu button (3 dots) -->
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/click_ripple_icon"
+            android:contentDescription="@string/cd_menu"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_more_vert"
+            app:tint="@color/smish_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ================= Chat Messages ================= -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/send_icon" />
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"/>
 
+    <!-- ================= Bottom Bar ================= -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/smish_white"
+        android:elevation="12dp"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Input Box -->
+        <EditText
+            android:id="@+id/messageInput"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:background="@drawable/rounded_input_box"
+            android:hint="@string/chat_input_hint"
+            android:textColor="@color/smish_text_primary"
+            android:textColorHint="@color/grey"
+            android:inputType="textCapSentences|textMultiLine"
+            android:importantForAutofill="yes"
+            android:autofillHints="sms,message"
+            android:maxLines="4"
+            android:minHeight="52dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/sendButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Send Button -->
+        <ImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/send_button_bg"
+            android:padding="6dp"
+            android:scaleType="center"
+            app:srcCompat="@android:drawable/ic_menu_send"
+            app:tint="@color/smish_white"
+            android:contentDescription="@string/cd_send"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/messageInput"
+            app:layout_constraintBottom_toBottomOf="@id/messageInput"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ================= Loading Spinner ================= -->
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/messageInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

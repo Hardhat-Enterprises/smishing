@@ -137,6 +137,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <ImageView
+                android:id="@+id/notificationIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/notification_icon_alt"
+                app:srcCompat="@drawable/notification_svg1"
+                app:layout_constraintEnd_toEndOf="@id/notificationBtn"
+                app:layout_constraintTop_toTopOf="@id/notificationBtn"
+                app:layout_constraintBottom_toBottomOf="@id/notificationBtn" />
+
             <View
                 android:id="@+id/divider3"
                 android:layout_width="0dp"
@@ -149,6 +160,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/notificationBtn" />
 
+            <!-- Filtering Section -->
             <TextView
                 android:id="@+id/filtering_text"
                 android:layout_width="wrap_content"
@@ -162,45 +174,55 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
+            <!-- Filter icon -->
+            <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:contentDescription="@string/filter_svg_alt"
+            app:srcCompat="@drawable/filter_svg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filtering_text"
+            app:layout_constraintBottom_toBottomOf="@id/filtering_text" />
 
+
+            <!-- Sort By label -->
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="366dp"
                 android:text="@string/sort_by"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/filtering_text" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/OldToNewRB"
+            <!-- RadioGroup for Sorting -->
+            <RadioGroup
+                android:id="@+id/sortOptionsGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="243dp"
-                android:text="@string/oldest_to_newest"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintTop_toBottomOf="@id/textView9">
 
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/OldToNewRB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/oldest_to_newest" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/NewToOldRB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="243dp"
-                android:text="@string/newest_to_oldest"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/OldToNewRB" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/NewToOldRB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/newest_to_oldest" />
+            </RadioGroup>
 
-
+            <!-- Divider after Filtering section -->
             <View
                 android:id="@+id/divider4"
                 android:layout_width="0dp"
@@ -208,9 +230,10 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginEnd="28dp"
                 android:background="@color/navy_blue"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/NewToOldRB" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sortOptionsGroup" />
+
 
 
             <TextView
@@ -226,6 +249,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
+            <ImageView
+                android:id="@+id/accessibilityIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/accessibility_icon_alt"
+                app:srcCompat="@drawable/access1"
+                app:layout_constraintEnd_toEndOf="@id/imageView7"
+                app:layout_constraintTop_toTopOf="@id/accessibility_text"
+                app:layout_constraintBottom_toBottomOf="@id/accessibility_text" />
 
             <Switch
                 android:id="@+id/dark_mode_switch"
@@ -533,8 +566,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aboutUsBtn" />
 
-
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/inviteFriendsBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawablePadding="8dp"
+                android:focusable="true"
+                android:gravity="start|center_vertical"
+                android:padding="12dp"
+                android:text="Invite a friend"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contactUsBtn" />
+            
+            
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonSignOut"
@@ -547,7 +596,9 @@
                 android:text="@string/sign_outBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/contactUsBtn" />
+                app:layout_constraintTop_toBottomOf="@+id/inviteFriendsBtn" />
+
+
 
 
 
@@ -575,17 +626,6 @@
                 app:layout_constraintTop_toTopOf="@+id/reportBtn"
                 app:srcCompat="@drawable/report_svg" />
 
-
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="-130dp"
-                android:contentDescription="@string/filter_svg_alt"
-                app:layout_constraintEnd_toEndOf="@+id/filtering_text"
-                app:layout_constraintTop_toTopOf="@+id/textView9"
-                app:srcCompat="@drawable/filter_svg" />
 
 
             <ImageView
@@ -673,14 +713,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="4dp"
-                android:contentDescription="Contact Us Icon"
+                android:contentDescription="@string/outline_arrow_outward_24_alt"
                 app:layout_constraintEnd_toEndOf="@+id/contactUsBtn"
                 app:layout_constraintTop_toTopOf="@+id/contactUsBtn"
                 app:srcCompat="@drawable/outline_arrow_outward_24" />
+
+            <ImageView
+                android:id="@+id/imageViewInviteFriends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@string/outline_arrow_outward_24_alt"
+                app:layout_constraintEnd_toEndOf="@+id/inviteFriendsBtn"
+                app:layout_constraintTop_toTopOf="@+id/inviteFriendsBtn"
+                app:srcCompat="@drawable/outline_arrow_outward_24" />
+
 
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </RelativeLayout>
-

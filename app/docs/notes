@@ -1,0 +1,19 @@
+# PR Notes – Chat Assistant + Local AI
+
+What I changed
+- Added chat assistant flow with predefined support replies then fallback to local AI (OllamaClient).
+- Implemented database-backed queries: “reports/detections” with date parsing.
+- Built a small Flask wrapper so Android can call the host via 10.0.2.2.
+- Increased OkHttp timeouts and added logging + error handling messages.
+- Created /app/docs/screenshots and added emulator screenshots for evidence.
+- Wrote a developer README with run instructions for reviewers.
+
+Why this matters
+- Proves end-to-end chat works on device (UI → local DB → Flask → Ollama).
+- Gives mentors a repeatable way to run the demo and verify evidence.
+
+Follow-ups
+- Make model name configurable.
+- Add health-check ping before sending a prompt.
+- Swap to a smaller model if RAM is low, or stream long answers.
+Youtube Link: https://youtu.be/DOwg_YxFoxo

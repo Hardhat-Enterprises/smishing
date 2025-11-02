@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:background="@color/smish_white">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/cd_success"
+        app:srcCompat="@drawable/ic_check_circle"
+        app:tint="@color/smish_bot_icon" />
+
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/smish_text_primary"
+        android:text="@string/feedback_thank_you" />
+
+    <TextView
+        android:id="@+id/tvDialogRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/smish_text_primary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvDialogText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/smish_text_secondary"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnCloseDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/close"
+        android:textColor="@color/smish_text_on_primary"
+        android:backgroundTint="@color/smish_blue_dark" />
+</LinearLayout>

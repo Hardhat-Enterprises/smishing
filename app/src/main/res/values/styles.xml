@@ -29,5 +29,15 @@
     <style name="BoldMaterialSwitch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="AlertDialogCustom" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:buttonBarPositiveButtonStyle">@style/AlertDialogButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/AlertDialogButtonStyle</item>
+    </style>
+
+    <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/smish_blue_dark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
 

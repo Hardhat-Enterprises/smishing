@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- <!-- <color name="purple_200">#FFBB86FC</color> -->
+
+ <!-- Default Colors (define once only) -->
  <color name="purple_700">#FF3700B3</color>
  <color name="teal_200">#FF03DAC5</color>
  <color name="teal_700">#FF018786</color>
@@ -15,17 +16,34 @@
  <color name="grey">#949494</color>
  <color name="azure">#F0FFFF</color>
  <color name="red">#FFFF0000</color>
- <color name="blueColor">#0000FF</color>
+ <color name="blue_color">#0000FF</color>
  <color name="cream">#F5EDD6</color>
- <color name="Dark_blue">#05445E</color>
+
+ <!-- note: resource names must be lowercase -->
+ <color name="dark_blue">#05445E</color>
  <color name="darker_baby_blue">#A0DCEB</color>
+ <!-- 8-digit value uses AARRGGBB; 4C is ~30% opacity -->
  <color name="light_blue">#4CD5F1F5</color>
  <color name="green">#66BB6A</color>
  <color name="orange">#FFEB3B</color>
  <color name="redd">#EF5350</color>
  <color name="off_white">#FAF9F6</color>
- <color name="navy_blue_dark">#001f4d</color>
+ <color name="navy_blue_dark">#001F4D</color>
  <color name="smishing_blue">#567BE6</color>
+ <color name="smish_bot_icon">#00BFA5</color>
 
-
+ <!-- Smishing Assistant Theme -->
+ <color name="smish_blue_primary">#2D5DA8</color>
+ <color name="smish_blue_dark">#2D68C4</color>
+ <color name="smish_blue_light">#3C6EC3</color>
+ <color name="smish_surface">#F2F4F7</color>
+ <color name="smish_white">#FFFFFFFF</color>
+ <color name="smish_text_hint">#7A8896</color>
+ <!-- Chat Support UI -->
+ <color name="smish_stroke">#DDDDDD</color>
+ <color name="smish_text_on_primary">#FFFFFFFF</color>
+ <color name="smish_text_primary">#0B1B2B</color>
+ <color name="smish_text_secondary">#999999</color>
+ <color name="star_filled">#FFD700</color>   <!-- Gold -->
+ <color name="star_empty">#DDDDDD</color>   <!-- Light grey -->
 </resources>

@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +24,12 @@ import com.example.smishingdetectionapp.detections.DetectionsActivity;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.example.smishingdetectionapp.riskmeter.RiskScannerTCActivity;
 import com.example.smishingdetectionapp.ui.BaseOfflineActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseOfflineActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -72,128 +77,140 @@ public class MainActivity extends BaseOfflineActivity {
             return false;
         });
 
-        // Buttons
-        Button debug_btn = findViewById(R.id.debug_btn);
-        debug_btn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DebugActivity.class)));
+        // Debug button (may be transparent and used as a hidden trigger)
+        Button debugBtn = findViewById(R.id.debug_btn);
+        if (debugBtn != null) {
+            debugBtn.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, DebugActivity.class))
+            );
+        }
 
-        Button detections_btn = findViewById(R.id.detections_btn);
-        detections_btn.setOnClickListener(v -> {
-            startActivity(new Intent(this, DetectionsActivity.class));
-            finish();
-        });
+        // ===== CLICK TARGETS: prefer new card containers; fall back to legacy buttons =====
+        View detectionsClickTarget =
+                findViewById(R.id.view_detections_container) != null
+                        ? findViewById(R.id.view_detections_container)
+                        : findViewById(R.id.detections_btn); // legacy fallback
 
-        Button learnMoreButton = findViewById(R.id.fragment_container);
-        learnMoreButton.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, EducationActivity.class)));
+        if (detectionsClickTarget != null) {
+            detectionsClickTarget.setOnClickListener(v -> {
+                startActivity(new Intent(this, DetectionsActivity.class));
+                finish();
+            });
+        }
 
-        Button scanner_btn = findViewById(R.id.scanner_btn);
-        scanner_btn.setOnClickListener(v -> {
-            startActivity(new Intent(this, RiskScannerTCActivity.class));
-            finish();
-        });
+        View scannerClickTarget =
+                findViewById(R.id.risk_scanner_container) != null
+                        ? findViewById(R.id.risk_scanner_container)
+                        : findViewById(R.id.scanner_btn); // legacy fallback
 
+        if (scannerClickTarget != null) {
+            scannerClickTarget.setOnClickListener(v -> {
+                startActivity(new Intent(this, RiskScannerTCActivity.class));
+                finish();
+            });
+        }
+        // ===== END CLICK TARGETS =====
+
+        // Learn more
+        View learnMoreButton = findViewById(R.id.fragment_container);
+        if (learnMoreButton != null) {
+            learnMoreButton.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, EducationActivity.class))
+            );
+        }
+
+        // Radar
         Button radarBtn = findViewById(R.id.radar_btn);
-        radarBtn.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, RadarActivity.class)));
+        if (radarBtn != null) {
+            radarBtn.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, RadarActivity.class))
+            );
+        }
 
         // Database connection (for totals)
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
 
         TextView infoText = findViewById(R.id.information_text);
-        TextView total_count = findViewById(R.id.total_counter);
+        TextView totalCount = findViewById(R.id.total_counter);
 
-        infoText.setText("Welcome to Smishing Detection! Your real-time tool to deter and detect smishing attacks.\nYour app is ready to smish.");
-        total_count.setText(String.valueOf(databaseAccess.getCounter()));
+        if (infoText != null) {
+            infoText.setText("Welcome to Smishing Detection! Your real-time tool to deter and detect smishing attacks.\nYour app is ready to smish.");
+        }
+        if (totalCount != null) {
+            totalCount.setText(String.valueOf(databaseAccess.getCounter()));
+        }
 
         databaseAccess.close();
 
-        // Onboarding guide
+        // TapTarget guide (only when relevant views exist)
         boolean showGuideNow = getIntent().getBooleanExtra("showGuide", false);
-        if (showGuideNow) {
-            findViewById(R.id.debug_btn).post(() -> {
-                new TapTargetSequence(MainActivity.this)
-                        .targets(
-                                TapTarget.forView(findViewById(R.id.new_detections_container), "New Detections", "This shows any newly detected smishing attempts on your device.")
-                                        .outerCircleColor(R.color.navy_blue)
-                                        .targetCircleColor(android.R.color.white)
-                                        .targetRadius(40)
-                                        .titleTextSize(22)
-                                        .descriptionTextSize(18)
-                                        .drawShadow(true)
-                                        .cancelable(false)
-                                        .transparentTarget(true),
+        if (showGuideNow && debugBtn != null) {
+            debugBtn.post(() -> {
+                View ttNew   = findViewById(R.id.new_detections_container);
+                View ttTotal = findViewById(R.id.total_detections_container);
+                View ttView  = (findViewById(R.id.view_detections_container) != null)
+                        ? findViewById(R.id.view_detections_container)
+                        : findViewById(R.id.detections_btn);
+                View ttScan  = (findViewById(R.id.risk_scanner_container) != null)
+                        ? findViewById(R.id.risk_scanner_container)
+                        : findViewById(R.id.scanner_btn);
+                View ttLearn = findViewById(R.id.fragment_container);
+                View ttNav   = findViewById(R.id.bottom_navigation);
 
-                                TapTarget.forView(findViewById(R.id.total_detections_container), "Total Detections", "This shows the total number of smishing attempts detected on your device.")
-                                        .outerCircleColor(R.color.navy_blue)
-                                        .targetCircleColor(android.R.color.white)
-                                        .targetRadius(40)
-                                        .titleTextSize(22)
-                                        .descriptionTextSize(18)
-                                        .drawShadow(true)
-                                        .cancelable(false)
-                                        .transparentTarget(true),
+                List<TapTarget> targets = new ArrayList<>();
+                if (ttNew != null)   targets.add(TapTarget.forView(ttNew, "New Detections", "This shows any newly detected smishing attempts on your device.")
+                        .outerCircleColor(R.color.navy_blue).targetCircleColor(android.R.color.white)
+                        .targetRadius(40).titleTextSize(22).descriptionTextSize(18)
+                        .drawShadow(true).cancelable(false).transparentTarget(true));
 
-                                TapTarget.forView(findViewById(R.id.detections_btn), "View Detections", "Tap here to view detailed records of detected smishing attempts made on your device.")
-                                        .outerCircleColor(R.color.navy_blue)
-                                        .targetCircleColor(android.R.color.white)
-                                        .targetRadius(31)
-                                        .titleTextSize(22)
-                                        .descriptionTextSize(18)
-                                        .drawShadow(true)
-                                        .cancelable(false)
-                                        .transparentTarget(true),
+                if (ttTotal != null) targets.add(TapTarget.forView(ttTotal, "Total Detections", "This shows the total number of smishing attempts detected on your device.")
+                        .outerCircleColor(R.color.navy_blue).targetCircleColor(android.R.color.white)
+                        .targetRadius(40).titleTextSize(22).descriptionTextSize(18)
+                        .drawShadow(true).cancelable(false).transparentTarget(true));
 
-                                TapTarget.forView(findViewById(R.id.scanner_btn), "Risk Scanner", "Tap here to scan your device and assess how vulnerable it may be to smishing attacks.")
-                                        .outerCircleColor(R.color.navy_blue)
-                                        .targetCircleColor(android.R.color.white)
-                                        .targetRadius(31)
-                                        .titleTextSize(22)
-                                        .descriptionTextSize(18)
-                                        .drawShadow(true)
-                                        .cancelable(false)
-                                        .transparentTarget(true),
+                if (ttView != null)  targets.add(TapTarget.forView(ttView, "View Detections", "Tap here to view detailed records of detected smishing attempts made on your device.")
+                        .outerCircleColor(R.color.navy_blue).targetCircleColor(android.R.color.white)
+                        .targetRadius(31).titleTextSize(22).descriptionTextSize(18)
+                        .drawShadow(true).cancelable(false).transparentTarget(true));
 
-                                TapTarget.forView(findViewById(R.id.fragment_container), "Learn More", "Tap here to explore tips and tutorials to understand smishing and stay safe.")
-                                        .outerCircleColor(R.color.navy_blue)
-                                        .targetCircleColor(android.R.color.white)
-                                        .targetRadius(23)
-                                        .titleTextSize(22)
-                                        .descriptionTextSize(18)
-                                        .drawShadow(true)
-                                        .cancelable(false)
-                                        .transparentTarget(true),
+                if (ttScan != null)  targets.add(TapTarget.forView(ttScan, "Risk Scanner", "Tap here to scan your device and assess how vulnerable it may be to smishing attacks.")
+                        .outerCircleColor(R.color.navy_blue).targetCircleColor(android.R.color.white)
+                        .targetRadius(31).titleTextSize(22).descriptionTextSize(18)
+                        .drawShadow(true).cancelable(false).transparentTarget(true));
 
-                                TapTarget.forView(findViewById(R.id.bottom_navigation), "Navigation Bar", "This is the navigation bar. Use it to switch between the Home screen, the Report page to report potential smishing attempts, the News section for the latest smishing updates, and the Settings page.")
-                                        .outerCircleColor(R.color.navy_blue)
-                                        .targetCircleColor(android.R.color.white)
-                                        .targetRadius(30)
-                                        .titleTextSize(22)
-                                        .descriptionTextSize(18)
-                                        .drawShadow(true)
-                                        .cancelable(false)
-                                        .transparentTarget(true)
-                        )
-                        .listener(new TapTargetSequence.Listener() {
-                            @Override
-                            public void onSequenceFinish() {
-                                Toast.makeText(MainActivity.this, "You're all set to smish!", Toast.LENGTH_SHORT).show();
-                            }
+                if (ttLearn != null) targets.add(TapTarget.forView(ttLearn, "Learn More", "Tap here to explore tips and tutorials to understand smishing and stay safe.")
+                        .outerCircleColor(R.color.navy_blue).targetCircleColor(android.R.color.white)
+                        .targetRadius(23).titleTextSize(22).descriptionTextSize(18)
+                        .drawShadow(true).cancelable(false).transparentTarget(true));
 
-                            @Override
-                            public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) { }
+                if (ttNav != null)   targets.add(TapTarget.forView(ttNav, "Navigation Bar", "Use this to switch between Home, Report, News, and Settings.")
+                        .outerCircleColor(R.color.navy_blue).targetCircleColor(android.R.color.white)
+                        .targetRadius(30).titleTextSize(22).descriptionTextSize(18)
+                        .drawShadow(true).cancelable(false).transparentTarget(true));
 
-                            @Override
-                            public void onSequenceCanceled(TapTarget lastTarget) {
-                                Toast.makeText(MainActivity.this, "Guide cancelled", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .start();
+                if (!targets.isEmpty()) {
+                    new TapTargetSequence(MainActivity.this)
+                            .targets(targets)
+                            .listener(new TapTargetSequence.Listener() {
+                                @Override
+                                public void onSequenceFinish() {
+                                    Toast.makeText(MainActivity.this, "You're all set to smish!", Toast.LENGTH_SHORT).show();
+                                }
+                                @Override
+                                public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) { }
+                                @Override
+                                public void onSequenceCanceled(TapTarget lastTarget) {
+                                    Toast.makeText(MainActivity.this, "Guide cancelled", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .start();
+                }
             });
         }
     }
 
-    // Press back twice to exit
+    // Double-press back to exit
     @Override
     public void onBackPressed() {
         if (isBackPressed) {
@@ -202,7 +219,7 @@ public class MainActivity extends BaseOfflineActivity {
         }
         Toast.makeText(this, "press back again to exit", Toast.LENGTH_SHORT).show();
         isBackPressed = true;
-        new Handler().postDelayed(() -> isBackPressed = false, 2000);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> isBackPressed = false, 2000);
     }
 
     private boolean areNotificationsEnabled() {

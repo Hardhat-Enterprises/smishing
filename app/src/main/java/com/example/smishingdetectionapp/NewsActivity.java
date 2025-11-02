@@ -88,6 +88,7 @@ public class NewsActivity extends BaseOfflineActivity implements SelectListener 
                 return true;
             }
             return false;
+
         });
 
         // RecyclerView + Adapter (init once)
@@ -110,6 +111,7 @@ public class NewsActivity extends BaseOfflineActivity implements SelectListener 
                 maybeFetchIfNeeded();
             }
         });
+        handleDeepLinkIfAny();
     }
 
     /**

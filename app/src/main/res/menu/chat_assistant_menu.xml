@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_view_history"
+        android:title="@string/history"
+        app:showAsAction="never" />
+
+    <!-- Support Feedback -->
+    <item
+        android:id="@+id/action_feedback"
+        android:title="@string/support_feedback_title"
+        app:showAsAction="never" />
+
+</menu>

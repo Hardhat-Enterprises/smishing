@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,30 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".detections.DetectionsActivity">
 
-    <!-- navigation bar -->
+    <!-- Bottom navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/baby_blue"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
-        app:itemIconSize="25dp"
-        app:itemHorizontalTranslationEnabled="false"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:itemPaddingBottom="10dp"
         android:theme="@style/Theme.SmishingDetectionApp"
+        app:itemBackground="@color/baby_blue"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconSize="25dp"
+        app:itemIconTint="@color/black"
+        app:itemPaddingBottom="10dp"
+        app:itemTextColor="@color/black"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/activity_main_drawer" />
 
+    <!-- Header + controls -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
         <ImageView
             android:id="@+id/HardhatLogo"
@@ -40,7 +37,7 @@
             android:layout_marginTop="20dp"
             android:contentDescription="@string/hardhat_logo_alt"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/new_logo" />
@@ -56,7 +53,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/HardhatLogo" />
+            app:layout_constraintTop_toBottomOf="@id/HardhatLogo" />
 
         <ImageButton
             android:id="@+id/detections_back"
@@ -70,7 +67,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/back_button" />
 
-        <!--Horizontal row for search + filter -->
+        <!-- Search + filter row -->
         <LinearLayout
             android:id="@+id/searchRow"
             android:layout_width="0dp"
@@ -81,7 +78,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DetectionsText">
+            app:layout_constraintTop_toBottomOf="@id/DetectionsText">
 
             <EditText
                 android:id="@+id/searchTextBox"
@@ -99,33 +96,35 @@
                 android:src="@drawable/filter_svg" />
         </LinearLayout>
 
-        <!-- PDF Export Button -->
+        <!-- ONE export button -->
         <Button
-            android:id="@+id/exportPdfBtn"
+            android:id="@+id/exportReportBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/darker_baby_blue"
-            android:text="Export to PDF"
+            android:text="Export report"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchRow" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- ListView of Detections -->
-        <ListView
-            android:id="@+id/lvDetectionsList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="280dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10sp"
-            android:focusable="false"
-            android:padding="10dp"
-            android:layout_marginBottom="?actionBarSize"/>
+    <!-- ListView between header and bottom nav (no hardcoded top margin) -->
+    <ListView
+        android:id="@+id/lvDetectionsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContainer"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_marginTop="8dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10sp"
+        android:focusable="false"
+        android:padding="12dp" />
 
 </RelativeLayout>
