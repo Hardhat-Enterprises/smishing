@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/offline_banner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    android:background="#FFF4D6"
+    android:padding="12dp"
+    android:foreground="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/offline_banner_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You’re offline. Some features are limited."
+        android:textColor="#7A4E00"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <!-- Optional: small Retry button -->
+    <Button
+        android:id="@+id/offline_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retry"
+        android:layout_gravity="end|center_vertical" />
+</FrameLayout>

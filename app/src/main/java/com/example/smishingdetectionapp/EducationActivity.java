@@ -10,11 +10,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.smishingdetectionapp.ui.BaseOfflineActivity;
 import com.example.smishingdetectionapp.ui.CaseStudiesActivity;
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class EducationActivity extends AppCompatActivity {
+public class EducationActivity extends BaseOfflineActivity {
+
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override

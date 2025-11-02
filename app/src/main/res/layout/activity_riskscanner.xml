@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     android:background="#F7F9FB">
 
+    <!-- offline banner -->
+    <include
+        android:id="@+id/offline_banner"
+        layout="@layout/view_offline_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
     <!-- semi-circle background -->
     <View
         android:id="@+id/SemiCircle"

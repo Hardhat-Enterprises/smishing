@@ -7,8 +7,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
+import com.example.smishingdetectionapp.Connectivity.ConnectivityMonitor;
 import com.example.smishingdetectionapp.news.Models.RSSFeedModel;
 import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.news.NewsRequestManager;
@@ -31,38 +30,41 @@ import com.example.smishingdetectionapp.news.OnFetchDataListener;
 import com.example.smishingdetectionapp.news.SavedNewsActivity;
 import com.example.smishingdetectionapp.news.SelectListener;
 import com.example.smishingdetectionapp.notifications.NotificationType;
+import com.example.smishingdetectionapp.ui.BaseOfflineActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
-public class NewsActivity extends SharedActivity implements SelectListener {
-    RecyclerView recyclerView;
-    NewsAdapter adapter; // moved to class scope to reuse
-    NewsRequestManager manager;
-    ProgressBar progressBar;
-    TextView errorMessage;
-    Button refreshButton, savedNewsButton;
+public class NewsActivity extends BaseOfflineActivity implements SelectListener {
+
+    private RecyclerView recyclerView;
+    private NewsAdapter adapter;
+    private NewsRequestManager manager;
+    private ProgressBar progressBar;
+    private TextView errorMessage;
+    private Button refreshButton, savedNewsButton;
+
+    // Guard to avoid spamming fetches while rapidly toggling connectivity
+    private boolean isFetching = false;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-      
+
         // UI refs
-        errorMessage = findViewById(R.id.errorTextView);
-        recyclerView = findViewById(R.id.news_recycler_view);
-        refreshButton = findViewById(R.id.refreshButton);
-        savedNewsButton = findViewById(R.id.btn_saved_news); // new
-        progressBar = findViewById(R.id.progressBar);
+        errorMessage     = findViewById(R.id.errorTextView);
+        recyclerView     = findViewById(R.id.news_recycler_view);
+        refreshButton    = findViewById(R.id.refreshButton);
+        savedNewsButton  = findViewById(R.id.btn_saved_news);
+        progressBar      = findViewById(R.id.progressBar);
 
-        // Saved News button click → open SavedNewsActivity
-        savedNewsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(NewsActivity.this, SavedNewsActivity.class);
-            startActivity(intent);
-        });
+        // Saved News
+        savedNewsButton.setOnClickListener(v ->
+                startActivity(new Intent(NewsActivity.this, SavedNewsActivity.class)));
 
-        // Bottom navigation setup(Pahul)
+        // Bottom navigation
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setSelectedItemId(R.id.nav_news);
         nav.setOnItemSelectedListener(menuItem -> {
@@ -72,15 +74,12 @@ public class NewsActivity extends SharedActivity implements SelectListener {
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
-
-            } else if (menuItem.getItemId() == R.id.nav_report) {
+            } else if (id == R.id.nav_report) {
                 startActivity(new Intent(this, CommunityReportActivity.class));
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
-                
             } else if (id == R.id.nav_news) {
-                nav.setActivated(true);
                 return true;
             } else if (id == R.id.nav_settings) {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
@@ -92,67 +91,94 @@ public class NewsActivity extends SharedActivity implements SelectListener {
 
         });
 
-        
-        progressBar.setVisibility(View.VISIBLE);
-
-        // Initialize RecyclerView and Adapter ONCE
+        // RecyclerView + Adapter (init once)
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         adapter = new NewsAdapter(this, this);
         recyclerView.setAdapter(adapter);
-        
-        fetchArticles();
 
-        // Refresh button click
-        refreshButton.setOnClickListener(v -> {
-            if (isNetworkConnected()) {
-                fetchArticles(); 
-            } else {
-                Toast.makeText(this, "You Have Lost Network Connection", Toast.LENGTH_SHORT).show();
+        // Try initial load
+        maybeFetchIfNeeded();
+
+        // Refresh button
+        refreshButton.setOnClickListener(v -> fetchArticles());
+
+        // Also observe connectivity directly (extra safety)
+        ConnectivityMonitor.getIsConnected().observe(this, connected -> {
+            if (Boolean.TRUE.equals(connected)) {
+                // If we come back online and list is empty, try again
+                maybeFetchIfNeeded();
             }
         });
         handleDeepLinkIfAny();
     }
 
-     /** Connectivity helper */
-    private boolean isNetworkConnected() {
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            NetworkCapabilities capabilities =
-                    connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
-            return capabilities != null && (
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-            );
-        }
-        return false;
+    /**
+     * Called by BaseOfflineActivity when we transition from offline -> online.
+     * We retry only if nothing is shown yet.
+     */
+    @Override
+    protected void onBackOnline() {
+        super.onBackOnline();
+        // Auto-refresh when network is back
+        fetchArticles();
     }
-  
 
-    /** Fetch RSS feed */
+
+    /**
+     * If user navigates back to News screen and nothing is loaded yet,
+     * try fetching again.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        maybeFetchIfNeeded();
+    }
+
+    /** Retry only when there is nothing in the adapter and we're not fetching already. */
+    private void maybeFetchIfNeeded() {
+        if (!isFetching && adapter.getItemCount() == 0) {
+            fetchArticles();
+        }
+    }
+
+    /** Fetch RSS feed (idempotent/guarded by isFetching). */
     private void fetchArticles() {
+        if (isFetching) return;
+        isFetching = true;
+
         progressBar.setVisibility(View.VISIBLE);
         errorMessage.setVisibility(View.GONE);
 
-        manager = new NewsRequestManager(this);
+        if (manager == null) {
+            manager = new NewsRequestManager(this);
+        }
+
         manager.fetchRSSFeed(new OnFetchDataListener<RSSFeedModel.Feed>() {
             @Override
             public void onFetchData(List<RSSFeedModel.Article> list, String msg) {
-                adapter.submitList(list);
+                isFetching = false;
                 progressBar.setVisibility(View.GONE);
-                errorMessage.setVisibility(View.GONE);
 
-                //for notification function
                 if (list != null && !list.isEmpty()) {
-                    checkAndNotifyLatestNews(list.get(0)); // Check the newest news
+                    adapter.submitList(list);
+                    errorMessage.setVisibility(View.GONE);
+                    // Check latest for notification
+                    checkAndNotifyLatestNews(list.get(0));
+                } else {
+                    // No items returned -> show message and keep Refresh visible
+                    errorMessage.setVisibility(View.VISIBLE);
+                    errorMessage.setText("Failed to load news. Please try again.");
                 }
             }
+
             @Override
             public void onError(String message) {
-                errorMessage.setVisibility(View.VISIBLE);
+                isFetching = false;
                 progressBar.setVisibility(View.GONE);
+                errorMessage.setVisibility(View.VISIBLE);
+                errorMessage.setText("Failed to load news. Please try again.");
             }
         });
     }
@@ -172,7 +198,7 @@ public class NewsActivity extends SharedActivity implements SelectListener {
         }
     }
 
-       /** Hardware back – bounce to Home tab */
+    /** Hardware back – bounce to Home tab */
     @Override
     public void onBackPressed() {
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
@@ -180,31 +206,33 @@ public class NewsActivity extends SharedActivity implements SelectListener {
         super.onBackPressed();
     }
 
-    //Notification
+    // ===== Notifications for the newest news item =====
     private void checkAndNotifyLatestNews(RSSFeedModel.Article latestArticle) {
         SharedPreferences prefs = getSharedPreferences("NewsPrefs", MODE_PRIVATE);
         String lastTitle = prefs.getString("last_notified_title", "");
 
-        // Check notification enabled or not (in notification settings)
-        boolean isNewsNotificationEnabled = NotificationType.createNewsAlert(getApplicationContext()).getEnabled();
+        boolean isNewsNotificationEnabled =
+                NotificationType.createNewsAlert(getApplicationContext()).getEnabled();
 
-        if (isNewsNotificationEnabled && !latestArticle.title.equals(lastTitle)) {
-            // Send notification
+        if (isNewsNotificationEnabled && latestArticle != null
+                && latestArticle.title != null
+                && !latestArticle.title.equals(lastTitle)) {
+
             showNotification("Cyber News Update", latestArticle.title);
-
-            // Save the newest title
             prefs.edit().putString("last_notified_title", latestArticle.title).apply();
         }
     }
 
     private void showNotification(String title, String message) {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager nm =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String channelId = "news_channel_id";
         String channelName = "News Notifications";
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
+            NotificationChannel ch =
+                    new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+            nm.createNotificationChannel(ch);
         }
 
         Notification notification = new NotificationCompat.Builder(this, channelId)
@@ -214,24 +242,6 @@ public class NewsActivity extends SharedActivity implements SelectListener {
                 .setAutoCancel(true)
                 .build();
 
-        notificationManager.notify(1, notification);
+        nm.notify(1, notification);
     }
-    private void handleDeepLinkIfAny() {
-        Intent intent = getIntent();
-        if (intent == null) return;
-
-        String openUrl = intent.getStringExtra("open_url");
-        if (openUrl != null && !openUrl.isEmpty()) {
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(openUrl)));
-            } catch (Exception ignored) { }
-            // prevent reopening if the activity is recreated
-            intent.removeExtra("open_url");
-            setIntent(intent);
-        }
-    }
-
-
-
-
 }

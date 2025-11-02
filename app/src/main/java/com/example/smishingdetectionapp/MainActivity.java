@@ -21,9 +21,9 @@ import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.DetectionsActivity;
-import com.example.smishingdetectionapp.RadarActivity;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.example.smishingdetectionapp.riskmeter.RiskScannerTCActivity;
+import com.example.smishingdetectionapp.ui.BaseOfflineActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
@@ -31,7 +31,7 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends SharedActivity {
+public class MainActivity extends BaseOfflineActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private boolean isBackPressed = false;
 
@@ -42,6 +42,10 @@ public class MainActivity extends SharedActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Wire the reusable offline banner from BaseOfflineActivity
+        super.setupOfflineUI();
+
+        // App bar config for NavigationUI
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_report, R.id.nav_news, R.id.nav_settings
         ).build();
@@ -50,6 +54,7 @@ public class MainActivity extends SharedActivity {
             showNotificationPermissionDialog();
         }
 
+        // Bottom navigation
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         nav.setSelectedItemId(R.id.nav_home);
         nav.setOnItemSelectedListener(menuItem -> {
@@ -72,6 +77,7 @@ public class MainActivity extends SharedActivity {
             return false;
         });
 
+        // Debug button (may be transparent and used as a hidden trigger)
         Button debugBtn = findViewById(R.id.debug_btn);
         if (debugBtn != null) {
             debugBtn.setOnClickListener(v ->
@@ -79,12 +85,11 @@ public class MainActivity extends SharedActivity {
             );
         }
 
-        // ===== CLICK TARGETS FOR "VIEW DETECTIONS" AND "RISK SCANNER" =====
-        // Prefer the new card containers if present; otherwise fall back to legacy buttons.
+        // ===== CLICK TARGETS: prefer new card containers; fall back to legacy buttons =====
         View detectionsClickTarget =
                 findViewById(R.id.view_detections_container) != null
                         ? findViewById(R.id.view_detections_container)
-                        : findViewById(R.id.detections_btn); // legacy overlay button
+                        : findViewById(R.id.detections_btn); // legacy fallback
 
         if (detectionsClickTarget != null) {
             detectionsClickTarget.setOnClickListener(v -> {
@@ -96,7 +101,7 @@ public class MainActivity extends SharedActivity {
         View scannerClickTarget =
                 findViewById(R.id.risk_scanner_container) != null
                         ? findViewById(R.id.risk_scanner_container)
-                        : findViewById(R.id.scanner_btn); // legacy overlay button
+                        : findViewById(R.id.scanner_btn); // legacy fallback
 
         if (scannerClickTarget != null) {
             scannerClickTarget.setOnClickListener(v -> {
@@ -114,6 +119,7 @@ public class MainActivity extends SharedActivity {
             );
         }
 
+        // Radar
         Button radarBtn = findViewById(R.id.radar_btn);
         if (radarBtn != null) {
             radarBtn.setOnClickListener(v ->
@@ -121,7 +127,7 @@ public class MainActivity extends SharedActivity {
             );
         }
 
-        // Database connection
+        // Database connection (for totals)
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         databaseAccess.open();
 
@@ -137,7 +143,7 @@ public class MainActivity extends SharedActivity {
 
         databaseAccess.close();
 
-        // TapTarget guide
+        // TapTarget guide (only when relevant views exist)
         boolean showGuideNow = getIntent().getBooleanExtra("showGuide", false);
         if (showGuideNow && debugBtn != null) {
             debugBtn.post(() -> {
@@ -178,7 +184,7 @@ public class MainActivity extends SharedActivity {
                         .targetRadius(23).titleTextSize(22).descriptionTextSize(18)
                         .drawShadow(true).cancelable(false).transparentTarget(true));
 
-                if (ttNav != null)   targets.add(TapTarget.forView(ttNav, "Navigation Bar", "This is the navigation bar. Use it to switch between the Home screen, the Report page to report potential smishing attempts, the News section for the latest smishing updates, and the Settings page.")
+                if (ttNav != null)   targets.add(TapTarget.forView(ttNav, "Navigation Bar", "Use this to switch between Home, Report, News, and Settings.")
                         .outerCircleColor(R.color.navy_blue).targetCircleColor(android.R.color.white)
                         .targetRadius(30).titleTextSize(22).descriptionTextSize(18)
                         .drawShadow(true).cancelable(false).transparentTarget(true));
@@ -204,7 +210,7 @@ public class MainActivity extends SharedActivity {
         }
     }
 
-    // Press back twice to exit
+    // Double-press back to exit
     @Override
     public void onBackPressed() {
         if (isBackPressed) {
@@ -236,5 +242,18 @@ public class MainActivity extends SharedActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
-}
 
+    /* Optional: react to offline/online specifically for this screen
+    @Override
+    protected void onWentOffline() {
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        if (nav != null) nav.getMenu().findItem(R.id.nav_news).setEnabled(false);
+    }
+
+    @Override
+    protected void onBackOnline() {
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        if (nav != null) nav.getMenu().findItem(R.id.nav_news).setEnabled(true);
+    }
+    */
+}

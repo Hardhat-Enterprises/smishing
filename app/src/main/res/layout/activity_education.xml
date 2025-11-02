@@ -5,7 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f8ff">
+    android:background="#f0f8ff"
+    tools:context=".NewsActivity">
+
+    <!-- Offline banner (global include) -->
+    <include
+        android:id="@+id/offline_banner"
+        layout="@layout/view_offline_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -32,7 +43,7 @@
         android:background="@null"
         android:importantForAccessibility="no"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/offline_banner"
         app:srcCompat="@drawable/back_button" />
 
     <ScrollView
@@ -94,7 +105,6 @@
                     android:background="@android:color/white"
                     android:padding="8dp"/>
             </androidx.cardview.widget.CardView>
-
 
             <!-- Quiz Section -->
             <TextView
