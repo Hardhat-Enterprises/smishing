@@ -187,14 +187,18 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Password visibility toggle
+        final boolean[] isPasswordVisible = {false};
         togglePasswordVisibility.setOnClickListener(v -> {
-            boolean isPasswordVisible = passwordEditText.getTransformationMethod() == null;
-            if (isPasswordVisible) {
+            if (isPasswordVisible[0]) {
+                // Hide password
                 passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
+                togglePasswordVisibility.setImageResource(android.R.drawable.ic_menu_view);
+                isPasswordVisible[0] = false;
             } else {
-                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-                togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
+                // Show password
+                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                togglePasswordVisibility.setImageResource(android.R.drawable.ic_secure);
+                isPasswordVisible[0] = true;
             }
             passwordEditText.setSelection(passwordEditText.getText().length());
         });
