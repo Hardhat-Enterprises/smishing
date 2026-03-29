@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/backupCodesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Backup Codes"
+        android:textColor="@color/navy_blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="12dp" />
+
+    <!-- Backup Codes Display -->
+    <TextView
+        android:id="@+id/backupCodesText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CODE1\nCODE2\nCODE3\nCODE4\nCODE5"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:background="@drawable/text_background"
+        android:scrollbars="vertical" />
+
+    <!-- Copy Button -->
+    <Button
+        android:id="@+id/copyBackupCodesBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Copy All"
+        android:backgroundTint="@color/baby_blue"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="16dp" />
+
+    <!-- Close Button -->
+    <Button
+        android:id="@+id/closeDialogBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:backgroundTint="@color/navy_blue"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

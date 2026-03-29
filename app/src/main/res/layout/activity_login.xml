@@ -168,6 +168,20 @@
             app:layout_constraintStart_toStartOf="@id/loginButton"
             app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
+        <Button
+            android:id="@+id/loginWithBackupButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/buttons_rounded"
+            android:backgroundTint="@color/baby_blue"
+            android:text="Login with Backup Code"
+            android:textColor="@color/navy_blue"
+            app:layout_constraintEnd_toEndOf="@id/registerButton"
+            app:layout_constraintStart_toStartOf="@id/registerButton"
+            app:layout_constraintTop_toBottomOf="@id/registerButton" />
+
+
         <!-- OR divider -->
         <LinearLayout
             android:id="@+id/orDivider"
@@ -176,7 +190,7 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/registerButton"
+            app:layout_constraintTop_toBottomOf="@id/loginWithBackupButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="32dp"
@@ -213,7 +227,7 @@
             android:layout_marginTop="45dp"
             app:layout_constraintEnd_toEndOf="@id/registerButton"
             app:layout_constraintStart_toStartOf="@id/registerButton"
-            app:layout_constraintTop_toBottomOf="@id/registerButton" />
+            app:layout_constraintTop_toBottomOf="@id/orDivider" />
 
         <!-- Progress Bar -->
         <ProgressBar

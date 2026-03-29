@@ -13,24 +13,30 @@ import com.example.smishingdetectionapp.R;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
+    private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private final MutableLiveData<String> backupCodeResult = new MutableLiveData<>();
+    private final LoginRepository loginRepository;
 
-    LoginViewModel(LoginRepository loginRepository) {
+    public LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
+    public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
 
-    LiveData<LoginResult> getLoginResult() {
+    public LiveData<LoginResult> getLoginResult() {
         return loginResult;
     }
 
+    public LiveData<String> getBackupCodeResult() {
+        return backupCodeResult;
+    }
+
+    // ------------------- LOGIN -------------------
+
     public void login(String username, String password) {
-        // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
@@ -40,6 +46,30 @@ public class LoginViewModel extends ViewModel {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
     }
+
+    // ------------------- BACKUP CODES -------------------
+
+    public void generateBackupCodes(String email) {
+        loginRepository.generateBackupCodes(email, result -> {
+            if (result instanceof Result.Success) {
+                backupCodeResult.postValue("Backup codes generated successfully.");
+            } else {
+                backupCodeResult.postValue("Failed to generate backup codes.");
+            }
+        });
+    }
+
+    public void verifyBackupCode(String email, String code) {
+        loginRepository.verifyBackupCode(email, code, result -> {
+            if (result instanceof Result.Success) {
+                backupCodeResult.postValue("Backup code verified successfully.");
+            } else {
+                backupCodeResult.postValue("Invalid or expired backup code.");
+            }
+        });
+    }
+
+    // ------------------- VALIDATION -------------------
 
     public void loginDataChanged(String username, String password) {
         if (!isUserNameValid(username)) {
@@ -51,7 +81,6 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    // A placeholder username validation check
     private boolean isUserNameValid(String username) {
         if (username == null) {
             return false;
@@ -63,7 +92,6 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }

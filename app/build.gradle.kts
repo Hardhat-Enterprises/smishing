@@ -28,7 +28,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
         buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http://10.0.2.2:5000/\"")
+        buildConfigField("String", "SERVERIP", "\"http://10.0.2.2:3000/\"")
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -37,7 +37,7 @@ android {
 
 
 
-    }
+   }
 
     buildTypes {
         release {
@@ -77,8 +77,6 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -132,3 +130,4 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
 }
+
