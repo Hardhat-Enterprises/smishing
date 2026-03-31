@@ -10,7 +10,7 @@
         android:id="@+id/chatTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ask AI Assistant"
+        android:text="@string/chat_title"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"/>
@@ -21,12 +21,12 @@
         android:id="@+id/userInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Type your message..." />
+        android:hint="@string/user_input_hint" />
 
     <Button
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send" />
+        android:text="@string/send_button" />
 
 </LinearLayout>

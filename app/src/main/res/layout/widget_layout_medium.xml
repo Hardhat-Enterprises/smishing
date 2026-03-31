@@ -10,7 +10,7 @@
         android:id="@+id/widget_medium_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Smishing Detection App"
+        android:text="@string/widget_medium_title"
         android:textStyle="bold"
         android:textSize="14sp"
         android:textColor="#000000"
@@ -29,7 +29,7 @@
         android:id="@+id/widget_medium_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Updated: --:--"
+        android:text="@string/widget_medium_timestamp"
         android:textSize="12sp"
         android:textColor="#555555"
         android:layout_marginBottom="8dp" />
@@ -38,12 +38,12 @@
         android:id="@+id/widget_open_app_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open App" />
+        android:text="@string/widget_open_app_btn" />
 
     <Button
         android:id="@+id/widget_report_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Report Smishing"
+        android:text="@string/widget_report_btn"
         android:layout_marginTop="4dp" />
 </LinearLayout>

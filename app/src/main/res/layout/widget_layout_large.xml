@@ -10,7 +10,7 @@
         android:id="@+id/widget_app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Smishing Detection App"
+        android:text="@string/widget_app_title"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="#000000"
@@ -20,7 +20,7 @@
         android:id="@+id/widget_risk_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Detections: --"
+        android:text="@string/widget_risk_score"
         android:textSize="14sp"
         android:textColor="#D50000"
         android:layout_marginBottom="4dp" />
@@ -29,7 +29,7 @@
         android:id="@+id/widget_profile_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Type: --"
+        android:text="@string/widget_profile_type"
         android:textSize="14sp"
         android:textColor="#00796B"
         android:layout_marginBottom="4dp" />
@@ -38,7 +38,7 @@
         android:id="@+id/widget_streak"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Safe Days: --"
+        android:text="@string/widget_streak"
         android:textSize="14sp"
         android:textColor="#4CAF50" />
 </LinearLayout>

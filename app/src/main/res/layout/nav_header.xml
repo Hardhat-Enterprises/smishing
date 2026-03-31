@@ -19,10 +19,11 @@
         android:id="@+id/header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Hardhat"
+        android:text="@string/header_welcome"
         android:textSize="18sp"
         android:textColor="@android:color/white"
         android:layout_gravity="center"
         android:layout_marginTop="8dp" />
+
 
 </LinearLayout>

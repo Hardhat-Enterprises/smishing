@@ -17,11 +17,12 @@
         android:layout_height="wrap_content"
         android:maxWidth="280dp"
         android:padding="12dp"
+        android:text="@string/user_sample_message"
         android:textSize="15sp"
         android:textColor="@color/smish_text_on_primary"
         android:background="@drawable/bubble_user"
-        android:lineSpacingExtra="2dp"
-        tools:text="Hey, I just got a suspicious SMS. Can you check it?" />
+        android:lineSpacingExtra="2dp" />
+
 
     <!-- Timestamp -->
     <TextView

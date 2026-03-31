@@ -548,4 +548,55 @@
     <string name="sync_summary">Enable or disable auto-sync</string>
     <string name="example_summary">This is an example preference summary</string>
 
+    <!-- English Defaults -->
+    <string name="create_account_title">Create Your Account</string>
+    <string name="onboarding_subtitle">Join in on the Journey to Better Cybersecurity</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="delete_button">Delete</string>
+    <string name="bot_greeting">Hello! I’m here to help you with smishing messages.</string>
+    <string name="user_sample_message">Hey, I just got a suspicious SMS. Can you check it?</string>
+    <string name="header_welcome">Welcome to Hardhat</string>
+    <string name="share_button">Share</string>
+    <string name="skip_button">Skip</string>
+    <string name="next_button">Next</string>
+    <string name="quiz_timer">Time: 15 sec</string>
+    <string name="quiz_question_placeholder">Question will appear here</string>
+    <string name="quiz_hint">Hint</string>
+    <string name="quiz_next">Next</string>
+    <string name="back_to_home">Back to Home</string>
+    <string name="share_score">Share Score</string>
+    <string name="password_note_text">Password must be minimum 8 characters, with an uppercase and a special character.</string>
+    <string name="terms_acceptance">I accept the Terms and Conditions</string>
+    <string name="chat_title">Ask AI Assistant</string>
+    <string name="user_input_hint">Type your message...</string>
+    <string name="send_button">Send</string>
+    <string name="thank_you_request">Thank you for your request !</string>
+    <string name="confirmation_message">We have received your message. We will get back to you shortly !</string>
+    <string name="exit_to_settings">Exit to Settings</string>
+    <string name="submit_another_response">Submit Another Response</string>
+    <string name="widget_app_title">Smishing Detection App</string>
+    <string name="widget_risk_score">Detections: --</string>
+    <string name="widget_profile_type">User Type: --</string>
+    <string name="widget_streak">Safe Days: --</string>
+    <string name="widget_medium_title">Smishing Detection App</string>
+    <string name="widget_medium_timestamp">Updated: --:--</string>
+    <string name="widget_open_app_btn">Open App</string>
+    <string name="widget_report_btn">Report Smishing</string>
+    <string name="widget_small_title">Smishing Detection App</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="or_text">or</string>
+    <string name="onboarding_title_1">Intelligent Scam Detection System</string>
+    <string name="onboarding_desc_1">Stay alert! Instantly identify and block suspicious messages before they reach you.</string>
+
+    <string name="onboarding_title_2">Real-Time Cyber News Alerts</string>
+    <string name="onboarding_desc_2">Get the latest updates on scams, breaches, and cybersecurity trends—right in your pocket.</string>
+
+    <string name="onboarding_title_3">Safe Browsing</string>
+    <string name="onboarding_desc_3">Protects you from malicious links and attachments. Adjust the sensitivity and criteria for spam detection.</string>
+
+    <string name="onboarding_btn_next">Next</string>
+    <string name="onboarding_btn_get_started">Let\'s Get Started</string>
+
 </resources>

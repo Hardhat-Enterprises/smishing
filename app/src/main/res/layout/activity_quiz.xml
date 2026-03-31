@@ -55,30 +55,30 @@
         tools:ignore="MissingConstraints" />
 
     <!-- Timer TextView -->
-    <TextView
-        android:id="@+id/timerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time: 15 sec"
-        android:textSize="16sp"
-        android:textColor="#333333"
-        app:layout_constraintTop_toBottomOf="@id/logoImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        <TextView
+            android:id="@+id/timerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quiz_timer"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            app:layout_constraintTop_toBottomOf="@id/logoImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"/>
 
-    <TextView
-        android:id="@+id/questionText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Question will appear here"
-        android:textColor="#333333"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/timerText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        <TextView
+            android:id="@+id/questionText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/quiz_question_placeholder"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/timerText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"/>
 
     <RadioGroup
         android:id="@+id/optionsGroup"
@@ -91,29 +91,29 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- New Hint Button -->
-    <Button
-        android:id="@+id/hintButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hint"
-        android:textColor="@android:color/black"
-        android:background="@drawable/buttons_rounded"
-        app:layout_constraintTop_toBottomOf="@id/optionsGroup"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"/>
+        <Button
+            android:id="@+id/hintButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quiz_hint"
+            android:textColor="@android:color/black"
+            android:background="@drawable/buttons_rounded"
+            app:layout_constraintTop_toBottomOf="@id/optionsGroup"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"/>
 
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/buttons_rounded"
-        android:text="Next"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/hintButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/buttons_rounded"
+            android:text="@string/quiz_next"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/hintButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

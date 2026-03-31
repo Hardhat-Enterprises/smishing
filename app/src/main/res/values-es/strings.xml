@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Existing strings (Spanish) -->
+    <string name="back">Atrás</string>
+    <string name="back_button_description">Atrás</string>
+    <string name="continue_button">Continuar</string>
+    <string name="app_name">Detección de Smishing</string>
+    <string name="bot_profile_icon">Ícono de perfil del bot</string>
+    <string name="navigation_drawer_open">Abrir el menú de navegación</string>
+    <string name="navigation_drawer_close">Cerrar el menú de navegación</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Encabezado de navegación</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="no_saved_articles">Aún no hay artículos guardados.</string>
+    <string name="baseline_keyboard_arrow_right_24">Flecha derecha</string>
+    <string name="menu_home">Inicio</string>
+    <string name="menu_report">Reportar</string>
+    <string name="title_activity_login">Actividad de inicio de sesión</string>
+    <string name="prompt_email">Correo electrónico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="toggle_password_visibility">Mostrar/ocultar contraseña</string>
+    <string name="action_welcome_to_screen">Bienvenido de nuevo</string>
+    <string name="action_login_in">Iniciar sesión</string>
+    <string name="action_sign_in">Acceder</string>
+    <string name="action_sign_in_short">Acceder</string>
+    <string name="action_sign_up">Registrarse</string>
+    <string name="welcome">"¡Bienvenido!"</string>
+    <string name="invalid_username">Nombre de usuario no válido</string>
+    <string name="invalid_password">La contraseña debe tener más de 5 caracteres</string>
+    <string name="login_failed">"Error de inicio de sesión"</string>
+    <string name="logo_description">Logotipo de la aplicación</string>
+    <string name="chat_history">Historial de chat</string>
+    <string name="clear_chat_history">Borrar historial de chat</string>
+
+    <!-- Chat Assistant -->
+    <string name="history">Ver historial de chat</string>
+    <string name="chat_assistant_btn">Obtener soporte</string>
+    <string name="chat_assistant_page">Chat de soporte</string>
+    <string name="back_button_desc">Atrás</string>
+    <string name="send_button_desc">Enviar</string>
+    <string name="support_hint">Escribe tu mensaje...</string>
+    <string name="support_title">Soporte de IA</string>
+    <string name="chat_back_desc">Atrás</string>
+    <string name="send_message">Enviar mensaje</string>
+    <string name="chat_input_hint">Escribe tu mensaje...</string>
+    <string name="cd_back">Atrás</string>
+    <string name="cd_send">Enviar mensaje</string>
+    <string name="cd_logo">Logotipo de la aplicación</string>
+    <string name="cd_history">Abrir historial de chat</string>
+    <string name="cd_send_button">Botón para enviar mensaje</string>
+    <string name="cd_message_input">Campo de texto editable para escribir tu mensaje</string>
+    <string name="chat_welcome_1">¡Hola! Soy el Asistente Inteligente contra Smishing.</string>
+    <string name="chat_welcome_2">Puedo ayudarte a explicar qué es el smishing, revisar mensajes sospechosos o mostrarte cómo reportarlos.</string>
+    <string name="chat_welcome_3">Prueba: "¿Qué es el smishing?" o pega un mensaje que quieras que revise.</string>
+    <string name="export_chat_history">Exportar historial de chat</string>
+    <string name="chat_history_exported">Historial de chat exportado con éxito.</string>
+    <string name="cd_menu">Más opciones</string>
+    <string name="export_chat_history_txt">Exportar historial de chat (TXT)</string>
+    <string name="export_chat_history_pdf">Exportar historial de chat (PDF)</string>
+    <string name="smishing_assistant">Asistente contra Smishing</string>
+
+    <!-- Error messages -->
+    <string name="no_network_message">No hay red disponible. Por favor, revisa tu conexión a internet o inténtalo de nuevo más tarde</string>
+
+    <!-- Page Titles -->
+    <string name="login_page">Iniciar sesión</string>
+    <string name="detections_str">Detecciones</string>
+    <string name="menu_news">Noticias</string>
+    <string name="play_alert_text">Reproducir alerta de texto</string>
+    <string name="menu_Cyber_news">Noticias de ACCC Scamwatch</string>
+    <string name="menu_settings">Configuraciones</string>
+    <string name="account_page">Cuenta</string>
+    <string name="report_page">Reportar Smishing</string>
+    <string name="filtering_page">Reglas de Smishing</string>
+    <string name="debug">Depuración</string>
+    <string name="help_page">Ayuda</string>
+    <string name="sms_page">Mensajes SMS</string>
+
+    <!-- Main Dashboard Strings -->
+    <string name="detectionsBtn">Ver detecciones</string>
+    <string name="new_detectionsTxt">Nuevas detecciones</string>
+    <string name="total_detectionsTxt">Detecciones totales</string>
+    <string name="view_detections">Ver detecciones</string>
+    <string name="risk_scanner">Escáner de riesgos</string>
+
+    <!-- Account Settings Page Buttons -->
+    <string name="password_changeBtn">Cambiar contraseña</string>
+    <string name="phone_changeBtn">Cambiar teléfono</string>
+    <string name="email_changeBtn">Cambiar correo electrónico</string>
+    <string name="dark_modeBtn">Alternar modo oscuro</string>
+    <string name="delete_accountBtn">Eliminar cuenta</string>
+    <string name="sign_outBtn">Cerrar sesión</string>
+    <string name="session_timeoutBtn">Configuración de tiempo de espera de sesión</string>
+    <string name="pin_changeBtn">Cambiar PIN</string>
+
+    <!-- Terms & Privacy (escaped HTML) -->
+    <string name="terms_and_conditions">
+&lt;b&gt;1.&lt;/b&gt; Al usar esta aplicación, aceptas cumplir con estos términos.&lt;br/&gt;
+&lt;b&gt;2.&lt;/b&gt; La aplicación se proporciona tal cual, sin garantías de precisión o disponibilidad.&lt;br/&gt;
+&lt;b&gt;3.&lt;/b&gt; Eres responsable de asegurarte de usar los servicios de acuerdo con las leyes aplicables.&lt;br/&gt;
+&lt;b&gt;4.&lt;/b&gt; La reproducción, modificación o distribución no autorizada de esta aplicación o su contenido está estrictamente prohibida.&lt;br/&gt;
+&lt;b&gt;5.&lt;/b&gt; Nos reservamos el derecho de modificar o descontinuar la aplicación sin previo aviso.&lt;br/&gt;
+&lt;b&gt;6.&lt;/b&gt; Respetamos tu privacidad y nos comprometemos a proteger tus datos según la política de privacidad aquí descrita.&lt;br/&gt;
+&lt;b&gt;7.&lt;/b&gt; Tus datos personales solo se utilizarán para fines a los que hayas dado tu consentimiento explícito.&lt;br/&gt;
+&lt;b&gt;8.&lt;/b&gt; Cualquier disputa que surja del uso de esta aplicación estará sujeta a la jurisdicción de [Tu Ubicación].&lt;br/&gt;&lt;br/&gt;
+
+&lt;b&gt;POLÍTICA DE PRIVACIDAD&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
+
+&lt;b&gt;1.&lt;/b&gt; Recopilamos datos para mejorar tu experiencia y nuestros servicios.&lt;br/&gt;
+&lt;b&gt;2.&lt;/b&gt; Tus datos nunca se venderán ni se compartirán con terceros sin tu consentimiento, excepto cuando lo exija la ley.&lt;br/&gt;
+&lt;b&gt;3.&lt;/b&gt; Se pueden usar cookies para personalizar el contenido y los anuncios.&lt;br/&gt;
+&lt;b&gt;4.&lt;/b&gt; Al continuar usando la aplicación, aceptas nuestro uso de cookies.&lt;br/&gt;&lt;br/&gt;
+
+&lt;b&gt;DESCARGO DE RESPONSABILIDAD&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
+
+&lt;b&gt;1.&lt;/b&gt; Esta aplicación se proporciona tal cual, sin garantías de ningún tipo.&lt;br/&gt;
+&lt;b&gt;2.&lt;/b&gt; No garantizamos el uso ininterrumpido o libre de errores de la aplicación.&lt;br/&gt;
+&lt;b&gt;3.&lt;/b&gt; No somos responsables de ningún daño que resulte del uso de esta aplicación.&lt;br/&gt;
+&lt;b&gt;4.&lt;/b&gt; Siempre actúa con precaución al interactuar con partes desconocidas a través de la aplicación.&lt;br/&gt;&lt;br/&gt;
+</string>
+
+    <!-- Password Change Window Strings -->
+    <string name="change_password_page">Cambiar contraseña</string>
+    <string name="current_password">Contraseña actual</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="confirm_new_password">Confirmar contraseña</string>
+
+    <!-- Email Change Window Strings -->
+    <string name="change_email_page">Cambiar correo electrónico</string>
+    <string name="new_email">Nuevo correo electrónico</string>
+    <string name="confirm_new_email">Confirmar correo electrónico</string>
+
+    <!-- Sign Out Window Strings -->
+    <string name="sign_out_page">Cerrar sesión</string>
+    <string name="confirmSOTxt">¿Estás seguro de que deseas cerrar sesión?</string>
+    <string name="cancelSOBtn">Cancelar</string>
+
+    <!-- Delete Account Window Strings -->
+    <string name="delete_acc_page">Eliminar cuenta</string>
+    <string name="confirmDelTxt">¿Estás seguro?</string>
+    <string name="confirmPNBtn">Cambiar número de teléfono</string>
+    <string name="confirmPN">Introduce tu número de teléfono:</string>
+
+    <!-- Change Phone Number Window Strings -->
+    <string name="phone_number_page">Cambiar número de teléfono</string>
+    <string name="confirm_PNTxt">El nuevo número debe estar asociado con este teléfono.</string>
+    <string name="cancelDelBtn">Cancelar</string>
+    <string name="confirmDelBtn">Sí</string>
+    <string name="confirmPW">Introduce tu contraseña:</string>
+
+    <!-- Report Page Strings -->
+    <string name="phone_number">Número de teléfono</string>
+    <string name="report_message_prompt">Mensaje de smishing</string>
+    <string name="action_report">Enviar reporte</string>
+
+    <!-- Settings Page Buttons -->
+    <string name="account_btn">Cuenta</string>
+    <string name="notifications_btn">Notificaciones</string>
+    <string name="filtering_btn">Filtrado</string>
+    <string name="report_btn">Reportar</string>
+    <string name="help_btn">Ayuda</string>
+    <string name="about_btn">Política de privacidad</string>
+
+    <!-- Filtering Rules Strings -->
+    <string name="keywords_label">Palabras clave</string>
+    <string name="pn_label">Números de teléfono</string>
+    <string name="set_keyword_btn">Establecer palabras clave</string>
+    <string name="set_pn_btn">Establecer números</string>
+
+    <!-- Register Page Strings -->
+    <string name="name_label">Nombre completo</string>
+    <string name="pin_label">PIN</string>
+    <string name="email_label">Correo electrónico</string>
+    <string name="Pin_label">PIN</string>
+    <string name="pn_register_label">Número de teléfono</string>
+    <string name="pw_register_label">Contraseña</string>
+    <string name="pw2_register_label">Confirmar contraseña</string>
+    <string name="register_btn">Registrar</string>
+    <string name="view_terms_and_conditions">Haz clic aquí para aceptar los términos y completar el registro.</string>
+    <string name="agree_terms_and_conditions">Acepto los términos y condiciones</string>
+
+    <!-- Detection Page Strings -->
+    <string name="delete_text">Eliminar</string>
+    <string name="pnTitle">Número: </string>
+    <string name="msgTitle">Mensaje: </string>
+    <string name="dateTitle">Fecha: </string>
+
+    <string name="info_icon">información</string>
+    <string name="new_icon">nuevo</string>
+    <string name="time_icon">hora</string>
+
+    <!-- Notification Page Strings -->
+    <string name="notification_header">Notificaciones</string>
+    <string name="notification_icon_alt">Icono de notificación</string>
+    <string name="news_notification_title">Actualizaciones de noticias</string>
+    <string name="smishing_detection_notification_title">Detecciones de smishing</string>
+    <string name="spam_detection_notification_title">Detecciones de spam</string>
+    <string name="password_security_check">Verificaciones de seguridad de contraseña</string>
+    <string name="backup_reminder">Recordatorios de copia de seguridad</string>
+    <string name="update_notifications">Actualizar notificaciones</string>
+    <string name="incident_reports">Informes de incidentes</string>
+    <string name="open_notification_settings">Configuración de notificaciones del dispositivo</string>
+    <string name="detection_notification_header">Notificaciones de detección</string>
+    <string name="push_notification_header">Notificaciones push</string>
+    <string name="system_maintenance_header">Notificaciones de mantenimiento del sistema</string>
+
+    <!-- NotificationHelper Strings -->
+    <string name="detection_channel_name">Alertas de detección</string>
+    <string name="detection_channel_id">detections_channel</string>
+    <string name="detection_channel_desc">Canal de notificaciones de detección</string>
+
+    <string name="push_channel_name">Notificaciones push</string>
+    <string name="push_channel_id">push_channel</string>
+    <string name="push_channel_desc">Canal de notificaciones push</string>
+
+    <string name="system_channel_name">Notificaciones del sistema</string>
+    <string name="system_channel_id">system_channel</string>
+    <string name="system_channel_desc">Canal de notificaciones del sistema</string>
+
+    <string name="smish_pref_key">smish_notif_pref</string>
+    <string name="spam_pref_key">spam_notif_pref</string>
+    <string name="news_pref_key">news_notif_pref</string>
+    <string name="incident_pref_key">incident_notif_pref</string>
+    <string name="update_pref_key">update_notif_pref</string>
+    <string name="backup_pref_key">backup_notif_pref</string>
+    <string name="password_pref_key">password_notif_pref</string>
+    <string name="what_is_the_app_for">¿Para qué sirve la aplicación?</string>
+    <string name="how_to_use_the_app">¿Cómo usar la aplicación?</string>
+
+    <!-- Settings Activity Title EXAMPLE -->
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles EXAMPLE -->
+    <string name="messages_header">Mensajes</string>
+    <string name="sync_header">Sincronización</string>
+
+    <!-- Messages Preferences EXAMPLE -->
+    <string name="signature_title">Tu firma</string>
+    <string name="reply_title">Acción de respuesta predeterminada</string>
+
+    <!-- Sync Preferences EXAMPLE -->
+    <string name="sync_title">Sincronizar correos electrónicos periódicamente</string>
+    <string name="attachment_title">Descargar archivos adjuntos entrantes</string>
+    <string name="attachment_summary_on">Descargar automáticamente los archivos adjuntos de los correos entrantes</string>
+    <string name="attachment_summary_off">Solo descargar archivos adjuntos cuando se solicite manualmente</string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+
+    <!-- Added strings -->
+    <string name="terms_and_conditions_content">El contenido de tus términos y condiciones aquí.</string>
+    <string name="helpful">Útil</string>
+    <string name="not_helpful">No útil</string>
+
+    <!-- Missing strings -->
+    <string name="phone_label">Número de teléfono</string>
+    <string name="refresh">Actualizar</string>
+    <string name="empty_sms">No se encontraron mensajes SMS</string>
+    <string name="message_details">Detalles del mensaje</string>
+    <string name="message_sender">Remitente</string>
+    <string name="message_body">Cuerpo del mensaje</string>
+
+    <string name="go_to_quizzes">Ir a los cuestionarios</string>
+    <string name="learn_more_about_smishing">Aprender más sobre smishing</string>
+
+    <string name="dummy_smishing_report">Este es un informe de smishing de prueba</string>
+    <string name="click_to_read_more">Haz clic para leer más</string>
+
+    <string name="reportLog"> Mis reportes </string>
+    <string name="number">Número</string>
+    <string name="spammsg">Mensaje</string>
+    <string name="reportDate">Fecha</string>
+    <string name="savedReportsMenu">Reportes guardados</string>
+
+    <string name="feedback">Comentarios</string>
+    <string name="rate_your_experience">Califica tu experiencia</string>
+    <string name="enter_feedback">Ingresa tus comentarios</string>
+    <string name="enter_email">Ingresa tu correo electrónico</string>
+    <string name="name">Nombre</string>
+    <string name="image_description">descripción de la imagen</string>
+    <string name="forums">Foros</string>
+    <string name="community_forum">Foro de la comunidad</string>
+    <string name="create_forum_topic">Crear tema en el foro</string>
+    <string name="back_button">Atrás</string>
+    <string name="search_bar">Barra de búsqueda</string>
+    <string name="forum_1">Foro 1</string>
+    <string name="forum_title">Título del foro</string>
+    <string name="forum_description">Descripción del foro</string>
+    <string name="share_your_thoughts">Comparte tus ideas...</string>
+    <string name="submit">Enviar</string>
+    <string name="comments">Comentarios</string>
+    <string name="add_a_comment">Agregar un comentario...</string>
+    <string name="submit_comment">Enviar comentario</string>
+    <string name="empty_forum">No hay foros.\n¡Crea uno nuevo hoy!</string>
+    <string name="start_a_new_post">Iniciar una nueva publicación</string>
+    <string name="submitfeedback">Enviar comentarios</string>
+    <string name="community">Comunidad</string>
+
+    <!-- community post -->
+    <string name="title">Título</string>
+    <string name="content">Contenido</string>
+    <string name="community_comments">Comentarios</string>
+    <string name="add_community_comment">Agregar un comentario...</string>
+    <string name="submit_community_comment">Enviar comentario</string>
+    <string name="share_post">Compartir publicación</string>
+
+    <string name="confirm_delete_account_title">Hola</string>
+    <string name="delete_account_warning_message">Has seleccionado eliminar cuenta. ¿Estás seguro de esto? Si eliges eliminar tu cuenta, la desactivaremos por 30 días. Si deseas reactivarla, inicia sesión dentro de esos 30 días.</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="login_with_pin">Iniciar sesión con PIN</string>
+
+    <!-- Reporting strings -->
+    <string name="reporting_activity_tvStep1Indicator">Paso 1 de 2</string>
+    <string name="reporting_activity_tvStep2Indicator">Paso 2 de 2</string>
+    <string name="reporting_activity_etName">Nombre</string>
+    <string name="reporting_activity_etEmail">Correo electrónico</string>
+    <string name="reporting_activity_etMobile">Número de móvil</string>
+    <string name="reporting_activity_etLastName">Apellido</string>
+    <string name="reporting_activity_etAddress">Dirección</string>
+    <string name="reporting_activity_etPostalCode">Código Postal</string>
+    <string name="reporting_activity_etCountry">País</string>
+    <string name="reporting_activity_btnNext">Siguiente</string>
+    <string name="reporting_activity_btnBackStep1">Atrás</string>
+    <string name="reporting_activity_etDescription">Descripción</string>
+    <string name="reporting_activity_etTypeOfAttack">Tipo de ataque</string>
+    <string name="reporting_activity_etHowToPrevent">Cómo prevenir</string>
+    <string name="reporting_activity_etDateReceived">Fecha de recepción</string>
+    <string name="reporting_activity_btnSelectImage">Seleccionar imagen (opcional)</string>
+    <string name="reporting_activity_btnSubmitReport">ENVIAR</string>
+
+    <string name="alert">triángulo con signo de exclamación</string>
+
+    <!-- Account / Sorting -->
+    <string name="account_details">Detalles de la cuenta</string>
+    <string name="about_us">Sobre nosotros</string>
+    <string name="dark_mode">Modo oscuro</string>
+    <string name="newest_to_oldest">Más recientes a más antiguos</string>
+    <string name="oldest_to_newest">Más antiguos a más recientes</string>
+    <string name="sort_by">Ordenar por</string>
+    <string name="password_and_security">Contraseña y seguridad</string>
+    <string name="account_details_text">Detalles de la cuenta</string>
+
+    <!-- Settings Section Headers -->
+    <string name="notifications_text">Notificaciones</string>
+    <string name="filtering_text">Filtrado</string>
+    <string name="accessibility_text">Accesibilidad</string>
+    <string name="Community_and_Report">Comunidad y Reportes</string>
+    <string name="MoreInfoandSupport">Más información y soporte</string>
+
+    <!-- Accessibility Alt Texts -->
+    <string name="account_user_svg_alt">Contorno negro de la cabeza y el cuerpo de una persona</string>
+    <string name="back_button_alt">Círculo negro con una flecha apuntando a la izquierda</string>
+    <string name="background_gradient_alt">Contorno negro de un cuadrado</string>
+    <string name="baseline_access_time_24_alt">Círculo negro con dos líneas que representan la hora 12:20</string>
+    <string name="bell_svg_alt">Contorno negro de una campana</string>
+    <string name="filter_svg_alt">Contorno negro de un filtro con la parte superior ligeramente abierta</string>
+    <string name="hardhat_logo_alt">Escudo amarillo con un borde azul oscuro, dos óvalos cruzados y un casco de construcción amarillo encima del escudo</string>
+    <string name="notification_svg1_alt">Contorno negro de una campana</string>
+    <string name="outline_arrow_outward_24_alt">Flecha negra apuntando hacia la parte superior derecha</string>
+    <string name="outline_archive_24_alt">Contorno negro de una caja con una flecha negra sólida apuntando hacia abajo</string>
+    <string name="icon_information_alt">Contorno negro de un círculo con una "i" negra en el centro</string>
+    <string name="always_underline_links">Subrayar siempre los enlaces</string>
+    <string name="report_svg_alt">Contorno negro de una bandera</string>
+    <string name="baseline_archive_24_alt">Caja negra sólida con una flecha hueca apuntando hacia abajo</string>
+    <string name="baseline_arrow_back_24_alt">Flecha negra apuntando a la izquierda</string>
+    <string name="bot_message_background_alt">Cuadro color crema claro con esquinas redondeadas</string>
+    <string name="button_background_alt">Cuadro color azul claro con esquinas redondeadas</string>
+    <string name="card_rounded_alt">Cuadro color crema claro con esquinas redondeadas</string>
+    <string name="chat_assistant_svg_alt">Contorno blanco de un bocadillo rectangular con tres puntos blancos en línea horizontal en el centro</string>
+    <string name="circle_background_alt">Círculo color azul claro</string>
+    <string name="close_button_alt">X negra</string>
+    <string name="counter_buttons_alt">Cuadro azul oscuro con esquinas redondeadas que cambia a azul claro</string>
+    <string name="email_icon_alt">Ícono de correo electrónico negro</string>
+    <string name="emoji_background_alt">Círculo blanco</string>
+    <string name="faq_icon_alt">Signo de interrogación negro</string>
+    <string name="feedback_icon_alt">Burbuja de chat cuadrada negra sólida con un signo de exclamación en el centro</string>
+    <string name="hardhat_logo_notif_alt">Escudo amarillo con un borde azul oscuro, dos óvalos cruzados y un casco de construcción amarillo encima del escudo</string>
+    <string name="help_svg_alt">Contorno negro de un círculo con un signo de interrogación en el centro</string>
+    <string name="ic_launcher_background_alt">Amarillo neón con una cuadrícula blanca</string>
+    <string name="ic_launcher_foreground_alt">Mitad superior de una cabeza de robot blanca con dos antenas</string>
+    <string name="icons8_home_48_alt">Contorno negro de una casa</string>
+    <string name="icons8_house_48_alt">Contorno negro de una casa con techo negro sólido</string>
+    <string name="icons8_news_48_alt">Contorno negro de un papel doblado por la mitad</string>
+    <string name="icons8_settings_48_alt">Contorno negro de un engranaje</string>
+    <string name="message_input_background_alt">Cuadro blanco con esquinas redondeadas</string>
+    <string name="new_5_svg_alt">Contorno negro de un icoságono con la palabra "nuevo" en el centro en ángulo</string>
+    <string name="outline_bookmark_24_alt">Ícono de marcador negro sólido</string>
+    <string name="phone_icon_alt">Ícono de teléfono negro sólido</string>
+    <string name="primary_button_alt">Cuadro verde neón</string>
+    <string name="send_button_background_alt">Círculo azul oscuro sólido</string>
+    <string name="send_icon_alt">Triángulo blanco apuntando a la derecha con un triángulo más delgado recortado en el centro</string>
+    <string name="side_nav_bar_alt">Cuadro color verde azulado sólido</string>
+    <string name="user_message_background_alt">Cuadro azul oscuro sólido</string>
+    <string name="icon_view_alt">Ícono de ver detecciones</string>
+    <string name="icon_scan_alt">Ícono del escáner de riesgos</string>
+    <string name="accessibility_icon_alt">Ícono de accesibilidad</string>
+
+    <!-- Miscellaneous -->
+    <string name="buttons_rounded_alt">Fondo de esquinas redondeadas utilizado para botones</string>
+    <string name="menu_icon_alt">Icono de menú hamburguesa en la barra de navegación superior</string>
+    <string name="bold_text">Texto en negrita</string>
+    <string name="saved_news">Noticias guardadas</string>
+    <string name="news_list">Lista de artículos de noticias</string>
+    <string name="bookmark">Marcador para noticias</string>
+    <string name="app_logo_description">Logotipo de la aplicación Smishing</string>
+    <string name="feedback_history">Historial de comentarios</string>
+    <string name="Forums_and_Report">Foros y Reportes</string>
+    <string name="word_count_format">Palabras: %1$d / %2$d</string>
+    <string name="feedback_success">¡Comentarios enviados con éxito!</string>
+
+    <string name="invite_friend">Invitar a un amigo</string>
+    <string name="share_to_story">Compartir en la historia</string>
+
+    <!-- Contact Us Strings -->
+    <string name="contact_us">Contáctenos</string>
+    <string name="app_logo">Logotipo de la aplicación</string>
+    <string name="contact_subtext">¿Desea más información sobre nuestros servicios? Haga todas sus preguntas, le responderemos lo antes posible.</string>
+    <string name="send_message_title">Envíenos un mensaje</string>
+
+    <!-- Required Field Hints -->
+    <string name="business_email_hint">Correo electrónico empresarial *</string>
+    <string name="first_name_hint">Nombre *</string>
+    <string name="last_name_hint">Apellido *</string>
+    <string name="company_hint">Compañía *</string>
+    <string name="phone_hint">Teléfono *</string>
+    <string name="message_hint">Mensaje *</string>
+
+    <!-- Checkboxes -->
+    <string name="your_request">Su solicitud *</string>
+    <string name="checkbox_fake_sms">Reportar un SMS sospechoso</string>
+    <string name="checkbox_feature_request">Solicitar una nueva función de detección</string>
+    <string name="checkbox_feedback">Enviar comentarios sobre la aplicación</string>
+    <string name="checkbox_other">Otras consultas</string>
+
+    <!-- Button -->
+    <string name="send_message_button">Enviar mi mensaje</string>
+
+    <!-- Privacy Note -->
+    <string name="privacy_note">Vaadata procesa sus datos personales para enviarle el recurso solicitado y para enviarle noticias e información relacionada con la seguridad y las pruebas de penetración. Puede darse de baja en cualquier momento a través de los enlaces de cancelación de suscripción. Para más información, consulte nuestra Política de Privacidad.</string>
+
+    <!-- feedback page  -->
+    <string name="enter_name">Su nombre</string>
+    <string name="word_count_default">Palabras: 0 / 150</string>
+    <string name="word_limit_warning">Ha superado el límite de 150 palabras.</string>
+    <string name="view_recent_feedback">Ver comentarios recientes</string>
+    <string name="rating_popup_text">Toque las estrellas para calificar su experiencia.</string>
+    <string name="hint_name">Su nombre</string>
+    <string name="hint_feedback">Introduzca un comentario</string>
+    <string name="rating_label">Califique su experiencia</string>
+    <string name="submit_feedback">Enviar comentario</string>
+
+    <!-- Common Topics -->
+    <string name="detect_smishing_title">¿Cómo detectar mensajes de smishing?</string>
+    <string name="detect_smishing_content">Nuestra aplicación de Smishing puede detectar y bloquear automáticamente todos los mensajes de smishing que reciba. ¡No se preocupe! Haremos lo mejor para proteger su seguridad.</string>
+    <string name="report_sms_title">¿Cómo reportar un SMS sospechoso?</string>
+    <string name="report_sms_content">Para reportar un SMS sospechoso, haga clic en “Configuración” en la esquina inferior derecha de la página de inicio de nuestra aplicación de smishing, busque el botón "Reportar" bajo el subtítulo "Comunidad y Reportes", complete su información personal y la información del SMS sospechoso para enviarlo.</string>
+    <string name="smishing_vs_phishing_title">¿Qué es smishing vs. phishing?</string>
+    <string name="smishing_vs_phishing_content">El smishing es phishing a través de SMS, engañando a los usuarios para que hagan clic en enlaces maliciosos o compartan información personal. El phishing normalmente utiliza correos electrónicos o sitios web falsos para lo mismo. Ambos buscan robar datos sensibles.</string>
+
+    <string name="terms_and_conditions_title">Términos y Condiciones</string>
+    <string name="please_scroll_to_the_bottom_to_proceed">Desplácese hasta el final para continuar.</string>
+    <string name="accept_and_go_back_to_registration">Aceptar y continuar con el registro.</string>
+
+    <string name="label_username">👤 Nombre de usuario</string>
+    <string name="label_feedback_message">💬 Mensaje de comentario</string>
+    <string name="options_menu">Más opciones</string>
+
+    <string name="edit_feedback">Editar comentario</string>
+    <string name="delete_selected">Eliminar seleccionados</string>
+    <string name="cancel">Cancelar</string>
+    <string name="select">Seleccionar</string>
+    <string name="update_feedback">Actualizar comentario</string>
+    <string name="rating_very_bad">😞 Muy malo</string>
+    <string name="rating_bad">😕 Malo</string>
+    <string name="rating_okay">😐 Regular</string>
+    <string name="rating_good">🙂 Bueno</string>
+    <string name="rating_excellent">🤩 Excelente</string>
+
+    <!-- Communsearch -->
+    <string-array name="search_fields">
+        <item>Todos</item>
+        <item>Nombre de usuario</item>
+        <item>Fecha</item>
+        <item>Título</item>
+        <item>Descripción</item>
+        <item>Me gusta</item>
+        <item>Comentarios</item>
+    </string-array>
+
+    <!-- Preference Summaries -->
+    <string name="signature_summary">Añadir una firma a sus mensajes</string>
+    <string name="reply_summary">Elija cómo se manejan las respuestas</string>
+    <string name="sync_summary">Habilitar o deshabilitar la sincronización automática</string>
+    <string name="example_summary">Este es un ejemplo de resumen de preferencia</string>
+
+    <!-- English Defaults -->
+    <string name="create_account_title">Crea tu cuenta</string>
+    <string name="onboarding_subtitle">Únete al viaje hacia una mejor ciberseguridad</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="log_in">Iniciar sesión</string>
+    <string name="delete_button">Eliminar</string>
+    <string name="bot_greeting">¡Hola! Estoy aquí para ayudarte con los mensajes de smishing.</string>
+    <string name="user_sample_message">Oye, acabo de recibir un SMS sospechoso. ¿Puedes revisarlo?</string>
+    <string name="header_welcome">Bienvenido a Hardhat</string>
+    <string name="share_button">Compartir</string>
+    <string name="skip_button">Saltar</string>
+    <string name="next_button">Siguiente</string>
+    <string name="quiz_timer">Tiempo: 15 seg</string>
+    <string name="quiz_question_placeholder">La pregunta aparecerá aquí</string>
+    <string name="quiz_hint">Pista</string>
+    <string name="quiz_next">Siguiente</string>
+    <string name="back_to_home">Volver a Inicio</string>
+    <string name="share_score">Compartir Puntuación</string>
+    <string name="password_note_text">La contraseña debe tener al menos 8 caracteres, con una mayúscula y un carácter especial.</string>
+    <string name="terms_acceptance">Acepto los Términos y Condiciones</string>
+    <string name="chat_title">Preguntar al Asistente de IA</string>
+    <string name="user_input_hint">Escribe tu mensaje...</string>
+    <string name="send_button">Enviar</string>
+    <string name="thank_you_request">¡Gracias por su solicitud!</string>
+    <string name="confirmation_message">Hemos recibido su mensaje. ¡Nos pondremos en contacto con usted pronto!</string>
+    <string name="exit_to_settings">Salir a Configuración</string>
+    <string name="submit_another_response">Enviar otra respuesta</string>
+    <string name="widget_app_title">Aplicación de Detección de Smishing</string>
+    <string name="widget_risk_score">Detecciones: --</string>
+    <string name="widget_profile_type">Tipo de Usuario: --</string>
+    <string name="widget_streak">Días Seguros: --</string>
+    <string name="widget_medium_title">Aplicación de Detección de Smishing</string>
+    <string name="widget_medium_timestamp">Actualizado: --:--</string>
+    <string name="widget_open_app_btn">Abrir App</string>
+    <string name="widget_report_btn">Reportar Smishing</string>
+    <string name="widget_small_title">Aplicación de Detección de Smishing</string>
+    <string name="welcome_back">¡Bienvenido de nuevo!</string>
+    <string name="remember_me">Recordarme</string>
+    <string name="or_text">o</string>
+    <string name="onboarding_title_1">Sistema inteligente de detección de estafas</string>
+    <string name="onboarding_desc_1">¡Mantente alerta! Identifica y bloquea al instante mensajes sospechosos antes de que te lleguen.</string>
+
+    <string name="onboarding_title_2">Alertas cibernéticas en tiempo real</string>
+    <string name="onboarding_desc_2">Recibe las últimas actualizaciones sobre estafas, filtraciones y tendencias de ciberseguridad — en tu bolsillo.</string>
+
+    <string name="onboarding_title_3">Navegación segura</string>
+    <string name="onboarding_desc_3">Te protege contra enlaces y archivos maliciosos. Ajusta la sensibilidad y los criterios para la detección de spam.</string>
+
+    <string name="onboarding_btn_next">Siguiente</string>
+    <string name="onboarding_btn_get_started">Comencemos</string>
+
+
+</resources>

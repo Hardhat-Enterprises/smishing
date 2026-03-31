@@ -40,16 +40,16 @@
 
         <!-- Bot Message Bubble -->
         <TextView
-            android:id="@+id/botMessageText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="280dp"
-            android:padding="12dp"
-            android:textSize="15sp"
-            android:textColor="@color/smish_text_primary"
-            android:background="@drawable/bubble_bot"
-            android:lineSpacingExtra="2dp"
-            tools:text="Hello! I’m here to help you with smishing messages." />
+        android:id="@+id/botMessageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="280dp"
+        android:padding="12dp"
+        android:text="@string/bot_greeting"
+        android:textSize="15sp"
+        android:textColor="@color/smish_text_primary"
+        android:background="@drawable/bubble_bot"
+        android:lineSpacingExtra="2dp" />
 
         <!-- Timestamp -->
         <TextView

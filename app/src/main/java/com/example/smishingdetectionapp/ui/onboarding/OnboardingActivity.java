@@ -32,9 +32,9 @@ public class OnboardingActivity extends AppCompatActivity{
         dotsIndicator = findViewById(R.id.dotsIndicator); // Initialize DotsIndicator
 
         List<OnBoardingSlide> slides = new ArrayList<>();
-        slides.add(new OnBoardingSlide(R.drawable.onboarding_screen_1, "Intelligent Scam Detection System", "Stay alert! Instantly identify and block suspicious messages before they reach you.."));
-        slides.add(new OnBoardingSlide(R.drawable.onboarding_screen_2, "Real-Time Cyber New Alerts", "Get the latest updates on scams, breaches, and cybersecurity trends—right in your pocket."));
-        slides.add(new OnBoardingSlide(R.drawable.onboarding_screen_3, "Safe browsing", "Protects you from malicious links and attachments. Adjust the sensitivity and criteria for spam detection."));
+        slides.add(new OnBoardingSlide(R.drawable.onboarding_screen_1, getString(R.string.onboarding_title_1), getString(R.string.onboarding_desc_1)));
+        slides.add(new OnBoardingSlide(R.drawable.onboarding_screen_2, getString(R.string.onboarding_title_2), getString(R.string.onboarding_desc_2)));
+        slides.add(new OnBoardingSlide(R.drawable.onboarding_screen_3, getString(R.string.onboarding_title_3), getString(R.string.onboarding_desc_3)));
 
         adapter = new OnBoardingSliderAdapter(this, slides);
         viewPager.setAdapter(adapter);
@@ -55,9 +55,9 @@ public class OnboardingActivity extends AppCompatActivity{
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == adapter.getItemCount() - 1) {
-                    nextButton.setText("Let's Get Started");
+                    nextButton.setText(getString(R.string.onboarding_btn_get_started));
                 } else {
-                    nextButton.setText("Next");
+                    nextButton.setText(getString(R.string.onboarding_btn_next));
                 }
             }
         });
