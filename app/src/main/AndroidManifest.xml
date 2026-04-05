@@ -42,6 +42,7 @@
         android:roundIcon="@drawable/new_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
+        android:name=".SmishingDetectionApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
@@ -54,7 +55,7 @@
         <activity
             android:name=".SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

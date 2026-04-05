@@ -323,8 +323,9 @@
     <string name="spammsg">Message</string>
     <string name="reportDate">Date</string>
     <string name="savedReportsMenu">Saved Reports</string>
+    <string name="save_button">Save</string>
 
-<<<<<<< Updated upstream
+
     <string name="feedback">Feedback</string>
     <string name="rate_your_experience">Rate your experience</string>
     <string name="enter_feedback">Enter feedback</string>
@@ -348,19 +349,25 @@
     <string name="start_a_new_post">Start a new post</string>
     <string name="submitfeedback">Submit Feedback</string>
     <string name="community">Community</string>
-=======
+
     <!--profile pic des -->
-      <string name="edit_feedback">Edit Feedback</string>
-      <string name="delete_selected">Delete Selected</string>
-      <string name="cancel">Cancel</string>
-      <string name="select">Select</string>
-      <string name="update_feedback">Update Feedback</string>
-      <string name="rating_very_bad">😞 Very Bad</string>
-      <string name="rating_bad">😕 Bad</string>
-      <string name="rating_okay">😐 Okay</string>
-      <string name="rating_good">🙂 Good</string>
-      <string name="rating_excellent">🤩 Excellent</string>
->>>>>>> Stashed changes
+    <string name="view_profile">View Profile</string>
+    <string name="user_profile_title">User Profile</string>
+    <string name="profile_picture_desc">Profile picture</string>
+    <string name="address_label">Address</string>
+    <string name="edit_button">Edit</string>
+    <string name="view_risk_profile">View Risk Profile</string>
+    <string name="edit_feedback">Edit Feedback</string>
+    <string name="delete_selected">Delete Selected</string>
+    <string name="cancel">Cancel</string>
+    <string name="select">Select</string>
+    <string name="update_feedback">Update Feedback</string>
+    <string name="rating_very_bad">😞 Very Bad</string>
+    <string name="rating_bad">😕 Bad</string>
+    <string name="rating_okay">😐 Okay</string>
+    <string name="rating_good">🙂 Good</string>
+    <string name="rating_excellent">🤩 Excellent</string>
+
 
     <!-- community post -->
     <string name="title">Title</string>

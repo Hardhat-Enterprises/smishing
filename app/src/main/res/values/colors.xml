@@ -18,6 +18,9 @@
  <color name="red">#FFFF0000</color>
  <color name="blue_color">#0000FF</color>
  <color name="cream">#F5EDD6</color>
+ <color name="background_light">#F5F7FA</color>
+ <color name="light_gray">#D9D9D9</color>
+
 
  <!-- note: resource names must be lowercase -->
  <color name="dark_blue">#05445E</color>

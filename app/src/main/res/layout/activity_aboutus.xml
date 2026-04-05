@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
+    android:background="?attr/colorSurface"
     tools:context=".AboutUsActivity">
 
 
@@ -26,10 +26,10 @@
                 android:layout_height="35dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@null"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/back_button" />
+                app:srcCompat="@drawable/back_button" app:tint="?attr/colorOnSurface" />
 
 
             <ImageView
@@ -49,7 +49,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="24dp"
                 android:text="About Us"
-                android:textColor="#333333"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Who We Are"
-                android:textColor="#2c3e50"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:text="Hardhat provides cutting-edge smishing detection solutions. Our mission is to empower individuals and organizations to identify and prevent phishing attacks effectively."
-                android:textColor="#555555"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp" />
 
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Our Mission"
-                android:textColor="#2c3e50"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:text="To create a secure digital environment by leveraging AI and advanced technologies to safeguard against online threats."
-                android:textColor="#555555"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp" />
 
 
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Contact Us"
-                android:textColor="#2c3e50"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:text="For inquiries, please email us at: support@hardhat.com"
-                android:textColor="#555555"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -122,9 +122,9 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/baby_blue"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        app:itemBackground="?attr/colorSurface"
+        app:itemIconTint="@color/bottom_nav_item_tint"
+        app:itemTextColor="@color/bottom_nav_item_tint"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
