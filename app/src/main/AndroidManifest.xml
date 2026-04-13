@@ -104,6 +104,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- MainActivity is not the launcher anymore -->
+        <activity android:name=".ui.login.ForgotPasswordActivity"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
