@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Change PIN"
-        android:textColor="@color/navy_blue"
+        android:textColor="@color/title_text_primary"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"

@@ -77,7 +77,7 @@
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/HardhatLogo"
-            android:textColor="@color/navy_blue"/>
+            android:textColor="@color/title_text_primary"/>
 
         <TextView
             android:id="@+id/new_detections"

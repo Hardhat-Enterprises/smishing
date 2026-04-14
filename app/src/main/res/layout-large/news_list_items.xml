@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
-    app:cardBackgroundColor="#FFFFFF"
+    app:cardBackgroundColor="?attr/colorSurfaceVariant"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp"
     android:foreground="?attr/selectableItemBackground">
@@ -34,7 +34,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_bookmark_border"
-                app:tint="@color/navy_blue" />
+                app:tint="?attr/colorPrimary" />
 
             <!-- Title & Date in Vertical -->
             <LinearLayout
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_xlarge"
                     android:textStyle="bold"
-                    android:textColor="@color/navy_blue"
+                    android:textColor="?attr/colorOnSurface"
                     android:fontFamily="sans-serif-medium"
                     android:maxLines="2"
                     android:ellipsize="end" />
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:textColor="#9E9E9E"
+                    android:textColor="?attr/colorOnSurfaceVariant"
                     android:textSize="@dimen/text_size_small"/>
             </LinearLayout>
 
@@ -69,7 +69,7 @@
                 android:layout_width="@dimen/icon_size_display"
                 android:layout_height="@dimen/icon_size_display"
                 android:src="@drawable/baseline_keyboard_arrow_right_24"
-                app:tint="#9E9E9E"
+                app:tint="?attr/colorOnSurfaceVariant"
                 android:paddingStart="8dp"
                 android:paddingTop="0dp"/>
         </LinearLayout>
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="@dimen/text_size_large"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:lineSpacingExtra="2dp"
             android:maxLines="4"
             android:ellipsize="end" />
@@ -94,7 +94,7 @@
             android:padding="8dp"
             android:text="Share"
             android:textSize="14sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/navy_blue" />
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
