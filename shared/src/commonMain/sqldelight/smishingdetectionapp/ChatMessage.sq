@@ -1,0 +1,20 @@
+-- Chat messages for a chat thread
+CREATE TABLE chat_message (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  chat_id INTEGER NOT NULL,
+  sender TEXT NOT NULL,
+  text TEXT NOT NULL,
+  timestamp INTEGER NOT NULL,
+  is_bot INTEGER NOT NULL
+);
+
+-- Query: get messages for a chat, ordered by time
+selectMessagesForChat:
+SELECT * FROM chat_message
+WHERE chat_id = ?
+ORDER BY timestamp ASC;
+
+-- Query: insert a message
+insertChatMessage:
+INSERT INTO chat_message (chat_id, sender, text, timestamp, is_bot)
+VALUES (?, ?, ?, ?, ?);

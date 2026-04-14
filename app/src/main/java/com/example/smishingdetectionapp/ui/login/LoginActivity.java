@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
+    private DatabaseAccess databaseAccess;
     //private Object BuildConfig;
     private String BASE_URL = BuildConfig.SERVERIP;
     private boolean isPasswordVisible = false;
@@ -78,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitinterface = retrofit.create(Retrofitinterface.class);
+        databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
 
         // Check if user is already logged in
         if (isUserLoggedIn()) {
@@ -274,24 +277,38 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginWithPin(String pin) {
-        // For testing purposes, simulate a successful PIN login
-        Toast.makeText(LoginActivity.this, "PIN verified successfully (bypassed for testing)", Toast.LENGTH_SHORT).show();
-        navigateToMainActivity();
+        if (canUseDebugBypassWithPin(pin)) {
+            Toast.makeText(LoginActivity.this, "Debug PIN login successful", Toast.LENGTH_SHORT).show();
+            navigateToMainActivity();
+            return;
+        }
+
+        if (databaseAccess.validatePin(pin)) {
+            navigateToMainActivity();
+        } else {
+            Toast.makeText(LoginActivity.this, "Invalid PIN", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loginWithPassword(String email, String password) {
-        // For testing purposes, simulate a successful login
-        Toast.makeText(LoginActivity.this, "Login successful (bypassed for testing)", Toast.LENGTH_SHORT).show();
-        navigateToMainActivity();
+        if (canUseDebugBypassWithPassword(email, password)) {
+            Toast.makeText(LoginActivity.this, "Debug login successful", Toast.LENGTH_SHORT).show();
+            navigateToMainActivity();
+            return;
+        }
+
+        if (databaseAccess.validateLogin(email, password)) {
+            navigateToMainActivity();
+            return;
+        }
+
+        handleLoginDialog(email, password);
     }
 
-    private void handleLoginDialog() {
-        final EditText usernameEditText = binding.email;
-        final EditText passwordEditText = binding.password;
-
+    private void handleLoginDialog(String email, String password) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("email", usernameEditText.getText().toString());
-        map.put("password", passwordEditText.getText().toString());
+        map.put("email", email);
+        map.put("password", password);
 
         Call<DBresult> call = retrofitinterface.executeLogin(map);
         call.enqueue(new Callback<DBresult>() {
@@ -307,7 +324,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DBresult> call, Throwable throwable) {
                 Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
-                navigateToMainActivity();
             }
         });
     }
@@ -332,11 +348,33 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
+    private boolean canUseDebugBypassWithPassword(String email, String password) {
+        return BuildConfig.DEBUG
+                && !BuildConfig.DEBUG_LOGIN_EMAIL.isEmpty()
+                && !BuildConfig.DEBUG_LOGIN_PASSWORD.isEmpty()
+                && BuildConfig.DEBUG_LOGIN_EMAIL.equals(email)
+                && BuildConfig.DEBUG_LOGIN_PASSWORD.equals(password);
+    }
+
+    private boolean canUseDebugBypassWithPin(String pin) {
+        return BuildConfig.DEBUG
+                && !BuildConfig.DEBUG_LOGIN_PIN.isEmpty()
+                && BuildConfig.DEBUG_LOGIN_PIN.equals(pin);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         // Reapply the secure flag when activity resumes
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (databaseAccess != null) {
+            databaseAccess.close();
+        }
     }
 }

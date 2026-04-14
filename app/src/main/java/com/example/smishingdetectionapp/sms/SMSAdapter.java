@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.sms.model.SMSMessage;
+import com.example.smishingdetectionapp.data.model.SMSMessage;
 
 import java.util.ArrayList;
 import java.util.List;

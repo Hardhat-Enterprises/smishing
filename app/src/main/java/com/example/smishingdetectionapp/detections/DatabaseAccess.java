@@ -11,13 +11,17 @@ import android.widget.SimpleCursorAdapter;
 import com.example.smishingdetectionapp.R;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HexFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class DatabaseAccess {
+    private static final String HASH_PREFIX = "sha256:";
     private static SQLiteOpenHelper openHelper;
     static SQLiteDatabase db;
     private static DatabaseAccess instance;
@@ -326,16 +330,17 @@ public class DatabaseAccess {
     }
 
     public boolean validateLogin(String email, String password) {
-        String query = "SELECT * FROM Login WHERE email = ? AND password = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{email, password});
+        String hashedPassword = hashSensitiveValue(password);
+        String query = "SELECT * FROM Login WHERE Email = ? AND (Password = ? OR Password = ?)";
+        Cursor cursor = db.rawQuery(query, new String[]{email, hashedPassword, password});
         boolean isValid = cursor.getCount() > 0;
         cursor.close();
         return isValid;
     }
     public boolean validatePin(String pin) {
         try {
-            String query = "SELECT * FROM Login WHERE pin = ?";
-            Cursor cursor = db.rawQuery(query, new String[]{pin});
+            String query = "SELECT * FROM Login WHERE Pin = ? OR Pin = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{hashSensitiveValue(pin), pin});
 
             boolean isValid = cursor.getCount() > 0; // Check if any row exists
             cursor.close(); // Close the cursor to prevent memory leaks
@@ -354,8 +359,8 @@ public class DatabaseAccess {
             contentValues.put("Name", name);
             contentValues.put("Email", email);
             contentValues.put("PhoneNumber", phoneNumber); // Ensure this is a valid integer string
-            contentValues.put("Password", password);
-            contentValues.put("Pin", pin); // Ensure this is a valid integer string
+            contentValues.put("Password", hashSensitiveValue(password));
+            contentValues.put("Pin", hashSensitiveValue(pin)); // Ensure this is a valid integer string
             System.out.println("Hereee :");
             long result = db.insert("Login", null, contentValues);
             System.out.println("Hereee :"+ result);
@@ -370,7 +375,7 @@ public class DatabaseAccess {
             String query = "SELECT * FROM Login";
             Cursor cursor = db.rawQuery(query, null);
             ContentValues contentValues = new ContentValues();
-            contentValues.put("Pin", newPIN); // Ensure "Pin" matches your column name in the Login table
+            contentValues.put("Pin", hashSensitiveValue(newPIN)); // Ensure "Pin" matches your column name in the Login table
             if (cursor != null && cursor.moveToFirst()) {
                 int rowsUpdated = db.update("Login", contentValues, null, null);
                 cursor.close();
@@ -401,6 +406,16 @@ public class DatabaseAccess {
         }
 
         return years;
+    }
+
+    private static String hashSensitiveValue(String rawValue) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            byte[] digest = messageDigest.digest(rawValue.getBytes(StandardCharsets.UTF_8));
+            return HASH_PREFIX + HexFormat.of().formatHex(digest);
+        } catch (Exception e) {
+            throw new IllegalStateException("Unable to hash sensitive value", e);
+        }
     }
 
 }
