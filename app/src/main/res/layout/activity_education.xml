@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f8ff">
+    android:background="?attr/colorSurface">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -18,8 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/bottom_nav_item_tint"
+        app:itemTextColor="@color/bottom_nav_item_tint"
         app:itemIconSize="25dp"
         app:itemHorizontalTranslationEnabled="false" />
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Education and Resources"
-                android:textColor="#1a1a1a"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/learn_more_about_smishing"
-                android:textColor="#2c3e50"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp"/>
@@ -82,7 +82,7 @@
             <!-- WebView Video Section -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="24dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp">
@@ -91,7 +91,7 @@
                     android:id="@+id/youtubeWebView"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="@android:color/white"
+                    android:background="?attr/colorSurfaceVariant"
                     android:padding="8dp"/>
             </androidx.cardview.widget.CardView>
 
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Can you spot a smishing attempt?"
-                android:textColor="#2c3e50"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp"/>
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="Take the Quiz"
                 android:textColor="@android:color/white"
-                android:backgroundTint="#567BDB"
+                android:backgroundTint="?attr/colorPrimary"
                 app:cornerRadius="24dp"
                 android:paddingHorizontal="24dp"
                 android:paddingVertical="12dp"
@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New to the app? Get a quick overview"
-                android:textColor="#2c3e50"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -135,8 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Get Started"
-                android:textColor="#567BDB"
-                android:backgroundTint="#1A5477D1"
+                android:textColor="?attr/colorOnPrimary"
+                android:backgroundTint="?attr/colorPrimary"
                 app:cornerRadius="24dp"
                 android:paddingHorizontal="24dp"
                 android:paddingVertical="12dp"
@@ -149,7 +149,7 @@
                 android:text="Case Studies: Your Learning Companion"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_marginBottom="12dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -158,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:text="Case Studies"
                 android:textColor="@android:color/white"
-                android:backgroundTint="#567BDB"
+                android:backgroundTint="?attr/colorPrimary"
                 app:cornerRadius="24dp"
                 android:paddingHorizontal="24dp"
                 android:paddingVertical="12dp"
