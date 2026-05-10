@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -38,49 +37,45 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterMain extends AppCompatActivity {
 
-    private static final int TERMS_REQUEST_CODE = 1001;  // Unique request code for terms acceptance
+    private static final int TERMS_REQUEST_CODE = 1001;
     private ActivitySignupBinding binding;
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
     private String BASE_URL = BuildConfig.SERVERIP;
-    private CheckBox termsCheckBox;
+    private boolean termsAccepted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set up view binding
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initialize Retrofit
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitinterface = retrofit.create(Retrofitinterface.class);
 
-        // Set up back button
+        // Back button
         ImageButton backButton = findViewById(R.id.signup_back);
         backButton.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
 
-        // Link Terms and Conditions
-        TextView termsTextView = findViewById(R.id.terms_text);
-        termsCheckBox = findViewById(R.id.terms_condition_checkbox);
+        // Register button
+        Button registerButton = findViewById(R.id.registerBtn);
+        registerButton.setEnabled(false);
+
+        // Terms and Conditions - fixed to use new terms_conditions TextView
+        TextView termsTextView = findViewById(R.id.terms_conditions);
         termsTextView.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterMain.this, TermsAndConditionsActivity.class);
             startActivityForResult(intent, TERMS_REQUEST_CODE);
         });
 
-        // Set up register button
-        // Test registration flow
-        Button registerButton = findViewById(R.id.registerBtn);
-        registerButton.setEnabled(false);
-
-        // Set up registration logic
+        // Registration logic
         registerButton.setOnClickListener(v -> {
             String fullName = binding.fullNameInput.getText().toString();
             String phoneNumber = binding.pnInput.getText().toString();
@@ -109,30 +104,29 @@ public class RegisterMain extends AppCompatActivity {
             binding.pwInput.setTextColor(ContextCompat.getColor(this, R.color.black));
             binding.pw2Input.setTextColor(ContextCompat.getColor(this, R.color.black));
         }
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Check if we are handling the result from the Terms and Conditions activity
         if (requestCode == TERMS_REQUEST_CODE) {
+            Button registerButton = findViewById(R.id.registerBtn);
             if (resultCode == RESULT_OK) {
-                // Terms accepted, enable the register button
-                Button registerButton = findViewById(R.id.registerBtn);
+                termsAccepted = true;
                 registerButton.setEnabled(true);
-                termsCheckBox.setChecked(true);
+                TextView termsTextView = findViewById(R.id.terms_conditions);
+                termsTextView.setText("Terms and Conditions accepted!");
             } else {
-                termsCheckBox.setChecked(false);
-                findViewById(R.id.registerBtn).setEnabled(false);
+                termsAccepted = false;
+                registerButton.setEnabled(false);
             }
         }
     }
 
     private String generateVerificationCode() {
         Random random = new Random();
-        int code = 100000 + random.nextInt(900000); // Generate a random 6-digit code
+        int code = 100000 + random.nextInt(900000);
         return String.valueOf(code);
     }
 
@@ -153,17 +147,14 @@ public class RegisterMain extends AppCompatActivity {
             Snackbar.make(binding.getRoot(), "Please enter your full name.", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
             Snackbar.make(binding.getRoot(), "Please enter a valid phone number.", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         if (!isValidEmailAddress(email)) {
             Snackbar.make(binding.getRoot(), "Please enter a valid email address.", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         String confirmPassword = binding.pw2Input.getText().toString();
         if (password.length() < 8) {
             Snackbar.make(binding.getRoot(), "Password must be at least 8 characters long.", Snackbar.LENGTH_LONG).show();
@@ -189,7 +180,6 @@ public class RegisterMain extends AppCompatActivity {
             Snackbar.make(binding.getRoot(), "Password must include a special character.", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         return true;
     }
 
@@ -230,12 +220,10 @@ public class RegisterMain extends AppCompatActivity {
         });
     }
 
-
     private boolean isValidEmailAddress(String email) {
         try {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
-
             String emailPattern = "^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
             return Pattern.matches(emailPattern, email) && !email.contains("..") && !email.startsWith(".") && !email.endsWith(".");
         } catch (AddressException ex) {

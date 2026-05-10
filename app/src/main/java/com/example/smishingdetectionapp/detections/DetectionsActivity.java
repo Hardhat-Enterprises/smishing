@@ -27,15 +27,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.SettingsActivity;
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.example.smishingdetectionapp.ui.WidgetDataManager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
@@ -173,7 +169,6 @@ public class DetectionsActivity extends AppCompatActivity {
             return true;
         });
 
-
         // CSV create-document launcher
         createCsvLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -195,13 +190,8 @@ public class DetectionsActivity extends AppCompatActivity {
                     }
                 }
         );
-
-        // Export button
-        Button exportReportBtn = findViewById(R.id.exportReportBtn);
-        exportReportBtn.setOnClickListener(v -> showExportDialog());
     }
 
-    // Centered popup dialog that inflates popup_export_report.xml
     private void showExportDialog() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.popup_export_report);
@@ -229,7 +219,6 @@ public class DetectionsActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // Launch the SAF to create CSV file
     private void launchCreateCsv() {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -239,7 +228,6 @@ public class DetectionsActivity extends AppCompatActivity {
         createCsvLauncher.launch(intent);
     }
 
-    // Search/sort/list helpers
     public void searchDB(String search) {
         String searchQuery = "SELECT * FROM Detections WHERE Phone_Number LIKE '%" + search + "%' OR Message LIKE '%" + search + "%' OR Date LIKE '%" + search + "%'";
         Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
@@ -275,8 +263,6 @@ public class DetectionsActivity extends AppCompatActivity {
         DatabaseAccess.db.delete("Detections", "_id = ?", new String[]{id});
     }
 
-
-    // PDF export feature
     private void exportDetectionsToPDF() {
         Cursor cursor = DatabaseAccess.db.rawQuery("SELECT * FROM Detections", null);
         if (cursor.getCount() == 0) {
@@ -320,8 +306,6 @@ public class DetectionsActivity extends AppCompatActivity {
         }
     }
 
-
-    // CSV export helpers
     private boolean exportCursorToCsvUri(Uri uri, Cursor currentCursor) {
         Cursor cursor = null;
         boolean closeAtEnd = false;
@@ -379,32 +363,26 @@ public class DetectionsActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    // PROTECTED CSV ENCODER (Security Feature)
     private String safeCsv(String s) {
         if (s == null) return "";
 
-        // Find first non-whitespace character (spaces, tabs, etc.)
         int i = 0;
         while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
 
         boolean dangerous = false;
         if (i < s.length()) {
             char c = s.charAt(i);
-            // Excel/Sheets treat = + - @ as formulas when first non-whitespace
             if (c == '=' || c == '+' || c == '-' || c == '@') {
                 dangerous = true;
             }
         }
 
-        // CSV-escape quotes
         String out = s.replace("\"", "\"\"");
 
-        // Neutralize formula evaluation by prefixing apostrophe
         if (dangerous) {
             out = "'" + out;
         }
 
-        // Quote fields that contain CSV special chars
         boolean needsQuoting = out.contains(",") || out.contains("\"") || out.contains("\n") || out.contains("\r");
         return needsQuoting ? "\"" + out + "\"" : out;
     }

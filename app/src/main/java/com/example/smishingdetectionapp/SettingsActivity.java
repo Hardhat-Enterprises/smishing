@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.smishingdetectionapp.Community.CommunityHomeActivity;
 import com.example.smishingdetectionapp.chat.ChatAssistantActivity;
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -52,10 +51,12 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         });
 
-        // Report button
+        // Report button - fixed, ReportingActivity does not exist
         Button reportBtn = findViewById(R.id.reportBtn);
         reportBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, ReportingActivity.class));
+            Intent intent = new Intent(this, CommunityHomeActivity.class);
+            intent.putExtra("source", "settings");
+            startActivity(intent);
             finish();
         });
 
@@ -91,21 +92,21 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         });
 
-        // Forum button
+        // Forum button - fixed, ForumActivity does not exist
         Button forumBtn = findViewById(R.id.forumBtn);
         forumBtn.setOnClickListener(v -> {
-            startActivity(new Intent(this, ForumActivity.class));
+            Intent intent = new Intent(this, CommunityHomeActivity.class);
+            intent.putExtra("source", "settings");
+            startActivity(intent);
             finish();
         });
     }
 
-    // Open AccountActivity directly
     private void openAccountActivity() {
         startActivity(new Intent(SettingsActivity.this, AccountActivity.class));
         finish();
     }
 
-    // Notification button
     public void openNotificationsActivity(View view) {
         startActivity(new Intent(this, NotificationActivity.class));
     }
