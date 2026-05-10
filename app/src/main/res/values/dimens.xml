@@ -15,6 +15,8 @@
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_xlarge">32dp</dimen>
     <dimen name="margin_xxlarge">50dp</dimen>
+    <dimen name="margin_xxxlarge">56dp</dimen>
+    <dimen name="margin_bottom">96dp</dimen>
 
     <!-- Padding -->
     <dimen name="padding_xsmall">4dp</dimen>
@@ -77,15 +79,19 @@
     <dimen name="button_height_small">40dp</dimen>
     <dimen name="button_height_medium">48dp</dimen>
     <dimen name="button_height_large">56dp</dimen>
+    <dimen name="button_height_xlarge">72dp</dimen>
+    <dimen name="button_height_xxlarge">320dp</dimen>
     <dimen name="button_width_small">100dp</dimen>
     <dimen name="button_width_medium">200dp</dimen>
     <dimen name="button_width_large">300dp</dimen>
+    <dimen name="button_width_half">160dp</dimen>
     <dimen name="button_primary_height">48dp</dimen>
     <dimen name="button_secondary_height">40dp</dimen>
     <dimen name="button_tertiary_height">32dp</dimen>
 
     <!-- Onboarding Sreen -->
     <dimen name="onborading_logo_size">80dp</dimen>
+    <dimen name="onborading_logo_size_large">100dp</dimen>
     <dimen name="dot_size">12dp</dimen>
     <dimen name="elevation_high">100dp</dimen>
     <dimen name="translation_z">5dp</dimen>
@@ -136,6 +142,7 @@
     <dimen name="text_size_micro">12sp</dimen>
     <dimen name="text_size_headline">28sp</dimen>
     <dimen name="text_size_display">34sp</dimen>
+    <dimen name="text_size_xdisplay">40sp</dimen>
 
     <!-- Margins and paddings -->
     <dimen name="margin_xxsmall">2dp</dimen>

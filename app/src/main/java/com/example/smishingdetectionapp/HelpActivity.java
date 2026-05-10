@@ -4,8 +4,10 @@ package com.example.smishingdetectionapp;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.activity.EdgeToEdge;
 
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -43,72 +45,52 @@ public class HelpActivity extends SharedActivity {
             return insets;
         });
 
-
-        // Back button: finish activity
-        ImageButton helpBack = findViewById(R.id.help_back);
-        helpBack.setOnClickListener(v -> {
+        // Back button to go back to settings dashboard
+        ImageButton report_back = findViewById(R.id.report_back);
+        report_back.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
         });
 
-        // Menu button: handle as needed
-        ImageButton helpMenu = findViewById(R.id.help_menu);
-        helpMenu.setOnClickListener(v -> {
-            // Implement menu actions if necessary
-        });
-
-
-        // Common Topics Click Listeners
-        MaterialCardView cardTopic1 = findViewById(R.id.cardTopic1);
-        cardTopic1.setOnClickListener(v -> {
-            Intent intent = new Intent(this, TopicDetailActivity.class);
-            intent.putExtra("TOPIC_ID", "DETECT_SMISHING");
-            startActivity(intent);
-        });
-
-        MaterialCardView cardTopic2 = findViewById(R.id.cardTopic2);
-        cardTopic2.setOnClickListener(v -> {
-            Intent intent = new Intent(this, TopicDetailActivity.class);
-            intent.putExtra("TOPIC_ID", "REPORT_SMS");
-            startActivity(intent);
-        });
-
-        MaterialCardView cardTopic3 = findViewById(R.id.cardTopic3);
-        cardTopic3.setOnClickListener(v -> {
-            Intent intent = new Intent(this, TopicDetailActivity.class);
-            intent.putExtra("TOPIC_ID", "SMISHING_VS_PHISHING");
-            startActivity(intent);
-        });
-
-
-        // ---------- FAQ entry (single id across layouts) ----------
-        MaterialCardView cardFAQ = findViewById(R.id.cardFAQ);   // <-- ensure your layout uses this id
-        if (cardFAQ != null) cardFAQ.setOnClickListener(v -> openFaq(null));
-
-
-        // Contact Options Click Listeners
-        MaterialCardView cardCallUs = findViewById(R.id.cardCallUs);
-        if (cardCallUs != null) {
-            cardCallUs.setOnClickListener(v -> {
+        // Contact Us
+        RelativeLayout rv2 = findViewById(R.id.rv_2);
+        rv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
-                phoneIntent.setData(Uri.parse("tel:+1234567890")); // Replace with your phone number
+                phoneIntent.setData(Uri.parse("tel:+1234567890"));
                 startActivity(phoneIntent);
-            });
-        }
-        MaterialCardView cardMailUs = findViewById(R.id.cardMailUs);
-        if (cardMailUs != null) {
-            cardMailUs.setOnClickListener(v -> {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.setData(Uri.parse("mailto:support@example.com")); // Replace with your email address
-                startActivity(emailIntent);
-            });
-        }
-        MaterialCardView cardFeedback = findViewById(R.id.cardFeedback);
-        if (cardFeedback != null) {
-            cardFeedback.setOnClickListener(v ->
-                    startActivity(new Intent(HelpActivity.this, FeedbackActivity.class))
-            );
+            }
+        });
 
-        }
+        // Mail Us
+        RelativeLayout rv1 = findViewById(R.id.rv_1);
+        rv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:support@example.com"));
+                startActivity(emailIntent);
+            }
+        });
+
+        // FAQ
+        RelativeLayout rv3 = findViewById(R.id.rv_3);
+        rv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HelpActivity.this, "Faq", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Feedback - navigate to FeedbackActivity
+        RelativeLayout rv4 = findViewById(R.id.rv_4);
+        rv4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HelpActivity.this, FeedbackActivity.class));
+                finish();
+            }
+        });
     }
 }

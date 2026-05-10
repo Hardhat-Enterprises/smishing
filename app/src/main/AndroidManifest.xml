@@ -34,7 +34,7 @@
         android:required="false" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/new_logo"
@@ -42,7 +42,7 @@
         android:roundIcon="@drawable/new_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmishingDetectionApp"
-        android:usesCleartextTraffic="true"
+        android:usesCleartextTraffic="false"
         tools:targetApi="31">
 
         <!-- Chat History Activity -->
@@ -96,7 +96,7 @@
         <activity android:name=".ui.onboarding.LoginCreateActivity" android:exported="false" />
         <activity android:name=".ui.login.LoginActivity" android:exported="true" />
         <activity android:name=".ui.Register.RegisterMain" android:exported="true" />
-        <activity android:name=".ui.Register.EmailVerify" android:exported="true" />
+        <activity android:name=".ui.Register.EmailVerify" android:exported="false" />
 
         <!-- Detection -->
         <activity android:name=".detections.DetectionsActivity" android:exported="true">

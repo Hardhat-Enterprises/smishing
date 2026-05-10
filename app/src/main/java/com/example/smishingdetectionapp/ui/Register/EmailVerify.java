@@ -133,13 +133,10 @@ public class EmailVerify extends AppCompatActivity {
                 return;
             }
 
-            // Uncomment below for real verification
-            /*
             if (!enteredOTP.equals(verificationCode)) {
                 Snackbar.make(findViewById(android.R.id.content), "Invalid verification code.", Snackbar.LENGTH_LONG).show();
                 return;
             }
-            */
 
             Snackbar.make(findViewById(android.R.id.content), "Email verified successfully.", Snackbar.LENGTH_LONG).show();
             completeSignup();

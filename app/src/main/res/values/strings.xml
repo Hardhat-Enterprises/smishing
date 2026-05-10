@@ -213,6 +213,7 @@
     <string name="report_btn">Report</string>
     <string name="help_btn">Help</string>
     <string name="about_btn">Privacy Policy</string>
+    <string name="about_us_btn">About Us</string>
 
     <!-- Filtering Rules Strings -->
     <string name="keywords_label">Keywords</string>
@@ -324,7 +325,7 @@
     <string name="reportDate">Date</string>
     <string name="savedReportsMenu">Saved Reports</string>
 
-<<<<<<< Updated upstream
+<!---Updated upstream -->
     <string name="feedback">Feedback</string>
     <string name="rate_your_experience">Rate your experience</string>
     <string name="enter_feedback">Enter feedback</string>
@@ -549,5 +550,13 @@
     <string name="reply_summary">Choose how replies are handled</string>
     <string name="sync_summary">Enable or disable auto-sync</string>
     <string name="example_summary">This is an example preference summary</string>
+
+    <string name="view_profile">View Profile</string>
+    <string name="user_profile_title">User Profile</string>
+    <string name="profile_picture_desc">Profile Picture</string>
+    <string name="address_label">Address</string>
+    <string name="edit_button">Edit</string>
+    <string name="view_risk_profile">View Risk Profile</string>
+    <string name="save_button">Save</string>
 
 </resources>

@@ -42,16 +42,21 @@ kotlin {
 
             // Coroutines
             implementation(libs.kotlinx.coroutines.core)
+
+            // Koin
+            implementation(libs.koin.core)
         }
 
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.sqldelight.android.driver)
+            implementation(libs.koin.android)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
             implementation(libs.sqldelight.native.driver)
+
         }
     }
 }
