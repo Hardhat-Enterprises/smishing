@@ -88,6 +88,7 @@
         <!-- Debug & Account -->
         <activity android:name=".DebugActivity" android:exported="false" />
         <activity android:name=".AboutMeActivity" android:exported="false" />
+        <activity android:name=".UserProfileActivity" android:exported="false" />
         <activity android:name=".ui.account.AccountActivity" android:exported="true" />
         <activity android:name=".ui.account.PopupDEL" />
 

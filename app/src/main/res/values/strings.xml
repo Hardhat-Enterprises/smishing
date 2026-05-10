@@ -549,5 +549,7 @@
     <string name="reply_summary">Choose how replies are handled</string>
     <string name="sync_summary">Enable or disable auto-sync</string>
     <string name="example_summary">This is an example preference summary</string>
+    <string name="edit_button">Edit</string>
+    <string name="save_button">Save</string>
 
 </resources>
