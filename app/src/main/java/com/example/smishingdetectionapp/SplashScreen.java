@@ -54,7 +54,7 @@ public class SplashScreen extends AppCompatActivity {
                 intent = new Intent(SplashScreen.this, OnboardingActivity.class);
                 prefs.edit().putBoolean("onboarding_shown", true).apply(); // Mark onboarding as completed
             } else {
-                intent = new Intent(SplashScreen.this, OnboardingActivity.class);
+                intent = new Intent(SplashScreen.this, LoginActivity.class);
             }
 
             startActivity(intent);
