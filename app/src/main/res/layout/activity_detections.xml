@@ -67,6 +67,18 @@
         app:layout_constraintStart_toEndOf="@+id/searchTextBox"
         app:layout_constraintTop_toBottomOf="@+id/DetectionsText"
         app:srcCompat="@drawable/filter_svg" />
+    <TextView
+        android:id="@+id/activeFilterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text=""
+        android:textSize="12sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/filterBtn"
+        app:layout_constraintTop_toBottomOf="@+id/DetectionsText"
+        app:layout_constraintBaseline_toBaselineOf="@+id/filterBtn"/>
 
     <!-- FIX: removed marginTop="220dp", now properly anchored below searchTextBox -->
     <ListView
