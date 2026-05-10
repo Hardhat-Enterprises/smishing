@@ -67,13 +67,35 @@
         app:layout_constraintStart_toEndOf="@+id/searchTextBox"
         app:layout_constraintTop_toBottomOf="@+id/DetectionsText"
         app:srcCompat="@drawable/filter_svg" />
+    <TextView
+        android:id="@+id/activeFilterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text=""
+        android:textSize="12sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/filterBtn"
+        app:layout_constraintTop_toBottomOf="@+id/DetectionsText"
+        app:layout_constraintBaseline_toBaselineOf="@+id/filterBtn"/>
 
-    <!-- FIX: removed marginTop="220dp", now properly anchored below searchTextBox -->
+    <Button
+        android:id="@+id/exportReportBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="10dp"
+        android:text="Export"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchTextBox" />
+
     <ListView
         android:id="@+id/lvDetectionsList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10sp"
         android:padding="10dp"
@@ -81,6 +103,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchTextBox" />
+        app:layout_constraintTop_toBottomOf="@+id/exportReportBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
