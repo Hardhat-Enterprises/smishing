@@ -22,7 +22,6 @@ import com.example.smishingdetectionapp.DataBase.DBresult;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.SharedActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
@@ -49,20 +48,24 @@ public class LoginActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
     private String BASE_URL = BuildConfig.SERVERIP;
+    private DatabaseAccess databaseAccess;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    private boolean isPinLogin = false;  // Flag for PIN login
+    private boolean isPinLogin = false;
+
+    // Debug credentials -- only active in debug builds
+    private static final String DEBUG_EMAIL = "debug@smishing.com";
+    private static final String DEBUG_PASSWORD = "Debug@123";
+    private static final String DEBUG_PIN = "000000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inflate layout
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initialize Retrofit
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -71,17 +74,14 @@ public class LoginActivity extends AppCompatActivity {
         databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
 
-        // Check if user is already logged in
         if (isUserLoggedIn()) {
             navigateToMainActivity();
             return;
         }
 
-        // ViewModel setup
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        // View bindings
         final EditText usernameEditText = binding.email;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.loginButton;
@@ -89,19 +89,16 @@ public class LoginActivity extends AppCompatActivity {
         final SignInButton googleBtn = binding.googleBtn;
         final Button registerButton = binding.registerButton;
         final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
-        final Button togglePinLogin = (Button) binding.togglePinLogin;  // Added missing reference for togglePinLogin button
+        final Button togglePinLogin = (Button) binding.togglePinLogin;
 
-        // Toggle functionality for PIN and Password login
         togglePinLogin.setOnClickListener(v -> {
             if (isPinLogin) {
-                // Switch to password login
                 passwordEditText.setHint("Password");
                 passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 loginButton.setText("Login");
                 togglePinLogin.setText("Login with PIN");
                 isPinLogin = false;
             } else {
-                // Switch to PIN login
                 passwordEditText.setHint("Enter 6-digit PIN");
                 passwordEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
                 loginButton.setText("Login with PIN");
@@ -110,18 +107,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Handle login button click
         loginButton.setOnClickListener(v -> {
             String input = passwordEditText.getText().toString();
             if (isPinLogin) {
-                // Handle PIN login
                 if (input.length() != 6) {
                     passwordEditText.setError("PIN must be 6 digits");
                     return;
                 }
                 loginWithPin(input);
             } else {
-                // Handle password login
                 String email = usernameEditText.getText().toString();
                 if (email.isEmpty() || input.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Email and Password must not be empty", Toast.LENGTH_SHORT).show();
@@ -131,24 +125,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Handle register button click
         registerButton.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterMain.class));
             finish();
         });
 
-        // Handle Google Sign-In setup
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         gsc = GoogleSignIn.getClient(this, gso);
 
-        // Sign out of Google account to allow fresh authentication
         gsc.signOut().addOnCompleteListener(task -> {
             Toast.makeText(this, "Signed out. Ready for fresh authentication.", Toast.LENGTH_SHORT).show();
         });
 
-        // Handle Google Sign-In button click
         googleBtn.setOnClickListener(v -> {
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
             if (acct != null) {
@@ -158,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Observe LoginFormState
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) return;
             loginButton.setEnabled(loginFormState.isDataValid());
@@ -173,9 +162,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
             public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
+                if (loginResult == null) return;
                 loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
@@ -188,7 +175,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Password visibility toggle
         togglePasswordVisibility.setOnClickListener(v -> {
             boolean isPasswordVisible = passwordEditText.getTransformationMethod() == null;
             if (isPasswordVisible) {
@@ -202,13 +188,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // Google Sign-In
     void signInGoogle() {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent, 1000);
     }
 
-    // Google Sign-Out
     void signOutGoogle(Runnable onSignOutComplete) {
         gsc.signOut().addOnCompleteListener(task -> {
             Toast.makeText(this, "Signed out of Google account.", Toast.LENGTH_SHORT).show();
@@ -216,7 +200,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // Handle the result of the Google Sign-In
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -231,37 +214,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    private void loginWithPin(String pin) {
-        // Open the database
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
-        databaseAccess.open();
-
-        // Validate the PIN
-        boolean isValid = databaseAccess.validatePin(pin);
-
-        if (isValid) {
-            // PIN is valid
-            Toast.makeText(LoginActivity.this, "PIN verified successfully", Toast.LENGTH_SHORT).show();
-            navigateToMainActivity();
-        } else {
-            // Invalid PIN
-            Toast.makeText(LoginActivity.this, "Invalid PIN. Please try again.", Toast.LENGTH_LONG).show();
-        }
-
-        // Close the database
-        databaseAccess.close();
-    }
-
-     */
-
     private void loginWithPin(String pin) {
         if (canUseDebugBypassWithPin(pin)) {
             Toast.makeText(LoginActivity.this, "Debug PIN login successful", Toast.LENGTH_SHORT).show();
             navigateToMainActivity();
             return;
         }
-
         if (databaseAccess.validatePin(pin)) {
             navigateToMainActivity();
         } else {
@@ -269,36 +227,23 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-    /*
-    private void loginWithPassword(String email, String password) {
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
-        databaseAccess.open();
-
-        boolean isValid = databaseAccess.validateLogin(email, password);
-
-        if (isValid) {
-            navigateToMainActivity();
-        } else {
-            Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_LONG).show();
-        }
-
-        databaseAccess.close();
-    }
-
-     */
-
     private void loginWithPassword(String email, String password) {
         if (canUseDebugBypassWithPassword(email, password)) {
             Toast.makeText(LoginActivity.this, "Debug login successful", Toast.LENGTH_SHORT).show();
             navigateToMainActivity();
             return;
         }
+        handleLoginDialog(email, password);
+    }
 
+    // Fixed - added missing debug bypass methods
+    private boolean canUseDebugBypassWithPin(String pin) {
+        return BuildConfig.DEBUG && DEBUG_PIN.equals(pin);
+    }
 
-    private void handleLoginDialog() {
-        final EditText usernameEditText = binding.email;
-        final EditText passwordEditText = binding.password;
+    private boolean canUseDebugBypassWithPassword(String email, String password) {
+        return BuildConfig.DEBUG && DEBUG_EMAIL.equals(email) && DEBUG_PASSWORD.equals(password);
+    }
 
     private void handleLoginDialog(String email, String password) {
         HashMap<String, String> map = new HashMap<>();
@@ -324,7 +269,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isUserLoggedIn() {
-        // Placeholder for checking login state
         return false;
     }
 

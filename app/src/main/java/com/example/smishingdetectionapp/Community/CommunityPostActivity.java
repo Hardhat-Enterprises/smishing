@@ -38,10 +38,14 @@ public class CommunityPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_communityposts);
 
+        // Fixed - read source from intent instead of hardcoding "posts"
+        final String source;
+        String src = getIntent().getStringExtra("source");
+        source = (src == null) ? "home" : src;
+
         dbAccess = new CommunityDatabaseAccess(this);
         dbAccess.open();
 
-        // Pre-loaded post
         if (dbAccess.isEmpty()) {
             int id1 = (int) dbAccess.insertPost(new CommunityPost(-1, "User1", "2025-05-11",
                     "Is this legit: 0280067670?",
@@ -57,8 +61,6 @@ public class CommunityPostActivity extends AppCompatActivity {
 
         postList = dbAccess.getAllPosts();
 
-
-        // Setup UI
         searchInput = findViewById(R.id.searchInput);
         ImageView filterBtn = findViewById(R.id.filterBtn);
         filterBtn.setOnClickListener(v -> {
@@ -104,12 +106,16 @@ public class CommunityPostActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    startActivity(new Intent(CommunityPostActivity.this, CommunityHomeActivity.class));
+                    // Fixed - pass source along to Trending
+                    Intent intent = new Intent(CommunityPostActivity.this, CommunityHomeActivity.class);
+                    intent.putExtra("source", source);
+                    startActivity(intent);
                     overridePendingTransition(0, 0);
                     finish();
                 } else if (tab.getPosition() == 2) {
+                    // Fixed - pass source along to Report
                     Intent intent = new Intent(CommunityPostActivity.this, CommunityReportActivity.class);
-                    intent.putExtra("source", "posts");
+                    intent.putExtra("source", source);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
                     finish();
@@ -119,14 +125,20 @@ public class CommunityPostActivity extends AppCompatActivity {
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
+        // Fixed - check source instead of always going to Settings
         ImageButton communityBack = findViewById(R.id.community_back);
         communityBack.setOnClickListener(v -> {
-            startActivity(new Intent(this, SettingsActivity.class));
+            if ("settings".equals(source)) {
+                startActivity(new Intent(this, SettingsActivity.class));
+            } else {
+                startActivity(new Intent(this, MainActivity.class));
+            }
+            overridePendingTransition(0, 0);
             finish();
         });
 
-        BottomNavCoordinator.setup(this, R.id.nav_report, "posts");
-
+        // Fixed - use source instead of hardcoded "posts"
+        BottomNavCoordinator.setup(this, R.id.nav_report, source);
     }
 
     @Override
