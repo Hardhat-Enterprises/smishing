@@ -1,4 +1,22 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use(::load)
+    }
+}
+
+fun configValue(name: String, defaultValue: String = ""): String {
+    val envValue = System.getenv(name)
+    val localValue = localProperties.getProperty(name)
+    return when {
+        !envValue.isNullOrBlank() -> envValue
+        !localValue.isNullOrBlank() -> localValue
+        else -> defaultValue
+    }
+}
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -30,9 +48,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "EMAIL", "\"smsphishing8@gmail.com\"")
-        buildConfigField("String", "EMAILPASSWORD", "\"xedr gaek jdsv ujxw\"")
-        buildConfigField("String", "SERVERIP", "\"http://10.0.2.2:5000/\"")
+        buildConfigField("String", "EMAIL", "\"${configValue("EMAIL")}\"")
+        buildConfigField("String", "EMAILPASSWORD", "\"${configValue("EMAILPASSWORD")}\"")
+        buildConfigField("String", "SERVERIP", "\"${configValue("SERVERIP", "https://example.invalid/")}\"")
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -44,7 +62,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "DEBUG_LOGIN_EMAIL", "\"${configValue("DEBUG_LOGIN_EMAIL", "debug@example.com")}\"")
+            buildConfigField("String", "DEBUG_LOGIN_PASSWORD", "\"${configValue("DEBUG_LOGIN_PASSWORD", "DebugPass123!")}\"")
+            buildConfigField("String", "DEBUG_LOGIN_PIN", "\"${configValue("DEBUG_LOGIN_PIN", "000000")}\"")
+        }
         release {
+            buildConfigField("String", "DEBUG_LOGIN_EMAIL", "\"\"")
+            buildConfigField("String", "DEBUG_LOGIN_PASSWORD", "\"\"")
+            buildConfigField("String", "DEBUG_LOGIN_PIN", "\"\"")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
@@ -89,6 +115,10 @@ android {
 dependencies {
 
     implementation(project(":shared"))
+    implementation("com.russhwolf:multiplatform-settings:1.1.1")
+    implementation("io.insert-koin:koin-core:3.5.6")
+    implementation("io.insert-koin:koin-android:3.5.6")
+
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")

@@ -40,6 +40,11 @@ public class JavaMailAPI extends AsyncTask<Void,Void,Void>  {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        if (!Utils.isEmailConfigured()) {
+            cancel(true);
+            Toast.makeText(mContext,"Email verification is not configured for this build.",Toast.LENGTH_LONG).show();
+            return;
+        }
         //Show progress dialog while sending email
         mProgressDialog = ProgressDialog.show(mContext,"Sending message", "Please wait...",false,false);
     }
@@ -48,10 +53,20 @@ public class JavaMailAPI extends AsyncTask<Void,Void,Void>  {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         //Dismiss progress dialog when message successfully send
-        mProgressDialog.dismiss();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
 
         //Show success toast
         Toast.makeText(mContext,"Message Sent",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
