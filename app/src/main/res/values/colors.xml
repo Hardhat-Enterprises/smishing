@@ -46,4 +46,8 @@
  <color name="smish_text_secondary">#999999</color>
  <color name="star_filled">#FFD700</color>   <!-- Gold -->
  <color name="star_empty">#DDDDDD</color>   <!-- Light grey -->
+
+ <!-- Account profile colors -->
+ <color name="background_light">#F8F9FA</color>
+ <color name="light_gray">#D3D3D3</color>
 </resources>

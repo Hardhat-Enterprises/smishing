@@ -40,11 +40,11 @@
     <string name="chat_assistant_page">Support Chat</string>
     <string name="back_button_desc">Back</string>
     <string name="send_button_desc">Send</string>
-    <string name="support_hint">Type your message...</string>
+    <string name="support_hint">Type your message</string>
     <string name="support_title">AI Support</string>
     <string name="chat_back_desc">Back</string>
     <string name="send_message">Send message</string>
-    <string name="chat_input_hint">Type your message...</string>
+    <string name="chat_input_hint">Type your message</string>
     <string name="cd_back">Back</string>
     <string name="cd_send">Send message</string>
     <string name="cd_logo">App logo</string>
@@ -85,7 +85,7 @@
     <string name="problem_unfriendly">Unfriendly attitude</string>
 
     <!-- Free text -->
-    <string name="feedback_hint">Please tell us more...</string>
+    <string name="feedback_hint">Please tell us more</string>
     <string name="feedback_more">Please provide more details</string>
     <string name="feedback_counter">0/280</string>
 
@@ -138,6 +138,7 @@
 
     <!-- Account Settings Page Buttons -->
     <string name="password_changeBtn">Change Password</string>
+    <string name="name_changeBtn">Change Name</string>
     <string name="phone_changeBtn">Change Phone</string>
     <string name="email_changeBtn">Change Email</string>
     <string name="dark_modeBtn">Toggle Dark mode</string>
@@ -182,6 +183,11 @@
     <string name="change_email_page">Change Email</string>
     <string name="new_email">New Email</string>
     <string name="confirm_new_email">Confirm Email</string>
+
+    <!-- Name Change Window Strings -->
+    <string name="change_name_page">Change Name</string>
+    <string name="new_name">New Name</string>
+    <string name="confirm_new_name">Confirm Name</string>
 
     <!-- Sign Out Window Strings -->
     <string name="sign_out_page">Sign Out</string>
@@ -324,7 +330,6 @@
     <string name="reportDate">Date</string>
     <string name="savedReportsMenu">Saved Reports</string>
 
-<<<<<<< Updated upstream
     <string name="feedback">Feedback</string>
     <string name="rate_your_experience">Rate your experience</string>
     <string name="enter_feedback">Enter feedback</string>
@@ -339,34 +344,33 @@
     <string name="forum_1">Forum 1</string>
     <string name="forum_title">Forum Title</string>
     <string name="forum_description">Forum Description</string>
-    <string name="share_your_thoughts">Share your thoughts...</string>
+    <string name="share_your_thoughts">Share your thoughts</string>
     <string name="submit">Submit</string>
     <string name="comments">Comments</string>
-    <string name="add_a_comment">Add a comment...</string>
+    <string name="add_a_comment">Add a comment</string>
     <string name="submit_comment">Submit Comment</string>
     <string name="empty_forum">There are no forums.\nStart a new one today!</string>
     <string name="start_a_new_post">Start a new post</string>
     <string name="submitfeedback">Submit Feedback</string>
     <string name="community">Community</string>
-=======
+
     <!--profile pic des -->
-      <string name="edit_feedback">Edit Feedback</string>
-      <string name="delete_selected">Delete Selected</string>
-      <string name="cancel">Cancel</string>
-      <string name="select">Select</string>
-      <string name="update_feedback">Update Feedback</string>
-      <string name="rating_very_bad">😞 Very Bad</string>
-      <string name="rating_bad">😕 Bad</string>
-      <string name="rating_okay">😐 Okay</string>
-      <string name="rating_good">🙂 Good</string>
-      <string name="rating_excellent">🤩 Excellent</string>
->>>>>>> Stashed changes
+    <string name="edit_feedback">Edit Feedback</string>
+    <string name="delete_selected">Delete Selected</string>
+    <string name="cancel">Cancel</string>
+    <string name="select">Select</string>
+    <string name="update_feedback">Update Feedback</string>
+    <string name="rating_very_bad">😞 Very Bad</string>
+    <string name="rating_bad">😕 Bad</string>
+    <string name="rating_okay">😐 Okay</string>
+    <string name="rating_good">🙂 Good</string>
+    <string name="rating_excellent">🤩 Excellent</string>
 
     <!-- community post -->
     <string name="title">Title</string>
     <string name="content">Content</string>
     <string name="community_comments">Comments</string>
-    <string name="add_community_comment">Add a comment...</string>
+    <string name="add_community_comment">Add a comment</string>
     <string name="submit_community_comment">Submit Comment</string>
     <string name="share_post">share post</string>
 
@@ -441,7 +445,7 @@
     <string name="emoji_background_alt">Plain white circle</string>
     <string name="faq_icon_alt">Black question mark</string>
     <string name="feedback_icon_alt">Solid black square chat bubble with an exclamation mark in the center</string>
-    <string name="hardhat_logo_notif_alt">Yellow shield with a dark blue outline with two oval rings crossing with a yellow construction hat above the sheild</string>
+    <string name="hardhat_logo_notif_alt">Yellow shield with a dark blue outline with two oval rings crossing with a yellow construction hat above the shield</string>
     <string name="help_svg_alt">Black outline of a circle with a black question mark in the center</string>
     <string name="ic_launcher_background_alt">Neon yellow with a white square grid</string>
     <string name="ic_launcher_foreground_alt">Top half of a white robot head with two atennas</string>
@@ -549,5 +553,14 @@
     <string name="reply_summary">Choose how replies are handled</string>
     <string name="sync_summary">Enable or disable auto-sync</string>
     <string name="example_summary">This is an example preference summary</string>
+
+    <!-- Account Profile -->
+    <string name="view_profile">View Profile</string>
+    <string name="user_profile_title">User Profile</string>
+    <string name="profile_picture_desc">Profile Picture</string>
+    <string name="address_label">Address</string>
+    <string name="edit_button">Edit</string>
+    <string name="view_risk_profile">View Risk Profile</string>
+    <string name="save_button">Save</string>
 
 </resources>
