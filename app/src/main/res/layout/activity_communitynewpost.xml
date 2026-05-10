@@ -125,6 +125,17 @@
                 android:inputType="textMultiLine"
                 android:background="@drawable/rounded_lightblue_border"
                 android:padding="12dp"
+                android:maxLength="500"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tvCharCounter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0/500"
+                android:textSize="12sp"
+                android:textColor="@color/grey"
+                android:gravity="end"
                 android:layout_marginBottom="24dp"/>
 
             <!-- Submit Post Button -->

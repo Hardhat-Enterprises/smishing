@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +28,7 @@ public class CommunityNewPost extends AppCompatActivity {
 
     private EditText titleInput, messageInput;
     private Button sharePostBtn;
+    private TextView charCounter;
     private ImageButton backButton;
     private TabLayout tabLayout;
     private BottomNavigationView bottomNav;
@@ -36,6 +40,24 @@ public class CommunityNewPost extends AppCompatActivity {
 
         titleInput = findViewById(R.id.etPostTitle);
         messageInput = findViewById(R.id.etPostMessage);
+        charCounter = findViewById(R.id.tvCharCounter);
+
+        messageInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int len = s.length();
+                charCounter.setText(len + "/500");
+                charCounter.setTextColor(len >= 500
+                        ? getResources().getColor(R.color.red, getTheme())
+                        : getResources().getColor(R.color.grey, getTheme()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
         sharePostBtn = findViewById(R.id.btnSharePost);
         backButton = findViewById(R.id.community_back);
         tabLayout = findViewById(R.id.tabLayout);
