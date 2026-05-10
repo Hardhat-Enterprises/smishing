@@ -52,7 +52,8 @@ public class LoginActivity extends AppCompatActivity {
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    private boolean isPinLogin = false;  // Flag for PIN login
+    private boolean isPinLogin = false;
+    private DatabaseAccess databaseAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -294,11 +295,8 @@ public class LoginActivity extends AppCompatActivity {
             navigateToMainActivity();
             return;
         }
-
-
-    private void handleLoginDialog() {
-        final EditText usernameEditText = binding.email;
-        final EditText passwordEditText = binding.password;
+        handleLoginDialog(email, password);
+    }
 
     private void handleLoginDialog(String email, String password) {
         HashMap<String, String> map = new HashMap<>();
@@ -321,6 +319,14 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private boolean canUseDebugBypassWithPin(String pin) {
+        return false;
+    }
+
+    private boolean canUseDebugBypassWithPassword(String email, String password) {
+        return false;
     }
 
     private boolean isUserLoggedIn() {
