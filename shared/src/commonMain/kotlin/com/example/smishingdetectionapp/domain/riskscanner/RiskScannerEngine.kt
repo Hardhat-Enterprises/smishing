@@ -42,7 +42,7 @@ object RiskScannerEngine {
             ))
         }
 
-        // SMS behaviour
+// SMS behaviour
         if (!disableSmsRisk) {
             val smsRisk = provider.hasSuspiciousSms()
             results.add(RiskCheckResult(
@@ -73,13 +73,20 @@ object RiskScannerEngine {
             totalScore += if (!hasSecurityApp) 14 else 0
 
             val hasSpamFilter = provider.hasSpamFilter()
+            val spamFilterRisk = if (hasSpamFilter) 4 else 10
+
             results.add(RiskCheckResult(
                 name = "Spam Filter",
                 passed = hasSpamFilter,
-                riskPoints = if (!hasSpamFilter) 14 else 0,
-                failureMessage = "No spam filter was detected on your device."
+                riskPoints = spamFilterRisk,
+                failureMessage = if (hasSpamFilter) {
+                    "A spam filter app was detected, but this only provides partial protection."
+                } else {
+                    "No spam filter was detected on your device."
+                }
             ))
-            totalScore += if (!hasSpamFilter) 14 else 0
+
+            totalScore += spamFilterRisk
 
             val isDeviceSecured = provider.isDeviceSecured()
             results.add(RiskCheckResult(

@@ -21,10 +21,18 @@ class AndroidRiskCheckProvider(private val context: Context) : RiskCheckProvider
 
 
     override fun hasSuspiciousSms(): Boolean {
-        //Unimplemented
-        return false
+        val suspiciousKeywords = listOf(
+            "urgent", "click", "verify", "bank", "link", "prize",
+            "otp", "login", "account", "password", "confirm", "limited time"
+        )
 
+        // Temporary sample message used to validate SMS behaviour logic until real SMS input is connected.
+        //val sampleMessage = "urgent: click this link to verify your account"
+         val sampleMessage = "Your package has been delivered"
 
+        val lowerMsg = sampleMessage.lowercase()
+
+        return suspiciousKeywords.any { lowerMsg.contains(it) }
     }
 
     override fun hasSecurityApp(): Boolean {

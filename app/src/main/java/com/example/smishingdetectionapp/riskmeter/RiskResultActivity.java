@@ -71,7 +71,7 @@ public class RiskResultActivity extends AppCompatActivity {
         //our logic scan and updates to progress bar, texts and lights
         RiskScannerLogic.scanHabits(this, progressBar, riskLevelText,
                 lightAgeGroup, lightSmsApp, lightSecurityApp, lightSpamFilter,
-                lightDeviceLock, lightUnknownSources, lightSmsBehaviour, disableSmsRisk,
+                lightDeviceLock, lightUnknownSources, lightSmsBehaviour, false,
                 disableAgeRisk, disableSecurityRisk, 23);
 
         animateProgress(progressBar, percentageText, RiskScannerLogic.getCalculatedScore());

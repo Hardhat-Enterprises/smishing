@@ -51,9 +51,13 @@ public class RiskScannerLogic {
 
         for (RiskCheckResult result : checkResults) {
             String color = result.getPassed() ? "#66BB6A" : "#EF5350";
+
             switch (result.getName()) {
                 case "Age Group":       setLightColor(lightAgeGroup, color); break;
-                case "SMS Behaviour":   setLightColor(lightSmsBehaviour, color); break;
+                case "SMS Behaviour":
+                case "SMS Behavior":
+                    setLightColor(lightSmsBehaviour, color);
+                    break;
                 case "Security App":    setLightColor(lightSecurityApp, color); break;
                 case "Spam Filter":     setLightColor(lightSpamFilter, color); break;
                 case "Device Lock":     setLightColor(lightDeviceLock, color); break;
@@ -61,6 +65,7 @@ public class RiskScannerLogic {
                 case "SMS App":         setLightColor(lightSmsApp, color); break;
             }
         }
+
 
         riskLevelText.setText(score.getRiskLevel());
         updateProgressBarColor(progressBar, calculatedScore);
