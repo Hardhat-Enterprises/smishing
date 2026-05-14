@@ -1,5 +1,5 @@
 [versions]
-agp = "8.11.2"
+agp = "8.13.2"
 kotlin = "2.3.10"
 kotlinx-coroutines = "1.10.2"
 composeMultiplatform = "1.10.3"
