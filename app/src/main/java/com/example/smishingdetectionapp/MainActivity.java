@@ -17,14 +17,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-
+import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.example.smishingdetectionapp.databinding.ActivityMainBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.detections.DetectionsActivity;
 import com.example.smishingdetectionapp.RadarActivity;
 import com.example.smishingdetectionapp.notifications.NotificationPermissionDialogFragment;
 import com.example.smishingdetectionapp.riskmeter.RiskScannerTCActivity;
-import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 
@@ -50,7 +50,27 @@ public class MainActivity extends SharedActivity {
             showNotificationPermissionDialog();
         }
 
-        BottomNavCoordinator.setup(this, R.id.nav_home);
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        nav.setSelectedItemId(R.id.nav_home);
+        nav.setOnItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (id == R.id.nav_home) {
+                return true;
+            } else if (id == R.id.nav_report) {
+                startActivity(new Intent(getApplicationContext(), CommunityReportActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            } else if (id == R.id.nav_news) {
+                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            } else if (id == R.id.nav_settings) {
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            }
+            return false;
+        });
 
         Button debugBtn = findViewById(R.id.debug_btn);
         if (debugBtn != null) {
@@ -113,6 +133,72 @@ public class MainActivity extends SharedActivity {
         }
         if (totalCount != null) {
             totalCount.setText(String.valueOf(databaseAccess.getCounter()));
+        }
+
+        // ===== Analytics Dashboard =====
+        try {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+
+            // Build last 7 days data
+            int[] dailyCounts = new int[7];
+            String[] dayLabels = new String[7];
+            java.text.SimpleDateFormat labelSdf = new java.text.SimpleDateFormat("EEE", java.util.Locale.getDefault());
+            int thisWeekTotal = 0;
+
+            for (int i = 6; i >= 0; i--) {
+                cal = java.util.Calendar.getInstance();
+                cal.add(java.util.Calendar.DAY_OF_YEAR, -i);
+                String dateStr = sdf.format(cal.getTime());
+                String label = labelSdf.format(cal.getTime());
+                android.database.Cursor c = databaseAccess.getDetectionsForDate(dateStr);
+                int count = c != null ? c.getCount() : 0;
+                if (c != null) c.close();
+                dailyCounts[6 - i] = count;
+                dayLabels[6 - i] = label;
+                thisWeekTotal += count;
+            }
+
+            // Last week total
+            int lastWeekTotal = 0;
+            for (int i = 13; i >= 7; i--) {
+                cal = java.util.Calendar.getInstance();
+                cal.add(java.util.Calendar.DAY_OF_YEAR, -i);
+                String dateStr = sdf.format(cal.getTime());
+                android.database.Cursor c = databaseAccess.getDetectionsForDate(dateStr);
+                lastWeekTotal += (c != null ? c.getCount() : 0);
+                if (c != null) c.close();
+            }
+
+            // Update this week / last week counters
+            TextView thisWeekCount = findViewById(R.id.thisWeekCount);
+            TextView lastWeekCount = findViewById(R.id.lastWeekCount);
+            TextView trendText = findViewById(R.id.trendText);
+
+            if (thisWeekCount != null) thisWeekCount.setText(String.valueOf(thisWeekTotal));
+            if (lastWeekCount != null) lastWeekCount.setText(String.valueOf(lastWeekTotal));
+
+            if (trendText != null) {
+                if (thisWeekTotal > lastWeekTotal) {
+                    trendText.setText("\u2197 Up " + (thisWeekTotal - lastWeekTotal) + " from last week");
+                    trendText.setTextColor(android.graphics.Color.parseColor("#E53935"));
+                } else if (thisWeekTotal < lastWeekTotal) {
+                    trendText.setText("\u2198 Down " + (lastWeekTotal - thisWeekTotal) + " from last week");
+                    trendText.setTextColor(android.graphics.Color.parseColor("#4CAF50"));
+                } else {
+                    trendText.setText("\u2192 Same as last week");
+                    trendText.setTextColor(android.graphics.Color.parseColor("#888888"));
+                }
+            }
+
+            // Set bar chart data
+            DashboardView barChart = findViewById(R.id.dashboardBarChart);
+            if (barChart != null) {
+                barChart.setData(dailyCounts, dayLabels);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         databaseAccess.close();
