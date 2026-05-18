@@ -70,6 +70,13 @@ public class MainActivity extends SharedActivity {
                 finish();
             });
         }
+        View totalDetectionsClickTarget = findViewById(R.id.total_detections_container);
+        if (totalDetectionsClickTarget != null) {
+            totalDetectionsClickTarget.setOnClickListener(v -> {
+                startActivity(new Intent(this, DetectionsActivity.class));
+                finish();
+            });
+        }
 
         View scannerClickTarget =
                 findViewById(R.id.risk_scanner_container) != null
