@@ -13,6 +13,7 @@ import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.NewsActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SettingsActivity;
+import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RiskScannerTCActivity extends AppCompatActivity {
@@ -24,40 +25,7 @@ public class RiskScannerTCActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_risk_scanner_tc);
 
-        // Bottom navigation
-        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
-
-        nav.setOnItemSelectedListener(menuItem -> {
-            int id = menuItem.getItemId();
-
-            if (id == R.id.nav_home) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-
-            } else if (id == R.id.nav_report) {
-                Intent i = new Intent(this, CommunityReportActivity.class);
-                i.putExtra("source", "home");
-                startActivity(i);
-                overridePendingTransition(0,0);
-                finish();
-                return true;
-
-            } else if (id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-            } else if (id == R.id.nav_settings) {
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-            }
-            return false;
-        });
-
+        BottomNavCoordinator.setup(this, R.id.nav_home);
         // Back button
         ImageButton report_back = findViewById(R.id.riskscannertc_back);
         report_back.setOnClickListener(v -> {

@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.example.smishingdetectionapp.SmishingDetector;
-import com.example.smishingdetectionapp.sms.model.SMSMessage;
+import com.example.smishingdetectionapp.data.model.SMSMessage;
 
 import java.util.ArrayList;
 import java.util.List;

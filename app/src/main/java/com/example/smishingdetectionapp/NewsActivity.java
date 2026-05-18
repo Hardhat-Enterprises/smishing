@@ -23,7 +23,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.smishingdetectionapp.Community.CommunityReportActivity;
+
 import com.example.smishingdetectionapp.news.Models.RSSFeedModel;
 import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.news.NewsRequestManager;
@@ -32,6 +32,7 @@ import com.example.smishingdetectionapp.news.SavedNewsActivity;
 import com.example.smishingdetectionapp.news.SelectListener;
 import com.example.smishingdetectionapp.notifications.NotificationType;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 
 import java.util.List;
 
@@ -62,35 +63,8 @@ public class NewsActivity extends SharedActivity implements SelectListener {
             startActivity(intent);
         });
 
-        // Bottom navigation setup(Pahul)
-        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
-        nav.setSelectedItemId(R.id.nav_news);
-        nav.setOnItemSelectedListener(menuItem -> {
-            int id = menuItem.getItemId();
-            if (id == R.id.nav_home) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
+        BottomNavCoordinator.setup(this, R.id.nav_news);
 
-            } else if (menuItem.getItemId() == R.id.nav_report) {
-                startActivity(new Intent(this, CommunityReportActivity.class));
-                overridePendingTransition(0,0);
-                finish();
-                return true;
-                
-            } else if (id == R.id.nav_news) {
-                nav.setActivated(true);
-                return true;
-            } else if (id == R.id.nav_settings) {
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-            }
-            return false;
-
-        });
 
         
         progressBar.setVisibility(View.VISIBLE);

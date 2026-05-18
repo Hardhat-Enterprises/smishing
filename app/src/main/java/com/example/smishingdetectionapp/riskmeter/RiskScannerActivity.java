@@ -17,6 +17,7 @@ import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SettingsActivity;
+import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static com.example.smishingdetectionapp.riskmeter.PulseInjectorKt.injectPulsing;

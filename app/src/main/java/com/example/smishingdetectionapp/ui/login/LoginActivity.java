@@ -2,13 +2,9 @@ package com.example.smishingdetectionapp.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.projection.MediaProjectionManager;
 import android.os.Bundle;
 import android.text.InputType;
-//import android.text.method.HideReturnsTransformationMethod;
-//import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -52,9 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
-    //private Object BuildConfig;
     private String BASE_URL = BuildConfig.SERVERIP;
-    private boolean isPasswordVisible = false;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
@@ -63,10 +57,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // BLOCKING screenshots and screen recording
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
-                WindowManager.LayoutParams.FLAG_SECURE);
 
         // Inflate layout
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
@@ -78,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitinterface = retrofit.create(Retrofitinterface.class);
+        databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
 
         // Check if user is already logged in
         if (isUserLoggedIn()) {
@@ -97,13 +89,10 @@ public class LoginActivity extends AppCompatActivity {
         final SignInButton googleBtn = binding.googleBtn;
         final Button registerButton = binding.registerButton;
         final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
-        final Button togglePinLogin = binding.togglePinLogin;
+        final Button togglePinLogin = (Button) binding.togglePinLogin;  // Added missing reference for togglePinLogin button
 
         // Toggle functionality for PIN and Password login
         togglePinLogin.setOnClickListener(v -> {
-            passwordEditText.setText("");
-
-
             if (isPinLogin) {
                 // Switch to password login
                 passwordEditText.setHint("Password");
@@ -115,11 +104,10 @@ public class LoginActivity extends AppCompatActivity {
                 // Switch to PIN login
                 passwordEditText.setHint("Enter 6-digit PIN");
                 passwordEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                loginButton.setText("Login with PIN");
-                togglePinLogin.setText("Login with Password");
+                loginButton.setText("Sign in with PIN");
+                togglePinLogin.setText("Sign in with Password");
                 isPinLogin = true;
             }
-            passwordEditText.requestFocus();
         });
 
         // Handle login button click
@@ -128,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             if (isPinLogin) {
                 // Handle PIN login
                 if (input.length() != 6) {
-                    passwordEditText.setError("PIN must be 6 digits");
+                    passwordEditText.setError("PIN must contains 6 digits");
                     return;
                 }
                 loginWithPin(input);
@@ -136,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Handle password login
                 String email = usernameEditText.getText().toString();
                 if (email.isEmpty() || input.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Email and Password must not be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 loginWithPassword(email, input);
@@ -157,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Sign out of Google account to allow fresh authentication
         gsc.signOut().addOnCompleteListener(task -> {
-            Toast.makeText(this, "Signed out. Ready for fresh authentication.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Signed out successfully. You may sign in again.", Toast.LENGTH_SHORT).show();
         });
 
         // Handle Google Sign-In button click
@@ -200,49 +188,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-        /*
         // Password visibility toggle
         togglePasswordVisibility.setOnClickListener(v -> {
-            // Check the current input type to determine if the password is visible
-            int currentInputType = passwordEditText.getInputType();
-
-            if (currentInputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
-                // If the password is currently hidden (password transformation is applied), show the password
-                passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD); // Show the password
-                togglePasswordVisibility.setImageResource(R.drawable.visibility);  // Open eye icon
-            } else {
-                // If the password is currently visible, hide the password
-                passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD); // Hide the password
-                togglePasswordVisibility.setImageResource(R.drawable.visibilityoff);  // Closed eye icon
-            }
-
-            // Move the cursor to the end
-            passwordEditText.setSelection(passwordEditText.getText().length());
-        });
-
-    }*/
-
-        togglePasswordVisibility.setOnClickListener(v -> {
+            boolean isPasswordVisible = passwordEditText.getTransformationMethod() == null;
             if (isPasswordVisible) {
-                // Hide password
                 passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                togglePasswordVisibility.setImageResource(R.drawable.visibilityoff); // lighter icon
-                isPasswordVisible = false;
+                togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
             } else {
-                // Show password
                 passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-                togglePasswordVisibility.setImageResource(R.drawable.visibility); // darker icon
-                isPasswordVisible = true;
+                togglePasswordVisibility.setImageResource(R.drawable.ic_passwords_visibility);
             }
-
-            // cursor stays at end of input
             passwordEditText.setSelection(passwordEditText.getText().length());
         });
-
-
     }
-    //
 
     // Google Sign-In
     void signInGoogle() {
@@ -253,7 +211,7 @@ public class LoginActivity extends AppCompatActivity {
     // Google Sign-Out
     void signOutGoogle(Runnable onSignOutComplete) {
         gsc.signOut().addOnCompleteListener(task -> {
-            Toast.makeText(this, "Signed out of Google account.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Successfully signed out of Google account.", Toast.LENGTH_SHORT).show();
             onSignOutComplete.run();
         });
     }
@@ -268,30 +226,84 @@ public class LoginActivity extends AppCompatActivity {
                 task.getResult(ApiException.class);
                 navigateToMainActivity();
             } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication was unsuccessful. Please try again", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    /*
     private void loginWithPin(String pin) {
-        // For testing purposes, simulate a successful PIN login
-        Toast.makeText(LoginActivity.this, "PIN verified successfully (bypassed for testing)", Toast.LENGTH_SHORT).show();
-        navigateToMainActivity();
+        // Open the database
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+
+        // Validate the PIN
+        boolean isValid = databaseAccess.validatePin(pin);
+
+        if (isValid) {
+            // PIN is valid
+            Toast.makeText(LoginActivity.this, "PIN verified successfully", Toast.LENGTH_SHORT).show();
+            navigateToMainActivity();
+        } else {
+            // Invalid PIN
+            Toast.makeText(LoginActivity.this, "Invalid PIN. Please try again.", Toast.LENGTH_LONG).show();
+        }
+
+        // Close the database
+        databaseAccess.close();
     }
 
-    private void loginWithPassword(String email, String password) {
-        // For testing purposes, simulate a successful login
-        Toast.makeText(LoginActivity.this, "Login successful (bypassed for testing)", Toast.LENGTH_SHORT).show();
-        navigateToMainActivity();
+     */
+
+    private void loginWithPin(String pin) {
+        if (canUseDebugBypassWithPin(pin)) {
+            Toast.makeText(LoginActivity.this, "Debug PIN login successful", Toast.LENGTH_SHORT).show();
+            navigateToMainActivity();
+            return;
+        }
+
+        if (databaseAccess.validatePin(pin)) {
+            navigateToMainActivity();
+        } else {
+            Toast.makeText(LoginActivity.this, "Invalid PIN entered", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
+    /*
+    private void loginWithPassword(String email, String password) {
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+
+        boolean isValid = databaseAccess.validateLogin(email, password);
+
+        if (isValid) {
+            navigateToMainActivity();
+        } else {
+            Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_LONG).show();
+        }
+
+        databaseAccess.close();
+    }
+
+     */
+
+    private void loginWithPassword(String email, String password) {
+        if (canUseDebugBypassWithPassword(email, password)) {
+            Toast.makeText(LoginActivity.this, "Debug login successful", Toast.LENGTH_SHORT).show();
+            navigateToMainActivity();
+            return;
+        }
+
 
     private void handleLoginDialog() {
         final EditText usernameEditText = binding.email;
         final EditText passwordEditText = binding.password;
 
+    private void handleLoginDialog(String email, String password) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("email", usernameEditText.getText().toString());
-        map.put("password", passwordEditText.getText().toString());
+        map.put("email", email);
+        map.put("password", password);
 
         Call<DBresult> call = retrofitinterface.executeLogin(map);
         call.enqueue(new Callback<DBresult>() {
@@ -300,14 +312,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     navigateToMainActivity();
                 } else if (response.code() == 404) {
-                    Toast.makeText(LoginActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Incorrect login Credentials", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DBresult> call, Throwable throwable) {
                 Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
-                navigateToMainActivity();
             }
         });
     }
@@ -330,13 +341,5 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Reapply the secure flag when activity resumes
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
-                WindowManager.LayoutParams.FLAG_SECURE);
     }
 }

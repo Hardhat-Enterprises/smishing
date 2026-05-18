@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smishingdetectionapp.sms.SMSAdapter;
 import com.example.smishingdetectionapp.sms.SMSClickListener;
-import com.example.smishingdetectionapp.sms.model.SMSMessage;
 import com.example.smishingdetectionapp.sms.SMSExtractor;
+import com.example.smishingdetectionapp.data.model.SMSMessage;
 
 import java.util.ArrayList;
 
@@ -105,21 +105,22 @@ public class SmsActivity extends SharedActivity implements SMSClickListener {
     }
 
     @Override
-    public void OnMessageClicked(com.example.smishingdetectionapp.sms.model.SMSMessage message) {
+    public void OnMessageClicked(SMSMessage message) {
         Intent intent = new Intent(SmsActivity.this, SMSMessageDetailActivity.class);
-        intent.putExtra("SMS_MESSAGE", message);
+        intent.putExtra("sender", message.getSender());
+        intent.putExtra("body", message.getBody());
         startActivity(intent);
-    }
+        }
 
-    /**
-     * permission receiver
-     * @param requestCode The request code passed in {@link #requestPermissions(String[], int)}
-     * @param permissions The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions
-     *     which is either {@link android.content.pm.PackageManager#PERMISSION_GRANTED}
-     *     or {@link android.content.pm.PackageManager#PERMISSION_DENIED}. Never null.
-     *
-     */
+        /**
+         * permission receiver
+         * @param requestCode The request code passed in {@link #requestPermissions(String[], int)}
+         * @param permissions The requested permissions. Never null.
+         * @param grantResults The grant results for the corresponding permissions
+         *     which is either {@link android.content.pm.PackageManager#PERMISSION_GRANTED}
+         *     or {@link android.content.pm.PackageManager#PERMISSION_DENIED}. Never null.
+         *
+         */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {

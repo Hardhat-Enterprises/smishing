@@ -2,7 +2,6 @@ package com.example.smishingdetectionapp;  // Ensure this matches your package
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageButton;
 
 public class AboutMeActivity extends SharedActivity {
@@ -20,5 +19,8 @@ public class AboutMeActivity extends SharedActivity {
             startActivity(intent);
             finish();  // Optional: Finish the current activity
         });
+    }
+
+    public static class UserProfileActivity {
     }
 }

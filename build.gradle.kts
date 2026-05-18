@@ -3,16 +3,19 @@ buildscript {
     repositories {
         mavenCentral()
         google()
-        // Add other repositories here
     }
     dependencies {
         classpath("com.chaquo.python:gradle:15.0.1")
-
-        // Add other classpaths here
     }
 }
 
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+    alias(libs.plugins.composeCompiler) apply false
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.kotlinSerialization) apply false
+    alias(libs.plugins.sqldelight) apply false
 }
+

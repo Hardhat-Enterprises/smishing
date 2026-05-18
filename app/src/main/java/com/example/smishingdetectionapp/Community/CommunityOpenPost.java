@@ -21,6 +21,7 @@ import com.example.smishingdetectionapp.NewsActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SettingsActivity;
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
+import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -194,25 +195,8 @@ public class CommunityOpenPost extends AppCompatActivity {
             Log.e("CommunityOpenPost", "Back button is null");
         }
 
-        bottomNav.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
+        BottomNavCoordinator.setup(this, R.id.nav_report, "OpenPost");
 
-            if (id == R.id.nav_home) {
-                startActivity(new Intent(this, MainActivity.class));
-            } else if (id == R.id.nav_report) {               // ← NEW
-                startActivity(new Intent(this, CommunityReportActivity.class));
-            } else if (id == R.id.nav_news) {
-                startActivity(new Intent(this, NewsActivity.class));
-            } else if (id == R.id.nav_settings) {
-                startActivity(new Intent(this, SettingsActivity.class));
-            } else {
-                return false;
-            }
-
-            overridePendingTransition(0, 0);
-            finish();
-            return true;
-        });
     }
 
     private void handleTabSelection(int position) {

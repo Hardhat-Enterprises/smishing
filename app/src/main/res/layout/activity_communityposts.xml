@@ -60,7 +60,7 @@
         android:layout_height="3dp"
         android:layout_below="@id/tabNavigationContainer"
         android:layout_marginTop="4dp"
-        android:background="@color/Dark_blue" />
+        android:background="@color/dark_blue" />
 
     <!-- Search bar container -->
     <RelativeLayout

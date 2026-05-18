@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smishingdetectionapp.Community.CommunityReportActivity;
+import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class TopicDetailActivity extends AppCompatActivity {
@@ -40,42 +40,7 @@ public class TopicDetailActivity extends AppCompatActivity {
                 break;
         }
 
-        // Bottom navigation logic
-        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
-
-        nav.setSelectedItemId(R.id.nav_settings);
-
-        nav.setOnItemSelectedListener(menuItem -> {
-            int id = menuItem.getItemId();
-            if (id == R.id.nav_home) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-
-            } else if (menuItem.getItemId() == R.id.nav_report) {
-                Intent i = new Intent(this, CommunityReportActivity.class);
-                i.putExtra("source", "home");
-                startActivity(i);
-                overridePendingTransition(0,0);
-                finish();
-                return true;
-
-            } else if (id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-            } else if (id == R.id.nav_settings) {
-                Intent intent1 = new Intent(getApplicationContext(), SettingsActivity.class);
-                intent1.putExtra("from_navigation", true);
-                startActivity(intent1);
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-            }
-            return false;
-        });
+        BottomNavCoordinator.setup(this, R.id.nav_settings);
     }
 
     // How to detect a smishing message method

@@ -10,7 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.smishingdetectionapp.sms.model.SMSMessage;
+import com.example.smishingdetectionapp.data.model.SMSMessage;
 
 public class SMSMessageDetailActivity extends SharedActivity {
 
@@ -33,10 +33,12 @@ public class SMSMessageDetailActivity extends SharedActivity {
         TextView text_sender = findViewById(R.id.text_sender);
         TextView text_body = findViewById(R.id.text_body);
 
-        SMSMessage message = getIntent().getParcelableExtra("SMS_MESSAGE");
-        if (message != null) {
-            text_sender.setText(message.getSender());
-            text_body.setText(message.getBody());
+        String sender = getIntent().getStringExtra("sender");
+        String body = getIntent().getStringExtra("body");
+
+        if (sender != null && body != null) {
+            text_sender.setText(sender);
+            text_body.setText(body);
         }
     }
 }

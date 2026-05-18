@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:layout_below="@id/tabNavigationContainer"
-        android:background="@color/Dark_blue" />
+        android:background="@color/dark_blue" />
 
     <!-- Report Form Content -->
     <ScrollView

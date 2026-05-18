@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.smishingdetectionapp.notifications.NotificationHelper;
 import com.example.smishingdetectionapp.notifications.NotificationType;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 
 public class DebugActivity extends AppCompatActivity {
 
@@ -18,25 +19,8 @@ public class DebugActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
 
-        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        BottomNavCoordinator.setup(this, R.id.nav_settings);
 
-        nav.setSelectedItemId(R.id.nav_settings);
-
-        nav.setOnItemSelectedListener(menuItem -> {
-
-            int id = menuItem.getItemId();
-            if(id == R.id.nav_home) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
-                return true;
-            }
-            else if(id == R.id.nav_news) {
-                startActivity(new Intent(getApplicationContext(), NewsActivity.class));
-                finish();
-                return true;
-            }
-            else return id == R.id.nav_settings;
-        });
 
         Button sms_pull_btn = findViewById(R.id.sms_pull_btn);
 

@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background circle -->
+    <item android:id="@android:id/background">
+        <shape android:shape="oval">
+            <solid android:color="#E5E7EB"/> <!-- Light gray -->
+        </shape>
+    </item>
+
+    <!-- Progress arc -->
+    <item android:id="@android:id/progress">
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent"/>
+            <stroke
+                android:width="16dp"
+                android:color="#10B981"/> <!-- Default Green -->
+        </shape>
+    </item>
+</layer-list>

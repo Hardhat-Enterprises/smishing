@@ -17,6 +17,7 @@
 
     import com.example.smishingdetectionapp.MainActivity;
     import com.example.smishingdetectionapp.SettingsActivity;
+    import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 
     public class CommunityReportActivity extends AppCompatActivity {
         @Override
@@ -83,23 +84,7 @@
                 Log.e("CommunityReportActivity", "Back button is null");
             }
 
-            // BottomNavigationView: identical to CommunityHomeActivity’s
-            BottomNavigationView nav = findViewById(R.id.bottom_navigation);
-
-            nav.setSelectedItemId(R.id.nav_report);
-
-            nav.setOnItemSelectedListener(item -> {
-                Intent intent;
-                int id = item.getItemId();
-                if      (id == R.id.nav_home)     intent = new Intent(this, MainActivity.class);
-                else if (id == R.id.nav_news)     intent = new Intent(this, NewsActivity.class);
-                else if (id == R.id.nav_settings) intent = new Intent(this, SettingsActivity.class);
-                else return false;
-                startActivity(intent);
-                overridePendingTransition(0,0);
-                finish();
-                return true;
-            });
+            BottomNavCoordinator.setup(this, R.id.nav_report, source);
 
             // Submit button to link to database
             btnReport.setOnClickListener(v -> {

@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Community"
             android:textColor="@color/navy_blue"
-            android:textSize="48sp"
+            android:textSize="58sp"
             android:textStyle="bold" />
 
         <TextView
@@ -37,22 +37,32 @@
     </LinearLayout>
 
     <!-- Tab Layout -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_below="@id/headerSection"
+    <LinearLayout
+        android:id="@+id/tabNavigationContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabTextColor="@color/black"
-        app:tabSelectedTextColor="@color/navy_blue"
-        app:tabIndicatorColor="@color/navy_blue" />
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/headerSection"
+        android:weightSum="3">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextColor="@color/black"
+            app:tabIndicatorColor="@color/navy_blue"
+            app:tabSelectedTextColor="@color/navy_blue"
+            app:tabBackground="@color/white"/>
+    </LinearLayout>
 
     <!-- Divider -->
     <View
         android:id="@+id/tabDivider"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/tabLayout"
-        android:background="@color/Dark_blue" />
+        android:layout_height="3dp"
+        android:layout_below="@id/tabNavigationContainer"
+        android:layout_marginTop="4dp"
+        android:background="@color/dark_blue" />
 
     <!-- Open post details -->
     <ScrollView

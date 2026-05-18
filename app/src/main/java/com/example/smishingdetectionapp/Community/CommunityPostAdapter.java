@@ -55,13 +55,25 @@ public class CommunityPostAdapter extends RecyclerView.Adapter<CommunityPostAdap
         holder.likes.setText(String.valueOf(post.getLikes()));
         holder.comments.setText(String.valueOf(post.getComments()));
 
-        // share button listener
+        // Share button listener
         holder.shareIcon.setOnClickListener(v -> {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             String shareText = post.getUsername() + " wrote:\n\n" + post.getPostdescription();
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
             v.getContext().startActivity(Intent.createChooser(shareIntent, "Share post via"));
+        });
+
+        // Like button listener (increments likes only, does not open post)
+        holder.likeIcon.setOnClickListener(v -> {
+            int newLikes = post.getLikes() + 1;
+            post.likes = newLikes;
+            holder.likes.setText(String.valueOf(newLikes));
+
+            CommunityDatabaseAccess dbAccess = new CommunityDatabaseAccess(context);
+            dbAccess.open();
+            dbAccess.updatePostLikes(post.getId(), newLikes);
+            dbAccess.close();
         });
 
         // Allow deletion only if current user posted comment or post

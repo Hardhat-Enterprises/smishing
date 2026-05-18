@@ -15,6 +15,7 @@ import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.NewsActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SettingsActivity;
+import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -72,27 +73,7 @@ public class CommunityHomeActivity extends AppCompatActivity {
             Log.e("CommunityHomeActivity", "Back button is null");
         }
 
-        // Bottom navigation
-        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
-        nav.setOnItemSelectedListener(menuItem -> {
-            int id = menuItem.getItemId();
-            if (id == R.id.nav_home) {
-                startActivity(new Intent(this, MainActivity.class));
-            } else if (id == R.id.nav_report) {
-                Intent intent = new Intent(this, CommunityReportActivity.class);
-                intent.putExtra("source", "home");
-                startActivity(intent);
-            } else if (id == R.id.nav_news) {
-                startActivity(new Intent(this, NewsActivity.class));
-            } else if (id == R.id.nav_settings) {
-                startActivity(new Intent(this, SettingsActivity.class));
-            } else {
-                return false;
-            }
-            overridePendingTransition(0, 0);
-            finish();
-            return true;
-        });
+        BottomNavCoordinator.setup(this, R.id.nav_report, origin);
 
         // Load the trending top reported numbers and top post
         loadTrendingPost();
