@@ -24,6 +24,9 @@ import android.os.Environment;
 import androidx.core.content.FileProvider;
 import java.io.File;
 import java.io.FileOutputStream;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +39,7 @@ import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
+import android.util.TypedValue;
 
 public class RiskResultActivity extends AppCompatActivity {
 
@@ -46,6 +50,18 @@ public class RiskResultActivity extends AppCompatActivity {
     //these are the circle indicators next to each digital habit that will change colour based on risk level
     View lightAgeGroup, lightSmsApp, lightSecurityApp, lightSpamFilter, lightDeviceLock, lightUnknownSources, lightSmsBehaviour;
 
+    View semiCircle;
+    View smishingLogo;
+    Button shareRiskButton;
+    ImageButton btnShareStory;
+    ScrollView habitContainer;
+
+    LinearLayout layoutResultError;
+    LinearLayout layoutResultUnsupported;
+    Button btnRetryResult;
+
+    TextView riskSubtitleText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +70,7 @@ public class RiskResultActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.circularProgressBar);
         percentageText = findViewById(R.id.percentageText);
         riskLevelText = findViewById(R.id.riskLevelText);
+        riskSubtitleText = findViewById(R.id.riskSubtitleText);
 
         lightAgeGroup = findViewById(R.id.light_age_group);
         lightSmsApp = findViewById(R.id.light_sms_app);
@@ -62,17 +79,48 @@ public class RiskResultActivity extends AppCompatActivity {
         lightDeviceLock = findViewById(R.id.light_device_lock);
         lightUnknownSources = findViewById(R.id.light_unknown_sources);
         lightSmsBehaviour = findViewById(R.id.light_sms_behaviour);
+        semiCircle = findViewById(R.id.SemiCircle);
+        smishingLogo = findViewById(R.id.SmishingLogo);
+        shareRiskButton = findViewById(R.id.shareRiskButton);
+        btnShareStory = findViewById(R.id.btnShareStory);
+        habitContainer = findViewById(R.id.habitContainer);
+
+        layoutResultError = findViewById(R.id.layoutResultError);
+        layoutResultUnsupported = findViewById(R.id.layoutResultUnsupported);
+        btnRetryResult = findViewById(R.id.btnRetryResult);
+
+
 
         boolean disableSmsRisk = getIntent().getBooleanExtra("DISABLE_SMS_RISK", false);
         boolean disableAgeRisk = getIntent().getBooleanExtra("DISABLE_AGE_RISK", false);
         boolean disableSecurityRisk = getIntent().getBooleanExtra("DISABLE_SECURITY_RISK", false);
+        boolean hasRequiredExtras =
+                getIntent().hasExtra("DISABLE_SMS_RISK") &&
+                        getIntent().hasExtra("DISABLE_AGE_RISK") &&
+                        getIntent().hasExtra("DISABLE_SECURITY_RISK");
+                if (!hasRequiredExtras) {
+                    showErrorState();
+                } else {
+                    showResultState();
 
+            RiskScannerLogic.scanHabits(this, progressBar, riskLevelText,
+                    lightAgeGroup, lightSmsApp, lightSecurityApp, lightSpamFilter,
+                    lightDeviceLock, lightUnknownSources, lightSmsBehaviour, disableSmsRisk,
+                    disableAgeRisk, disableSecurityRisk);
+                }
 
-        //our logic scan and updates to progress bar, texts and lights
-        RiskScannerLogic.scanHabits(this, progressBar, riskLevelText,
-                lightAgeGroup, lightSmsApp, lightSecurityApp, lightSpamFilter,
-                lightDeviceLock, lightUnknownSources, lightSmsBehaviour, disableSmsRisk,
-                disableAgeRisk, disableSecurityRisk);
+        btnRetryResult.setOnClickListener(v -> {
+            if (!hasRequiredExtras) {
+                showErrorState();
+            } else {
+                showResultState();
+
+                RiskScannerLogic.scanHabits(this, progressBar, riskLevelText,
+                        lightAgeGroup, lightSmsApp, lightSecurityApp, lightSpamFilter,
+                        lightDeviceLock, lightUnknownSources, lightSmsBehaviour, disableSmsRisk,
+                        disableAgeRisk, disableSecurityRisk);
+            }
+        });
 
         // this is for view anlysis text to make it a clickable text view
         TextView viewAnalysisText = findViewById(R.id.textViewRiskDetails);
@@ -91,7 +139,7 @@ public class RiskResultActivity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
-        Button shareRiskButton = findViewById(R.id.shareRiskButton);
+        //Button shareRiskButton = findViewById(R.id.shareRiskButton);
         shareRiskButton.setOnClickListener(v -> {
             // Prefer the logic’s canonical score, fall back to parsing the TextView.
             int score = RiskScannerLogic.getCalculatedScore();
@@ -125,7 +173,7 @@ public class RiskResultActivity extends AppCompatActivity {
 
             startActivity(Intent.createChooser(shareIntent, "Share via"));
         });
-        ImageButton btnShareStory = findViewById(R.id.btnShareStory);
+        //ImageButton btnShareStory = findViewById(R.id.btnShareStory);
         btnShareStory.setOnClickListener(v -> shareStoryFlow());
 
 
@@ -174,7 +222,12 @@ public class RiskResultActivity extends AppCompatActivity {
         // adding styling to detected issues and the text for it
         SpannableString riskHeader = new SpannableString(header);
         riskHeader.setSpan(new StyleSpan(Typeface.BOLD), 0, riskHeader.length(), 0);
-        riskHeader.setSpan(new ForegroundColorSpan(android.graphics.Color.parseColor("#4B74F0")), 0, riskHeader.length(), 0);
+
+        TypedValue tv = new TypedValue();
+        getTheme().resolveAttribute(com.google.android.material.R.attr.colorPrimary, tv, true);
+        int primaryColor = tv.data;
+
+        riskHeader.setSpan(new ForegroundColorSpan(primaryColor), 0, riskHeader.length(), 0);
         riskHeader.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, riskHeader.length(), 0);
         message.append(riskHeader);
 
@@ -302,6 +355,67 @@ public class RiskResultActivity extends AppCompatActivity {
                 "https://play.google.com/store/apps/details?id=" + getPackageName());
         send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(send, "Share your risk score"));
+    }
+
+    private void showResultState() {
+        semiCircle.setVisibility(View.VISIBLE);
+        smishingLogo.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        percentageText.setVisibility(View.VISIBLE);
+        riskLevelText.setVisibility(View.VISIBLE);
+        shareRiskButton.setVisibility(View.VISIBLE);
+        btnShareStory.setVisibility(View.VISIBLE);
+        habitContainer.setVisibility(View.VISIBLE);
+        riskSubtitleText.setVisibility(View.VISIBLE);
+
+        layoutResultError.setVisibility(View.GONE);
+        layoutResultUnsupported.setVisibility(View.GONE);
+        progressBar.setAlpha(0f);
+        progressBar.animate().alpha(1f).setDuration(500);
+
+        percentageText.setAlpha(0f);
+        percentageText.animate().alpha(1f).setDuration(500);
+
+        riskLevelText.setAlpha(0f);
+        riskLevelText.animate().alpha(1f).setDuration(500);
+
+        habitContainer.setAlpha(0f);
+        habitContainer.animate().alpha(1f).setDuration(500);
+    }
+
+    private void showErrorState() {
+        semiCircle.setVisibility(View.GONE);
+        smishingLogo.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        percentageText.setVisibility(View.GONE);
+        riskLevelText.setVisibility(View.GONE);
+        shareRiskButton.setVisibility(View.GONE);
+        btnShareStory.setVisibility(View.GONE);
+        habitContainer.setVisibility(View.GONE);
+        riskSubtitleText.setVisibility(View.GONE);
+
+        layoutResultUnsupported.setVisibility(View.GONE);
+
+        layoutResultError.setAlpha(0f);
+        layoutResultError.setVisibility(View.VISIBLE);
+        layoutResultError.animate().alpha(1f).setDuration(300);
+    }
+
+    private void showUnsupportedState() {
+        semiCircle.setVisibility(View.GONE);
+        smishingLogo.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        percentageText.setVisibility(View.GONE);
+        riskLevelText.setVisibility(View.GONE);
+        shareRiskButton.setVisibility(View.GONE);
+        btnShareStory.setVisibility(View.GONE);
+        habitContainer.setVisibility(View.GONE);
+        riskSubtitleText.setVisibility(View.GONE);
+        layoutResultError.setVisibility(View.GONE);
+
+        layoutResultUnsupported.setAlpha(0f);
+        layoutResultUnsupported.setVisibility(View.VISIBLE);
+        layoutResultUnsupported.animate().alpha(1f).setDuration(300);
     }
 
 }

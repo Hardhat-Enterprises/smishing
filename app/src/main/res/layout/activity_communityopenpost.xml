@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Community"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/title_text_primary"
             android:textSize="58sp"
             android:textStyle="bold" />
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="keeping you and your loved ones safe"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/title_text_primary"
             android:textSize="14sp" />
     </LinearLayout>
 

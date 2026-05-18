@@ -1,6 +1,7 @@
 package com.example.smishingdetectionapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
@@ -146,12 +147,19 @@ public class QuizesActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(QUESTION_TIME, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timerTextView.setText("Time: " + millisUntilFinished / 1000 + " sec");
+                long secondsLeft = millisUntilFinished / 1000;
+                timerTextView.setText("Time: " + secondsLeft + " sec");
+                if (secondsLeft <= 5) {
+                    timerTextView.setTextColor(getResources().getColor(R.color.red, getTheme()));
+                } else {
+                    timerTextView.setTextColor(Color.parseColor("#333333"));
+                }
             }
 
             @Override
             public void onFinish() {
                 timerTextView.setText("Time's up!");
+                timerTextView.setTextColor(Color.parseColor("#333333"));
                 // Record full time (15 sec) if timer runs out.
                 timeSpentPerQuestion.add((int) (QUESTION_TIME / 1000));
                 // Auto-move to next question; leave answer as -1 (unanswered).
