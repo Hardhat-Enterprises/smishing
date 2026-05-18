@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -121,13 +120,15 @@ public class RegisterMain extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == TERMS_REQUEST_CODE) {
+            Button registerButton = findViewById(R.id.registerBtn);
             if (resultCode == RESULT_OK) {
                 Button registerButton = findViewById(R.id.registerBtn);
                 registerButton.setEnabled(true);
-                termsCheckBox.setChecked(true);
+                TextView termsTextView = findViewById(R.id.terms_conditions);
+                termsTextView.setText("Terms and Conditions accepted!");
             } else {
-                termsCheckBox.setChecked(false);
-                findViewById(R.id.registerBtn).setEnabled(false);
+                termsAccepted = false;
+                registerButton.setEnabled(false);
             }
         }
     }
@@ -149,17 +150,14 @@ public class RegisterMain extends AppCompatActivity {
             Snackbar.make(binding.getRoot(), "Enter full name", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
             Snackbar.make(binding.getRoot(), "Invalid phone number", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         if (!isValidEmailAddress(email)) {
             Snackbar.make(binding.getRoot(), "Invalid email", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         String confirmPassword = binding.pw2Input.getText().toString();
 
         if (password.length() < 8 ||
@@ -172,7 +170,6 @@ public class RegisterMain extends AppCompatActivity {
             Snackbar.make(binding.getRoot(), "Password does not meet requirements", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
         return true;
     }
 

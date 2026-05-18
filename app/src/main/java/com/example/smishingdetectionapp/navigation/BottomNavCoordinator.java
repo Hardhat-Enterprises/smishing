@@ -6,6 +6,7 @@ import android.content.Intent;
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 
+import com.example.smishingdetectionapp.Community.CommunityHomeActivity;
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.NewsActivity;
@@ -50,7 +51,8 @@ public final class BottomNavCoordinator {
         if (destinationId == R.id.nav_home) return new Intent(activity, MainActivity.class);
 
         if (destinationId == R.id.nav_report) {
-            Intent intent = new Intent(activity, CommunityReportActivity.class);
+            // Fixed - launch CommunityHomeActivity so source is passed correctly to all tabs
+            Intent intent = new Intent(activity, CommunityHomeActivity.class);
             intent.putExtra("source", reportSource == null ? DEFAULT_REPORT_SOURCE : reportSource);
             return intent;
         }
@@ -66,4 +68,3 @@ public final class BottomNavCoordinator {
         return null;
     }
 }
-

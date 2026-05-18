@@ -167,12 +167,10 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         gsc = GoogleSignIn.getClient(this, gso);
 
-        // Sign out of Google account to allow fresh authentication
         gsc.signOut().addOnCompleteListener(task -> {
             Toast.makeText(this, "Signed out successfully. You may sign in again.", Toast.LENGTH_SHORT).show();
         });
 
-        // Handle Google Sign-In button click
         googleBtn.setOnClickListener(v -> {
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
             if (acct != null) {
@@ -182,7 +180,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Observe LoginFormState
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) return;
             loginButton.setEnabled(loginFormState.isDataValid());
@@ -197,9 +194,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
             public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
+                if (loginResult == null) return;
                 loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
@@ -256,13 +251,11 @@ public class LoginActivity extends AppCompatActivity {
     }
     //
 
-    // Google Sign-In
     void signInGoogle() {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent, 1000);
     }
 
-    // Google Sign-Out
     void signOutGoogle(Runnable onSignOutComplete) {
         gsc.signOut().addOnCompleteListener(task -> {
             Toast.makeText(this, "Successfully signed out of Google account.", Toast.LENGTH_SHORT).show();
@@ -270,7 +263,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // Handle the result of the Google Sign-In
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -304,6 +296,8 @@ public class LoginActivity extends AppCompatActivity {
             navigateToMainActivity();
             return;
         }
+        handleLoginDialog(email, password);
+    }
 
         handleLoginDialog(email, password);
     }
