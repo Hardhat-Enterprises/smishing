@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#F7F9FB">
 
-    <!-- semi-circle background -->
+
     <View
         android:id="@+id/SemiCircle"
         android:layout_width="414dp"
@@ -57,7 +57,7 @@
         android:id="@+id/scanningText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scanning..."
+        android:text="Scanning your device for potential risks..."
         android:textColor="#E63B3B3B"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -365,7 +365,96 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:id="@+id/layoutError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageView
+            android:id="@+id/imgError"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@android:drawable/ic_dialog_alert"
+            android:contentDescription="Error icon" />
+
+        <TextView
+            android:id="@+id/tvErrorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="We couldn’t complete the scan"
+            android:textColor="#E63B3B3B"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Please try again. If the issue continues, the feature may not be available yet."
+            android:textColor="#7A7A7A"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Retry" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutUnsupported"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgUnsupported"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@android:drawable/ic_dialog_info"
+            android:contentDescription="Info icon" />
+
+        <TextView
+            android:id="@+id/tvUnsupportedTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Feature not available"
+            android:textColor="#E63B3B3B"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvUnsupportedMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="This feature is still under development on this screen."
+            android:textColor="#7A7A7A"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
     <!-- navigation bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
