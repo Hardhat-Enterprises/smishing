@@ -1,0 +1,100 @@
+CREATE TABLE posts (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    date TEXT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    likes INTEGER NOT NULL,
+    comments INTEGER NOT NULL
+);
+
+CREATE TABLE comments (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    comment_user TEXT NOT NULL,
+    comment_date TEXT NOT NULL,
+    comment_text TEXT NOT NULL
+);
+
+CREATE TABLE reports (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    reported_number TEXT NOT NULL UNIQUE,
+    report_message TEXT NOT NULL,
+    report_count INTEGER NOT NULL,
+    last_reported_date TEXT NOT NULL
+);
+
+insertPost:
+INSERT INTO posts(username, date, title, description, likes, comments)
+VALUES (?, ?, ?, ?, ?, ?);
+
+getAllPosts:
+SELECT *
+FROM posts
+ORDER BY id DESC;
+
+isPostsEmpty:
+SELECT COUNT(*)
+FROM posts;
+
+updatePostLikes:
+UPDATE posts
+SET likes = ?
+WHERE id = ?;
+
+updatePostComments:
+UPDATE posts
+SET comments = ?
+WHERE id = ?;
+
+deletePost:
+DELETE FROM posts
+WHERE id = ?;
+
+deleteCommentsByPostId:
+DELETE FROM comments
+WHERE post_id = ?;
+
+getTopLikedPosts:
+SELECT *
+FROM posts
+WHERE likes = (SELECT MAX(likes) FROM posts);
+
+insertComment:
+INSERT INTO comments(post_id, comment_user, comment_date, comment_text)
+VALUES (?, ?, ?, ?);
+
+getCommentsByPostId:
+SELECT *
+FROM comments
+WHERE post_id = ?
+ORDER BY id ASC;
+
+deleteSingleComment:
+DELETE FROM comments
+WHERE id = ?;
+
+isReportsEmpty:
+SELECT COUNT(*)
+FROM reports;
+
+getReportByNumber:
+SELECT *
+FROM reports
+WHERE reported_number = ?;
+
+insertReport:
+INSERT INTO reports(reported_number, report_message, report_count, last_reported_date)
+VALUES (?, ?, ?, ?);
+
+updateReport:
+UPDATE reports
+SET report_count = ?,
+    last_reported_date = ?
+WHERE reported_number = ?;
+
+getTopReportedDetails:
+SELECT reported_number, report_count, last_reported_date
+FROM reports
+ORDER BY report_count DESC
+LIMIT ?;

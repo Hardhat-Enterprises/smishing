@@ -1,0 +1,102 @@
+CREATE TABLE Detections (
+    _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    Phone_Number INTEGER,
+    Message TEXT,
+    Date TEXT
+);
+
+CREATE TABLE Reports (
+    Phone_Number INTEGER,
+    Message TEXT,
+    Date TEXT
+);
+
+CREATE TABLE Login (
+    Name TEXT NOT NULL,
+    Email TEXT,
+    PhoneNumber INTEGER,
+    ID INTEGER,
+    Password TEXT,
+    Pin INTEGER
+);
+
+getAllDetections:
+SELECT * FROM Detections ORDER BY Date DESC;
+
+getDetectionsForDate:
+SELECT * FROM Detections WHERE Date LIKE ? ORDER BY Date DESC;
+
+searchDetections:
+SELECT * FROM Detections WHERE Phone_Number LIKE ? OR Message LIKE ? OR Date LIKE ? ORDER BY Date DESC;
+
+getDetectionsNewestFirst:
+SELECT * FROM Detections ORDER BY Date DESC;
+
+getDetectionsOldestFirst:
+SELECT * FROM Detections ORDER BY Date ASC;
+
+deleteDetectionById:
+DELETE FROM Detections WHERE _id = ?;
+
+getDetectionCount:
+SELECT COUNT(*) FROM Detections;
+
+getAvailableDetectionYears:
+SELECT DISTINCT SUBSTR(Date, 1, 4) AS year FROM Detections WHERE LENGTH(Date) >= 10 AND SUBSTR(Date, 1, 4) GLOB '[0-9][0-9][0-9][0-9]' ORDER BY year DESC;
+
+insertReport:
+INSERT INTO Reports(Phone_Number, Message, Date)
+VALUES (?, ?, ?);
+
+getAllReports:
+SELECT * FROM Reports ORDER BY Date DESC;
+
+getReportsForDate:
+SELECT * FROM Reports WHERE Date LIKE ? ORDER BY Date DESC;
+
+getReportsForSpecificDate:
+SELECT * FROM Reports WHERE DATE(Date) = DATE(?) ORDER BY Date DESC;
+
+getReportsNewestFirst:
+SELECT * FROM Reports ORDER BY Date DESC;
+
+getReportsOldestFirst:
+SELECT * FROM Reports ORDER BY Date ASC;
+
+searchReports:
+SELECT * FROM Reports WHERE Phone_Number LIKE ? OR Message LIKE ? OR Date LIKE ? ORDER BY Date DESC;
+
+searchReportsByPhone:
+SELECT * FROM Reports WHERE Phone_Number LIKE ? ORDER BY Date DESC;
+
+searchReportsByMessage:
+SELECT * FROM Reports WHERE Message LIKE ? ORDER BY Date DESC;
+
+searchReportsByDate:
+SELECT * FROM Reports WHERE Date LIKE ? ORDER BY Date DESC;
+
+deleteReport:
+DELETE FROM Reports WHERE Phone_Number = ? AND Message = ?;
+
+deleteReportByPhoneNumber:
+DELETE FROM Reports WHERE Phone_Number = ?;
+
+getReportCount:
+SELECT COUNT(*) FROM Reports;
+
+validateLogin:
+SELECT * FROM Login WHERE Email = ? AND Password = ?;
+
+validatePin:
+SELECT * FROM Login WHERE Pin = ?;
+
+insertLogin:
+INSERT INTO Login(Name, Email, PhoneNumber, Password, Pin)
+VALUES (?, ?, ?, ?, ?);
+
+updatePin:
+UPDATE Login SET Pin = ?;
+
+insertPin:
+INSERT INTO Login(Pin)
+VALUES (?);
