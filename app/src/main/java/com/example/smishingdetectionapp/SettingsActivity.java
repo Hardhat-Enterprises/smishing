@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat;
 import com.example.smishingdetectionapp.Community.CommunityHomeActivity;
 import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.example.smishingdetectionapp.chat.ChatAssistantActivity;
+import com.example.smishingdetectionapp.Community.CommunityHomeActivity;
+import com.example.smishingdetectionapp.detections.YourReportsActivity;
 import com.example.smishingdetectionapp.ui.account.AccountActivity;
 import com.example.smishingdetectionapp.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
