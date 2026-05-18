@@ -27,6 +27,11 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
+import android.graphics.Color;
+import android.util.TypedValue;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -81,11 +86,11 @@ public class RadarActivity extends AppCompatActivity {
     }
 
     private void setupCategoryColors() {
-        categoryColors.put("Phishing", 0xFF03A9F4); // Light Blue
-        categoryColors.put("Banking", 0xFF9C27B0);  // Purple
-        categoryColors.put("Delivery", 0xFF4CAF50); // Green
-        categoryColors.put("Other", 0xFFFFC107);    // Yellow
-        categoryColors.put("Insurance", 0xFFFF5722); // Orange
+        categoryColors.put("Phishing", ContextCompat.getColor(this, R.color.radar_cat_phishing));
+        categoryColors.put("Banking", ContextCompat.getColor(this, R.color.radar_cat_banking));
+        categoryColors.put("Delivery", ContextCompat.getColor(this, R.color.radar_cat_delivery));
+        categoryColors.put("Other", ContextCompat.getColor(this, R.color.radar_cat_other));
+        categoryColors.put("Insurance", ContextCompat.getColor(this, R.color.radar_cat_insurance));
     }
 
     private void fetchDetectionsPeriodically() {
@@ -202,7 +207,7 @@ public class RadarActivity extends AppCompatActivity {
         pieChart.setHoleRadius(45f);
         pieChart.setTransparentCircleRadius(48f);
         pieChart.setEntryLabelTextSize(10f);
-        pieChart.setEntryLabelColor(getResources().getColor(android.R.color.white));
+        pieChart.setEntryLabelColor(resolvePieEntryLabelColor(pieColors));
         pieChart.setDescription(new Description());
         pieChart.invalidate();
 
@@ -215,6 +220,31 @@ public class RadarActivity extends AppCompatActivity {
             @Override public void onNothingSelected() {}
         });
     }
+
+
+    private int resolvePieEntryLabelColor(List<Integer> sliceColors) {
+        double avgLuminance = 0.0;
+        if (sliceColors != null && !sliceColors.isEmpty()) {
+            for (int c : sliceColors) {
+                avgLuminance += ColorUtils.calculateLuminance(c);
+            }
+            avgLuminance /= sliceColors.size();
+        }
+
+        if (avgLuminance < 0.45) {
+            return resolveThemeColor(com.google.android.material.R.attr.colorOnPrimary, Color.WHITE);
+        }
+        return resolveThemeColor(com.google.android.material.R.attr.colorOnSurface, Color.BLACK);
+    }
+
+    private int resolveThemeColor(int attrResId, int fallback) {
+        TypedValue tv = new TypedValue();
+        if (getTheme().resolveAttribute(attrResId, tv, true)) {
+            return tv.data;
+        }
+        return fallback;
+    }
+
 
     private void showMessageDialog(String category) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

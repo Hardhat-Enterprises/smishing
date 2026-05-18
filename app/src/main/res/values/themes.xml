@@ -19,7 +19,7 @@
         <item name="colorSecondary">@color/baby_blue</item>
     </style>
 
-    <style name="Theme.SmishingDetectionApp.NoActionBar">
+    <style name="Theme.SmishingDetectionApp.NoActionBar" parent="Theme.SmishingDetectionApp">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -35,7 +35,7 @@
         <item name="colorPrimary">@color/baby_blue</item>
     </style>
     <!--Text styling-->
-    <style name="Theme.SmishingDetectionApp.Bold">
+    <style name="Theme.SmishingDetectionApp.Bold" parent="Theme.SmishingDetectionApp">
     <item name="android:textViewStyle">@style/BoldTextViewStyle</item>
     <item name="textAppearanceBodyLarge">@style/BoldTextAppearance</item>
     <item name="textAppearanceBodyMedium">@style/BoldTextAppearance</item>

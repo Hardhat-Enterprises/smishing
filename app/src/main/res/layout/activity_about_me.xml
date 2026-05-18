@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Privacy Policy"
-        android:textColor="@color/navy_blue"
+        android:textColor="@color/title_text_primary"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/body_text_primary"
             android:lineSpacingExtra="4dp"
             android:text="Welcome to the Smishing Detection App!\n\nThis Privacy Policy outlines how we collect, use, and protect your data:\n\n1. Data Collection: We gather personal information only as necessary to enhance your experience. This includes device details, usage logs, and optional user inputs.\n\n2. Data Usage: Your information helps us improve functionality and deliver better features. We use data strictly for intended purposes and never share or sell it without your consent.\n\n3. Security: We prioritize the security of your data and employ modern safeguards to protect it from unauthorized access.\n\n4. Third-Party Services: Some features may utilize third-party APIs or integrations. While we ensure compliance, these services may have their own privacy terms.\n\n5. Policy Updates: This Privacy Policy may change as we evolve. Updates will be posted within the app. Continued use implies acceptance of changes.\n\nIf you have questions or concerns, please contact us at s224504216@deakin.edu.au.\n\nThank you for using Smishing Detection App!" />
     </ScrollView>

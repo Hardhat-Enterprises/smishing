@@ -2,7 +2,6 @@ package com.example.smishingdetectionapp.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.projection.MediaProjectionManager;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,9 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
-
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,6 @@ import com.example.smishingdetectionapp.DataBase.DBresult;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.SharedActivity;
 import com.example.smishingdetectionapp.databinding.ActivityLoginBinding;
 import com.example.smishingdetectionapp.detections.DatabaseAccess;
 import com.example.smishingdetectionapp.ui.Register.RegisterMain;
@@ -40,6 +40,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,23 +49,35 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.HashMap;
+import com.example.smishingdetectionapp.ui.login.ForgotPasswordActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
+    private DatabaseAccess databaseAccess;
     //private Object BuildConfig;
     private String BASE_URL = BuildConfig.SERVERIP;
     private boolean isPasswordVisible = false;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    private boolean isPinLogin = false;  // Flag for PIN login
+
+    private boolean isPinLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isDarkMode = prefs.getBoolean("dark_mode", false);
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
+                isDarkMode
+                        ? androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+                        : androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+
+        );
+
         super.onCreate(savedInstanceState);
 
         // BLOCKING screenshots and screen recording
@@ -74,24 +88,16 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initialize Retrofit
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         retrofitinterface = retrofit.create(Retrofitinterface.class);
 
-        // Check if user is already logged in
-        if (isUserLoggedIn()) {
-            navigateToMainActivity();
-            return;
-        }
+        databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
 
-        // ViewModel setup
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
-
-        // View bindings
         final EditText usernameEditText = binding.email;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.loginButton;
@@ -100,50 +106,54 @@ public class LoginActivity extends AppCompatActivity {
         final Button registerButton = binding.registerButton;
         final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
         final Button togglePinLogin = binding.togglePinLogin;
+      final TextView forgotPasswordButton = binding.forgotPasswordButton;
 
-        // Toggle functionality for PIN and Password login
         togglePinLogin.setOnClickListener(v -> {
             passwordEditText.setText("");
 
 
             if (isPinLogin) {
-                // Switch to password login
                 passwordEditText.setHint("Password");
                 passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 loginButton.setText("Login");
                 togglePinLogin.setText("Login with PIN");
                 isPinLogin = false;
             } else {
-                // Switch to PIN login
                 passwordEditText.setHint("Enter 6-digit PIN");
                 passwordEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                loginButton.setText("Login with PIN");
-                togglePinLogin.setText("Login with Password");
+                loginButton.setText("Sign in with PIN");
+                togglePinLogin.setText("Sign in with Password");
                 isPinLogin = true;
             }
             passwordEditText.requestFocus();
         });
 
-        // Handle login button click
         loginButton.setOnClickListener(v -> {
             String input = passwordEditText.getText().toString();
+
             if (isPinLogin) {
-                // Handle PIN login
                 if (input.length() != 6) {
-                    passwordEditText.setError("PIN must be 6 digits");
+                    passwordEditText.setError("PIN must contains 6 digits");
                     return;
                 }
                 loginWithPin(input);
             } else {
-                // Handle password login
                 String email = usernameEditText.getText().toString();
+
                 if (email.isEmpty() || input.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Email and Password must not be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 loginWithPassword(email, input);
                 //handleLoginDialog(); // login using actual email and password
             }
+        });
+
+        // Handle forgot password click
+        forgotPasswordButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
         });
 
         // Handle register button click
@@ -152,7 +162,6 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
-        // Handle Google Sign-In setup
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -160,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Sign out of Google account to allow fresh authentication
         gsc.signOut().addOnCompleteListener(task -> {
-            Toast.makeText(this, "Signed out. Ready for fresh authentication.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Signed out successfully. You may sign in again.", Toast.LENGTH_SHORT).show();
         });
 
         // Handle Google Sign-In button click
@@ -256,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
     // Google Sign-Out
     void signOutGoogle(Runnable onSignOutComplete) {
         gsc.signOut().addOnCompleteListener(task -> {
-            Toast.makeText(this, "Signed out of Google account.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Successfully signed out of Google account.", Toast.LENGTH_SHORT).show();
             onSignOutComplete.run();
         });
     }
@@ -271,26 +280,35 @@ public class LoginActivity extends AppCompatActivity {
                 task.getResult(ApiException.class);
                 navigateToMainActivity();
             } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication was unsuccessful. Please try again", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void loginWithPin(String pin) {
-        // For testing purposes, simulate a successful PIN login
-        Toast.makeText(LoginActivity.this, "PIN verified successfully (bypassed for testing)", Toast.LENGTH_SHORT).show();
-        navigateToMainActivity();
+        if (databaseAccess.validatePin(pin)) {
+            navigateToMainActivity();
+        } else {
+            Toast.makeText(LoginActivity.this, "Invalid PIN entered", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loginWithPassword(String email, String password) {
-        // For testing purposes, simulate a successful login
-        Toast.makeText(LoginActivity.this, "Login successful (bypassed for testing)", Toast.LENGTH_SHORT).show();
-        navigateToMainActivity();
+        if (canUseDebugBypassWithPassword(email, password)) {
+            Toast.makeText(this, "Debug login successful", Toast.LENGTH_SHORT).show();
+            navigateToMainActivity();
+            return;
+        }
+
+        if (databaseAccess.validateLogin(email, password)) {
+            navigateToMainActivity();
+            return;
+        }
+
+        handleLoginDialog(email, password);
     }
 
-    private void handleLoginDialog() {
-        final EditText usernameEditText = binding.email;
-        final EditText passwordEditText = binding.password;
+    private void handleLoginDialog(String email, String password) {
 
         HashMap<String, String> map = new HashMap<>();
         map.put("email", usernameEditText.getText().toString());
@@ -298,6 +316,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         Call<DBresult> call = retrofitinterface.executeLogin(map);
+
         call.enqueue(new Callback<DBresult>() {
             @Override
             public void onResponse(Call<DBresult> call, Response<DBresult> response) {
@@ -311,66 +330,73 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     navigateToMainActivity();
-
-                } else {
-                    try {
-                        String errorBody = response.errorBody().string();
-                        Toast.makeText(LoginActivity.this, "Error " + response.code() + ": " + errorBody, Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(LoginActivity.this, "Login failed: " + response.code(), Toast.LENGTH_LONG).show();
-                    }
-                }
-                if (response.isSuccessful() && response.body() != null) {
-
-                    String token = response.body().getToken();
-
-                    if (token != null) {
-
-                        // saving token
-                        SharedPreferences prefs = getSharedPreferences("APP_PREFS", MODE_PRIVATE);
-                        prefs.edit().putString("JWT_TOKEN", token).apply();
-
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-
-                        navigateToMainActivity();
-
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Token missing", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                } else if (response.code() == 404) {
+                    Toast.makeText(LoginActivity.this, "Incorrect login Credentials", Toast.LENGTH_LONG).show();
                 }
             }
 
 
             @Override
-            public void onFailure(Call<DBresult> call, Throwable throwable) {
-                // Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
-                Toast.makeText(LoginActivity.this, "Network error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
-                //navigateToMainActivity();
+            public void onFailure(Call<DBresult> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private boolean isUserLoggedIn() {
-        // Placeholder for checking login state
-        return false;
+    // ---------------- GOOGLE LOGIN ----------------
+    private void signInGoogle() {
+        Intent signInIntent = gsc.getSignInIntent();
+        startActivityForResult(signInIntent, 1000);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1000) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                navigateToMainActivity();
+            } catch (ApiException e) {
+                Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    // ---------------- NAVIGATION ----------------
     private void navigateToMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+    // ---------------- PLACEHOLDERS ----------------
+    private boolean canUseDebugBypassWithPassword(String email, String password) {
+        return false;
     }
+
+    private boolean isUserLoggedIn() {
+        return false;
+    }
+
+    private void updateUiWithUser(Object model) {}
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean canUseDebugBypassWithPassword(String email, String password) {
+        return BuildConfig.DEBUG
+                && !BuildConfig.DEBUG_LOGIN_EMAIL.isEmpty()
+                && !BuildConfig.DEBUG_LOGIN_PASSWORD.isEmpty()
+                && BuildConfig.DEBUG_LOGIN_EMAIL.equals(email)
+                && BuildConfig.DEBUG_LOGIN_PASSWORD.equals(password);
+    }
+
+    private boolean canUseDebugBypassWithPin(String pin) {
+        return BuildConfig.DEBUG
+                && !BuildConfig.DEBUG_LOGIN_PIN.isEmpty()
+                && BuildConfig.DEBUG_LOGIN_PIN.equals(pin);
     }
 
     @Override
@@ -379,5 +405,13 @@ public class LoginActivity extends AppCompatActivity {
         // Reapply the secure flag when activity resumes
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (databaseAccess != null) {
+            databaseAccess.close();
+        }
     }
 }

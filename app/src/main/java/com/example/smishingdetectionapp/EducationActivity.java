@@ -14,7 +14,7 @@ import com.example.smishingdetectionapp.ui.CaseStudiesActivity;
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class EducationActivity extends AppCompatActivity {
+public class EducationActivity extends SharedActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override

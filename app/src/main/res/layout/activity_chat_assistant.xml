@@ -5,7 +5,7 @@
     android:id="@+id/chat_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/smish_white">
+    android:background="?attr/colorSurface">
 
     <!-- ================= Header ================= -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minHeight="72dp"
-        android:background="@color/smish_blue_dark"
+        android:background="?attr/colorPrimary"
         android:elevation="6dp"
         android:paddingStart="12dp"
         android:paddingTop="8dp"
@@ -32,7 +32,7 @@
             android:contentDescription="@string/cd_back"
             android:scaleType="center"
             app:srcCompat="@drawable/back_button"
-            app:tint="@color/smish_white"
+            app:tint="?attr/colorOnPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -69,7 +69,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/smishing_assistant"
-            android:textColor="@color/smish_text_on_primary"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/logoContainer"
@@ -86,7 +86,7 @@
             android:contentDescription="@string/cd_menu"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_more_vert"
-            app:tint="@color/smish_white"
+            app:tint="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -112,7 +112,7 @@
         android:id="@+id/bottomBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/smish_white"
+        android:background="?attr/colorSurface"
         android:elevation="12dp"
         android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -126,8 +126,8 @@
             android:layout_height="52dp"
             android:background="@drawable/rounded_input_box"
             android:hint="@string/chat_input_hint"
-            android:textColor="@color/smish_text_primary"
-            android:textColorHint="@color/grey"
+            android:textColor="?attr/colorOnSurface"
+            android:textColorHint="?attr/colorOnSurfaceVariant"
             android:inputType="textCapSentences|textMultiLine"
             android:importantForAutofill="yes"
             android:autofillHints="sms,message"
@@ -150,7 +150,7 @@
             android:padding="6dp"
             android:scaleType="center"
             app:srcCompat="@android:drawable/ic_menu_send"
-            app:tint="@color/smish_white"
+            app:tint="?attr/colorOnPrimary"
             android:contentDescription="@string/cd_send"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/messageInput"

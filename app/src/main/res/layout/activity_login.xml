@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Welcome Back!"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/title_text_primary"
             android:textSize="35sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +94,7 @@
             android:drawablePadding="8dp"
             android:paddingHorizontal="16dp"
             android:text="@string/login_with_pin"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/body_text_primary"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginOptionsLayout" />
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:text="Remember Me"
             android:buttonTint="#E605445E"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/body_text_primary"
             android:textSize="14sp" />
 
         <Space
@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/forgot_password"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/body_text_primary"
             android:textSize="14sp"
             android:layout_gravity="center_vertical"
             android:paddingStart="16dp" />
@@ -148,7 +148,7 @@
             android:background="@drawable/buttons_rounded"
             android:backgroundTint="@color/baby_blue"
             android:text="@string/action_login_in"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/body_text_primary"
             app:layout_constraintEnd_toEndOf="@id/password"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/password"
@@ -163,7 +163,7 @@
             android:background="@drawable/buttons_rounded"
             android:backgroundTint="@color/baby_blue"
             android:text="@string/action_sign_up"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/body_text_primary"
             app:layout_constraintEnd_toEndOf="@id/loginButton"
             app:layout_constraintStart_toStartOf="@id/loginButton"
             app:layout_constraintTop_toBottomOf="@id/loginButton" />
@@ -193,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="or"
-                    android:textColor="#808080"
+                    android:textColor="@color/body_text_primary"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
                     android:textSize="14sp" />
