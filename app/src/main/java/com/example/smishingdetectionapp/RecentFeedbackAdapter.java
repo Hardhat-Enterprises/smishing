@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,15 @@ public class RecentFeedbackAdapter extends RecyclerView.Adapter<RecentFeedbackAd
         holder.tvMessage.setText("\uD83D\uDCAC \"" + message + "\"");
         holder.ratingBar.setRating(rating);
 
-        holder.itemView.setBackgroundColor(selectedItems.contains(position) ? 0xFFE0F7FA : 0x00000000);
+        if (selectedItems.contains(position)) {
+            holder.itemView.setBackgroundColor(
+                    androidx.core.content.ContextCompat.getColor(context, R.color.darker_baby_blue)
+            );
+        } else {
+            holder.itemView.setBackground(
+                    androidx.core.content.ContextCompat.getDrawable(context, R.drawable.rounded_lightblue_card)
+            );
+        }
 
         holder.itemView.setOnClickListener(v -> {
             if (selectionMode) {

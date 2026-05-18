@@ -1,17 +1,17 @@
 package com.example.smishingdetectionapp.ui.Register;
 
-import android.content.res.Configuration;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.smishingdetectionapp.BuildConfig;
 import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
@@ -42,6 +42,7 @@ public class RegisterMain extends AppCompatActivity {
     private Retrofit retrofit;
     private Retrofitinterface retrofitinterface;
     private String BASE_URL = BuildConfig.SERVERIP;
+
     private boolean termsAccepted = false;
 
     @Override
@@ -51,61 +52,69 @@ public class RegisterMain extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Retrofit setup
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         retrofitinterface = retrofit.create(Retrofitinterface.class);
 
         // Back button
-        ImageButton backButton = findViewById(R.id.signup_back);
-        backButton.setOnClickListener(v -> {
+        binding.signupBack.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
 
-        // Register button
-        Button registerButton = findViewById(R.id.registerBtn);
-        registerButton.setEnabled(false);
+        // Link Terms and Conditions
+        TextView termsTextView = findViewById(R.id.terms_text);
+        termsCheckBox = findViewById(R.id.terms_condition_checkbox);
 
-        // Terms and Conditions -- fixed to use new terms_conditions TextView
-        TextView termsTextView = findViewById(R.id.terms_conditions);
+        // Tapping the text opens Terms and Conditions page
         termsTextView.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterMain.this, TermsAndConditionsActivity.class);
             startActivityForResult(intent, TERMS_REQUEST_CODE);
         });
 
-        // Registration logic
+        // Tapping the checkbox also opens Terms and Conditions page
+        termsCheckBox.setOnClickListener(v -> {
+            termsCheckBox.setChecked(false);
+            Intent intent = new Intent(RegisterMain.this, TermsAndConditionsActivity.class);
+            startActivityForResult(intent, TERMS_REQUEST_CODE);
+        });
+
+        // Set up register button
+        Button registerButton = findViewById(R.id.registerBtn);
+        registerButton.setEnabled(false);
+
         registerButton.setOnClickListener(v -> {
             String fullName = binding.fullNameInput.getText().toString();
             String phoneNumber = binding.pnInput.getText().toString();
             String email = binding.emailInput.getText().toString();
             String password = binding.pwInput.getText().toString();
 
+            if (!termsAccepted) {
+                Snackbar.make(binding.getRoot(), "Please accept Terms & Conditions", Snackbar.LENGTH_LONG).show();
+                return;
+            }
+
             if (validateInput(fullName, phoneNumber, email, password)) {
                 validateAndCheckEmail(fullName, phoneNumber, email, password);
             }
         });
 
-        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        // Dark mode support
+        int nightModeFlags = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
 
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-            binding.getRoot().setBackgroundColor(ContextCompat.getColor(this, R.color.black));
-            binding.fullNameInput.setTextColor(ContextCompat.getColor(this, R.color.white));
-            binding.emailInput.setTextColor(ContextCompat.getColor(this, R.color.white));
-            binding.pnInput.setTextColor(ContextCompat.getColor(this, R.color.white));
-            binding.pwInput.setTextColor(ContextCompat.getColor(this, R.color.white));
-            binding.pw2Input.setTextColor(ContextCompat.getColor(this, R.color.white));
+            setDarkMode();
         } else {
-            binding.getRoot().setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-            binding.fullNameInput.setTextColor(ContextCompat.getColor(this, R.color.black));
-            binding.emailInput.setTextColor(ContextCompat.getColor(this, R.color.black));
-            binding.pnInput.setTextColor(ContextCompat.getColor(this, R.color.black));
-            binding.pwInput.setTextColor(ContextCompat.getColor(this, R.color.black));
-            binding.pw2Input.setTextColor(ContextCompat.getColor(this, R.color.black));
+            setLightMode();
         }
     }
 
+    // ---------------- TERMS RESULT ----------------
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -113,8 +122,7 @@ public class RegisterMain extends AppCompatActivity {
         if (requestCode == TERMS_REQUEST_CODE) {
             Button registerButton = findViewById(R.id.registerBtn);
             if (resultCode == RESULT_OK) {
-                // Terms accepted, enable register button
-                termsAccepted = true;
+                Button registerButton = findViewById(R.id.registerBtn);
                 registerButton.setEnabled(true);
                 TextView termsTextView = findViewById(R.id.terms_conditions);
                 termsTextView.setText("Terms and Conditions accepted!");
@@ -131,92 +139,75 @@ public class RegisterMain extends AppCompatActivity {
         return String.valueOf(code);
     }
 
-    private void sendVerificationEmail(String email, String verificationCode) {
-        if (!Utils.isEmailConfigured()) {
-            Snackbar.make(binding.getRoot(), "Email verification is not configured for this build.", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        String subject = "Your Verification Code";
-        String message = "Your verification code is: " + verificationCode;
-
-        JavaMailAPI javaMailAPI = new JavaMailAPI(this, email, subject, message);
-        javaMailAPI.execute();
+    private void setLightMode() {
+        binding.getRoot().setBackgroundColor(ContextCompat.getColor(this, R.color.white));
     }
 
+    // ---------------- VALIDATION ----------------
     private boolean validateInput(String fullName, String phoneNumber, String email, String password) {
+
         if (TextUtils.isEmpty(fullName)) {
-            Snackbar.make(binding.getRoot(), "Please enter your full name.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(binding.getRoot(), "Enter full name", Snackbar.LENGTH_LONG).show();
             return false;
         }
         if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
-            Snackbar.make(binding.getRoot(), "Please enter a valid phone number.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(binding.getRoot(), "Invalid phone number", Snackbar.LENGTH_LONG).show();
             return false;
         }
         if (!isValidEmailAddress(email)) {
-            Snackbar.make(binding.getRoot(), "Please enter a valid email address.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(binding.getRoot(), "Invalid email", Snackbar.LENGTH_LONG).show();
             return false;
         }
         String confirmPassword = binding.pw2Input.getText().toString();
-        if (password.length() < 8) {
-            Snackbar.make(binding.getRoot(), "Password must be at least 8 characters long.", Snackbar.LENGTH_LONG).show();
-            return false;
-        }
-        if (!password.equals(confirmPassword)) {
-            Snackbar.make(binding.getRoot(), "Passwords do not match.", Snackbar.LENGTH_LONG).show();
-            return false;
-        }
-        if (!password.matches(".*\\d.*")) {
-            Snackbar.make(binding.getRoot(), "Password must include a number.", Snackbar.LENGTH_LONG).show();
-            return false;
-        }
-        if (!password.matches(".*[A-Z].*")) {
-            Snackbar.make(binding.getRoot(), "Password must include an uppercase letter.", Snackbar.LENGTH_LONG).show();
-            return false;
-        }
-        if (!password.matches(".*[a-z].*")) {
-            Snackbar.make(binding.getRoot(), "Password must include a lowercase letter.", Snackbar.LENGTH_LONG).show();
-            return false;
-        }
-        if (!password.matches(".*[!@#$%^&*+=?-].*")) {
-            Snackbar.make(binding.getRoot(), "Password must include a special character.", Snackbar.LENGTH_LONG).show();
+
+        if (password.length() < 8 ||
+                !password.equals(confirmPassword) ||
+                !password.matches(".*\\d.*") ||
+                !password.matches(".*[A-Z].*") ||
+                !password.matches(".*[a-z].*") ||
+                !password.matches(".*[!@#$%^&*+=?-].*")) {
+
+            Snackbar.make(binding.getRoot(), "Password does not meet requirements", Snackbar.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
 
-    private void validateAndCheckEmail(final String fullName, final String phoneNumber, final String email, final String password) {
+    // ---------------- EMAIL CHECK ----------------
+    private void validateAndCheckEmail(String fullName, String phoneNumber, String email, String password) {
+
         HashMap<String, String> map = new HashMap<>();
         map.put("email", email);
 
         Call<SignupResponse> call = retrofitinterface.checkEmail(map);
+
         call.enqueue(new Callback<SignupResponse>() {
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
+
                 if (response.isSuccessful()) {
-                    if (!Utils.isEmailConfigured()) {
-                        Snackbar.make(binding.getRoot(), "Email verification is not configured for this build.", Snackbar.LENGTH_LONG).show();
-                        return;
-                    }
-                    String verificationCode = generateVerificationCode();
-                    sendVerificationEmail(email, verificationCode);
+
+                    String code = generateVerificationCode();
 
                     Intent intent = new Intent(RegisterMain.this, EmailVerify.class);
                     intent.putExtra("fullName", fullName);
                     intent.putExtra("phoneNumber", phoneNumber);
                     intent.putExtra("email", email);
                     intent.putExtra("password", password);
-                    intent.putExtra("code", verificationCode);
+                    intent.putExtra("code", code);
+
                     startActivity(intent);
+
                 } else if (response.code() == 409) {
-                    Snackbar.make(binding.getRoot(), "Email already exists.", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(binding.getRoot(), "Email already exists", Snackbar.LENGTH_LONG).show();
                 } else {
-                    Snackbar.make(binding.getRoot(), "Error checking email. Please try again.", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(binding.getRoot(), "Server error", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<SignupResponse> call, Throwable t) {
-                Snackbar.make(binding.getRoot(), "Network error. Please try again.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(binding.getRoot(), "Network error", Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -225,9 +216,11 @@ public class RegisterMain extends AppCompatActivity {
         try {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
-            String emailPattern = "^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-            return Pattern.matches(emailPattern, email) && !email.contains("..") && !email.startsWith(".") && !email.endsWith(".");
-        } catch (AddressException ex) {
+
+            String pattern = "^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+            return Pattern.matches(pattern, email);
+
+        } catch (AddressException e) {
             return false;
         }
     }

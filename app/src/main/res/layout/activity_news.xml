@@ -35,7 +35,7 @@
             android:gravity="center_vertical"
             android:text="@string/menu_Cyber_news"
             android:textSize="@dimen/text_size_large"
-            android:textColor="@color/navy_blue"
+            android:background="?attr/colorSurface"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -60,7 +60,7 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:text="@string/refresh"
-    android:textColor="@color/navy_blue"
+    android:textColor="?attr/colorOnPrimary"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toTopOf="@id/btn_saved_news" />
@@ -75,7 +75,7 @@
         android:layout_marginBottom="6dp"
         android:paddingVertical="10dp"
         android:text="@string/saved_news"
-        android:textColor="@color/navy_blue"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation" />
@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Failed to load news. Please try again."
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="?attr/colorError"
         android:textSize="16sp"
         android:visibility="gone"
         android:layout_marginTop="8dp"
@@ -112,12 +112,12 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/baby_blue"
+        app:itemBackground="?attr/colorSurface"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/bottom_nav_item_tint"
+        app:itemTextColor="@color/bottom_nav_item_tint"
         app:itemIconSize="25dp"
         app:itemHorizontalTranslationEnabled="false"
         app:labelVisibilityMode="labeled"

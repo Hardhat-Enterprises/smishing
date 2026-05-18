@@ -10,11 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/margin_xxlarge"
-        app:layout_constraintBottom_toTopOf="@+id/dotsIndicator"
+        app:layout_constraintBottom_toTopOf="@+id/stepCounter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/stepCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/grey"
+        android:textSize="14sp"
+        tools:text="1 of 3"
+        app:layout_constraintBottom_toTopOf="@+id/dotsIndicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/dotsIndicator"
@@ -26,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/nextButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager"
+        app:layout_constraintTop_toBottomOf="@+id/stepCounter"
         app:selectedDotColor="@color/navy_blue" />
 
     <ImageView
@@ -46,7 +59,7 @@
         android:layout_margin="@dimen/margin_medium"
         android:background="@android:color/transparent"
         android:text="Skip"
-        android:textColor="@color/grey"
+        android:textColor="@color/body_text_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +71,7 @@
         android:background="@drawable/buttons_rounded"
         android:backgroundTint="@color/baby_blue"
         android:text="Next"
-        android:textColor="@color/navy_blue"
+        android:textColor="@color/body_text_primary"
         android:elevation="@dimen/elevation_high"
         android:translationZ="@dimen/translation_z"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -3,10 +3,14 @@ package com.example.smishingdetectionapp.DataBase;
 // Class to handle the result of login or similar operations
 public class DBresult {
 
+    private String token; //for storing token
     private String name;
     private String email;
 
     // Getters and setters
+    public String getToken() {
+        return token;} //for storing token
+
     public String getName() {
         return name;
     }
