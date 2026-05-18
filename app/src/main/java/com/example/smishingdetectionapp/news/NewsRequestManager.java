@@ -1,5 +1,6 @@
 package com.example.smishingdetectionapp.news;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import retrofit2.Call;
@@ -18,8 +19,13 @@ public class NewsRequestManager {
 
     // Fetches RSS feed from a specified site using Retrofit and notifies the listener.
     public void fetchRSSFeed(OnFetchDataListener<RSSFeedModel.Feed> listener) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(15, java.util.concurrent.TimeUnit.SECONDS)
+                .readTimeout(15, java.util.concurrent.TimeUnit.SECONDS)
+                .build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.scamwatch.gov.au/rss/news-feed.xml/") // Example base URL
+                .baseUrl("https://www.scamwatch.gov.au/rss/news-feed.xml/")// Example base UR// L
+                .client(client)
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 

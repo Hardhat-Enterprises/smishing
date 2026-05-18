@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F9FF">
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="📡 Smishing Radar"
-            android:textColor="#0D47A1"
+            android:textColor="?attr/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Filter by Category"
-            android:textColor="#263238"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_gravity="center"
@@ -75,7 +75,7 @@
             android:text=" Stay cautious of fake SMS links!"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="#0D47A1"
+            android:textColor="?attr/colorOnSurface"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:padding="14dp"
@@ -92,7 +92,7 @@
             android:text="Scanning for threats..."
             android:textSize="17sp"
             android:textStyle="bold"
-            android:textColor="#212121"
+            android:textColor="?attr/colorOnSurface"
             android:layout_gravity="center"
             android:layout_marginTop="6dp" />
 
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:text="Last updated: --:--"
             android:textSize="14sp"
-            android:textColor="#757575"
+            android:textColor="?attr/colorOnSurface"
             android:layout_gravity="center"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="10dp" />
@@ -116,14 +116,14 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="5dp"
-            android:backgroundTint="#FFFFFF">
+            android:backgroundTint="?attr/colorSurfaceContainerHigh">
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barChart"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
                 android:padding="10dp"
-                android:background="@android:color/white" />
+                android:background="?attr/colorSurfaceContainer" />
         </androidx.cardview.widget.CardView>
 
         <!-- 🍩 Pie Chart Card -->
@@ -134,14 +134,14 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="5dp"
             android:layout_marginBottom="40dp"
-            android:backgroundTint="#FFFFFF">
+            android:backgroundTint="?attr/colorSurfaceContainerHigh">
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
                 android:padding="10dp"
-                android:background="@android:color/white" />
+                android:background="?attr/colorSurfaceContainer" />
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>

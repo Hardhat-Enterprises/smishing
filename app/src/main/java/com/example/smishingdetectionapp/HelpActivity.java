@@ -1,80 +1,100 @@
 package com.example.smishingdetectionapp;
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-
-import com.example.smishingdetectionapp.FeedbackActivity;
-import com.example.smishingdetectionapp.ui.FaqActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
+import com.example.smishingdetectionapp.ui.FaqActivity;
 import com.google.android.material.card.MaterialCardView;
 
-
 public class HelpActivity extends SharedActivity {
-    // key used by FaqActivity to auto-expand the matching item
-    public static final String EXTRA_FAQ_KEY = "faq_key";
-
-    private void openFaq(String key) {
-        Intent i = new Intent(this, FaqActivity.class);
-        if (key != null) i.putExtra(EXTRA_FAQ_KEY, key);
-        startActivity(i);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_updated);
 
-        BottomNavCoordinator.setup(this, R.id.nav_settings);
+        BottomNavCoordinator.setup(this, R.id.bottom_navigation);
 
-        // Adjust padding for system insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Back button to go back to settings dashboard
-        ImageButton report_back = findViewById(R.id.help_back);
-        report_back.setOnClickListener(v -> {
+
+        // Back button: finish activity
+        ImageButton helpBack = findViewById(R.id.help_back);
+        helpBack.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
         });
 
-        // Contact Us
+        // Menu button: handle as needed
+        ImageButton helpMenu = findViewById(R.id.help_menu);
+        helpMenu.setOnClickListener(v -> {
+            // Implement menu actions if necessary
+        });
+
+
+        // Common Topics Click Listeners
+        MaterialCardView cardTopic1 = findViewById(R.id.cardTopic1);
+        cardTopic1.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TopicDetailActivity.class);
+            intent.putExtra("TOPIC_ID", "DETECT_SMISHING");
+            startActivity(intent);
+        });
+
+        MaterialCardView cardTopic2 = findViewById(R.id.cardTopic2);
+        cardTopic2.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TopicDetailActivity.class);
+            intent.putExtra("TOPIC_ID", "REPORT_SMS");
+            startActivity(intent);
+        });
+
+        MaterialCardView cardTopic3 = findViewById(R.id.cardTopic3);
+        cardTopic3.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TopicDetailActivity.class);
+            intent.putExtra("TOPIC_ID", "SMISHING_VS_PHISHING");
+            startActivity(intent);
+        });
+
+
+        // ---------- FAQ entry (single id across layouts) ----------
+        MaterialCardView cardFAQ = findViewById(R.id.cardFAQ);   // <-- ensure your layout uses this id
+        if (cardFAQ != null) cardFAQ.setOnClickListener(v -> openFaq(null));
+
+
+        // Contact Options Click Listeners
         MaterialCardView cardCallUs = findViewById(R.id.cardCallUs);
-        cardCallUs.setOnClickListener(v -> {
-            Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
-            phoneIntent.setData(Uri.parse("tel:+1234567890"));
-            startActivity(phoneIntent);
-        });
-
-        // Mail Us
+        if (cardCallUs != null) {
+            cardCallUs.setOnClickListener(v -> {
+                Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
+                phoneIntent.setData(Uri.parse("tel:+1234567890")); // Replace with your phone number
+                startActivity(phoneIntent);
+            });
+        }
         MaterialCardView cardMailUs = findViewById(R.id.cardMailUs);
-        cardMailUs.setOnClickListener(v -> {
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-            emailIntent.setData(Uri.parse("mailto:support@example.com"));
-            startActivity(emailIntent);
-        });
-
-        // FAQ
-        MaterialCardView cardFAQ = findViewById(R.id.cardFAQ);
-        cardFAQ.setOnClickListener(v -> openFaq(null));
-
-        // Feedback - navigate to FeedbackActivity
+        if (cardMailUs != null) {
+            cardMailUs.setOnClickListener(v -> {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:support@example.com")); // Replace with your email address
+                startActivity(emailIntent);
+            });
+        }
         MaterialCardView cardFeedback = findViewById(R.id.cardFeedback);
-        cardFeedback.setOnClickListener(v -> {
-            startActivity(new Intent(HelpActivity.this, FeedbackActivity.class));
-            finish();
-        });
+        if (cardFeedback != null) {
+            cardFeedback.setOnClickListener(v ->
+                    startActivity(new Intent(HelpActivity.this, FeedbackActivity.class))
+            );
+
+        }
     }
 }
