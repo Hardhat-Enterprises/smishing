@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <!-- Offline Banner -->
     <TextView
         android:id="@+id/offline_Banner"
@@ -20,6 +21,7 @@
         android:padding="8dp"
         android:visibility="gone"
         android:layout_alignParentTop="true"/>
+
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -77,10 +79,11 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Information Box -->
-            <TextView
+            <LinearLayout
                 android:id="@+id/information_box"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
@@ -103,36 +106,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="4dp"
-                android:contentDescription="@string/icon_information_alt"
-                app:srcCompat="@drawable/icon_information"
-                app:layout_constraintTop_toTopOf="@id/information_box"
-                app:layout_constraintEnd_toEndOf="@id/information_box" />
+            </LinearLayout>
 
             <!-- New Detections Frame -->
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/new_detections_container"
-                android:layout_width="181dp"
-                android:layout_height="101dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/counter_buttons"
+                android:padding="8dp"
+                android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/information_box"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    app:srcCompat="@drawable/new_5_svg"
+                    android:contentDescription="@string/hardhat_logo_alt"/>
 
                 <TextView
                     android:id="@+id/new_detections"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/counter_buttons" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/new_counter"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textColor="#000000"
@@ -144,7 +152,7 @@
 
                 <TextView
                     android:id="@+id/textView7"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/new_detectionsTxt"
                     android:textColor="#000000"
@@ -153,35 +161,49 @@
                     android:paddingBottom="4dp"
                     android:layout_gravity="bottom"/>
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="top|end"
-                    android:layout_margin="4dp"
-                    app:srcCompat="@drawable/new_5_svg"
-                    android:contentDescription="@string/hardhat_logo_alt"/>
-            </FrameLayout>
+            </LinearLayout>
+
+            <!-- Guideline for splitting cards 50/50 -->
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"/>
 
             <!-- Total Detections Frame -->
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/total_detections_container"
-                android:layout_width="180dp"
-                android:layout_height="100dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/counter_buttons"
+                android:padding="8dp"
+                android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/information_box"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
                 app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    app:srcCompat="@drawable/baseline_access_time_24"
+                    android:contentDescription="@string/baseline_access_time_24_alt"/>
 
                 <TextView
                     android:id="@+id/total_detections"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/counter_buttons" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/total_counter"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textColor="#000000"
@@ -194,7 +216,7 @@
 
                 <TextView
                     android:id="@+id/textView8"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/total_detectionsTxt"
                     android:textColor="#000000"
@@ -203,33 +225,30 @@
                     android:paddingBottom="4dp"
                     android:layout_gravity="bottom"/>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="top|end"
-                    android:layout_margin="4dp"
-                    app:srcCompat="@drawable/baseline_access_time_24"
-                    android:contentDescription="@string/baseline_access_time_24_alt"/>
-            </FrameLayout>
+            </LinearLayout>
 
             <!-- View Detections Frame -->
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/view_detections_container"
-                android:layout_width="181dp"
-                android:layout_height="101dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="4dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/total_detections_container"
-                app:layout_constraintStart_toStartOf="parent">
+                android:background="@drawable/counter_buttons"
+                android:padding="8dp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/new_detections_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline">
 
                 <TextView
                     android:id="@+id/view_detections_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/counter_buttons" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
-                <!-- Center icon -->
                 <ImageView
                     android:id="@+id/view_detections_icon"
                     android:layout_width="64dp"
@@ -238,10 +257,9 @@
                     android:contentDescription="@string/icon_view_alt"
                     app:srcCompat="@drawable/ic_view" />
 
-                <!-- Bottom label -->
                 <TextView
                     android:id="@+id/view_detections_label"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/view_detections"
                     android:textColor="#000000"
@@ -252,22 +270,27 @@
             </FrameLayout>
 
             <!-- Risk Scanner Frame -->
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/risk_scanner_container"
-                android:layout_width="180dp"
-                android:layout_height="101dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/counter_buttons"
+                android:padding="8dp"
+                android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/total_detections_container"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
                     android:id="@+id/risk_scanner_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/counter_buttons" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
-                <!-- Center icon -->
                 <ImageView
                     android:id="@+id/risk_scanner_icon"
                     android:layout_width="45dp"
@@ -276,10 +299,9 @@
                     android:contentDescription="@string/icon_scan_alt"
                     app:srcCompat="@drawable/ic_scan" />
 
-                <!-- Bottom label -->
                 <TextView
                     android:id="@+id/risk_scanner_label"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/risk_scanner"
                     android:textColor="#000000"
@@ -289,8 +311,9 @@
                     android:layout_gravity="bottom"/>
             </FrameLayout>
 
+            </LinearLayout>
 
-            <!-- Main Action Buttons -->
+            <!-- Learn More Button -->
             <Button
                 android:id="@+id/fragment_container"
                 android:layout_width="0dp"
@@ -301,7 +324,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/buttons_rounded"
-                app:layout_constraintTop_toBottomOf="@id/risk_scanner_container"
+                app:layout_constraintTop_toBottomOf="@id/view_detections_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
