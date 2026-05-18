@@ -332,6 +332,135 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+                <!-- ===== ANALYTICS DASHBOARD ===== -->
+                <TextView
+                    android:id="@+id/dashboardTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Detection Analytics"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/navy_blue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radar_btn" />
+
+                <!-- This week vs last week -->
+                <LinearLayout
+                    android:id="@+id/weekCompareContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dashboardTitle">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:background="@drawable/buttons_rounded">
+
+                        <TextView
+                            android:id="@+id/thisWeekCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/navy_blue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="This Week"
+                            android:textSize="12sp"
+                            android:textColor="@color/grey" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:background="@drawable/buttons_rounded">
+
+                        <TextView
+                            android:id="@+id/lastWeekCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/navy_blue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Last Week"
+                            android:textSize="12sp"
+                            android:textColor="@color/grey" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Trend text -->
+                <TextView
+                    android:id="@+id/trendText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="6dp"
+                    android:textSize="13sp"
+                    android:textStyle="italic"
+                    android:textColor="@color/grey"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/weekCompareContainer" />
+
+                <!-- Bar chart label -->
+                <TextView
+                    android:id="@+id/chartLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Last 7 Days"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/navy_blue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/trendText" />
+
+                <!-- Bar chart -->
+                <com.example.smishingdetectionapp.DashboardView
+                    android:id="@+id/dashboardBarChart"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chartLabel" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
