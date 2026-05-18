@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button registerButton = binding.registerButton;
         final ImageButton togglePasswordVisibility = binding.togglePasswordVisibility;
         final Button togglePinLogin = binding.togglePinLogin;
-        final TextView forgotPasswordButton = binding.forgotPasswordButton;
+      final TextView forgotPasswordButton = binding.forgotPasswordButton;
 
         togglePinLogin.setOnClickListener(v -> {
             passwordEditText.setText("");
@@ -146,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 loginWithPassword(email, input);
+                //handleLoginDialog(); // login using actual email and password
             }
         });
 
@@ -310,20 +311,30 @@ public class LoginActivity extends AppCompatActivity {
     private void handleLoginDialog(String email, String password) {
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("email", email);
-        map.put("password", password);
+        map.put("email", usernameEditText.getText().toString());
+        map.put("password", passwordEditText.getText().toString());
+
 
         Call<DBresult> call = retrofitinterface.executeLogin(map);
 
         call.enqueue(new Callback<DBresult>() {
             @Override
             public void onResponse(Call<DBresult> call, Response<DBresult> response) {
-                if (response.code() == 200) {
+            /*if (response.code() == 200) {
+                navigateToMainActivity();
+
+            } else if (response.code() == 404) {
+                Toast.makeText(LoginActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
+            }
+            */
+                if (response.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     navigateToMainActivity();
                 } else if (response.code() == 404) {
                     Toast.makeText(LoginActivity.this, "Incorrect login Credentials", Toast.LENGTH_LONG).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<DBresult> call, Throwable t) {
