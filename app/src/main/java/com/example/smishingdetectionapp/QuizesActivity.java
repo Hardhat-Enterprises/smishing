@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
@@ -112,8 +113,16 @@ public class QuizesActivity extends AppCompatActivity {
 
         ImageButton report_back = findViewById(R.id.quiz_back);
         report_back.setOnClickListener(v -> {
-            startActivity(new Intent(this, EducationActivity.class));
-            finish();
+            new AlertDialog.Builder(this)
+                    .setTitle("Quit Quiz")
+                    .setMessage("Are you sure you want to quit? Your progress will be lost.")
+                    .setPositiveButton("Quit", (dialog, which) -> {
+                        if (countDownTimer != null) countDownTimer.cancel();
+                        startActivity(new Intent(this, EducationActivity.class));
+                        finish();
+                    })
+                    .setNegativeButton("Resume", null)
+                    .show();
         });
     }
 
@@ -276,9 +285,16 @@ public class QuizesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        countDownTimer.cancel();
-        finish();
-        super.onBackPressed();
+        new AlertDialog.Builder(this)
+                .setTitle("Quit Quiz")
+                .setMessage("Are you sure you want to quit? Your progress will be lost.")
+                .setPositiveButton("Quit", (dialog, which) -> {
+                    if (countDownTimer != null) countDownTimer.cancel();
+                    finish();
+                    QuizesActivity.super.onBackPressed();
+                })
+                .setNegativeButton("Resume", null)
+                .show();
     }
 
     private void showResults() {
