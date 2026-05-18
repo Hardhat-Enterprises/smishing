@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,6 +63,7 @@ public class CommunityPostActivity extends AppCompatActivity {
         // Setup UI
         searchInput = findViewById(R.id.searchInput);
         ImageView filterBtn = findViewById(R.id.filterBtn);
+        TextView activeFilterLabel = findViewById(R.id.activeFilterLabel);
         filterBtn.setOnClickListener(v -> {
             String[] fields = {"All", "Username", "Date", "Title", "Description", "Likes", "Comments"};
             new androidx.appcompat.app.AlertDialog.Builder(this)
@@ -68,12 +71,21 @@ public class CommunityPostActivity extends AppCompatActivity {
                     .setItems(fields, (dialog, which) -> {
                         selectedField = fields[which].toLowerCase();
                         adapter.filter(searchInput.getText().toString(), selectedField);
+                        activeFilterLabel.setText(fields[which]);
+                        activeFilterLabel.setVisibility(View.VISIBLE);
                     })
                     .show();
         });
 
         ImageView clearSearch = findViewById(R.id.clearSearch);
-        clearSearch.setOnClickListener(v -> searchInput.setText(""));
+        clearSearch.setOnClickListener(v -> {
+            searchInput.setText("");
+            activeFilterLabel.setText("");
+            activeFilterLabel.setVisibility(View.GONE);
+            selectedField = "all";
+            adapter.filter("", "all");
+        });
+
 
         postsRecyclerView = findViewById(R.id.postsRecyclerView);
         postsRecyclerView.setLayoutManager(new LinearLayoutManager(this));

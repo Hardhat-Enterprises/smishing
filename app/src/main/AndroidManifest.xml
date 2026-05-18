@@ -54,7 +54,7 @@
         <activity
             android:name=".SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.SmishingDetectionApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -69,6 +69,7 @@
         <activity android:name=".TermsAndConditionsActivity" android:exported="false" />
         <activity android:name=".SignupActivity" android:exported="false" />
         <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity android:name=".PasswordSecurityActivity" android:exported="false" />
 
         <!-- News -->
         <activity android:name=".NewsActivity" android:exported="false" />
@@ -90,6 +91,7 @@
         <activity android:name=".AboutMeActivity" android:exported="false" />
         <activity android:name=".ui.account.AccountActivity" android:exported="true" />
         <activity android:name=".ui.account.PopupDEL" />
+        <activity android:name=".UserProfileActivity" android:exported="false" />
 
         <!-- Onboarding & Auth -->
         <activity android:name=".ui.onboarding.OnboardingActivity" android:exported="true" />

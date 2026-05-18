@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="?android:attr/windowBackground">
 
     <LinearLayout
         android:id="@+id/title_linear_layout"
@@ -24,14 +24,16 @@
             android:gravity="center"
             android:text="@string/terms_and_conditions_title"
             android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/title_text_primary" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/please_scroll_to_the_bottom_to_proceed"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:textColor="@color/body_text_primary" />
     </LinearLayout>
 
     <!-- Terms and Conditions Content -->
@@ -41,6 +43,7 @@
         android:layout_height="612dp"
         android:layout_margin="16dp"
         android:overScrollMode="always"
+        android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toTopOf="@id/accept_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +57,8 @@
             android:padding="16dp"
             android:scrollbars="vertical"
             android:text="@string/terms_and_conditions"
-            android:textColor="@android:color/black"
+            android:textColor="@color/body_text_primary"
+            android:background="?android:attr/windowBackground"
             android:textIsSelectable="false"
             android:textSize="16sp" />
 

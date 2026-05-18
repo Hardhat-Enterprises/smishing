@@ -188,6 +188,8 @@ public class DetectionsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Detection Deleted!", Toast.LENGTH_SHORT).show();
             });
 
+
+
             return true;
         });
 

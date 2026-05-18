@@ -213,7 +213,6 @@
     <string name="report_btn">Report</string>
     <string name="help_btn">Help</string>
     <string name="about_btn">Privacy Policy</string>
-    <string name="about_us_btn">About Us</string>
 
     <!-- Filtering Rules Strings -->
     <string name="keywords_label">Keywords</string>
@@ -325,6 +324,7 @@
     <string name="reportDate">Date</string>
     <string name="savedReportsMenu">Saved Reports</string>
 
+
 <!---Updated upstream -->
     <string name="feedback">Feedback</string>
     <string name="rate_your_experience">Rate your experience</string>
@@ -416,15 +416,15 @@
     <string name="MoreInfoandSupport">More Info and Support</string>
 
     <!-- Accessibility Alt Texts -->
-    <string name="account_user_svg_alt">Black outline of a persons head and body</string>
+    <string name="account_user_svg_alt">Account details</string>
     <string name="back_button_alt">Black circle outline with a black arrow pointing to the left</string>
     <string name="background_gradient_alt">Black outline of a square</string>
     <string name="baseline_access_time_24_alt">Black circle with two lines representing the time 12:20</string>
     <string name="bell_svg_alt">Black outline of a bell</string>
-    <string name="filter_svg_alt">Black outline of a filter where the top is slightly ajar</string>
+    <string name="filter_svg_alt">Filter options</string>
     <string name="hardhat_logo_alt">Yellow shield with a dark blue outline with two oval rings crossing with a yellow construction hat above the shield</string>
     <string name="notification_svg1_alt">Black outline of a bell</string>
-    <string name="outline_arrow_outward_24_alt">Black arrow pointing towards the top right</string>
+    <string name="outline_arrow_outward_24_alt">Navigate to section</string>
     <string name="outline_archive_24_alt">Black outline of a box with a solid black arrow pointing down</string>
     <string name="icon_information_alt">Black outline of a circle with a black i in the center</string>
     <string name="always_underline_links">Always underline links</string>
@@ -443,7 +443,7 @@
     <string name="faq_icon_alt">Black question mark</string>
     <string name="feedback_icon_alt">Solid black square chat bubble with an exclamation mark in the center</string>
     <string name="hardhat_logo_notif_alt">Yellow shield with a dark blue outline with two oval rings crossing with a yellow construction hat above the sheild</string>
-    <string name="help_svg_alt">Black outline of a circle with a black question mark in the center</string>
+    <string name="help_svg_alt">Help and support</string>
     <string name="ic_launcher_background_alt">Neon yellow with a white square grid</string>
     <string name="ic_launcher_foreground_alt">Top half of a white robot head with two atennas</string>
     <string name="icons8_home_48_alt">Black outline of a house</string>
@@ -558,5 +558,9 @@
     <string name="edit_button">Edit</string>
     <string name="view_risk_profile">View Risk Profile</string>
     <string name="save_button">Save</string>
+
+
+
+
 
 </resources>
