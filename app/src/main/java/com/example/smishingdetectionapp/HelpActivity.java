@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -29,22 +28,20 @@ public class HelpActivity extends SharedActivity {
             return insets;
         });
 
-
-        // Back button: finish activity
+        // Back button
         ImageButton helpBack = findViewById(R.id.help_back);
         helpBack.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
         });
 
-        // Menu button: handle as needed
+        // Menu button
         ImageButton helpMenu = findViewById(R.id.help_menu);
         helpMenu.setOnClickListener(v -> {
             // Implement menu actions if necessary
         });
 
-
-        // Common Topics Click Listeners
+        // Common Topics
         MaterialCardView cardTopic1 = findViewById(R.id.cardTopic1);
         cardTopic1.setOnClickListener(v -> {
             Intent intent = new Intent(this, TopicDetailActivity.class);
@@ -66,35 +63,45 @@ public class HelpActivity extends SharedActivity {
             startActivity(intent);
         });
 
-
-        // ---------- FAQ entry (single id across layouts) ----------
-        MaterialCardView cardFAQ = findViewById(R.id.cardFAQ);   // <-- ensure your layout uses this id
+        // FAQ
+        MaterialCardView cardFAQ = findViewById(R.id.cardFAQ);
         if (cardFAQ != null) cardFAQ.setOnClickListener(v -> openFaq(null));
 
-
-        // Contact Options Click Listeners
+        // Call Us
         MaterialCardView cardCallUs = findViewById(R.id.cardCallUs);
         if (cardCallUs != null) {
             cardCallUs.setOnClickListener(v -> {
                 Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
-                phoneIntent.setData(Uri.parse("tel:+1234567890")); // Replace with your phone number
+                phoneIntent.setData(Uri.parse("tel:+1234567890"));
                 startActivity(phoneIntent);
             });
         }
+
+        // Mail Us
         MaterialCardView cardMailUs = findViewById(R.id.cardMailUs);
         if (cardMailUs != null) {
             cardMailUs.setOnClickListener(v -> {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.setData(Uri.parse("mailto:support@example.com")); // Replace with your email address
+                emailIntent.setData(Uri.parse("mailto:support@example.com"));
                 startActivity(emailIntent);
             });
         }
+
+        // Feedback
         MaterialCardView cardFeedback = findViewById(R.id.cardFeedback);
         if (cardFeedback != null) {
             cardFeedback.setOnClickListener(v ->
                     startActivity(new Intent(HelpActivity.this, FeedbackActivity.class))
             );
-
         }
+    }
+
+    // ── Opens the FAQ screen, optionally scrolling to a specific key ──
+    private void openFaq(String key) {
+        Intent intent = new Intent(this, FaqActivity.class);
+        if (key != null) {
+            intent.putExtra("FAQ_KEY", key);
+        }
+        startActivity(intent);
     }
 }
