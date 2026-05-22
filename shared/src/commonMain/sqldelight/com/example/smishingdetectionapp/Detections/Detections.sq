@@ -100,3 +100,6 @@ UPDATE Login SET Pin = ?;
 insertPin:
 INSERT INTO Login(Pin)
 VALUES (?);
+
+getLastInsertRowId:
+SELECT last_insert_rowid();
