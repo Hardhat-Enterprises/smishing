@@ -559,8 +559,14 @@
     <string name="view_risk_profile">View Risk Profile</string>
     <string name="save_button">Save</string>
 
-
-
+    <!-- Empty state — Detections screen -->
+    <string name="empty_detections_title">No Detections Yet</string>
+    <string name="empty_detections_subtitle">You haven\'t scanned any messages yet.\nScan a suspicious SMS to see your results here.</string>
+    <string name="empty_detections_cta">Scan Now</string>
+    <string name="empty_detections_icon_alt">No detections illustration</string>
+    <string name="search_detections_hint">Search detections...</string>
+    <string name="filter_button_alt">Filter detections</string>
+    <string name="export_report">Export report</string>
 
 
 </resources>
