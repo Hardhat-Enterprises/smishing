@@ -471,6 +471,9 @@ public class SettingsActivity extends AppCompatActivity {
             restoreScrollPosition();
         }
     }
-
-
+    private void saveScrollPosition() {
+        if (scrollView != null && prefs != null) {
+            prefs.edit().putInt("scroll_pos", scrollView.getScrollY()).apply();
+        }
+    }
 }
