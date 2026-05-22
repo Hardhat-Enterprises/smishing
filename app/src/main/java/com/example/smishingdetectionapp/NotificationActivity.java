@@ -60,7 +60,6 @@ public class NotificationActivity extends SharedActivity {
         setupSwitch(findViewById(R.id.password_security_check_switch), passwordNotification);
 
 
-
         // Additional UI setup
         // Initialize the main view container object from the layout
         View mainView = findViewById(R.id.notification_main);
@@ -119,6 +118,7 @@ public class NotificationActivity extends SharedActivity {
         } else {
             testNotificationButton.setVisibility(View.GONE);
         }
+    }
 
     private void sendAllTestNotifications() {
         Context context = this;
