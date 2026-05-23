@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -43,6 +44,8 @@ public class NewsActivity extends SharedActivity implements SelectListener {
     ProgressBar progressBar;
     TextView errorMessage;
     Button refreshButton, savedNewsButton;
+    LinearLayout emptyStateNews;
+    Button emptyNewsRetryBtn;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,6 +59,10 @@ public class NewsActivity extends SharedActivity implements SelectListener {
         refreshButton = findViewById(R.id.refreshButton);
         savedNewsButton = findViewById(R.id.btn_saved_news); // new
         progressBar = findViewById(R.id.progressBar);
+
+        emptyStateNews = findViewById(R.id.emptyStateNews);
+        emptyNewsRetryBtn = findViewById(R.id.emptyNewsRetryBtn);
+        emptyNewsRetryBtn.setOnClickListener(v -> fetchArticles());
 
         // Saved News button click → open SavedNewsActivity
         savedNewsButton.setOnClickListener(v -> {
@@ -117,6 +124,13 @@ public class NewsActivity extends SharedActivity implements SelectListener {
                 adapter.submitList(list);
                 progressBar.setVisibility(View.GONE);
                 errorMessage.setVisibility(View.GONE);
+                if (list == null || list.isEmpty()) {
+                    recyclerView.setVisibility(View.GONE);
+                    emptyStateNews.setVisibility(View.VISIBLE);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyStateNews.setVisibility(View.GONE);
+                }
 
                 //for notification function
                 if (list != null && !list.isEmpty()) {
@@ -125,8 +139,10 @@ public class NewsActivity extends SharedActivity implements SelectListener {
             }
             @Override
             public void onError(String message) {
-                errorMessage.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+                errorMessage.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
+                emptyStateNews.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Background circle -->
+    <path
+        android:fillColor="#FFD4F1F4"
+        android:pathData="M50,5 A45,45 0 1,1 49.999,5 Z" />
+
+    <!-- Newspaper body -->
+    <path
+        android:fillColor="#FF05445E"
+        android:pathData="M25,30 L75,30 L75,75 L25,75 Z" />
+
+    <!-- Newspaper inner white area -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M30,35 L70,35 L70,70 L30,70 Z" />
+
+    <!-- Text lines -->
+    <path
+        android:fillColor="#FF189AB4"
+        android:pathData="M34,42 L66,42 L66,45 L34,45 Z" />
+
+    <path
+        android:fillColor="#FF189AB4"
+        android:pathData="M34,49 L66,49 L66,52 L34,52 Z" />
+
+    <path
+        android:fillColor="#FF189AB4"
+        android:pathData="M34,56 L55,56 L55,59 L34,59 Z" />
+
+    <!-- X mark indicating no news -->
+    <path
+        android:fillColor="#FFE53935"
+        android:pathData="M58,62 L66,70 L64,72 L56,64 Z" />
+
+    <path
+        android:fillColor="#FFE53935"
+        android:pathData="M64,62 L56,70 L58,72 L66,64 Z" />
+
+</vector>

@@ -559,8 +559,10 @@
     <string name="view_risk_profile">View Risk Profile</string>
     <string name="save_button">Save</string>
 
-
-
-
+    <!-- Empty state — News screen -->
+    <string name="empty_news_title">No News Available</string>
+    <string name="empty_news_subtitle">We couldn\'t find any cybersecurity news.\nCheck your connection and try again.</string>
+    <string name="empty_news_retry">Retry</string>
+    <string name="empty_news_icon_alt">No news illustration</string>
 
 </resources>
