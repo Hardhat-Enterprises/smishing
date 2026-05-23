@@ -39,304 +39,311 @@
         android:theme="@style/Theme.SmishingDetectionApp"
         app:menu="@menu/activity_main_drawer" />
 
-    <!-- Scrollable Main Content -->
-    <ScrollView
+    <!-- Scrollable Main Content with Pull-to-Refresh -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"
-        android:fillViewport="true">
+        android:layout_above="@id/bottom_navigation">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="24dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <!-- Logo -->
-            <ImageView
-                android:id="@+id/HardhatLogo"
-                android:layout_width="112dp"
-                android:layout_height="106dp"
-                android:layout_marginTop="20dp"
-                android:contentDescription="@string/logo_description"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/new_logo" />
-
-            <!-- Dashboard Title -->
-            <TextView
-                android:id="@+id/DashboardText"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="38sp"
-                android:textStyle="bold"
-                android:textColor="@color/title_text_primary"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/HardhatLogo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:paddingBottom="24dp">
 
-            <!-- Information Box -->
-            <LinearLayout
-                android:id="@+id/information_box"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/buttons_rounded"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/DashboardText">
-
-                <TextView
-                    android:id="@+id/information_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Welcome to Smishing Detection! Your real-time tool for detecting and preventing smishing attacks."
-                    android:textSize="24dp"
-                    android:textStyle="italic"
-                    android:gravity="center"
-                    android:layout_margin="16dp" />
-
-            </LinearLayout>
-
-            <!-- Guideline for splitting cards 50/50 -->
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/vertical_guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5"/>
-
-            <!-- New Detections Frame -->
-            <LinearLayout
-                android:id="@+id/new_detections_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/counter_buttons"
-                android:padding="8dp"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/information_box"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/vertical_guideline">
-
+                <!-- Logo -->
                 <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="end"
-                    app:srcCompat="@drawable/new_5_svg"
-                    android:contentDescription="@string/hardhat_logo_alt"/>
+                    android:id="@+id/HardhatLogo"
+                    android:layout_width="112dp"
+                    android:layout_height="106dp"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/logo_description"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/new_logo" />
 
+                <!-- Dashboard Title -->
                 <TextView
-                    android:id="@+id/new_detections"
+                    android:id="@+id/DashboardText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/new_counter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="#000000"
-                    android:textSize="50dp"
-                    android:gravity="center"
+                    android:text="@string/app_name"
+                    android:textSize="38sp"
                     android:textStyle="bold"
-                    android:layout_gravity="top|center_horizontal"
-                    android:layout_marginTop="10dp"/>
+                    android:textColor="@color/title_text_primary"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/HardhatLogo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView7"
+                <!-- Information Box -->
+                <LinearLayout
+                    android:id="@+id/information_box"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/buttons_rounded"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/DashboardText">
+
+                    <TextView
+                        android:id="@+id/information_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Welcome to Smishing Detection! Your real-time tool for detecting and preventing smishing attacks."
+                        android:textSize="24dp"
+                        android:textStyle="italic"
+                        android:gravity="center"
+                        android:layout_margin="16dp" />
+
+                </LinearLayout>
+
+                <!-- Guideline for splitting cards 50/50 -->
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vertical_guideline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/new_detectionsTxt"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5"/>
+
+                <!-- New Detections Frame -->
+                <LinearLayout
+                    android:id="@+id/new_detections_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/counter_buttons"
+                    android:padding="8dp"
                     android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:layout_gravity="bottom"/>
+                    app:layout_constraintTop_toBottomOf="@id/information_box"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/vertical_guideline">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="end"
+                        app:srcCompat="@drawable/new_5_svg"
+                        android:contentDescription="@string/hardhat_logo_alt"/>
 
-            <!-- Total Detections Frame -->
-            <LinearLayout
-                android:id="@+id/total_detections_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/counter_buttons"
-                android:padding="8dp"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/information_box"
-                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
-                app:layout_constraintEnd_toEndOf="parent">
+                    <TextView
+                        android:id="@+id/new_detections"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="end"
-                    app:srcCompat="@drawable/baseline_access_time_24"
-                    android:contentDescription="@string/baseline_access_time_24_alt"/>
+                    <TextView
+                        android:id="@+id/new_counter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#000000"
+                        android:textSize="50dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_gravity="top|center_horizontal"
+                        android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:id="@+id/total_detections"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/new_detectionsTxt"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:paddingBottom="4dp"
+                        android:layout_gravity="bottom"/>
+
+                </LinearLayout>
+
+                <!-- Total Detections Frame -->
+                <LinearLayout
+                    android:id="@+id/total_detections_container"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/total_counter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="#000000"
-                    android:textSize="50sp"
+                    android:orientation="vertical"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/counter_buttons"
+                    android:padding="8dp"
                     android:gravity="center"
-                    android:layout_gravity="top|center_horizontal"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"/>
+                    app:layout_constraintTop_toBottomOf="@id/information_box"
+                    app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+                    app:layout_constraintEnd_toEndOf="parent">
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="end"
+                        app:srcCompat="@drawable/baseline_access_time_24"
+                        android:contentDescription="@string/baseline_access_time_24_alt"/>
+
+                    <TextView
+                        android:id="@+id/total_detections"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/total_counter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#000000"
+                        android:textSize="50sp"
+                        android:gravity="center"
+                        android:layout_gravity="top|center_horizontal"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_detectionsTxt"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:paddingBottom="4dp"
+                        android:layout_gravity="bottom"/>
+
+                </LinearLayout>
+
+                <!-- View Detections Frame -->
+                <LinearLayout
+                    android:id="@+id/view_detections_container"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/total_detectionsTxt"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/counter_buttons"
+                    android:padding="8dp"
                     android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:layout_gravity="bottom"/>
+                    app:layout_constraintTop_toBottomOf="@id/new_detections_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/vertical_guideline">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/view_detections_bg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
 
-            <!-- View Detections Frame -->
-            <LinearLayout
-                android:id="@+id/view_detections_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/counter_buttons"
-                android:padding="8dp"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/new_detections_container"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/vertical_guideline">
+                    <ImageView
+                        android:id="@+id/view_detections_icon"
+                        android:layout_width="64dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/icon_view_alt"
+                        app:srcCompat="@drawable/ic_view" />
 
-                <TextView
-                    android:id="@+id/view_detections_bg"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/view_detections_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/view_detections"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:paddingBottom="4dp"
+                        android:layout_gravity="bottom"/>
+
+                </LinearLayout>
+
+                <!-- Risk Scanner Frame -->
+                <LinearLayout
+                    android:id="@+id/risk_scanner_container"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/view_detections_icon"
-                    android:layout_width="64dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/icon_view_alt"
-                    app:srcCompat="@drawable/ic_view" />
-
-                <TextView
-                    android:id="@+id/view_detections_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view_detections"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:orientation="vertical"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/counter_buttons"
+                    android:padding="8dp"
                     android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:layout_gravity="bottom"/>
+                    app:layout_constraintTop_toBottomOf="@id/total_detections_container"
+                    app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+                    app:layout_constraintEnd_toEndOf="parent">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/risk_scanner_bg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
 
-            <!-- Risk Scanner Frame -->
-            <LinearLayout
-                android:id="@+id/risk_scanner_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/counter_buttons"
-                android:padding="8dp"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/total_detections_container"
-                app:layout_constraintStart_toStartOf="@id/vertical_guideline"
-                app:layout_constraintEnd_toEndOf="parent">
+                    <ImageView
+                        android:id="@+id/risk_scanner_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="42dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/icon_scan_alt"
+                        app:srcCompat="@drawable/ic_scan" />
 
-                <TextView
-                    android:id="@+id/risk_scanner_bg"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/risk_scanner_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/risk_scanner"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:paddingBottom="4dp"
+                        android:layout_gravity="bottom"/>
+
+                </LinearLayout>
+
+                <!-- Learn More Button -->
+                <Button
+                    android:id="@+id/fragment_container"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:text="Learn More About Smishing"
+                    android:textSize="16sp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/buttons_rounded"
+                    app:layout_constraintTop_toBottomOf="@id/view_detections_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-                <ImageView
-                    android:id="@+id/risk_scanner_icon"
-                    android:layout_width="45dp"
-                    android:layout_height="42dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/icon_scan_alt"
-                    app:srcCompat="@drawable/ic_scan" />
-
-                <TextView
-                    android:id="@+id/risk_scanner_label"
-                    android:layout_width="wrap_content"
+                <!-- Live Smishing Radar Button -->
+                <Button
+                    android:id="@+id/radar_btn"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/risk_scanner"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:layout_gravity="bottom"/>
+                    android:text="Live Smishing Radar"
+                    android:textSize="16sp"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/buttons_rounded"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Learn More Button -->
-            <Button
-                android:id="@+id/fragment_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Learn More About Smishing"
-                android:textSize="16sp"
-                android:layout_marginTop="24dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/buttons_rounded"
-                app:layout_constraintTop_toBottomOf="@id/view_detections_container"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+        </ScrollView>
 
-            <!-- Live Smishing Radar Button -->
-            <Button
-                android:id="@+id/radar_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Live Smishing Radar"
-                android:textSize="16sp"
-                android:layout_margin="16dp"
-                android:background="@drawable/buttons_rounded"
-                app:layout_constraintTop_toBottomOf="@id/fragment_container"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
