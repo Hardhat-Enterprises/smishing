@@ -13,7 +13,8 @@
             android:layout_alignParentTop="true"
             android:text="@string/pnTitle"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:id="@+id/messageTitle"
@@ -23,7 +24,8 @@
             android:layout_alignStart="@+id/pnTitle"
             android:text="@string/msgTitle"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:id="@+id/item_pn"
@@ -33,7 +35,8 @@
             android:layout_alignBottom="@+id/pnTitle"
             android:layout_toEndOf="@+id/pnTitle"
             android:text="pn"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:id="@+id/item_message"
@@ -42,7 +45,8 @@
             android:layout_below="@+id/messageTitle"
             android:layout_alignStart="@+id/messageTitle"
             android:text="msg"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:id="@+id/dateTitle"
@@ -52,7 +56,8 @@
             android:layout_alignStart="@+id/spacer"
             android:text="@string/dateTitle"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:id="@+id/item_date"
@@ -62,7 +67,8 @@
             android:layout_alignBottom="@+id/dateTitle"
             android:layout_toEndOf="@+id/dateTitle"
             android:text="date"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:id="@+id/item_id"
@@ -76,4 +82,5 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/item_message"
             android:layout_alignStart="@+id/item_message" />
+
 </RelativeLayout>

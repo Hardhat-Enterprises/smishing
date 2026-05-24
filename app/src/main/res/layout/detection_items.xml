@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     android:padding="16dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="?android:attr/windowBackground"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
     app:strokeColor="@color/navy_blue"
@@ -28,7 +28,6 @@
             android:gravity="center_vertical"
             android:paddingBottom="8dp">
 
-            <!-- Left side: "Number:" and phone -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -52,11 +51,10 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="4dp"
                     android:text=""
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
-            <!-- Right side: detection number -->
             <TextView
                 android:id="@+id/detectionNumber"
                 android:layout_width="wrap_content"
@@ -86,15 +84,14 @@
             android:paddingTop="4dp"
             android:paddingBottom="8dp"
             android:text=""
-            android:textColor="@color/black" />
+            android:textColor="?android:attr/textColorPrimary" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="8dp"
             android:background="@android:color/transparent" />
 
-
-        <!-- Date & Delete row -->
+        <!-- Date and Delete row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +100,6 @@
             android:paddingTop="4dp"
             android:paddingBottom="4dp">
 
-            <!-- Date Section -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -121,19 +117,16 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-
                 <TextView
                     android:id="@+id/detectionDateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="4dp"
                     android:text=""
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
-
-            <!-- Delete Button -->
             <Button
                 android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
