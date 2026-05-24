@@ -63,6 +63,12 @@ public class DetectionsActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> createCsvLauncher;
     private TextView activeFilterLabel;
 
+    private com.google.android.material.chip.Chip chipAll;
+    private com.google.android.material.chip.Chip chipContainsLink;
+    private com.google.android.material.chip.Chip chipToday;
+    private com.google.android.material.chip.Chip chipLast7Days;
+    private TextView noResultsText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +113,57 @@ public class DetectionsActivity extends AppCompatActivity {
         // Filtering feature
         ImageView filterBtn = findViewById(R.id.filterBtn);
         activeFilterLabel = findViewById(R.id.activeFilterLabel);
+        noResultsText = findViewById(R.id.noResultsText);
+        // Quick filter chips
+        chipAll = findViewById(R.id.chipAll);
+        chipContainsLink = findViewById(R.id.chipContainsLink);
+        chipToday = findViewById(R.id.chipToday);
+        chipLast7Days = findViewById(R.id.chipLast7Days);
+
+        chipAll.setOnClickListener(v -> {
+            chipContainsLink.setChecked(false);
+            chipToday.setChecked(false);
+            chipLast7Days.setChecked(false);
+            chipAll.setChecked(true);
+            refreshList();
+            activeFilterLabel.setVisibility(View.GONE);
+            noResultsText.setVisibility(View.GONE);
+            detectionLV.setVisibility(View.VISIBLE);
+        });
+
+        chipContainsLink.setOnClickListener(v -> {
+            chipAll.setChecked(false);
+            chipToday.setChecked(false);
+            chipLast7Days.setChecked(false);
+            chipContainsLink.setChecked(true);
+            filterByQuery("SELECT * FROM Detections WHERE Message LIKE '%http%' OR Message LIKE '%www%'");
+            activeFilterLabel.setText("Filter: Contains Link");
+            activeFilterLabel.setVisibility(View.VISIBLE);
+        });
+
+        chipToday.setOnClickListener(v -> {
+            chipAll.setChecked(false);
+            chipContainsLink.setChecked(false);
+            chipLast7Days.setChecked(false);
+            chipToday.setChecked(true);
+            String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            filterByQuery("SELECT * FROM Detections WHERE Date LIKE '" + today + "%'");
+            activeFilterLabel.setText("Filter: Today");
+            activeFilterLabel.setVisibility(View.VISIBLE);
+        });
+
+        chipLast7Days.setOnClickListener(v -> {
+            chipAll.setChecked(false);
+            chipContainsLink.setChecked(false);
+            chipToday.setChecked(false);
+            chipLast7Days.setChecked(true);
+            long sevenDaysAgoMillis = System.currentTimeMillis() - (7L * 24 * 60 * 60 * 1000);
+            String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            String sevenDaysAgo = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(sevenDaysAgoMillis));
+            filterByQuery("SELECT * FROM Detections WHERE Date BETWEEN '" + sevenDaysAgo + "' AND '" + today + "'");
+            activeFilterLabel.setText("Filter: Last 7 Days");
+            activeFilterLabel.setVisibility(View.VISIBLE);
+        });
         filterBtn.setOnClickListener(v -> {
             SmartFilterBottomSheet filterFragment = new SmartFilterBottomSheet();
             filterFragment.setFilterListener((newestFirst, containsLink, todayOnly, last7DaysOnly, selectedYears, startDate, endDate) -> {
@@ -258,6 +315,30 @@ public class DetectionsActivity extends AppCompatActivity {
         DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
         detectionLV.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    public void filterByQuery(String query) {
+        Cursor cursor = DatabaseAccess.db.rawQuery(query, null);
+        DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
+        detectionLV.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        if (cursor.getCount() == 0) {
+            detectionLV.setVisibility(View.GONE);
+            noResultsText.setVisibility(View.VISIBLE);
+        } else {
+            detectionLV.setVisibility(View.VISIBLE);
+            noResultsText.setVisibility(View.GONE);
+        }
+    }
+
+    private View getNoResultsView() {
+        TextView noResults = new TextView(this);
+        noResults.setText("No detections match this filter.\nTap 'All' to reset.");
+        noResults.setGravity(android.view.Gravity.CENTER);
+        noResults.setTextSize(16);
+        noResults.setPadding(32, 64, 32, 32);
+        noResults.setTextColor(getResources().getColor(R.color.grey, getTheme()));
+        return noResults;
     }
 
     public void sortONDB() {

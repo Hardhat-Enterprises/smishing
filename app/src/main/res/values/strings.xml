@@ -559,8 +559,14 @@
     <string name="view_risk_profile">View Risk Profile</string>
     <string name="save_button">Save</string>
 
+    <!-- Quick filter chips — Detections screen -->
+    <string name="chip_all">All</string>
+    <string name="chip_contains_link">Contains Link</string>
+    <string name="chip_today">Today</string>
+    <string name="chip_last7days">Last 7 Days</string>
 
-
-
+    <string name="search_detections_hint">Search detections...</string>
+    <string name="filter_button_alt">Filter detections</string>
+    <string name="export_report">Export report</string>
 
 </resources>

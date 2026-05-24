@@ -85,7 +85,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search detections..."
+                android:hint="@string/search_detections_hint"
                 android:inputType="text" />
 
             <ImageView
@@ -93,10 +93,83 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:contentDescription="@string/filter_button_alt"
                 android:src="@drawable/filter_svg" />
+
         </LinearLayout>
 
-        <!-- ONE export button -->
+        <!-- ═══════════════════════════════════════════════════
+             Quick filter chips — All / Contains Link / Today
+             ═══════════════════════════════════════════════════ -->
+        <HorizontalScrollView
+            android:id="@+id/chipScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchRow">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:checked="true"
+                    android:text="@string/chip_all"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipContainsLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/chip_contains_link"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipToday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/chip_today"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipLast7Days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chip_last7days"
+                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <!-- Active filter label -->
+        <TextView
+            android:id="@+id/activeFilterLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/navy_blue"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chipScrollView" />
+
+        <!-- Export button -->
         <Button
             android:id="@+id/exportReportBtn"
             android:layout_width="0dp"
@@ -105,16 +178,16 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/darker_baby_blue"
-            android:text="Export report"
+            android:text="@string/export_report"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchRow" />
+            app:layout_constraintTop_toBottomOf="@id/activeFilterLabel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- ListView between header and bottom nav (no hardcoded top margin) -->
+    <!-- ListView -->
     <ListView
         android:id="@+id/lvDetectionsList"
         android:layout_width="match_parent"
@@ -126,5 +199,19 @@
         android:dividerHeight="10sp"
         android:focusable="false"
         android:padding="12dp" />
+
+    <!-- No results message — shown when filter returns zero detections -->
+    <TextView
+        android:id="@+id/noResultsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerContainer"
+        android:layout_above="@id/bottom_navigation"
+        android:gravity="center"
+        android:padding="32dp"
+        android:text="No detections match this filter.\nTap \'All\' to reset."
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
 </RelativeLayout>
