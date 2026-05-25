@@ -361,7 +361,6 @@
       <string name="rating_okay">😐 Okay</string>
       <string name="rating_good">🙂 Good</string>
       <string name="rating_excellent">🤩 Excellent</string>
->>>>>>> Stashed changes
 
     <!-- community post -->
     <string name="title">Title</string>
@@ -550,19 +549,17 @@
     <string name="reply_summary">Choose how replies are handled</string>
     <string name="sync_summary">Enable or disable auto-sync</string>
     <string name="example_summary">This is an example preference summary</string>
-
-    <string name="view_profile">View Profile</string>
-    <string name="user_profile_title">User Profile</string>
-    <string name="profile_picture_desc">Profile Picture</string>
-    <string name="address_label">Address</string>
     <string name="edit_button">Edit</string>
-    <string name="view_risk_profile">View Risk Profile</string>
     <string name="save_button">Save</string>
 
-    <!-- Empty state — News screen -->
-    <string name="empty_news_title">No News Available</string>
-    <string name="empty_news_subtitle">We couldn\'t find any cybersecurity news.\nCheck your connection and try again.</string>
-    <string name="empty_news_retry">Retry</string>
-    <string name="empty_news_icon_alt">No news illustration</string>
+    <!-- Empty state — Detections screen -->
+    <string name="empty_detections_title">No Detections Yet</string>
+    <string name="empty_detections_subtitle">You haven\'t scanned any messages yet.\nScan a suspicious SMS to see your results here.</string>
+    <string name="empty_detections_cta">Scan Now</string>
+    <string name="empty_detections_icon_alt">No detections illustration</string>
+    <string name="search_detections_hint">Search detections...</string>
+    <string name="filter_button_alt">Filter detections</string>
+    <string name="export_report">Export report</string>
+
 
 </resources>

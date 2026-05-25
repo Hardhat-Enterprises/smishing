@@ -24,7 +24,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.smishingdetectionapp.news.Models.RSSFeedModel;
 import com.example.smishingdetectionapp.news.NewsAdapter;
 import com.example.smishingdetectionapp.news.NewsRequestManager;
@@ -39,7 +38,7 @@ import java.util.List;
 
 public class NewsActivity extends SharedActivity implements SelectListener {
     RecyclerView recyclerView;
-    NewsAdapter adapter; // moved to class scope to reuse
+    NewsAdapter adapter;
     NewsRequestManager manager;
     ProgressBar progressBar;
     TextView errorMessage;
@@ -52,19 +51,15 @@ public class NewsActivity extends SharedActivity implements SelectListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-      
+
         // UI refs
         errorMessage = findViewById(R.id.errorTextView);
         recyclerView = findViewById(R.id.news_recycler_view);
         refreshButton = findViewById(R.id.refreshButton);
-        savedNewsButton = findViewById(R.id.btn_saved_news); // new
+        savedNewsButton = findViewById(R.id.btn_saved_news);
         progressBar = findViewById(R.id.progressBar);
 
-        emptyStateNews = findViewById(R.id.emptyStateNews);
-        emptyNewsRetryBtn = findViewById(R.id.emptyNewsRetryBtn);
-        emptyNewsRetryBtn.setOnClickListener(v -> fetchArticles());
-
-        // Saved News button click → open SavedNewsActivity
+        // Saved News button click
         savedNewsButton.setOnClickListener(v -> {
             Intent intent = new Intent(NewsActivity.this, SavedNewsActivity.class);
             startActivity(intent);
@@ -72,8 +67,6 @@ public class NewsActivity extends SharedActivity implements SelectListener {
 
         BottomNavCoordinator.setup(this, R.id.nav_news);
 
-
-        
         progressBar.setVisibility(View.VISIBLE);
 
         // Initialize RecyclerView and Adapter ONCE
@@ -82,21 +75,30 @@ public class NewsActivity extends SharedActivity implements SelectListener {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         adapter = new NewsAdapter(this, this);
         recyclerView.setAdapter(adapter);
-        
+
         fetchArticles();
 
         // Refresh button click
         refreshButton.setOnClickListener(v -> {
             if (isNetworkConnected()) {
-                fetchArticles(); 
+                fetchArticles();
             } else {
                 Toast.makeText(this, "You Have Lost Network Connection", Toast.LENGTH_SHORT).show();
             }
         });
+
         handleDeepLinkIfAny();
     }
 
-     /** Connectivity helper */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Fixed - refresh bookmark icons when returning from SavedNewsActivity
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     private boolean isNetworkConnected() {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -110,9 +112,7 @@ public class NewsActivity extends SharedActivity implements SelectListener {
         }
         return false;
     }
-  
 
-    /** Fetch RSS feed */
     private void fetchArticles() {
         progressBar.setVisibility(View.VISIBLE);
         errorMessage.setVisibility(View.GONE);
@@ -132,9 +132,8 @@ public class NewsActivity extends SharedActivity implements SelectListener {
                     emptyStateNews.setVisibility(View.GONE);
                 }
 
-                //for notification function
                 if (list != null && !list.isEmpty()) {
-                    checkAndNotifyLatestNews(list.get(0)); // Check the newest news
+                    checkAndNotifyLatestNews(list.get(0));
                 }
             }
             @Override
@@ -162,7 +161,6 @@ public class NewsActivity extends SharedActivity implements SelectListener {
         }
     }
 
-       /** Hardware back – bounce to Home tab */
     @Override
     public void onBackPressed() {
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
@@ -170,19 +168,14 @@ public class NewsActivity extends SharedActivity implements SelectListener {
         super.onBackPressed();
     }
 
-    //Notification
     private void checkAndNotifyLatestNews(RSSFeedModel.Article latestArticle) {
         SharedPreferences prefs = getSharedPreferences("NewsPrefs", MODE_PRIVATE);
         String lastTitle = prefs.getString("last_notified_title", "");
 
-        // Check notification enabled or not (in notification settings)
         boolean isNewsNotificationEnabled = NotificationType.createNewsAlert(getApplicationContext()).getEnabled();
 
         if (isNewsNotificationEnabled && !latestArticle.title.equals(lastTitle)) {
-            // Send notification
             showNotification("Cyber News Update", latestArticle.title);
-
-            // Save the newest title
             prefs.edit().putString("last_notified_title", latestArticle.title).apply();
         }
     }
@@ -206,6 +199,7 @@ public class NewsActivity extends SharedActivity implements SelectListener {
 
         notificationManager.notify(1, notification);
     }
+
     private void handleDeepLinkIfAny() {
         Intent intent = getIntent();
         if (intent == null) return;
@@ -215,13 +209,8 @@ public class NewsActivity extends SharedActivity implements SelectListener {
             try {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(openUrl)));
             } catch (Exception ignored) { }
-            // prevent reopening if the activity is recreated
             intent.removeExtra("open_url");
             setIntent(intent);
         }
     }
-
-
-
-
 }

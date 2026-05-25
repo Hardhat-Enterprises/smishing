@@ -17,7 +17,6 @@
  <color name="azure">#F0FFFF</color>
  <color name="red">#FFFF0000</color>
  <color name="blue_color">#0000FF</color>
- <color name="blueColor">#0000FF</color>
  <color name="cream">#F5EDD6</color>
 
 
@@ -32,7 +31,6 @@
 
  <!-- note: resource names must be lowercase -->
  <color name="dark_blue">#05445E</color>
- <color name="Dark_blue">#05445E</color>
  <color name="darker_baby_blue">#A0DCEB</color>
  <!-- 8-digit value uses AARRGGBB; 4C is ~30% opacity -->
  <color name="light_blue">#4CD5F1F5</color>
