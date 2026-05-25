@@ -28,15 +28,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.SettingsActivity;
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.example.smishingdetectionapp.ui.WidgetDataManager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
