@@ -1,12 +1,21 @@
 package com.example.smishingdetectionapp
 
 import android.app.Application
-import com.example.smishingdetectionapp.di.initKoin
+import android.preference.PreferenceManager
+import androidx.appcompat.app.AppCompatDelegate
 
 class SmishingDetectionApp : Application() {
-    fun oncreate() {
+    override fun onCreate() {
         super.onCreate()
-        // initialise Koin with the application context
-        initKoin(this)
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val darkModeEnabled = prefs.getBoolean("dark_mode", false) // default = light
+
+        AppCompatDelegate.setDefaultNightMode(
+            if (darkModeEnabled)
+                AppCompatDelegate.MODE_NIGHT_YES
+            else
+                AppCompatDelegate.MODE_NIGHT_NO
+        )
     }
 }

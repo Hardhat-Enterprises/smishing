@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground"
     android:layout_margin="12dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="?attr/colorSurfaceVariant"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 
@@ -36,7 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_bookmark_border"
-                app:tint="@color/navy_blue" />
+                app:tint="?attr/colorPrimary" />
 
             <!-- Title + date (vertical) -->
             <LinearLayout
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_small"
                     android:textStyle="bold"
-                    android:textColor="@color/navy_blue"
+                    android:textColor="?attr/colorOnSurface"
                     android:maxLines="2"
                     android:ellipsize="end" />
 
@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:textColor="#9E9E9E"
+                    android:textColor="?attr/colorOnSurfaceVariant"
                     android:textSize="@dimen/text_size_xsmall"/>
             </LinearLayout>
 
@@ -73,7 +73,7 @@
                 android:paddingStart="8dp"
                 android:contentDescription="@string/baseline_keyboard_arrow_right_24"
                 android:src="@drawable/baseline_keyboard_arrow_right_24"
-                app:tint="#9E9E9E" />
+                app:tint="?attr/colorOnSurfaceVariant" />
 
         </LinearLayout>
 
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="@dimen/text_size_small"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:lineSpacingExtra="2dp"
             android:maxLines="3"
             android:ellipsize="end" />
@@ -97,8 +97,8 @@
             android:padding="8dp"
             android:text="Share"
             android:textSize="14sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/navy_blue" />
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary" />
 
 
     </LinearLayout>

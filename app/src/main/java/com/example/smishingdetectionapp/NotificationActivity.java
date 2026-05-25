@@ -112,11 +112,12 @@ public class NotificationActivity extends SharedActivity {
             startActivity(intent);
         });
 
-        // Delete this button before prod
         Button testNotificationButton = findViewById(R.id.button_test_notifications);
-            testNotificationButton.setOnClickListener(v -> {
-                sendAllTestNotifications();
-            });
+        if (BuildConfig.DEBUG) {
+            testNotificationButton.setVisibility(View.VISIBLE);
+            testNotificationButton.setOnClickListener(v -> sendAllTestNotifications());
+        } else {
+            testNotificationButton.setVisibility(View.GONE);
         }
 
     private void sendAllTestNotifications() {

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -49,7 +50,9 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class DetectionsActivity extends AppCompatActivity {
@@ -58,6 +61,7 @@ public class DetectionsActivity extends AppCompatActivity {
     DatabaseAccess databaseAccess;
 
     private ActivityResultLauncher<Intent> createCsvLauncher;
+    private TextView activeFilterLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +106,7 @@ public class DetectionsActivity extends AppCompatActivity {
 
         // Filtering feature
         ImageView filterBtn = findViewById(R.id.filterBtn);
+        activeFilterLabel = findViewById(R.id.activeFilterLabel);
         filterBtn.setOnClickListener(v -> {
             SmartFilterBottomSheet filterFragment = new SmartFilterBottomSheet();
             filterFragment.setFilterListener((newestFirst, containsLink, todayOnly, last7DaysOnly, selectedYears, startDate, endDate) -> {
@@ -145,6 +150,19 @@ public class DetectionsActivity extends AppCompatActivity {
 
                 Cursor filteredCursor = DatabaseAccess.db.rawQuery(query.toString(), null);
                 DisplayDataAdapterView filteredAdapter = new DisplayDataAdapterView(this, filteredCursor);
+                List<String> activeFilters = new ArrayList<>();
+                if (containsLink) activeFilters.add("Contains Link");
+                if (todayOnly) activeFilters.add("Today");
+                if (last7DaysOnly) activeFilters.add("Last 7 Days");
+                if (newestFirst) activeFilters.add("Newest First");
+                if (startDate != null) activeFilters.add("Date Range");
+
+                if (activeFilters.isEmpty()) {
+                    activeFilterLabel.setVisibility(View.GONE);
+                } else {
+                    activeFilterLabel.setText("Filters: " + String.join(", ", activeFilters));
+                    activeFilterLabel.setVisibility(View.VISIBLE);
+                }
                 detectionLV.setAdapter(filteredAdapter);
                 filteredAdapter.notifyDataSetChanged();
             });
@@ -170,9 +188,10 @@ public class DetectionsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Detection Deleted!", Toast.LENGTH_SHORT).show();
             });
 
+
+
             return true;
         });
-
 
         // CSV create-document launcher
         createCsvLauncher = registerForActivityResult(
@@ -195,13 +214,8 @@ public class DetectionsActivity extends AppCompatActivity {
                     }
                 }
         );
-
-        // Export button
-        Button exportReportBtn = findViewById(R.id.exportReportBtn);
-        exportReportBtn.setOnClickListener(v -> showExportDialog());
     }
 
-    // Centered popup dialog that inflates popup_export_report.xml
     private void showExportDialog() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.popup_export_report);
@@ -229,7 +243,6 @@ public class DetectionsActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // Launch the SAF to create CSV file
     private void launchCreateCsv() {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -239,7 +252,6 @@ public class DetectionsActivity extends AppCompatActivity {
         createCsvLauncher.launch(intent);
     }
 
-    // Search/sort/list helpers
     public void searchDB(String search) {
         String searchQuery = "SELECT * FROM Detections WHERE Phone_Number LIKE '%" + search + "%' OR Message LIKE '%" + search + "%' OR Date LIKE '%" + search + "%'";
         Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
@@ -275,8 +287,6 @@ public class DetectionsActivity extends AppCompatActivity {
         DatabaseAccess.db.delete("Detections", "_id = ?", new String[]{id});
     }
 
-
-    // PDF export feature
     private void exportDetectionsToPDF() {
         Cursor cursor = DatabaseAccess.db.rawQuery("SELECT * FROM Detections", null);
         if (cursor.getCount() == 0) {
@@ -320,8 +330,6 @@ public class DetectionsActivity extends AppCompatActivity {
         }
     }
 
-
-    // CSV export helpers
     private boolean exportCursorToCsvUri(Uri uri, Cursor currentCursor) {
         Cursor cursor = null;
         boolean closeAtEnd = false;
@@ -379,32 +387,26 @@ public class DetectionsActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    // PROTECTED CSV ENCODER (Security Feature)
     private String safeCsv(String s) {
         if (s == null) return "";
 
-        // Find first non-whitespace character (spaces, tabs, etc.)
         int i = 0;
         while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
 
         boolean dangerous = false;
         if (i < s.length()) {
             char c = s.charAt(i);
-            // Excel/Sheets treat = + - @ as formulas when first non-whitespace
             if (c == '=' || c == '+' || c == '-' || c == '@') {
                 dangerous = true;
             }
         }
 
-        // CSV-escape quotes
         String out = s.replace("\"", "\"\"");
 
-        // Neutralize formula evaluation by prefixing apostrophe
         if (dangerous) {
             out = "'" + out;
         }
 
-        // Quote fields that contain CSV special chars
         boolean needsQuoting = out.contains(",") || out.contains("\"") || out.contains("\n") || out.contains("\r");
         return needsQuoting ? "\"" + out + "\"" : out;
     }

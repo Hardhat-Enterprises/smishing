@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#F7F9FB"/> <!-- Matches your main card -->
+    <solid android:color="?attr/colorSurfaceContainer"/> <!-- Matches your main card -->
     <corners android:radius="24dp" />
     <padding
         android:left="16dp"

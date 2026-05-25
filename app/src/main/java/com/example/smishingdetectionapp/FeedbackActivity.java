@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.color.MaterialColors;
 
 public class FeedbackActivity extends AppCompatActivity {
 
@@ -49,6 +50,16 @@ public class FeedbackActivity extends AppCompatActivity {
         wordCountText = findViewById(R.id.wordCountText);
         wordLimitWarning = findViewById(R.id.wordLimitWarning);
 
+        // Theme-aware colors for light/dark mode
+
+        final int errorColor = MaterialColors.getColor(
+                wordCountText, com.google.android.material.R.attr.colorError
+        );
+        final int onSurfaceVariantColor = MaterialColors.getColor(
+                wordCountText, com.google.android.material.R.attr.colorOnSurfaceVariant
+        );
+
+
         report_back.setOnClickListener(v -> finish());
 
         feedbackInput.setInputType(InputType.TYPE_CLASS_TEXT |
@@ -73,10 +84,10 @@ public class FeedbackActivity extends AppCompatActivity {
                 wordCountText.setText("Words: " + wordCount + " / " + WORD_LIMIT);
 
                 if (wordCount > WORD_LIMIT) {
-                    wordCountText.setTextColor(0xFFFF4444);
+                    wordCountText.setTextColor(errorColor);
                     wordLimitWarning.setVisibility(View.VISIBLE);
                 } else {
-                    wordCountText.setTextColor(0xFF888888);
+                    wordCountText.setTextColor(onSurfaceVariantColor);
                     wordLimitWarning.setVisibility(View.GONE);
                 }
 
@@ -120,7 +131,7 @@ public class FeedbackActivity extends AppCompatActivity {
             feedbackInput.setText("");
             ratingBar.setRating(0);
             wordCountText.setText("Words: 0 / " + WORD_LIMIT);
-            wordCountText.setTextColor(0xFF888888);
+            wordCountText.setTextColor(onSurfaceVariantColor);
             wordLimitWarning.setVisibility(View.GONE);
             submitFeedbackButton.setEnabled(false);
             submitFeedbackButton.setAlpha(0.5f);
