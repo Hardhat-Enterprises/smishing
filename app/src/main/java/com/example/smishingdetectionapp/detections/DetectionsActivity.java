@@ -20,23 +20,20 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smishingdetectionapp.Community.CommunityReportActivity;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
-import com.example.smishingdetectionapp.SettingsActivity;
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
+import com.example.smishingdetectionapp.riskmeter.RiskScannerTCActivity;
 import com.example.smishingdetectionapp.ui.WidgetDataManager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
@@ -50,9 +47,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class DetectionsActivity extends AppCompatActivity {
@@ -60,8 +55,11 @@ public class DetectionsActivity extends AppCompatActivity {
     private ListView detectionLV;
     DatabaseAccess databaseAccess;
 
+    // Empty state views
+    private LinearLayout emptyStateContainer;
+    private Button emptyScanNowBtn;
+
     private ActivityResultLauncher<Intent> createCsvLauncher;
-    private TextView activeFilterLabel;
 
     private com.google.android.material.chip.Chip chipAll;
     private com.google.android.material.chip.Chip chipContainsLink;
@@ -83,13 +81,20 @@ public class DetectionsActivity extends AppCompatActivity {
             finish();
         });
 
-        // List + DataBase
+        // List + Database
         detectionLV = findViewById(R.id.lvDetectionsList);
         databaseAccess = new DatabaseAccess(getApplicationContext());
         databaseAccess.open();
+
+        // Wire up empty state
+        emptyStateContainer = findViewById(R.id.emptyStateContainer);
+        emptyScanNowBtn = findViewById(R.id.emptyScanNowBtn);
+        emptyScanNowBtn.setOnClickListener(v ->
+                startActivity(new Intent(this, RiskScannerTCActivity.class))
+        );
         refreshList();
 
-        // Widgets updating function
+        // Widgets
         int detectionCount = databaseAccess.getCounter();
         WidgetDataManager.updateDetectionCount(this, detectionCount);
         WidgetDataManager.updateSafeDayStreak(this);
@@ -110,60 +115,8 @@ public class DetectionsActivity extends AppCompatActivity {
             @Override public void afterTextChanged(Editable s) {}
         });
 
-        // Filtering feature
+        // Filter button
         ImageView filterBtn = findViewById(R.id.filterBtn);
-        activeFilterLabel = findViewById(R.id.activeFilterLabel);
-        noResultsText = findViewById(R.id.noResultsText);
-        // Quick filter chips
-        chipAll = findViewById(R.id.chipAll);
-        chipContainsLink = findViewById(R.id.chipContainsLink);
-        chipToday = findViewById(R.id.chipToday);
-        chipLast7Days = findViewById(R.id.chipLast7Days);
-
-        chipAll.setOnClickListener(v -> {
-            chipContainsLink.setChecked(false);
-            chipToday.setChecked(false);
-            chipLast7Days.setChecked(false);
-            chipAll.setChecked(true);
-            refreshList();
-            activeFilterLabel.setVisibility(View.GONE);
-            noResultsText.setVisibility(View.GONE);
-            detectionLV.setVisibility(View.VISIBLE);
-        });
-
-        chipContainsLink.setOnClickListener(v -> {
-            chipAll.setChecked(false);
-            chipToday.setChecked(false);
-            chipLast7Days.setChecked(false);
-            chipContainsLink.setChecked(true);
-            filterByQuery("SELECT * FROM Detections WHERE Message LIKE '%http%' OR Message LIKE '%www%'");
-            activeFilterLabel.setText("Filter: Contains Link");
-            activeFilterLabel.setVisibility(View.VISIBLE);
-        });
-
-        chipToday.setOnClickListener(v -> {
-            chipAll.setChecked(false);
-            chipContainsLink.setChecked(false);
-            chipLast7Days.setChecked(false);
-            chipToday.setChecked(true);
-            String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-            filterByQuery("SELECT * FROM Detections WHERE Date LIKE '" + today + "%'");
-            activeFilterLabel.setText("Filter: Today");
-            activeFilterLabel.setVisibility(View.VISIBLE);
-        });
-
-        chipLast7Days.setOnClickListener(v -> {
-            chipAll.setChecked(false);
-            chipContainsLink.setChecked(false);
-            chipToday.setChecked(false);
-            chipLast7Days.setChecked(true);
-            long sevenDaysAgoMillis = System.currentTimeMillis() - (7L * 24 * 60 * 60 * 1000);
-            String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-            String sevenDaysAgo = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(sevenDaysAgoMillis));
-            filterByQuery("SELECT * FROM Detections WHERE Date BETWEEN '" + sevenDaysAgo + "' AND '" + today + "'");
-            activeFilterLabel.setText("Filter: Last 7 Days");
-            activeFilterLabel.setVisibility(View.VISIBLE);
-        });
         filterBtn.setOnClickListener(v -> {
             SmartFilterBottomSheet filterFragment = new SmartFilterBottomSheet();
             filterFragment.setFilterListener((newestFirst, containsLink, todayOnly, last7DaysOnly, selectedYears, startDate, endDate) -> {
@@ -174,13 +127,11 @@ public class DetectionsActivity extends AppCompatActivity {
                     query.append(" WHERE (Message LIKE '%http%' OR Message LIKE '%www%')");
                     hasCondition = true;
                 }
-
                 if (todayOnly) {
                     String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                     query.append(hasCondition ? " AND " : " WHERE ").append("Date LIKE '").append(today).append("%'");
                     hasCondition = true;
                 }
-
                 if (last7DaysOnly) {
                     long sevenDaysAgoMillis = System.currentTimeMillis() - (7L * 24 * 60 * 60 * 1000);
                     String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
@@ -188,12 +139,10 @@ public class DetectionsActivity extends AppCompatActivity {
                     query.append(hasCondition ? " AND " : " WHERE ").append("Date BETWEEN '").append(sevenDaysAgo).append("' AND '").append(today).append("'");
                     hasCondition = true;
                 }
-
                 if (startDate != null && endDate != null) {
                     query.append(hasCondition ? " AND " : " WHERE ").append("Date BETWEEN '").append(startDate).append("' AND '").append(endDate).append("'");
                     hasCondition = true;
                 }
-
                 if (!selectedYears.isEmpty()) {
                     StringBuilder yearCondition = new StringBuilder();
                     for (int i = 0; i < selectedYears.size(); i++) {
@@ -202,28 +151,13 @@ public class DetectionsActivity extends AppCompatActivity {
                     }
                     query.append(hasCondition ? " AND (" : " WHERE (").append(yearCondition).append(")");
                 }
-
                 query.append(newestFirst ? " ORDER BY Date DESC" : " ORDER BY Date ASC");
 
                 Cursor filteredCursor = DatabaseAccess.db.rawQuery(query.toString(), null);
                 DisplayDataAdapterView filteredAdapter = new DisplayDataAdapterView(this, filteredCursor);
-                List<String> activeFilters = new ArrayList<>();
-                if (containsLink) activeFilters.add("Contains Link");
-                if (todayOnly) activeFilters.add("Today");
-                if (last7DaysOnly) activeFilters.add("Last 7 Days");
-                if (newestFirst) activeFilters.add("Newest First");
-                if (startDate != null) activeFilters.add("Date Range");
-
-                if (activeFilters.isEmpty()) {
-                    activeFilterLabel.setVisibility(View.GONE);
-                } else {
-                    activeFilterLabel.setText("Filters: " + String.join(", ", activeFilters));
-                    activeFilterLabel.setVisibility(View.VISIBLE);
-                }
                 detectionLV.setAdapter(filteredAdapter);
                 filteredAdapter.notifyDataSetChanged();
             });
-
             filterFragment.show(getSupportFragmentManager(), filterFragment.getTag());
         });
 
@@ -243,14 +177,12 @@ public class DetectionsActivity extends AppCompatActivity {
                 refreshList();
                 bottomSheetDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Detection Deleted!", Toast.LENGTH_SHORT).show();
+                updateEmptyState();
             });
-
-
-
             return true;
         });
 
-        // CSV create-document launcher
+        // CSV launcher
         createCsvLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -271,6 +203,31 @@ public class DetectionsActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        // Export button
+        Button exportReportBtn = findViewById(R.id.exportReportBtn);
+        exportReportBtn.setOnClickListener(v -> showExportDialog());
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Shows empty state when no detections exist, hides when they do
+    // ═══════════════════════════════════════════════════════════
+    private void updateEmptyState() {
+        Cursor countCursor = DatabaseAccess.db.rawQuery(
+                "SELECT COUNT(*) FROM Detections", null);
+        int count = 0;
+        if (countCursor.moveToFirst()) {
+            count = countCursor.getInt(0);
+        }
+        countCursor.close();
+
+        if (count == 0) {
+            detectionLV.setVisibility(View.GONE);
+            emptyStateContainer.setVisibility(View.VISIBLE);
+        } else {
+            detectionLV.setVisibility(View.VISIBLE);
+            emptyStateContainer.setVisibility(View.GONE);
+        }
     }
 
     private void showExportDialog() {
@@ -304,17 +261,21 @@ public class DetectionsActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("text/csv");
-        String name = "detections_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + ".csv";
+        String name = "detections_" + new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date()) + ".csv";
         intent.putExtra(Intent.EXTRA_TITLE, name);
         createCsvLauncher.launch(intent);
     }
 
     public void searchDB(String search) {
-        String searchQuery = "SELECT * FROM Detections WHERE Phone_Number LIKE '%" + search + "%' OR Message LIKE '%" + search + "%' OR Date LIKE '%" + search + "%'";
+        String searchQuery = "SELECT * FROM Detections WHERE Phone_Number LIKE '%"
+                + search + "%' OR Message LIKE '%" + search + "%' OR Date LIKE '%"
+                + search + "%'";
         Cursor cursor = DatabaseAccess.db.rawQuery(searchQuery, null);
         DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
         detectionLV.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        updateEmptyState();
     }
 
     public void filterByQuery(String query) {
@@ -362,6 +323,7 @@ public class DetectionsActivity extends AppCompatActivity {
         DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
         detectionLV.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        updateEmptyState();
     }
 
     public void DeleteRow(String id) {
@@ -376,7 +338,8 @@ public class DetectionsActivity extends AppCompatActivity {
         }
 
         Document document = new Document();
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "detections_report.pdf");
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS), "detections_report.pdf");
         String filePath = file.getAbsolutePath();
 
         try {
@@ -397,12 +360,9 @@ public class DetectionsActivity extends AppCompatActivity {
 
             document.close();
 
-            MediaScannerConnection.scanFile(
-                    this,
-                    new String[] { file.getAbsolutePath() },
-                    new String[] { "application/pdf" },
-                    null
-            );
+            MediaScannerConnection.scanFile(this,
+                    new String[]{file.getAbsolutePath()},
+                    new String[]{"application/pdf"}, null);
 
             Toast.makeText(this, "PDF exported to: " + filePath, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
@@ -420,8 +380,7 @@ public class DetectionsActivity extends AppCompatActivity {
                 cursor = currentCursor;
             } else {
                 cursor = DatabaseAccess.db.rawQuery(
-                        "SELECT Phone_Number, Message, Date FROM Detections", null
-                );
+                        "SELECT Phone_Number, Message, Date FROM Detections", null);
                 closeAtEnd = true;
             }
 
@@ -433,22 +392,18 @@ public class DetectionsActivity extends AppCompatActivity {
                 bw.write(csv);
                 bw.flush();
             }
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         } finally {
-            if (closeAtEnd && cursor != null) {
-                cursor.close();
-            }
+            if (closeAtEnd && cursor != null) cursor.close();
         }
     }
 
     private String buildCsvFromCursor(Cursor cursor) {
         StringBuilder sb = new StringBuilder();
         sb.append("Phone Number,Message,Date\n");
-
         if (cursor == null) return sb.toString();
 
         int colPhone = cursor.getColumnIndex("Phone_Number");
@@ -470,25 +425,17 @@ public class DetectionsActivity extends AppCompatActivity {
 
     private String safeCsv(String s) {
         if (s == null) return "";
-
         int i = 0;
         while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
-
         boolean dangerous = false;
         if (i < s.length()) {
             char c = s.charAt(i);
-            if (c == '=' || c == '+' || c == '-' || c == '@') {
-                dangerous = true;
-            }
+            if (c == '=' || c == '+' || c == '-' || c == '@') dangerous = true;
         }
-
         String out = s.replace("\"", "\"\"");
-
-        if (dangerous) {
-            out = "'" + out;
-        }
-
-        boolean needsQuoting = out.contains(",") || out.contains("\"") || out.contains("\n") || out.contains("\r");
+        if (dangerous) out = "'" + out;
+        boolean needsQuoting = out.contains(",") || out.contains("\"")
+                || out.contains("\n") || out.contains("\r");
         return needsQuoting ? "\"" + out + "\"" : out;
     }
 }

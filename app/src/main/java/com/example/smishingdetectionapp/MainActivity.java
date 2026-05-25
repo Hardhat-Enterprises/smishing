@@ -122,6 +122,21 @@ public class MainActivity extends SharedActivity {
 
         databaseAccess.close();
 
+        // Pull-to-refresh — refreshes detection count on swipe down
+        androidx.swiperefreshlayout.widget.SwipeRefreshLayout swipeRefreshLayout =
+                findViewById(R.id.swipeRefreshLayout);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setColorSchemeResources(R.color.navy_blue);
+            swipeRefreshLayout.setOnRefreshListener(() -> {
+                DatabaseAccess dbRefresh = DatabaseAccess.getInstance(getApplicationContext());
+                dbRefresh.open();
+                if (totalCount != null) {
+                    totalCount.setText(String.valueOf(dbRefresh.getCounter()));
+                }
+                dbRefresh.close();
+                swipeRefreshLayout.setRefreshing(false);
+            });
+        }
         // TapTarget guide
         boolean showGuideNow = getIntent().getBooleanExtra("showGuide", false);
         if (showGuideNow) {
