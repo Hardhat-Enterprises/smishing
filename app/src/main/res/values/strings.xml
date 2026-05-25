@@ -361,7 +361,6 @@
       <string name="rating_okay">😐 Okay</string>
       <string name="rating_good">🙂 Good</string>
       <string name="rating_excellent">🤩 Excellent</string>
->>>>>>> Stashed changes
 
     <!-- community post -->
     <string name="title">Title</string>
@@ -550,13 +549,7 @@
     <string name="reply_summary">Choose how replies are handled</string>
     <string name="sync_summary">Enable or disable auto-sync</string>
     <string name="example_summary">This is an example preference summary</string>
-
-    <string name="view_profile">View Profile</string>
-    <string name="user_profile_title">User Profile</string>
-    <string name="profile_picture_desc">Profile Picture</string>
-    <string name="address_label">Address</string>
     <string name="edit_button">Edit</string>
-    <string name="view_risk_profile">View Risk Profile</string>
     <string name="save_button">Save</string>
 
 
