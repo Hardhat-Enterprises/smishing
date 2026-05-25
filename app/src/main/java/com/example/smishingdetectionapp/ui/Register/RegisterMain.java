@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,6 +56,9 @@ public class RegisterMain extends AppCompatActivity {
     private TextView errorConfirmPassword;
     private TextView passwordStrength;
 
+    // ── Declared as fields so all methods can access them ──────
+    private CheckBox termsCheckBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +92,7 @@ public class RegisterMain extends AppCompatActivity {
         TextView termsTextView = findViewById(R.id.terms_text);
         termsCheckBox = findViewById(R.id.terms_condition_checkbox);
 
+        // Tapping the text opens Terms and Conditions page
         if (termsTextView != null) {
             termsTextView.setOnClickListener(v -> {
                 Intent intent = new Intent(RegisterMain.this, TermsAndConditionsActivity.class);
@@ -95,6 +100,7 @@ public class RegisterMain extends AppCompatActivity {
             });
         }
 
+        // Tapping the checkbox also opens Terms and Conditions page
         if (termsCheckBox != null) {
             termsCheckBox.setOnClickListener(v -> {
                 termsCheckBox.setChecked(false);
@@ -251,43 +257,6 @@ public class RegisterMain extends AppCompatActivity {
         }
     }
 
-    // ── Password strength indicator ─────────────────────────────
-    private void updatePasswordStrength(String password) {
-        int score = 0;
-        if (password.length() >= 8) score++;
-        if (password.matches(".*[A-Z].*")) score++;
-        if (password.matches(".*[a-z].*")) score++;
-        if (password.matches(".*\\d.*")) score++;
-        if (password.matches(".*[!@#$%^&*+=?-].*")) score++;
-
-        passwordStrength.setVisibility(android.view.View.VISIBLE);
-
-        if (score <= 2) {
-            passwordStrength.setText("Password strength: Weak");
-            passwordStrength.setTextColor(ContextCompat.getColor(this, R.color.red));
-            showError(errorPassword, "Password must be at least 8 characters with uppercase, number and special character");
-        } else if (score == 3 || score == 4) {
-            passwordStrength.setText("Password strength: Medium");
-            passwordStrength.setTextColor(ContextCompat.getColor(this, R.color.darker_baby_blue));
-            hideError(errorPassword);
-        } else {
-            passwordStrength.setText("Password strength: Strong ✓");
-            passwordStrength.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
-            hideError(errorPassword);
-        }
-    }
-
-    // ── Error helpers ───────────────────────────────────────────
-    private void showError(TextView errorView, String message) {
-        errorView.setText(message);
-        errorView.setVisibility(android.view.View.VISIBLE);
-    }
-
-    private void hideError(TextView errorView) {
-        errorView.setText("");
-        errorView.setVisibility(android.view.View.GONE);
-    }
-
     // ── Terms result ────────────────────────────────────────────
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -309,7 +278,8 @@ public class RegisterMain extends AppCompatActivity {
 
     // ── Dark / Light mode ───────────────────────────────────────
     private void setDarkMode() {
-        binding.getRoot().setBackgroundColor(ContextCompat.getColor(this, R.color.black));
+        binding.getRoot().setBackgroundColor(
+                ContextCompat.getColor(this, R.color.black));
         binding.fullNameInput.setTextColor(ContextCompat.getColor(this, R.color.white));
         binding.emailInput.setTextColor(ContextCompat.getColor(this, R.color.white));
         binding.pnInput.setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -318,7 +288,8 @@ public class RegisterMain extends AppCompatActivity {
     }
 
     private void setLightMode() {
-        binding.getRoot().setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+        binding.getRoot().setBackgroundColor(
+                ContextCompat.getColor(this, R.color.white));
         binding.fullNameInput.setTextColor(ContextCompat.getColor(this, R.color.black));
         binding.emailInput.setTextColor(ContextCompat.getColor(this, R.color.black));
         binding.pnInput.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -333,47 +304,35 @@ public class RegisterMain extends AppCompatActivity {
         return String.valueOf(code);
     }
 
-    // ── Input validation (on submit) ────────────────────────────
+    // ── Input validation ────────────────────────────────────────
     private boolean validateInput(String fullName, String phoneNumber,
                                   String email, String password) {
-        boolean valid = true;
-
         if (TextUtils.isEmpty(fullName)) {
-            showError(errorFullName, "Full name is required");
-            valid = false;
+            Snackbar.make(binding.getRoot(), "Enter full name",
+                    Snackbar.LENGTH_LONG).show();
+            return false;
         }
-
-        String digitsOnly = phoneNumber.replaceAll("[\\s\\-().+]", "");
-        boolean isAustralian = digitsOnly.matches("04\\d{8}") ||
-                digitsOnly.matches("0[2378]\\d{8}") ||
-                digitsOnly.matches("614\\d{8}");
-        if (!isAustralian) {
-            showError(errorPhone, "Enter a valid Australian phone number (e.g. 04XX XXX XXX)");
-            valid = false;
+        if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
+            Snackbar.make(binding.getRoot(), "Invalid phone number",
+                    Snackbar.LENGTH_LONG).show();
+            return false;
         }
 
         if (!isValidEmailAddress(email)) {
-            showError(errorEmail, "Enter a valid email address");
-            valid = false;
+            Snackbar.make(binding.getRoot(), "Invalid email",
+                    Snackbar.LENGTH_LONG).show();
+            return false;
         }
-
         String confirmPassword = binding.pw2Input.getText().toString();
         if (password.length() < 8 ||
                 !password.matches(".*\\d.*") ||
                 !password.matches(".*[A-Z].*") ||
                 !password.matches(".*[a-z].*") ||
                 !password.matches(".*[!@#$%^&*+=?-].*")) {
-            showError(errorPassword, "Password must be at least 8 characters with uppercase, number and special character");
-            valid = false;
+            Snackbar.make(binding.getRoot(), "Password does not meet requirements",
+                    Snackbar.LENGTH_LONG).show();
+            return false;
         }
-
-        if (!password.equals(confirmPassword)) {
-            showError(errorConfirmPassword, "Passwords do not match");
-            valid = false;
-        }
-
-        return valid;
-    }
 
     // ── Email availability check ────────────────────────────────
     private void validateAndCheckEmail(String fullName, String phoneNumber,
@@ -396,16 +355,17 @@ public class RegisterMain extends AppCompatActivity {
                     intent.putExtra("code", code);
                     startActivity(intent);
                 } else if (response.code() == 409) {
-                    showError(errorEmail, "This email is already registered");
+                    Snackbar.make(binding.getRoot(), "Email already exists",
+                            Snackbar.LENGTH_LONG).show();
                 } else {
-                    Snackbar.make(binding.getRoot(), "Server error. Please try again.",
+                    Snackbar.make(binding.getRoot(), "Server error",
                             Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<SignupResponse> call, Throwable t) {
-                Snackbar.make(binding.getRoot(), "Network error. Please try again.",
+                Snackbar.make(binding.getRoot(), "Network error",
                         Snackbar.LENGTH_LONG).show();
             }
         });

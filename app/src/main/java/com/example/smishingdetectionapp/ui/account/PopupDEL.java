@@ -1,5 +1,7 @@
 package com.example.smishingdetectionapp.ui.account;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -7,33 +9,48 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.smishingdetectionapp.BuildConfig;
+import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
 import com.example.smishingdetectionapp.MainActivity;
 import com.example.smishingdetectionapp.R;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PopupDEL extends AppCompatActivity {
 
     private EditText passwordEditText;
     private Button confirmDelYesBtn, confirmDelNoBtn;
+    private Retrofitinterface retrofitinterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_delete_account);
 
+        // Initialize Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.SERVERIP)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofitinterface = retrofit.create(Retrofitinterface.class);
+
         passwordEditText = findViewById(R.id.del_accPW);
         confirmDelYesBtn = findViewById(R.id.confirmDelYesBtn);
         confirmDelNoBtn = findViewById(R.id.confirmDelNoBtn);
 
         confirmDelNoBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(com.example.smishingdetectionapp.ui.account.PopupDEL.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
             finish();
         });
 
@@ -54,50 +71,60 @@ public class PopupDEL extends AppCompatActivity {
     }
 
     private void handleAccountDeletion() {
-        String enteredPassword = passwordEditText.getText().toString();
+        String enteredPassword = passwordEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(enteredPassword)) {
             Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (isPasswordValid(enteredPassword)) {
-            disableAccountFor30Days();
-        } else {
-            Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show();
+        SharedPreferences prefs = getSharedPreferences("APP_PREFS", 0);
+        String savedToken = prefs.getString("JWT_TOKEN", null);
+
+        if (savedToken == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
         }
-    }
 
-    private boolean isPasswordValid(String password) {
-        String storedPassword = getStoredPassword(); // Get the stored password (you can set a mock password)
-        return password.equals(storedPassword); // Compare with the entered password
-    }
-    private String getStoredPassword() {
-        return "userPassword"; // Placeholder: Replace this with actual stored password or DB retrieval logic
-    }
+        String token = "Bearer " + savedToken;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("password", enteredPassword);
 
-    private void disableAccountFor30Days() {
-        Date currentDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        calendar.add(Calendar.DAY_OF_MONTH, 30);
-        Date deletionDate = calendar.getTime();
+        retrofitinterface.deleteAccount(token, map).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(PopupDEL.this, "Account successfully deleted", Toast.LENGTH_LONG).show();
+                    
+                    // Clear token and logout
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.remove("JWT_TOKEN");
+                    editor.apply();
 
-        saveAccountStatus("disabled");
-        saveDeletionDate(deletionDate);
+                    Intent intent = new Intent(PopupDEL.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    String errorMsg = "Deletion failed";
+                    try (ResponseBody responseBody = response.errorBody()) {
+                        if (responseBody != null) {
+                            errorMsg = responseBody.string();
+                        }
+                    } catch (Exception e) {}
+                    
+                    new AlertDialog.Builder(PopupDEL.this)
+                            .setTitle("Error")
+                            .setMessage(errorMsg)
+                            .setPositiveButton("OK", null)
+                            .show();
+                }
+            }
 
-        Toast.makeText(this, "Account will be deleted on " + deletionDate, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(com.example.smishingdetectionapp.ui.account.PopupDEL.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
-
-    private void saveAccountStatus(String status) {
-        // Placeholder for saving account status in the database
-    }
-
-    private void saveDeletionDate(Date deletionDate) {
-        // Placeholder for saving the deletion date in the database
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                Toast.makeText(PopupDEL.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

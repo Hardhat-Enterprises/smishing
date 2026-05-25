@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,21 +27,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PopupEmail extends BottomSheetDialogFragment {
+public class PopupName extends BottomSheetDialogFragment {
 
-    private EditText etNewEmail, etConfirmEmail;
+    private EditText etNewName, etConfirmName;
     private Button btnUpdate;
     private Retrofitinterface retrofitinterface;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.popup_email,
-                container, false);
+        View v = inflater.inflate(R.layout.popup_name, container, false);
 
         // Bind UI
-        etNewEmail = v.findViewById(R.id.editTextEmail);
-        etConfirmEmail = v.findViewById(R.id.editTextEmail2);
-        btnUpdate = v.findViewById(R.id.change_emailBtn);
+        etNewName = v.findViewById(R.id.editTextName);
+        etConfirmName = v.findViewById(R.id.editTextName2);
+        btnUpdate = v.findViewById(R.id.change_nameBtn);
 
         // Initialize Retrofit
         Retrofit retrofit = new Retrofit.Builder()
@@ -64,37 +62,39 @@ public class PopupEmail extends BottomSheetDialogFragment {
             }
         };
 
-        etNewEmail.addTextChangedListener(watcher);
-        etConfirmEmail.addTextChangedListener(watcher);
+        etNewName.addTextChangedListener(watcher);
+        etConfirmName.addTextChangedListener(watcher);
 
-        // Button click → call API
+        // Button click calls API
         btnUpdate.setOnClickListener(view -> {
-            String email = etNewEmail.getText().toString().trim();
-            callUpdateAPI(email);
+            String name = etNewName.getText().toString().trim();
+            callUpdateAPI(name);
         });
 
         return v;
     }
 
     private void validate() {
-        String email = etNewEmail.getText().toString().trim();
-        String confirm = etConfirmEmail.getText().toString().trim();
+        String name = etNewName.getText().toString().trim();
+        String confirm = etConfirmName.getText().toString().trim();
 
-        boolean isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches();
-        boolean isMatching = email.equals(confirm);
+        boolean isMatching = name.equals(confirm);
 
-        if (!isValidEmail && !email.isEmpty()) {
-            etNewEmail.setError("Invalid email address format");
+        if (name.isEmpty() && etNewName.hasFocus()) {
+            etNewName.setError("Name cannot be empty");
         }
+        
         if (!isMatching && !confirm.isEmpty()) {
-            etConfirmEmail.setError("Emails must match");
+            etConfirmName.setError("Names must match");
+        } else {
+            etConfirmName.setError(null);
         }
 
-        btnUpdate.setEnabled(isValidEmail && isMatching && !email.isEmpty());
+        btnUpdate.setEnabled(isMatching && !name.isEmpty());
     }
 
     // ================= API CALL =================
-    private void callUpdateAPI(String email) {
+    private void callUpdateAPI(String name) {
         SharedPreferences prefs = getActivity().getSharedPreferences("APP_PREFS", 0);
         String savedToken = prefs.getString("JWT_TOKEN", null);
 
@@ -106,13 +106,13 @@ public class PopupEmail extends BottomSheetDialogFragment {
         String token = "Bearer " + savedToken;
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("email", email);
+        map.put("fullName", name);
 
         retrofitinterface.updateProfile(token, map).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Email updated successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Name updated successfully", Toast.LENGTH_SHORT).show();
                     dismiss();
                 } else {
                     try {
