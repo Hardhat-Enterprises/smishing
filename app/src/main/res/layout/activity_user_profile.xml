@@ -162,7 +162,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:background="@android:color/transparent"
-                                app:srcCompat="@drawable/ic_eye"
+                                app:srcCompat="@drawable/visibility"
                                 android:contentDescription="View Email"/>
                         </LinearLayout>
 
@@ -204,7 +204,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:background="@android:color/transparent"
-                                app:srcCompat="@drawable/ic_eye"
+                                app:srcCompat="@drawable/visibility"
                                 android:contentDescription="View Phone"/>
                         </LinearLayout>
 
@@ -246,7 +246,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:background="@android:color/transparent"
-                                app:srcCompat="@drawable/ic_eye"
+                                app:srcCompat="@drawable/visibility"
                                 android:contentDescription="View Address"/>
                         </LinearLayout>
                     </LinearLayout>

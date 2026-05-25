@@ -3,7 +3,9 @@ package com.example.smishingdetectionapp.ui.Register;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -43,6 +45,28 @@ public class RegisterMain extends AppCompatActivity {
     private Retrofitinterface retrofitinterface;
     private String BASE_URL = BuildConfig.SERVERIP;
     private boolean termsAccepted = false;
+    private CheckBox termsCheckBox;
+
+    // ── Inline error TextViews ──────────────────────────────────
+    private TextView errorFullName;
+    private TextView errorPhone;
+    private TextView errorEmail;
+    private TextView errorPin;
+    private TextView errorPassword;
+    private TextView errorConfirmPassword;
+    private TextView passwordStrength;
+
+    // ── Declared as fields so all methods can access them ──────
+    private CheckBox termsCheckBox;
+
+    // ── Declared as fields so all methods can access them ──────
+    private CheckBox termsCheckBox;
+
+    // ── Declared as fields so all methods can access them ──────
+    private CheckBox termsCheckBox;
+
+    // ── Declared as fields so all methods can access them ──────
+    private CheckBox termsCheckBox;
 
     // ── Declared as fields so all methods can access them ──────
     private CheckBox termsCheckBox;
@@ -60,6 +84,15 @@ public class RegisterMain extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitinterface = retrofit.create(Retrofitinterface.class);
+
+        // Wire up error TextViews
+        errorFullName = findViewById(R.id.error_full_name);
+        errorPhone = findViewById(R.id.error_phone);
+        errorEmail = findViewById(R.id.error_email);
+        errorPin = findViewById(R.id.error_pin);
+        errorPassword = findViewById(R.id.error_password);
+        errorConfirmPassword = findViewById(R.id.error_confirm_password);
+        passwordStrength = findViewById(R.id.password_strength);
 
         // Back button
         binding.signupBack.setOnClickListener(v -> {
@@ -93,9 +126,9 @@ public class RegisterMain extends AppCompatActivity {
         registerButton.setEnabled(false);
 
         registerButton.setOnClickListener(v -> {
-            String fullName = binding.fullNameInput.getText().toString();
-            String phoneNumber = binding.pnInput.getText().toString();
-            String email = binding.emailInput.getText().toString();
+            String fullName = binding.fullNameInput.getText().toString().trim();
+            String phoneNumber = binding.pnInput.getText().toString().trim();
+            String email = binding.emailInput.getText().toString().trim();
             String password = binding.pwInput.getText().toString();
 
             if (!termsAccepted) {
@@ -107,6 +140,122 @@ public class RegisterMain extends AppCompatActivity {
 
             if (validateInput(fullName, phoneNumber, email, password)) {
                 validateAndCheckEmail(fullName, phoneNumber, email, password);
+            }
+        });
+
+        // ── Real-time validation listeners ──────────────────────
+
+        // Full name
+        binding.fullNameInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                if (s.toString().trim().isEmpty()) {
+                    showError(errorFullName, "Full name is required");
+                } else {
+                    hideError(errorFullName);
+                }
+            }
+        });
+
+        // Phone number — Australian format
+        binding.pnInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                String phone = s.toString().trim();
+                if (phone.isEmpty()) {
+                    hideError(errorPhone);
+                    return;
+                }
+                String digitsOnly = phone.replaceAll("[\\s\\-().+]", "");
+                boolean isValid = digitsOnly.matches("04\\d{8}") ||
+                        digitsOnly.matches("0[2378]\\d{8}") ||
+                        digitsOnly.matches("614\\d{8}");
+                if (!isValid) {
+                    showError(errorPhone, "Enter a valid Australian phone number (e.g. 04XX XXX XXX)");
+                } else {
+                    hideError(errorPhone);
+                }
+            }
+        });
+
+        // Email
+        binding.emailInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                String email = s.toString().trim();
+                if (email.isEmpty()) {
+                    hideError(errorEmail);
+                    return;
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    showError(errorEmail, "Enter a valid email address");
+                } else {
+                    hideError(errorEmail);
+                }
+            }
+        });
+
+        // PIN — must be 6 digits
+        binding.pinInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                String pin = s.toString().trim();
+                if (pin.isEmpty()) {
+                    hideError(errorPin);
+                    return;
+                }
+                if (pin.length() != 6) {
+                    showError(errorPin, "PIN must be exactly 6 digits");
+                } else {
+                    hideError(errorPin);
+                }
+            }
+        });
+
+        // Password strength
+        binding.pwInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                String pw = s.toString();
+                if (pw.isEmpty()) {
+                    passwordStrength.setVisibility(android.view.View.GONE);
+                    hideError(errorPassword);
+                    return;
+                }
+                updatePasswordStrength(pw);
+                // Validate confirm password match if already filled
+                String confirm = binding.pw2Input.getText().toString();
+                if (!confirm.isEmpty()) {
+                    if (!pw.equals(confirm)) {
+                        showError(errorConfirmPassword, "Passwords do not match");
+                    } else {
+                        hideError(errorConfirmPassword);
+                    }
+                }
+            }
+        });
+
+        // Confirm password
+        binding.pw2Input.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                String confirm = s.toString();
+                String password = binding.pwInput.getText().toString();
+                if (confirm.isEmpty()) {
+                    hideError(errorConfirmPassword);
+                    return;
+                }
+                if (!confirm.equals(password)) {
+                    showError(errorConfirmPassword, "Passwords do not match");
+                } else {
+                    hideError(errorConfirmPassword);
+                }
             }
         });
 
@@ -180,6 +329,7 @@ public class RegisterMain extends AppCompatActivity {
                     Snackbar.LENGTH_LONG).show();
             return false;
         }
+
         if (!isValidEmailAddress(email)) {
             Snackbar.make(binding.getRoot(), "Invalid email",
                     Snackbar.LENGTH_LONG).show();
@@ -187,7 +337,6 @@ public class RegisterMain extends AppCompatActivity {
         }
         String confirmPassword = binding.pw2Input.getText().toString();
         if (password.length() < 8 ||
-                !password.equals(confirmPassword) ||
                 !password.matches(".*\\d.*") ||
                 !password.matches(".*[A-Z].*") ||
                 !password.matches(".*[a-z].*") ||
@@ -196,8 +345,6 @@ public class RegisterMain extends AppCompatActivity {
                     Snackbar.LENGTH_LONG).show();
             return false;
         }
-        return true;
-    }
 
     // ── Email availability check ────────────────────────────────
     private void validateAndCheckEmail(String fullName, String phoneNumber,
