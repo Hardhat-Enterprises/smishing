@@ -94,6 +94,63 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <!-- ───── Empty state — shown when news loads but returns zero articles ───── -->
+    <LinearLayout
+        android:id="@+id/emptyStateNews"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/topHeaderContainer"
+        app:layout_constraintBottom_toTopOf="@id/refreshButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/emptyNewsIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="@string/empty_news_icon_alt"
+            app:srcCompat="@drawable/ic_empty_news" />
+
+        <TextView
+            android:id="@+id/emptyNewsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="@string/empty_news_title"
+            android:textColor="@color/navy_blue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/emptyNewsSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.4"
+            android:text="@string/empty_news_subtitle"
+            android:textColor="@color/grey"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/emptyNewsRetryBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/navy_blue"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:text="@string/empty_news_retry"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
     <!-- ───── ProgressBar centred on RecyclerView ───── -->
     <ProgressBar
         android:id="@+id/progressBar"
