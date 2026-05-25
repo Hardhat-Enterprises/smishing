@@ -42,7 +42,6 @@ import android.widget.Switch;
 import com.example.smishingdetectionapp.ui.ContactUsActivity;
 import com.google.android.material.button.MaterialButton;
 
-
 public class SettingsActivity extends AppCompatActivity {
     private SeekBar seekBarFontScale;
     private TextView preview;
