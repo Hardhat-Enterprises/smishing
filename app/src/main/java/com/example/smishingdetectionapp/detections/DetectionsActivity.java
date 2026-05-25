@@ -61,6 +61,12 @@ public class DetectionsActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> createCsvLauncher;
 
+    private com.google.android.material.chip.Chip chipAll;
+    private com.google.android.material.chip.Chip chipContainsLink;
+    private com.google.android.material.chip.Chip chipToday;
+    private com.google.android.material.chip.Chip chipLast7Days;
+    private TextView noResultsText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -270,6 +276,30 @@ public class DetectionsActivity extends AppCompatActivity {
         detectionLV.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         updateEmptyState();
+    }
+
+    public void filterByQuery(String query) {
+        Cursor cursor = DatabaseAccess.db.rawQuery(query, null);
+        DisplayDataAdapterView adapter = new DisplayDataAdapterView(this, cursor);
+        detectionLV.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        if (cursor.getCount() == 0) {
+            detectionLV.setVisibility(View.GONE);
+            noResultsText.setVisibility(View.VISIBLE);
+        } else {
+            detectionLV.setVisibility(View.VISIBLE);
+            noResultsText.setVisibility(View.GONE);
+        }
+    }
+
+    private View getNoResultsView() {
+        TextView noResults = new TextView(this);
+        noResults.setText("No detections match this filter.\nTap 'All' to reset.");
+        noResults.setGravity(android.view.Gravity.CENTER);
+        noResults.setTextSize(16);
+        noResults.setPadding(32, 64, 32, 32);
+        noResults.setTextColor(getResources().getColor(R.color.grey, getTheme()));
+        return noResults;
     }
 
     public void sortONDB() {

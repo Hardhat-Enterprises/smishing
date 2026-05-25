@@ -65,6 +65,9 @@ public class RegisterMain extends AppCompatActivity {
     // ── Declared as fields so all methods can access them ──────
     private CheckBox termsCheckBox;
 
+    // ── Declared as fields so all methods can access them ──────
+    private CheckBox termsCheckBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
