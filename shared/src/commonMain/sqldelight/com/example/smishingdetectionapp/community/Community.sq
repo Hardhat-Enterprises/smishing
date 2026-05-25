@@ -98,3 +98,6 @@ SELECT reported_number, report_count, last_reported_date
 FROM reports
 ORDER BY report_count DESC
 LIMIT ?;
+
+getLastInsertRowId:
+SELECT last_insert_rowid();
