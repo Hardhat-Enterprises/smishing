@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smishingdetectionapp.R;
@@ -14,6 +18,15 @@ import com.example.smishingdetectionapp.ui.login.LoginActivity;
 public class LoginCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isDarkMode = prefs.getBoolean("dark_mode", false);
+        AppCompatDelegate.setDefaultNightMode(
+                isDarkMode
+                        ? AppCompatDelegate.MODE_NIGHT_YES
+                        : AppCompatDelegate.MODE_NIGHT_NO
+        );
+
         super.onCreate(savedInstanceState);
         // Inflate the layout
         setContentView(R.layout.login_create_page);

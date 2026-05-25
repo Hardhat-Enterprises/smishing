@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Community"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/title_text_primary"
             android:textSize="58sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="keeping you and your loved ones safe"
-            android:textColor="@color/navy_blue"
+            android:textColor="@color/title_text_primary"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -125,6 +125,17 @@
                 android:inputType="textMultiLine"
                 android:background="@drawable/rounded_lightblue_border"
                 android:padding="12dp"
+                android:maxLength="500"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tvCharCounter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0/500"
+                android:textSize="12sp"
+                android:textColor="@color/grey"
+                android:gravity="end"
                 android:layout_marginBottom="24dp"/>
 
             <!-- Submit Post Button -->

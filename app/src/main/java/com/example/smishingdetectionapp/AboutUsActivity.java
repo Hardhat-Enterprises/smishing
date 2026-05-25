@@ -1,7 +1,7 @@
 package com.example.smishingdetectionapp;
 
 import android.content.Intent;
-import android.graphics.Color;
+import com.google.android.material.color.MaterialColors;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -39,14 +39,18 @@ public class AboutUsActivity extends AppCompatActivity {
         String fullText = "For inquiries, please email us at: support@hardhat.com";
         String email = "support@hardhat.com";
 
-        SpannableString spannableString = getSpannableString(fullText, email);
+        int linkColor = MaterialColors.getColor(
+                contactUsText,
+                com.google.android.material.R.attr.colorPrimary
+        );
+        SpannableString spannableString = getSpannableString(fullText, email, linkColor);
 
         contactUsText.setText(spannableString);
         contactUsText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @NonNull
-    private static SpannableString getSpannableString(String fullText, String email) {
+    private static SpannableString getSpannableString(String fullText, String email, int linkColor) {
         int startIndex = fullText.indexOf(email);
         int endIndex = startIndex + email.length();
 
@@ -63,7 +67,7 @@ public class AboutUsActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(Color.parseColor("#00008B")); // Dark Blue color
+                ds.setColor(linkColor);
                 ds.setFakeBoldText(true);                  // Bold text
                 ds.setUnderlineText(false);                // Remove underline if you prefer
             }

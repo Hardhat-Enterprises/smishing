@@ -16,7 +16,6 @@ import com.example.smishingdetectionapp.NewsActivity;
 import com.example.smishingdetectionapp.R;
 import com.example.smishingdetectionapp.SettingsActivity;
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -42,14 +41,12 @@ public class CommunityHomeActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 1) {
-                    // Navigate to Posts
                     Intent intent = new Intent(CommunityHomeActivity.this, CommunityPostActivity.class);
                     intent.putExtra("source", origin);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
                     finish();
                 } else if (position == 2) {
-                    // Navigate to Report page
                     Intent intent = new Intent(CommunityHomeActivity.this, CommunityReportActivity.class);
                     intent.putExtra("source", origin);
                     startActivity(intent);
@@ -62,11 +59,16 @@ public class CommunityHomeActivity extends AppCompatActivity {
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        // Back button
+        // Back button - fixed to check source instead of always going to Settings
         ImageButton community_back = findViewById(R.id.community_back);
         if (community_back != null) {
             community_back.setOnClickListener(v -> {
-                startActivity(new Intent(this, SettingsActivity.class));
+                if ("settings".equals(origin)) {
+                    startActivity(new Intent(this, SettingsActivity.class));
+                } else {
+                    startActivity(new Intent(this, MainActivity.class));
+                }
+                overridePendingTransition(0, 0);
                 finish();
             });
         } else {
@@ -75,17 +77,14 @@ public class CommunityHomeActivity extends AppCompatActivity {
 
         BottomNavCoordinator.setup(this, R.id.nav_report, origin);
 
-        // Load the trending top reported numbers and top post
         loadTrendingPost();
         loadTopReportedNumbers();
     }
 
-    // Top post
     private void loadTrendingPost() {
         CommunityDatabaseAccess dbAccess = new CommunityDatabaseAccess(this);
         dbAccess.open();
 
-        // Pre-loaded reported numbers while pre-loaded posts is in PostActivity
         if (dbAccess.isReportTableEmpty()) {
             dbAccess.insertOrUpdateReport("0400255019", "Preloaded: 19 reports");
             dbAccess.insertOrUpdateReport("0280067670", "Preloaded: 3 reports");
@@ -114,7 +113,6 @@ public class CommunityHomeActivity extends AppCompatActivity {
             cardParams.setMargins(0, 0, 0, 12);
             cardLayout.setLayoutParams(cardParams);
 
-            // Post title
             TextView title = new TextView(this);
             title.setText(post.getPosttitle());
             title.setTextSize(18);
@@ -122,7 +120,6 @@ public class CommunityHomeActivity extends AppCompatActivity {
             title.setTextColor(getResources().getColor(R.color.black));
             title.setPadding(0, 0, 0, 8);
 
-            // Post description
             TextView description = new TextView(this);
             description.setText(post.getPostdescription());
             description.setTextSize(14);
@@ -148,7 +145,7 @@ public class CommunityHomeActivity extends AppCompatActivity {
             container.addView(cardLayout);
         }
     }
-    // Top reported numbers
+
     private void loadTopReportedNumbers() {
         CommunityDatabaseAccess dbAccess = new CommunityDatabaseAccess(this);
         dbAccess.open();

@@ -1,6 +1,7 @@
 package com.example.smishingdetectionapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smishingdetectionapp.navigation.BottomNavCoordinator;
@@ -111,8 +113,16 @@ public class QuizesActivity extends AppCompatActivity {
 
         ImageButton report_back = findViewById(R.id.quiz_back);
         report_back.setOnClickListener(v -> {
-            startActivity(new Intent(this, EducationActivity.class));
-            finish();
+            new AlertDialog.Builder(this)
+                    .setTitle("Quit Quiz")
+                    .setMessage("Are you sure you want to quit? Your progress will be lost.")
+                    .setPositiveButton("Quit", (dialog, which) -> {
+                        if (countDownTimer != null) countDownTimer.cancel();
+                        startActivity(new Intent(this, EducationActivity.class));
+                        finish();
+                    })
+                    .setNegativeButton("Resume", null)
+                    .show();
         });
     }
 
@@ -146,12 +156,19 @@ public class QuizesActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(QUESTION_TIME, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timerTextView.setText("Time: " + millisUntilFinished / 1000 + " sec");
+                long secondsLeft = millisUntilFinished / 1000;
+                timerTextView.setText("Time: " + secondsLeft + " sec");
+                if (secondsLeft <= 5) {
+                    timerTextView.setTextColor(getResources().getColor(R.color.red, getTheme()));
+                } else {
+                    timerTextView.setTextColor(Color.parseColor("#333333"));
+                }
             }
 
             @Override
             public void onFinish() {
                 timerTextView.setText("Time's up!");
+                timerTextView.setTextColor(Color.parseColor("#333333"));
                 // Record full time (15 sec) if timer runs out.
                 timeSpentPerQuestion.add((int) (QUESTION_TIME / 1000));
                 // Auto-move to next question; leave answer as -1 (unanswered).
@@ -268,9 +285,16 @@ public class QuizesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        countDownTimer.cancel();
-        finish();
-        super.onBackPressed();
+        new AlertDialog.Builder(this)
+                .setTitle("Quit Quiz")
+                .setMessage("Are you sure you want to quit? Your progress will be lost.")
+                .setPositiveButton("Quit", (dialog, which) -> {
+                    if (countDownTimer != null) countDownTimer.cancel();
+                    finish();
+                    QuizesActivity.super.onBackPressed();
+                })
+                .setNegativeButton("Resume", null)
+                .show();
     }
 
     private void showResults() {

@@ -41,7 +41,7 @@
         android:text="@string/help_page"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="@color/navy_blue"
+        android:textColor="@color/title_text_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"

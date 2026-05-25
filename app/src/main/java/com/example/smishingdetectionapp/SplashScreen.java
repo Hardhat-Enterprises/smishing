@@ -5,18 +5,14 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.smishingdetectionapp.ui.login.LoginActivity;
 import com.example.smishingdetectionapp.ui.onboarding.OnboardingActivity;
+import com.example.smishingdetectionapp.MainActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -27,38 +23,47 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EdgeToEdge.enable(this);
+        // Set the layout for the splash screen
         setContentView(R.layout.activity_splash_screen);
 
+        // Initialize the ImageView
         imageview = findViewById(R.id.imageview);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        // Log splash animation start
+        Log.d("SplashScreen", "Splash screen animation started.");
 
         // Start splash animation
-        ObjectAnimator animator = (ObjectAnimator) AnimatorInflater
-                .loadAnimator(this, R.animator.smishing_detection_logo_animator);
-        animator.setTarget(imageview);
-        animator.start();
+        ObjectAnimator animator = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.smishing_detection_logo_animator);
+        animator.setTarget(imageview);  // Set the animation target to the imageview
+        animator.start();  // Start the animation
 
-        // Navigate after delay
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            SharedPreferences prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE);
-            boolean onboardingShown = prefs.getBoolean("onboarding_shown", false);
+        // Handle the onboarding flow
+        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        boolean onboardingShown = prefs.getBoolean("onboarding_shown", false);
 
-            Intent intent;
-            if (!onboardingShown) {
-                intent = new Intent(SplashScreen.this, OnboardingActivity.class);
-                prefs.edit().putBoolean("onboarding_shown", true).apply(); // Mark onboarding as completed
-            } else {
-                intent = new Intent(SplashScreen.this, OnboardingActivity.class);
-            }
+        Intent intent;
 
-            startActivity(intent);
-            finish();
-        }, SPLASH_DURATION);
+        if (!onboardingShown) {
+            // First-time user -> Show OnboardingActivity
+            intent = new Intent(SplashScreen.this, OnboardingActivity.class);
+            prefs.edit().putBoolean("onboarding_shown", true).apply();  // Mark onboarding as completed
+
+            // Log the navigation to OnboardingActivity
+            Log.d("SplashScreen", "Navigating to OnboardingActivity.");
+        } else {
+            // Returning user -> Show MainActivity or LoginActivity
+            intent = new Intent(SplashScreen.this, MainActivity.class);  // Or LoginActivity if preferred
+
+            // Log the navigation to MainActivity
+            Log.d("SplashScreen", "Navigating to MainActivity.");
+        }
+
+        // Start the appropriate activity
+        startActivity(intent);
+
+        // Log the end of the splash screen
+        Log.d("SplashScreen", "Splash screen finished. Moving to the next activity.");
+
+        finish();  // Close SplashScreen
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FeedbackActivity"
-    android:background="#FFFFFF">
+    android:background="?attr/colorSurface">
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,9 +14,9 @@
         android:layout_height="65dp"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/baby_blue"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        app:itemBackground="?attr/colorSurface"
+        app:itemIconTint="@color/bottom_nav_item_tint"
+        app:itemTextColor="@color/bottom_nav_item_tint"
         app:itemIconSize="25dp"
         app:itemHorizontalTranslationEnabled="false"
         app:labelVisibilityMode="labeled"
@@ -66,7 +66,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:textColor="#000000"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginBottom="16dp" />
 
         <!-- Name Input -->
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:hint="@string/hint_name"
-            android:textColorHint="#888888"
+            android:textColorHint="?attr/colorOnSurfaceVariant"
             android:inputType="textPersonName"
             android:importantForAutofill="yes"
             android:autofillHints="name"
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:hint="@string/hint_feedback"
-            android:textColorHint="#888888"
+            android:textColorHint="?attr/colorOnSurfaceVariant"
             android:gravity="top|start"
             android:inputType="textMultiLine"
             android:importantForAutofill="yes"
@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/word_count_default"
-            android:textColor="#444444"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginBottom="4dp"/>
 
         <TextView
@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/word_limit_warning"
-            android:textColor="#FF4444"
+            android:textColor="?attr/colorError"
             android:textSize="12sp"
             android:visibility="gone"
             android:layout_marginBottom="8dp"/>
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:text="@string/rating_label"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginBottom="4dp"/>
 
         <!-- Rating Bar -->
@@ -144,7 +144,7 @@
             android:text=""
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textColor="#000000"
+            android:textColor="?attr/colorOnSurface"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"
             android:layout_marginBottom="12dp"/>
@@ -156,7 +156,7 @@
             android:layout_height="56dp"
             android:text="@string/submit_feedback"
             android:textAllCaps="false"
-            android:backgroundTint="#E0F7FA"
+            android:backgroundTint="?attr/colorPrimary"
             android:layout_marginBottom="12dp"/>
 
         <!-- View History Button -->
@@ -166,7 +166,7 @@
             android:layout_height="56dp"
             android:text="@string/view_recent_feedback"
             android:textAllCaps="false"
-            android:backgroundTint="#E0F7FA"/>
+            android:backgroundTint="?attr/colorPrimary"/>
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

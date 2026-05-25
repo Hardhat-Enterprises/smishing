@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -45,7 +46,9 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class DetectionsActivity extends AppCompatActivity {
@@ -54,6 +57,7 @@ public class DetectionsActivity extends AppCompatActivity {
     DatabaseAccess databaseAccess;
 
     private ActivityResultLauncher<Intent> createCsvLauncher;
+    private TextView activeFilterLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +102,7 @@ public class DetectionsActivity extends AppCompatActivity {
 
         // Filtering feature
         ImageView filterBtn = findViewById(R.id.filterBtn);
+        activeFilterLabel = findViewById(R.id.activeFilterLabel);
         filterBtn.setOnClickListener(v -> {
             SmartFilterBottomSheet filterFragment = new SmartFilterBottomSheet();
             filterFragment.setFilterListener((newestFirst, containsLink, todayOnly, last7DaysOnly, selectedYears, startDate, endDate) -> {
@@ -141,6 +146,19 @@ public class DetectionsActivity extends AppCompatActivity {
 
                 Cursor filteredCursor = DatabaseAccess.db.rawQuery(query.toString(), null);
                 DisplayDataAdapterView filteredAdapter = new DisplayDataAdapterView(this, filteredCursor);
+                List<String> activeFilters = new ArrayList<>();
+                if (containsLink) activeFilters.add("Contains Link");
+                if (todayOnly) activeFilters.add("Today");
+                if (last7DaysOnly) activeFilters.add("Last 7 Days");
+                if (newestFirst) activeFilters.add("Newest First");
+                if (startDate != null) activeFilters.add("Date Range");
+
+                if (activeFilters.isEmpty()) {
+                    activeFilterLabel.setVisibility(View.GONE);
+                } else {
+                    activeFilterLabel.setText("Filters: " + String.join(", ", activeFilters));
+                    activeFilterLabel.setVisibility(View.VISIBLE);
+                }
                 detectionLV.setAdapter(filteredAdapter);
                 filteredAdapter.notifyDataSetChanged();
             });
@@ -165,6 +183,8 @@ public class DetectionsActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Detection Deleted!", Toast.LENGTH_SHORT).show();
             });
+
+
 
             return true;
         });

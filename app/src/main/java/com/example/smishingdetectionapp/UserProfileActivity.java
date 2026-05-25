@@ -1,16 +1,26 @@
 package com.example.smishingdetectionapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.smishingdetectionapp.DataBase.Retrofitinterface;
+import com.example.smishingdetectionapp.DataBase.UserProfile;
 import com.google.android.material.button.MaterialButton;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -29,11 +39,19 @@ public class UserProfileActivity extends AppCompatActivity {
     private boolean unlocked = false;
     private long unlockTimestamp = 0;
 
-    // Demo user data
-    private String actualName = "Moshadi Hansamali";
-    private String actualEmail = "moshadi@gmail.com";
-    private String actualPhone = "0489300074";
-    private String actualAddress = "24 Rhynhurst Street, Clyde North";
+    //    // Demo user data
+    //    private String actualName = "Moshadi Hansamali";
+    //    private String actualEmail = "moshadi@gmail.com";
+    //    private String actualPhone = "0489300074";
+    //    private String actualAddress = "24 Rhynhurst Street, Clyde North";
+
+    // User data from MongoDB
+    private String actualName = "";
+    private String actualEmail = "";
+    private String actualPhone = "";
+    private String actualAddress = "";
+
+    private Retrofitinterface retrofitinterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +79,13 @@ public class UserProfileActivity extends AppCompatActivity {
 
         // Mask initially
         maskFields();
+
+        // Initialize Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.SERVERIP)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofitinterface = retrofit.create(Retrofitinterface.class);
 
         // Restore unlock status if still valid
         unlockTimestamp = getUnlockTimestamp();
@@ -130,6 +155,30 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
             });
         }
+        // Hardcoded token for testing purposes only
+        String token = "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWJjYzA3OTYwZTFhNzllNjRjNmRiN2EiLCJpYXQiOjE3NzY2MDc4MDUsImV4cCI6MTc3NjY5NDIwNX0.tn3q7ly7XMXcbdZB-7Bo_vvnbCFa1iRc8IsrwqUVzvA";
+
+        retrofitinterface.getUserProfile(token).enqueue(new Callback<UserProfile>() {
+            @Override
+            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    UserProfile profile = response.body();
+                    actualName = profile.getFullName() != null ? profile.getFullName() : "N/A";
+                    actualEmail = profile.getEmail() != null ? profile.getEmail() : "N/A";
+                    actualPhone = profile.getPhoneNumber() != null ? profile.getPhoneNumber() : "N/A";
+                    actualAddress = profile.getAddress() != null ? profile.getAddress() : "N/A";
+
+                    maskFields();
+                } else {
+                    Toast.makeText(UserProfileActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
+                Toast.makeText(UserProfileActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // === Field helpers ===
